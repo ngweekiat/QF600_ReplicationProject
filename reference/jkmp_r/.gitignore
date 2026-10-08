@@ -1,0 +1,11 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+ief_for_slides.R
+Data/
+Figures/
+slurm_output/
+simulations/results/
+simulations/Depreceated code/
+scribbles/

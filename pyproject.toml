@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jkmp"
+version = "0.1.0"
+description = "Python replication of Jensen, Kelly, Malamud & Pedersen (2026), Machine Learning and the Implementable Efficient Frontier"
+# Python 3.14: no pandas 2.2 wheels; a source build segfaults against numpy 2.5.
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "numpy>=2.0,<2.3",   # pandas 2.2.x is not tested against newer numpy
+    "pandas>=2.2,<2.3",  # wrds 3.5 pins pandas < 2.3
+    "scipy",
+    "pyarrow",
+    "pyyaml",
+    "wrds>=3.5",         # older wrds resolves to SQLAlchemy 1.4, which pandas >= 2.2 cannot read through
+    "matplotlib",
+    "joblib",
+    "openpyxl",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

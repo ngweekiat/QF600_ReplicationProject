@@ -1,0 +1,194 @@
+# Base configuration for the JKMP (2026) replication.
+# Every design parameter lives here; code reads it through jkmp.config.load_config().
+# Override per run with dotted keys, e.g. load_config(overrides=["investor.gamma=5"]).
+#
+# NOTE: write scientific notation as 1.0e+9, not 1e9 — PyYAML reads "1e9" as a string.
+# R reference values are noted as "R: ..." (reference/jkmp_r/Main.R unless stated).
+
+seed: 1
+
+paths:
+  raw: data/raw
+  processed: data/processed
+  outputs: outputs
+  reference_r: reference/jkmp_r
+
+# ---------------------------------------------------------------------------
+# Data sources. WRDS tables confirmed 2026-10-07 via `scripts/00_download.py explore`:
+# legacy crsp.dsf ends 2024-12-31, so daily returns come from the CRSP v2 (CIZ) file.
+# ---------------------------------------------------------------------------
+data_sources:
+  jkp_table: contrib.global_factor       # JKP Global Factor Data; 444 columns, through 2025-12
+  crsp_daily_table: crsp.dsf_v2          # CRSP v2 daily stock file; through 2025-12-31
+  factor_details_url: https://raw.githubusercontent.com/bkelly-lab/ReplicationCrisis/master/GlobalFactors/Factor%20Details.xlsx
+  cluster_labels_url: https://raw.githubusercontent.com/bkelly-lab/ReplicationCrisis/master/GlobalFactors/Cluster%20Labels.csv
+  ff_factors_url: https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_CSV.zip
+  ff_factors_daily_url: https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_daily_CSV.zip
+  fred_csv_url: https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}   # public CSV, no API key
+
+# ---------------------------------------------------------------------------
+# Sample periods (month-ends). R: estimation from 1952, rolling validation from 1971, OOS 1981–2020.
+# ---------------------------------------------------------------------------
+dates:
+  warmup_start: 1993-01-31   # first month of data pulled: a full 10-year covariance window exists by early 2003 (O9)
+  train_start: 2005-01-31
+  train_end: 2014-12-31
+  validation_start: 2015-01-31
+  validation_end: 2019-12-31
+  test_start: 2020-01-31
+  test_end: 2025-12-31
+
+# ---------------------------------------------------------------------------
+# Investable universe. R: NYSE only, above-median market cap, 12/12 addition/deletion rule.
+# ---------------------------------------------------------------------------
+universe:
+  exchanges: [1, 3]            # CRSP exchcd: 1 = NYSE, 3 = Nasdaq
+  share_codes: [10, 11, 12]    # CRSP shrcd: common stocks (as in the paper, Sec. 5.1.1)
+  jkp_flags: [common, primary_sec, obs_main]  # JKP flags that must equal 1: one main common-share row per firm
+  target_n: 80                 # portfolio universe size
+  entry_rank: 70               # buffer: a non-member enters if its market-cap rank <= 70
+  exit_rank: 100               # buffer: a member stays while its market-cap rank <= 100
+  reconstitution_month: 12     # reconstitute each December; membership fixed for the next 12 months
+  min_feature_pct: 0.5         # R: settings$screens$feat_pct — need >= 50% of features non-missing
+  lookback_months: 11          # R: pf_set$lb_hor — need current + 11 past months of signals
+
+# ---------------------------------------------------------------------------
+# Characteristics: ~18 JKP features in 6 themes (R: 115 features in 13 themes).
+# Theme labels follow JKP "Cluster Labels.csv" (lower-case, underscores).
+# Sign directions come from JKP "Factor Details.xlsx" at run time, not from here.
+# Verified 2026-10-07: all 18 are in Factor Details.xlsx (abr_jkp), are in the stated theme in
+# Cluster Labels.csv, and are among the 115 features R uses (scripts/00_download.py explore re-checks).
+# ---------------------------------------------------------------------------
+features:
+  percentile_rank: true        # R: settings$feat_prank — cross-sectional rank to [0, 1] each month
+  impute_value: 0.5            # R: missing ranked features set to 0.5
+  themes:
+    value: [be_me, sale_me, ebitda_mev]
+    momentum: [ret_12_1, ret_6_1, prc_highprc_252d]
+    quality: [qmj_prof, qmj_safety, gp_at]
+    investment: [at_gr1, ppeinv_gr1a, noa_gr1a]
+    low_risk: [ivol_capm_252d, beta_60m, rvol_21d]
+    short_term_reversal: [ret_1_0, rskew_21d, iskew_capm_21d]
+
+# ---------------------------------------------------------------------------
+# Barra-style covariance (Eqs. 36–37). R: 3 - Estimate Covariance Matrix.R.
+# ---------------------------------------------------------------------------
+covariance:
+  factor_universe_top_n: 500   # factor returns estimated on the top 500 stocks by market cap (R: the portfolio universe)
+  sectors:                     # 6 sector dummies merged from the 12 Fama-French industries (R: 12 industry dummies)
+    consumer: [NoDur, Durbl, Shops]
+    industrials: [Manuf, Chems, Other]
+    tech_telecom: [BusEq, Telcm]
+    energy_utilities: [Enrgy, Utils]
+    health: [Hlth]
+    finance: [Money]
+  window_days: 2520            # R: 252 * 10 (10 years of daily data)
+  min_window_days: 2520        # require the full 10-year window, as R does (data from 1993 makes this available by 2003)
+  half_life_corr_days: 378     # R: hl_cor = 252 * 3 / 2
+  half_life_var_days: 126      # R: hl_var = 252 / 2
+  half_life_idio_days: 126     # R: hl_stock_var = 252 / 2
+  idio_min_obs: 200            # need 200 non-missing residuals ...
+  idio_min_window: 252         # ... within the last 252 trading days (else size-group median)
+  idio_initial_obs: 63         # R: initial_var_obs = 21 * 3 (EWMA burn-in)
+  days_per_month: 21           # daily -> MONTHLY Sigma (R multiplies by 21 and calls it "annualize")
+
+# ---------------------------------------------------------------------------
+# Trading costs (Eq. 35). Lambda_i = 2 * price_impact / dolvol_126d = 0.2 / dolvol_126d.
+# ---------------------------------------------------------------------------
+trading_costs:
+  price_impact: 0.1            # R: settings$pi — trading 1% of daily volume moves price 0.1%
+  dolvol_column: dolvol_126d   # 6-month average daily dollar volume
+  dolvol_units: dollars        # TODO: verify JKP units on first data pull (dollars vs millions)
+
+# ---------------------------------------------------------------------------
+# Investor. R: pf_set.
+# ---------------------------------------------------------------------------
+investor:
+  gamma: 10.0                  # baseline relative risk aversion
+  wealth: 1.0e+10              # baseline wealth at wealth_end_date (R: $10B by end-2020)
+  wealth_end_date: 2025-12-31  # wealth is rolled backwards from here with the market total return
+  mu: 0.007                    # R: pf_set$mu — expected monthly portfolio growth used in m (Lemma 1)
+  m_iterations: 10             # fixed-point iterations for m
+  gamma_grid: [1.0, 5.0, 10.0, 20.0, 100.0]                      # frontier (Fig 1A)
+  wealth_grid: [1.0e+9, 1.0e+10, 5.0e+10, 1.0e+11, 2.5e+11]      # frontier by investor size (Fig 1B)
+
+# ---------------------------------------------------------------------------
+# Portfolio accounting. R: w_fun / pf_ts_fun.
+# ---------------------------------------------------------------------------
+portfolio:
+  charge_exit_tc: true         # charge selling stocks that leave the universe but still trade (R: not charged)
+
+# ---------------------------------------------------------------------------
+# Ridge penalty grid shared by all random-feature models.
+# R: c(0, exp(seq(-10, 10, length.out = 100))).
+# ---------------------------------------------------------------------------
+ridge_grid:
+  include_zero: true
+  log_min: -10.0
+  log_max: 10.0
+  n: 100
+
+# ---------------------------------------------------------------------------
+# Return prediction: random Fourier features + ridge. R: settings$rff.
+# ---------------------------------------------------------------------------
+return_model:
+  p_grid: [2, 4, 8, 16, 32, 64, 128, 256, 512]
+  rff_variance_grid: [0.049787068367863944, 0.1353352832366127]  # exp(-3), exp(-2); a VARIANCE in R, not a std
+  horizons: [1]                # 1-month only (Multiperiod-ML is out of scope; R uses 1..12)
+  val_years: 5                 # validate on return years y-5..y-1, train on everything up to y-6 (R: 10)
+  pred_years: [2015, 2025]     # first and last return year to predict (formation Dec y-1 .. Nov y)
+
+# ---------------------------------------------------------------------------
+# Portfolio-ML. R: settings$pf_ml.
+# ---------------------------------------------------------------------------
+portfolio_ml:
+  use_rff: true               # false: signals = the ranked characteristics (linear Portfolio-ML, configs/experiments/linear_pfml.yaml)
+  p_grid: [64, 128, 256, 512]
+  rff_variance_grid: [0.049787068367863944, 0.1353352832366127]  # exp(-3), exp(-2)
+  scale_by_vol: true           # R: scale = T — aim = diag(1/sigma) * RF * beta
+  add_original_features: false # R: orig_feat = F
+
+# ---------------------------------------------------------------------------
+# Static-ML* second tuning layer (Eq. 41). R: settings$pf$hps$static, cov_type = "cov_add".
+# ---------------------------------------------------------------------------
+static_ml:
+  k_grid: [1.0, 0.3333333333333333, 0.2]  # multiplier on Lambda (= 1/phi)
+  u_grid: [0.25, 0.5, 1.0]                # shrinkage of predicted returns
+  g_grid: [0.0, 1.0, 2.0]                 # gamma*Sigma + g*diag(gamma*Sigma) (R cov_add); paper's v = 1 + g
+
+# ---------------------------------------------------------------------------
+# Factor-ML. R: settings$factor_ml.
+# ---------------------------------------------------------------------------
+factor_ml:
+  n_portfolios: 5              # long top quintile, short bottom quintile (~16 stocks each at N ≈ 80; R: deciles)
+
+# ---------------------------------------------------------------------------
+# Implementable efficient frontier (Fig. 1). R: settings$ef, 6 - Implementable efficient frontier.R.
+# Every (investor.gamma_grid x investor.wealth_grid) point re-tunes Static-ML* and Portfolio-ML.
+# ---------------------------------------------------------------------------
+grids:
+  n_jobs: 5                    # joblib workers (each runs one (gamma, wealth) point)
+  frontier_vol_max: 0.5        # Markowitz-ML / Factor-ML scaled to target vols 0 .. max (R: vol_range)
+  frontier_vol_step: 0.01
+
+# ---------------------------------------------------------------------------
+# Feature importance (Fig. 5). R: 5 - Feature importance base.R. Shuffles use the top-level seed.
+# ---------------------------------------------------------------------------
+feature_importance:
+  markowitz_gamma: 100.0       # R tpf_cf_fun: gamma_rel = 100 and zero wealth (gross); utility still at investor.gamma
+
+# ---------------------------------------------------------------------------
+# Market regimes over the test window (our extension). FRED: USREC (NBER recession, monthly),
+# VIXCLS (daily close -> monthly mean), FEDFUNDS (monthly effective rate, %).
+# ---------------------------------------------------------------------------
+regimes:
+  fred_series: [USREC, VIXCLS, FEDFUNDS]
+  fed_change_months: 3         # Fed stance from the change in FEDFUNDS over the last 3 months
+  fed_threshold: 0.10          # percentage points: > +0.10 hiking, < -0.10 cutting, else on hold
+  vix_norm: window             # VIX cost scale = VIX_t / mean VIX over the test window ('full': since 1990)
+  plot_types: [Market, 1/N, Minimum variance, Static-ML, Static-ML*, Portfolio-ML, Portfolio-ML (linear)]
+  episodes:                    # shaded on the cumulative-utility chart (return months)
+    - {label: COVID crash, start: 2020-02-01, end: 2020-04-30}
+    - {label: 2022 hikes / bear market, start: 2022-01-01, end: 2022-12-31}
+    - {label: SVB / regional banks, start: 2023-03-01, end: 2023-03-31}
+    - {label: Tariff shock, start: 2025-04-01, end: 2025-04-30}

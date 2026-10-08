@@ -1,0 +1,33 @@
+# Data and generated results (too large / licensed; rebuilt by scripts/)
+data/
+outputs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Credentials (WRDS stores its own in ~/.pgpass; never commit one here)
+.pgpass
+*.pgpass
+.env
+.env.*
+!.env.example
+# Claude Code local settings (can record full command lines)
+.claude/settings.local.json
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# R reference: session files only (the code itself is tracked)
+reference/jkmp_r/.Rproj.user/
+reference/jkmp_r/.Rhistory
