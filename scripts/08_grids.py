@@ -2,13 +2,13 @@
 
 The Portfolio-ML signal set follows portfolio_ml.use_rff; run once with configs/base.yaml and once with
 configs/experiments/linear_pfml.yaml to add Portfolio-ML (linear) — the second run reuses Static-ML results.
-The summary and figures use every method stored for each point.
+The summary and figures use only Static-ML* and Portfolio-ML, including when older cached results exist.
 
 Loops investor.gamma_grid × investor.wealth_grid (25 points). Each point re-tunes every hyperparameter
 (Static-ML* (k, u, g); Portfolio-ML (g, p, λ) and β) and runs over the test window, in parallel with
 joblib (grids.n_jobs workers). Portfolio-ML moments are cached per point in data/processed/grids/{key}/;
 finished points in outputs/grids/{key}/ are reused unless --force.
-Needs scripts 01–04 (panel, Σ, predictions, benchmark weights for the scaled Markowitz-ML/Factor-ML lines).
+Needs scripts 01–03 (panel, covariance, predictions); no benchmark results required.
 Writes outputs/grids/summary.csv and outputs/figures/{fig1a_frontier,fig1b_frontier_wealth,capacity}.{png,pdf}.
 
     python scripts/08_grids.py [--config configs/experiments/linear_pfml.yaml] [--force] [--plots-only]
@@ -20,15 +20,14 @@ import argparse
 import logging
 import time
 
-import numpy as np
 import pandas as pd
 from joblib import Parallel, delayed
 
 from jkmp.config import load_config
 from jkmp.covariance import load_covariance
 from jkmp.data.prepare import risk_free_monthly
-from jkmp.evaluation.frontier import plot_capacity, plot_fig1a, plot_fig1b, scaled_frontier
-from jkmp.evaluation.metrics import table2
+from jkmp.evaluation.frontier import plot_capacity, plot_fig1a, plot_fig1b
+from jkmp.evaluation.comparison import selected_methods
 from jkmp.portfolio.grids import grid_inputs, grid_points, load_point, run_point, summarise
 
 MONTH = pd.offsets.MonthEnd(1)
@@ -65,16 +64,11 @@ def main() -> None:
             delayed(run_point)(inp, cfg, g, w, cache_root, out_root, args.force) for g, w in points)
         logging.info("grid done in %.1f min", (time.time() - start) / 60)
     summary = summarise(pd.concat([load_point(out_root, g, w) for g, w in points], ignore_index=True))
+    summary = selected_methods(summary)
     summary.to_csv(out_root / "summary.csv", index=False)
 
-    # Markowitz-ML / Factor-ML scaled to target vols at the baseline wealth (R vol_range)
-    bw = pd.read_parquet(outputs / "benchmarks" / "weights_test.parquet")
-    bw = bw[bw["type"].isin(["Markowitz-ML", "Factor-ML"])]
-    vols = np.arange(cfg.grids.frontier_vol_step, cfg.grids.frontier_vol_max + 1e-12, cfg.grids.frontier_vol_step)
-    scaled = scaled_frontier(bw, inp.panel, wealth, vols, inv.gamma)
-    scaled.to_csv(out_root / "scaled_benchmarks.csv", index=False)
-    bench = pd.read_parquet(outputs / "benchmarks" / "pf_test.parquet")
-    sr_gross = float(table2(bench[bench["type"] == "Markowitz-ML"], inv.gamma)["SR_gross"].iloc[0])
+    scaled = pd.DataFrame(columns=["type", "Vol", "R_TC"])
+    sr_gross = None
 
     figs = outputs / "figures"
     written = (plot_fig1a(summary, scaled, inv.wealth, inv.gamma, sr_gross, figs / "fig1a_frontier")

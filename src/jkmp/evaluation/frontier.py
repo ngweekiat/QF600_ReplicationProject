@@ -65,14 +65,15 @@ def _limits(points: pd.DataFrame) -> tuple[float, float, float]:
 
 
 def plot_fig1a(summary: pd.DataFrame, scaled: pd.DataFrame, wealth: float, gamma_base: float,
-               markowitz_sr_gross: float, path: Path) -> list[Path]:
+               markowitz_sr_gross: float | None, path: Path) -> list[Path]:
     s = summary[summary["wealth"] == wealth]
     main = s[s["type"].isin(MAIN)]
     xmax, ylo, yhi = _limits(main)
     fig, ax = plt.subplots(figsize=(7, 4.8))
     x = np.linspace(0, xmax, 200)
-    ax.plot(x, markowitz_sr_gross * x, color=COLOURS["Markowitz-ML"], lw=1, ls=":",
-            label="Markowitz-ML (gross, no TC)")
+    if markowitz_sr_gross is not None:
+        ax.plot(x, markowitz_sr_gross * x, color=COLOURS["Markowitz-ML"], lw=1, ls=":",
+                label="Markowitz-ML (gross, no TC)")
     for t, g in scaled.groupby("type", sort=False):
         ax.plot(g["Vol"], g["R_TC"], color=COLOURS.get(t, "grey"), lw=1.2, label=f"{t} (scaled)")
     for t, offset in [("Portfolio-ML", (-6, 6)), ("Static-ML*", (4, -10)), ("Portfolio-ML (linear)", None)]:
@@ -98,12 +99,13 @@ def plot_fig1a(summary: pd.DataFrame, scaled: pd.DataFrame, wealth: float, gamma
     return _save(fig, path)
 
 
-def plot_fig1b(summary: pd.DataFrame, markowitz_sr_gross: float, path: Path) -> list[Path]:
+def plot_fig1b(summary: pd.DataFrame, markowitz_sr_gross: float | None, path: Path) -> list[Path]:
     s = summary[summary["type"] == "Portfolio-ML"]
     xmax, ylo, yhi = _limits(s)
     fig, ax = plt.subplots(figsize=(7, 4.8))
     x = np.linspace(0, xmax, 200)
-    ax.plot(x, markowitz_sr_gross * x, color="grey", lw=1, ls=":", label="Markowitz-ML (gross, no TC)")
+    if markowitz_sr_gross is not None:
+        ax.plot(x, markowitz_sr_gross * x, color="grey", lw=1, ls=":", label="Markowitz-ML (gross, no TC)")
     cmap = plt.get_cmap("viridis")
     levels = sorted(s["wealth"].unique())
     for i, level in enumerate(levels):

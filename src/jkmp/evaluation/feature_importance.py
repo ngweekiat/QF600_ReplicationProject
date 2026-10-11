@@ -131,6 +131,27 @@ def markowitz_counterfactual(theme_features: Sequence[str] | None, universe: pd.
 
 # --- Importance and Figure 5 --------------------------------------------------------------------------
 
+def static_counterfactual(theme_features, universe, perms, features, models, z,
+                          panel, wealth, cov_parts, chosen, *, gamma, charge_exit_tc):
+    """Re-predict shuffled features, keeping Static-ML*'s annual choices fixed."""
+    from jkmp.portfolio.static_ml import static_weights
+    from jkmp.portfolio.recursion import month_inputs
+
+    parts = []
+    for eom, rows in universe.groupby("eom", sort=True):
+        x = shuffled(rows, features, theme_features, perms[eom])
+        parts.append(rows[["id", "eom"]].assign(pred_ld1=models[return_year(eom)].predict(x, z)))
+    predictions = pd.concat(parts, ignore_index=True)
+    cf_panel = panel.drop(columns=["pred_ld1"], errors="ignore").merge(
+        predictions, on=["id", "eom"], how="left", validate="one_to_one")
+    dates = sorted(universe["eom"].unique())
+    inputs = month_inputs(cf_panel, wealth, cov_parts, dates)
+    hypers = {int(row.year): (row.k, row.u, row.g) for row in chosen.itertuples()}
+    weights = static_weights(inputs, cf_panel, wealth, gamma,
+                             lambda eom: hypers[return_year(eom)], charge_exit_tc)
+    return portfolio_returns(weights, cf_panel, wealth)
+
+
 def importance(pfs: pd.DataFrame, gamma: float) -> pd.DataFrame:
     """``pfs``: monthly rows with ``type, theme, r, tc``. Utility per (type, theme) and the drop
     ``fi = U(none) − U(theme)`` (R: ``cf_obj[cluster == "bm"] - cf_obj``)."""

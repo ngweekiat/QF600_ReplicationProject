@@ -15,7 +15,7 @@ MONTHS = pd.date_range("2020-01-31", periods=12, freq="ME")
 
 def test_fetch_fred_parses_csv_and_drops_missing(tmp_path):
     (tmp_path / "VIXCLS.csv").write_text("observation_date,VIXCLS\n2020-01-02,12.5\n2020-01-03,.\n2020-01-06,13.0\n")
-    out = fetch_fred(f"file://{tmp_path}/{{series}}.csv", "VIXCLS")
+    out = fetch_fred(f"{tmp_path.as_uri()}/{{series}}.csv", "VIXCLS")
     assert out["value"].tolist() == [12.5, 13.0] and out["date"].dt.day.tolist() == [2, 6]
 
 

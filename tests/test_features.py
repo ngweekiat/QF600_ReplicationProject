@@ -49,6 +49,6 @@ def test_load_theme_directions_against_jkp_files():
     if not (cfg.paths.raw / "cluster_labels.parquet").exists():
         pytest.skip("raw data not downloaded")
     d = load_theme_directions(cfg.paths.raw, cfg.features.themes)
-    assert len(d) == 18 and set(d["direction"]) == {1.0, -1.0}
+    assert len(d) == len(cfg.features.names) and set(d["direction"]) == {1.0, -1.0}
     assert d.set_index("feature").loc["be_me", "direction"] == 1.0      # value: high B/M is good
     assert d.set_index("feature").loc["ret_1_0", "direction"] == -1.0   # short-term reversal

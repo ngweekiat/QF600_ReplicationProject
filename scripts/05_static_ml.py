@@ -1,7 +1,7 @@
 """Static-ML and Static-ML*: validate (k, u, g) from return year 2015, pick each December, evaluate on the test window.
 
-Reads the benchmark results of scripts/04_benchmarks.py for the test window and prints the combined
-Table 2. Writes outputs/static_ml/{validation,chosen,weights,pf}.* and outputs/table2_test.csv.
+Reports Static-ML* only; no benchmark stage is required.
+Writes outputs/static_ml/{validation,chosen,weights,pf}.* and outputs/table2_test.csv.
 
     python scripts/05_static_ml.py
 """
@@ -16,6 +16,7 @@ import pandas as pd
 from jkmp.config import load_config
 from jkmp.covariance import load_covariance
 from jkmp.evaluation.metrics import table2
+from jkmp.evaluation.comparison import load_comparison, selected_methods
 from jkmp.portfolio.static_ml import hyper_grid, run_static_ml
 
 MONTH = pd.offsets.MonthEnd(1)
@@ -43,6 +44,7 @@ def main() -> None:
     s = cfg.static_ml
     res = run_static_ml(panel, wealth, cov, val_dates, eval_dates, cfg.investor.gamma,
                         hyper_grid(s.k_grid, s.u_grid, s.g_grid), cfg.portfolio.charge_exit_tc)
+    res["pf"] = selected_methods(res["pf"])
 
     out = outputs / "static_ml"
     out.mkdir(parents=True, exist_ok=True)
@@ -51,9 +53,7 @@ def main() -> None:
     res["weights"].to_parquet(out / "weights.parquet", index=False)
     res["pf"].to_parquet(out / "pf.parquet", index=False)
 
-    bench = pd.read_parquet(outputs / "benchmarks" / "pf_test.parquet")
-    pf = pd.concat([res["pf"], bench], ignore_index=True)
-    t2 = table2(pf, cfg.investor.gamma)
+    t2 = table2(load_comparison(outputs), cfg.investor.gamma)
     t2.to_csv(outputs / "table2_test.csv")
     pd.set_option("display.width", 200)
     print("\nStatic-ML* choices (k, u, g) by return year:")

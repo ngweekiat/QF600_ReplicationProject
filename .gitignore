@@ -1,6 +1,6 @@
 # Data and generated results (too large / licensed; rebuilt by scripts/)
-data/
-outputs/
+/data/
+/outputs/
 
 # Python
 __pycache__/
@@ -20,6 +20,7 @@ venv/
 .env
 .env.*
 !.env.example
+/configs/wrds_login.local.json
 # Claude Code local settings (can record full command lines)
 .claude/settings.local.json
 

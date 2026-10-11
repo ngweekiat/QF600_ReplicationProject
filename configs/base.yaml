@@ -53,22 +53,30 @@ universe:
   lookback_months: 11          # R: pf_set$lb_hor — need current + 11 past months of signals
 
 # ---------------------------------------------------------------------------
-# Characteristics: ~18 JKP features in 6 themes (R: 115 features in 13 themes).
+# Characteristics: 50 representative JKP features in 13 themes (R: 115 in 13 themes).
 # Theme labels follow JKP "Cluster Labels.csv" (lower-case, underscores).
 # Sign directions come from JKP "Factor Details.xlsx" at run time, not from here.
-# Verified 2026-10-07: all 18 are in Factor Details.xlsx (abr_jkp), are in the stated theme in
-# Cluster Labels.csv, and are among the 115 features R uses (scripts/00_download.py explore re-checks).
+# Selected for economic coverage, not ranked using test-period returns.
+# Checked against the local JKP definitions, cluster labels and R feature list;
+# WRDS column availability and sample coverage are checked when downloading/preparing.
 # ---------------------------------------------------------------------------
 features:
   percentile_rank: true        # R: settings$feat_prank — cross-sectional rank to [0, 1] each month
   impute_value: 0.5            # R: missing ranked features set to 0.5
   themes:
-    value: [be_me, sale_me, ebitda_mev]
-    momentum: [ret_12_1, ret_6_1, prc_highprc_252d]
-    quality: [qmj_prof, qmj_safety, gp_at]
-    investment: [at_gr1, ppeinv_gr1a, noa_gr1a]
-    low_risk: [ivol_capm_252d, beta_60m, rvol_21d]
+    value: [be_me, sale_me, ebitda_mev, ni_me, fcf_me, div12m_me]
+    momentum: [ret_12_1, ret_6_1, prc_highprc_252d, ret_9_1, ret_3_1]
+    quality: [qmj_prof, qmj_safety, gp_at, op_at, cop_at, at_turnover]
+    investment: [at_gr1, ppeinv_gr1a, noa_gr1a, capx_gr1, emp_gr1]
+    low_risk: [ivol_capm_252d, beta_60m, rvol_21d, betadown_252d, zero_trades_126d]
     short_term_reversal: [ret_1_0, rskew_21d, iskew_capm_21d]
+    profitability: [ocf_at, ni_be, ebit_sale, ope_be]
+    profit_growth: [ocf_at_chg1, sale_emp_gr1, tax_gr1a, ret_12_7]
+    low_leverage: [cash_at, netdebt_me, tangibility]
+    accruals: [oaccruals_at, taccruals_at, cowc_gr1a]
+    size: [market_equity, ami_126d, dolvol_126d]
+    debt_issuance: [noa_at, fnl_gr1a]
+    seasonality: [seas_11_15an]
 
 # ---------------------------------------------------------------------------
 # Barra-style covariance (Eqs. 36–37). R: 3 - Estimate Covariance Matrix.R.
@@ -186,7 +194,7 @@ regimes:
   fed_change_months: 3         # Fed stance from the change in FEDFUNDS over the last 3 months
   fed_threshold: 0.10          # percentage points: > +0.10 hiking, < -0.10 cutting, else on hold
   vix_norm: window             # VIX cost scale = VIX_t / mean VIX over the test window ('full': since 1990)
-  plot_types: [Market, 1/N, Minimum variance, Static-ML, Static-ML*, Portfolio-ML, Portfolio-ML (linear)]
+  plot_types: [Static-ML*, Portfolio-ML]
   episodes:                    # shaded on the cumulative-utility chart (return months)
     - {label: COVID crash, start: 2020-02-01, end: 2020-04-30}
     - {label: 2022 hikes / bear market, start: 2022-01-01, end: 2022-12-31}

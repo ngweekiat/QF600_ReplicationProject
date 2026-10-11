@@ -1,4 +1,4 @@
-# Linear Portfolio-ML: the aim portfolio is linear in the 18 ranked characteristics (plus a constant)
+# Linear Portfolio-ML: the aim portfolio is linear in the 50 ranked characteristics (plus a constant)
 # instead of 512 random Fourier features. Everything else as configs/base.yaml.
 #
 #   python scripts/06_pfml_inputs.py  --config configs/experiments/linear_pfml.yaml

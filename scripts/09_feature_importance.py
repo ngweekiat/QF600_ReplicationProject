@@ -1,9 +1,8 @@
 """Feature importance by theme (Fig. 5): permute each theme's characteristics across universe stocks within
 each month, keep W, β and hyperparameters, and measure the drop in realised utility over the test window.
 
-  Portfolio-ML (net of TC) and, if built, Portfolio-ML (linear): same aim coefficients as scripts/07.
-  Markowitz-ML (gross): pred_ld1 recomputed with each year's fitted return model (scripts/03 models.npz),
-  w = Σ⁻¹μ/γ at feature_importance.markowitz_gamma with zero wealth, as R's tpf_cf_fun.
+  Portfolio-ML and Static-ML*: both evaluated net of trading costs.
+  Static-ML* re-predicts shuffled features using the fitted return models, with annual choices fixed.
 Writes outputs/feature_importance/{pf.parquet, importance.csv} and outputs/figures/fig5_feature_importance.{png,pdf}.
 
     python scripts/09_feature_importance.py
@@ -25,7 +24,7 @@ from jkmp.models.return_model import load_models
 from jkmp.portfolio.grids import grid_inputs
 from jkmp.portfolio.recursion import month_inputs
 
-LABELS = {"rff": "Portfolio-ML", "raw": "Portfolio-ML (linear)"}
+LABELS = {"rff": "Portfolio-ML"}
 
 
 def main() -> None:
@@ -71,13 +70,13 @@ def main() -> None:
         logging.info("%s unshuffled vs scripts/07: max |Δr| = %.2e", label, gap)
 
     models, z = load_models(processed / "return_model" / "models.npz")
-    wealth0 = wealth.assign(wealth=0.0)  # R: wealth_func(wealth_end = 0) -> no trading costs
+    chosen = pd.read_csv(outputs / "static_ml" / "chosen.csv")
     for theme, feats in themes:
-        pf = fi.markowitz_counterfactual(feats, universe, perms, cfg.features.names, models, z, panel, wealth0, cov,
-                                         gamma=cfg.feature_importance.markowitz_gamma,
-                                         charge_exit_tc=cfg.portfolio.charge_exit_tc)
-        runs.append(pf.assign(type="Markowitz-ML", theme=theme))
-    types.append("Markowitz-ML")
+        pf = fi.static_counterfactual(feats, universe, perms, cfg.features.names, models, z,
+                                      panel, wealth, cov, chosen, gamma=inv.gamma,
+                                      charge_exit_tc=cfg.portfolio.charge_exit_tc)
+        runs.append(pf.assign(type="Static-ML*", theme=theme))
+    types.append("Static-ML*")
 
     pfs = pd.concat(runs, ignore_index=True)
     imp = fi.importance(pfs, inv.gamma)

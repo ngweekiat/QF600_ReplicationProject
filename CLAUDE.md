@@ -140,9 +140,12 @@ uv venv --python 3.12 .venv && uv pip install --python .venv/bin/python -e ".[de
 **Python 3.11–3.13 only.** `wrds` pins pandas < 2.3, which has no Python 3.14 wheels; a source
 build on 3.14 segfaults against numpy 2.5. Versions are pinned in `pyproject.toml`.
 
-**WRDS credentials** come from environment variables only: `WRDS_USERNAME` and `WRDS_API_KEY`
-(passed as `wrds.Connection(wrds_username=..., api_key=...)`; the password itself is read from
-`~/.pgpass`). Never write credentials into code, config, notebooks or logs.
+**WRDS credentials:** optional `WRDS_USERNAME` sets the username. The installed WRDS PostgreSQL
+client uses a saved password or a secure interactive prompt, not `WRDS_API_KEY`. On Windows its
+password file is `%APPDATA%/postgresql/pgpass.conf`; on Unix it is `~/.pgpass`.
+At the user's request, automatic login also supports the Git-ignored local file
+`configs/wrds_login.local.json`; its contents must not appear in logs or tracked source.
+Never write credentials into code, config, notebooks or logs. See `docs/Downloading data.md`.
 
 ## Raw data (`data/raw/`, from `scripts/00_download.py pull`)
 

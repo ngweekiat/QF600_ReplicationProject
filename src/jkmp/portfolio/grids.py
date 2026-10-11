@@ -124,7 +124,7 @@ def run_point(inp: GridInputs, cfg: Config, gamma: float, level: float, cache_ro
         static = run_static_ml(inp.panel, wealth, inp.cov, inp.val_dates, inp.eval_dates, gamma,
                                hyper_grid(s.k_grid, s.u_grid, s.g_grid), cfg.portfolio.charge_exit_tc)
         static["chosen"].to_csv(out / "chosen_static_ml.csv", index=False)
-        static["pf"].assign(gamma=gamma, wealth=level).to_parquet(static_path, index=False)
+        static["pf"].loc[static["pf"]["type"] == "Static-ML*"].assign(gamma=gamma, wealth=level).to_parquet(static_path, index=False)
 
     pm = cfg.portfolio_ml
     sig, tags, label = signal_set(pm.use_rff, pm.rff_variance_grid)

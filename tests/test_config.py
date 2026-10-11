@@ -13,8 +13,8 @@ def test_base_config_loads():
     assert cfg.investor.wealth == 1.0e10
     assert cfg.universe.target_n == 80
     assert cfg.dates.test_end == dt.date(2025, 12, 31)
-    assert len(cfg.features.themes) == 6
-    assert len(cfg.features.names) == 18
+    assert len(cfg.features.themes) == 13
+    assert len(cfg.features.names) == 50
     assert cfg.paths.raw == PROJECT_ROOT / "data" / "raw"
 
 

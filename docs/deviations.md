@@ -1,5 +1,18 @@
 # Deviations from the paper and the R reference
 
+## Reconstructed data package (2026-10-11)
+
+`src/jkmp/data/` was absent from the supplied Python checkout and its Git history.
+The downloader, preparation module and buffered universe have been reconstructed
+from the existing tests, `configs/base.yaml`, this document and the reference R
+code. This is a new implementation; historical numerical results documented below
+have not been reproduced with it yet. The download uses yearly streaming queries,
+atomic completion of Parquet files and a settings/completion manifest for resume.
+Annual name turnover is reported as the mean of entry and exit fractions (zero
+for initial establishment). WRDS authentication follows the installed PostgreSQL
+client's username/password or saved-password mechanism; it has no API-key support.
+See `docs/Downloading data.md` for commands and verification limits.
+
 Every place this replication differs from Jensen, Kelly, Malamud & Pedersen (2026) or from the
 authors' R code (`reference/jkmp_r/`) is listed here. Add a row whenever code or config departs
 from either, in the same change. This file feeds the report's methodology section.

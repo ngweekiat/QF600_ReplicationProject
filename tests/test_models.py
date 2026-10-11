@@ -79,6 +79,8 @@ def test_year_boundaries_follow_r_data_split():
 
 
 CFG = load_config(overrides={
+    # Keep the planted-signal fixture independent of the production feature count.
+    "features.themes": {"value": ["be_me", "sale_me", "ebitda_mev"]},
     "return_model.p_grid": [2, 4, 8], "return_model.pred_years": [2008, 2009], "return_model.val_years": 2,
     "ridge_grid.n": 5,
 })

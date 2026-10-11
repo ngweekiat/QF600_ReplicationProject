@@ -9,7 +9,7 @@ Reads data/processed/pfml/{tag}/ from scripts/06_pfml_inputs.py.
   portfolio_ml.use_rff = false : the ranked characteristics, λ only, "Portfolio-ML (linear)" -> "raw"
                                  (configs/experiments/linear_pfml.yaml)
 Writes outputs/portfolio_ml/{rff|raw}/{validation,aims,aim_coefs,weights,pf}.parquet + chosen.csv, and
-rebuilds outputs/table2_test.csv from every test-window pf file present (benchmarks, Static-ML, Portfolio-ML).
+rebuilds outputs/table2_test.csv for Static-ML* and Portfolio-ML only.
 
     python scripts/07_portfolio_ml.py [--config configs/experiments/linear_pfml.yaml]
 """
@@ -26,6 +26,7 @@ from jkmp.config import load_config
 from jkmp.covariance import load_covariance
 from jkmp.data.prepare import risk_free_monthly
 from jkmp.evaluation.metrics import table2
+from jkmp.evaluation.comparison import load_comparison
 from jkmp.portfolio.portfolio_ml import load_moments, return_year, run_portfolio_ml, search, signal_set
 
 MONTH = pd.offsets.MonthEnd(1)
@@ -67,9 +68,7 @@ def main() -> None:
         res[name].to_parquet(out / f"{name}.parquet", index=False)
     res["chosen"].to_csv(out / "chosen.csv", index=False)
 
-    pfs = [outputs / "benchmarks" / "pf_test.parquet", outputs / "static_ml" / "pf.parquet",
-           outputs / "portfolio_ml" / "rff" / "pf.parquet", outputs / "portfolio_ml" / "raw" / "pf.parquet"]
-    t2 = table2(pd.concat([pd.read_parquet(f) for f in pfs if f.exists()], ignore_index=True), cfg.investor.gamma)
+    t2 = table2(load_comparison(outputs), cfg.investor.gamma)
     t2.to_csv(outputs / "table2_test.csv")
 
     pd.set_option("display.width", 200)

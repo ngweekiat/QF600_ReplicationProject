@@ -1,8 +1,7 @@
 """Regimes over the test window: FRED USREC / VIXCLS / FEDFUNDS labels, cumulative utility with shaded
 episodes, Table 2 statistics by regime and method, and every method's trades re-costed with Λ ∝ VIX.
 
-Uses the test-window performance of every method present (outputs/benchmarks/pf_test.parquet,
-outputs/static_ml/pf.parquet, outputs/portfolio_ml/{rff,raw}/pf.parquet). FRED files are cached in
+Uses only Static-ML* and Portfolio-ML test-window performance. FRED files are cached in
 data/raw/fred_{series}.parquet (--force re-downloads).
 Writes outputs/regimes/{labels,regime_table,vix_recost,cumulative_utility}.csv and
 outputs/figures/cumulative_utility.{png,pdf}.
@@ -19,6 +18,7 @@ import pandas as pd
 
 from jkmp.config import load_config
 from jkmp.evaluation import regimes as rg
+from jkmp.evaluation.comparison import load_comparison
 
 
 def main() -> None:
@@ -32,9 +32,7 @@ def main() -> None:
     cfg = load_config(args.config, args.override)
     outputs, rc, gamma = cfg.paths.outputs, cfg.regimes, cfg.investor.gamma
 
-    files = [outputs / "benchmarks" / "pf_test.parquet", outputs / "static_ml" / "pf.parquet",
-             outputs / "portfolio_ml" / "rff" / "pf.parquet", outputs / "portfolio_ml" / "raw" / "pf.parquet"]
-    pfs = pd.concat([pd.read_parquet(f) for f in files if f.exists()], ignore_index=True)
+    pfs = load_comparison(outputs)
     pfs = pfs[["type", "eom", "eom_ret", "r", "tc", "turnover", "inv", "shorting"]]
     ret_months = pd.DatetimeIndex(sorted(pfs["eom_ret"].unique()))
     form_months = pd.DatetimeIndex(sorted(pfs["eom"].unique()))
