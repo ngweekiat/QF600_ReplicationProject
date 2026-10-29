@@ -5,12 +5,14 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from jkmp.config import load_config
 from jkmp.evaluation.metrics import summary_stats, utility_flow
 from jkmp.evaluation.regimes import (cumulative_utility, fetch_fred, label_regimes, monthly_series, recost_vix,
                                      regime_table, vix_cost_scale)
 
 RNG = np.random.default_rng(9)
 MONTHS = pd.date_range("2020-01-31", periods=12, freq="ME")
+DATES = load_config().dates
 
 
 def test_fetch_fred_parses_csv_and_drops_missing(tmp_path):
@@ -59,7 +61,7 @@ def _pfs():
 def test_regime_table_matches_summary_stats_on_subsets():
     pfs = _pfs()
     lab = label_regimes(monthly_series(_fred()), MONTHS, 3, 0.10)
-    t = regime_table(pfs, lab, gamma=10)
+    t = regime_table(pfs, lab, gamma=10, dates=DATES)
     sub = pfs.merge(lab.rename(columns={"eom": "eom_ret"}), on="eom_ret")
     want = summary_stats(sub[(sub["vix_regime"] == "high VIX") & (sub["type"] == "A")], 10)
     got = t[(t["dimension"] == "vix_regime") & (t["regime"] == "high VIX") & (t["type"] == "A")].iloc[0]
@@ -68,7 +70,7 @@ def test_regime_table_matches_summary_stats_on_subsets():
 
 def test_cumulative_utility_sums_monthly_flows():
     pfs = _pfs()
-    cum = cumulative_utility(pfs, 10)
+    cum = cumulative_utility(pfs, 10, DATES)
     a = pfs[pfs["type"] == "A"]
     assert cum[cum["type"] == "A"]["cum_u"].iloc[-1] == pytest.approx(utility_flow(a, 10).sum())
 
@@ -76,9 +78,9 @@ def test_cumulative_utility_sums_monthly_flows():
 def test_vix_recost_is_linear_in_lambda():
     pfs = _pfs()
     form = pd.DatetimeIndex(sorted(pfs["eom"].unique()))
-    same = recost_vix(pfs, pd.Series(1.0, index=form), 10)
+    same = recost_vix(pfs, pd.Series(1.0, index=form), 10, DATES)
     np.testing.assert_allclose(same["TC_vix"], same["TC"]) and np.testing.assert_allclose(same["dUtility"], 0)
-    double = recost_vix(pfs, pd.Series(2.0, index=form), 10)
+    double = recost_vix(pfs, pd.Series(2.0, index=form), 10, DATES)
     np.testing.assert_allclose(double["TC_vix"], 2 * double["TC"])
     np.testing.assert_allclose(double["dUtility"], -double["TC"])          # utility falls by the extra cost
     monthly = pd.DataFrame({"eom": form, "vix": np.linspace(10, 30, len(form))})

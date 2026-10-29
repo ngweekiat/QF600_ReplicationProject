@@ -1,6 +1,6 @@
 # Data and generated results (too large / licensed; rebuilt by scripts/)
-data/
-outputs/
+/data/
+/outputs/
 
 # Python
 __pycache__/

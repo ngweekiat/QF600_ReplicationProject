@@ -48,7 +48,8 @@ def sample():
     rows = cand.sample(N_SAMPLES, random_state=cfg.seed)
 
     wealth = wealth_path(cfg.investor.wealth, cfg.investor.wealth_end_date,
-                         market_total_returns(ff, start=pd.Timestamp(cfg.dates.warmup_start)))
+                         market_total_returns(ff, start=pd.Timestamp(cfg.dates.warmup_start),
+                                              end=pd.Timestamp(cfg.dates.data_end)))
     rf = risk_free_monthly(ff)
     timed = add_timing_columns(rows[["id", "eom", "ret_exc", "ret_exc_lead1m"]], rf, wealth)
     rows = rows.assign(ret_ld1=timed["ret_ld1"].to_numpy(), tr_ld1=timed["tr_ld1"].to_numpy(),

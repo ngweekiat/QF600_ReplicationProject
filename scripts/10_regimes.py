@@ -42,10 +42,10 @@ def main() -> None:
     fred = rg.load_fred(cfg.data_sources.fred_csv_url, rc.fred_series, cfg.paths.raw, force=args.force)
     monthly = rg.monthly_series(fred)
     labels = rg.label_regimes(monthly, ret_months, rc.fed_change_months, rc.fed_threshold)
-    table = rg.regime_table(pfs, labels, gamma)
+    table = rg.regime_table(pfs, labels, gamma, cfg.dates)
     scale = rg.vix_cost_scale(monthly, form_months, rc.vix_norm)
-    recost = rg.recost_vix(pfs, scale, gamma)
-    cum = rg.cumulative_utility(pfs, gamma)
+    recost = rg.recost_vix(pfs, scale, gamma, cfg.dates)
+    cum = rg.cumulative_utility(pfs, gamma, cfg.dates)
 
     out = outputs / "regimes"
     out.mkdir(parents=True, exist_ok=True)
@@ -54,7 +54,7 @@ def main() -> None:
     recost.to_csv(out / "vix_recost.csv", index=False)
     cum.to_csv(out / "cumulative_utility.csv", index=False)
     written = rg.plot_cumulative_utility(cum, rc.episodes, rc.plot_types, gamma,
-                                         outputs / "figures" / "cumulative_utility")
+                                         outputs / "figures" / "cumulative_utility", cfg.dates)
     logging.info("wrote %s", ", ".join(p.name for p in written))
 
     pd.set_option("display.width", 220)

@@ -12,7 +12,8 @@ def test_base_config_loads():
     assert cfg.investor.gamma == 10.0
     assert cfg.investor.wealth == 1.0e10
     assert cfg.universe.target_n == 80
-    assert cfg.dates.test_end == dt.date(2025, 12, 31)
+    assert cfg.dates.test_end == dt.date(2020, 12, 31) and cfg.dates.data_end == dt.date(2025, 12, 31)
+    assert cfg.dates.holdout_locked is True
     assert len(cfg.features.themes) == 6
     assert len(cfg.features.names) == 18
     assert cfg.paths.raw == PROJECT_ROOT / "data" / "raw"
@@ -34,8 +35,8 @@ def test_config_is_frozen():
 def test_overrides_strings_and_mapping():
     assert load_config(overrides=["investor.gamma=5"]).investor.gamma == 5.0
     assert load_config(overrides={"investor.wealth": 1.0e9}).investor.wealth == 1.0e9
-    cfg = load_config(overrides=["dates.warmup_start=2003-01-31"])
-    assert cfg.dates.warmup_start == dt.date(2003, 1, 31)
+    cfg = load_config(overrides=["dates.warmup_start=1960-01-31"])
+    assert cfg.dates.warmup_start == dt.date(1960, 1, 31)
 
 
 @pytest.mark.parametrize(
@@ -44,7 +45,9 @@ def test_overrides_strings_and_mapping():
         "investor.gama=5",              # typo -> unknown key
         "investor.wealth=1e9",          # PyYAML reads 1e9 as a string
         "universe.entry_rank=90",       # entry_rank > target_n
-        "dates.test_start=2019-06-30",  # overlaps validation
+        "dates.test_start=1980-06-30",  # overlaps validation
+        "dates.holdout_start=2020-06-30",  # overlaps the test window
+        "dates.data_end=2024-12-31",    # data end before the holdout end
         "portfolio_ml.p_grid=[63]",     # odd number of random features
     ],
 )

@@ -123,3 +123,32 @@ def test_save_load_roundtrip(tmp_path):
     q = load_covariance(tmp_path)[p.eom]
     assert q.factors == p.factors and (q.ids == p.ids).all()
     np.testing.assert_allclose(q.full(), p.full())
+
+
+@pytest.mark.filterwarnings("ignore:.*encountered in matmul:RuntimeWarning")
+def test_vol_bias_is_one_when_returns_match_sigma_and_respects_the_lock():
+    from jkmp.config import load_config
+    from jkmp.covariance import CovParts, bias_by_decade, vol_bias
+    from jkmp.evaluation.holdout import HoldoutLockedError
+
+    rng = np.random.default_rng(5)
+    n, k, months = 40, 3, pd.date_range("1999-01-31", periods=24, freq="ME")
+    X, F, ivar = rng.normal(size=(n, k)), np.diag([0.002, 0.001, 0.0005]), np.full(n, 0.004)
+    parts = {m: CovParts(eom=m, ids=np.arange(n), factors=("a", "b", "c"), X=X, F=F, ivar=ivar) for m in months}
+    chol = np.linalg.cholesky(X @ F @ X.T + np.diag(ivar))
+    panel = pd.concat([pd.DataFrame({"eom": m, "id": np.arange(n), "me": rng.uniform(1, 5, n), "in_universe": True,
+                                     "ret_ld1": chol @ rng.normal(size=n)}) for m in months], ignore_index=True)
+    dates = load_config().dates
+    z = vol_bias(parts, panel, months, dates)
+    assert set(z["scope"]) == {"stock", "ew", "vw"} and (z["eom_ret"] == z["eom"] + pd.offsets.MonthEnd(1)).all()
+    one = z[z["eom"] == months[0]]
+    r = panel.loc[panel["eom"] == months[0], "ret_ld1"].to_numpy()
+    sd = np.sqrt(np.diag(X @ F @ X.T) + ivar)
+    np.testing.assert_allclose(one.loc[one["scope"] == "stock", "z"], r / sd, rtol=1e-12)
+    out = bias_by_decade(z)
+    assert out["decade"].unique().tolist() == [1990, 2000]                # 1999-02 .. 2001-01 return months
+    stock = out[out["scope"] == "stock"]
+    np.testing.assert_allclose(stock["ratio"], 1.0, atol=0.15)            # 440 and 520 draws with the true Σ
+    late = {m + pd.DateOffset(years=22) + pd.offsets.MonthEnd(0): v for m, v in parts.items()}
+    with pytest.raises(HoldoutLockedError):
+        vol_bias(late, panel.assign(eom=panel["eom"] + pd.DateOffset(years=22) + pd.offsets.MonthEnd(0)), list(late), dates)

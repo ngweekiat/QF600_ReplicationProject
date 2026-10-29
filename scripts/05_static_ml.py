@@ -1,4 +1,4 @@
-"""Static-ML and Static-ML*: validate (k, u, g) from return year 2015, pick each December, evaluate on the test window.
+"""Static-ML and Static-ML*: validate (k, u, g) from the first prediction year, pick each December, evaluate on the test window.
 
 Reads the benchmark results of scripts/04_benchmarks.py for the test window and prints the combined
 Table 2. Writes outputs/static_ml/{validation,chosen,weights,pf}.* and outputs/table2_test.csv.
@@ -53,7 +53,7 @@ def main() -> None:
 
     bench = pd.read_parquet(outputs / "benchmarks" / "pf_test.parquet")
     pf = pd.concat([res["pf"], bench], ignore_index=True)
-    t2 = table2(pf, cfg.investor.gamma)
+    t2 = table2(pf, cfg.investor.gamma, cfg.dates)
     t2.to_csv(outputs / "table2_test.csv")
     pd.set_option("display.width", 200)
     print("\nStatic-ML* choices (k, u, g) by return year:")

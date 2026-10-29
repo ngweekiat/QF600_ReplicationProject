@@ -2,8 +2,8 @@
 
 Windows are defined by the months in which returns are realised (formation month t earns over t+1),
 each started fresh from value weights (as R does per window):
-  test : returns in dates.test_start .. dates.test_end           (2020-01 .. 2025-12)
-  oos  : returns in return_model.pred_years                       (2015-01 .. 2025-12)
+  test : returns in dates.test_start .. dates.test_end
+  oos  : returns in return_model.pred_years, up to the last month the holdout lock allows
 Writes outputs/benchmarks/{weights,pf,table2}_{window}.* and prints both Table 2s.
 
     python scripts/04_benchmarks.py [--override portfolio.charge_exit_tc=false]
@@ -18,6 +18,7 @@ import pandas as pd
 
 from jkmp.config import load_config
 from jkmp.covariance import load_covariance
+from jkmp.evaluation.holdout import last_open_month
 from jkmp.evaluation.metrics import table2
 from jkmp.portfolio.benchmarks import run_benchmarks
 from jkmp.portfolio.ml_benchmarks import run_ml_benchmarks
@@ -44,7 +45,8 @@ def main() -> None:
     first, last = cfg.return_model.pred_years
     windows = {
         "test": formation[(returns >= pd.Timestamp(cfg.dates.test_start)) & (returns <= pd.Timestamp(cfg.dates.test_end))],
-        "oos": formation[(returns >= pd.Timestamp(first, 1, 31)) & (returns <= pd.Timestamp(last, 12, 31))],
+        "oos": formation[(returns >= pd.Timestamp(first, 1, 31))
+                         & (returns <= min(pd.Timestamp(last, 12, 31), last_open_month(cfg.dates)))],
     }
     out = cfg.paths.outputs / "benchmarks"
     out.mkdir(parents=True, exist_ok=True)
@@ -54,7 +56,7 @@ def main() -> None:
         w1, pf1 = run_benchmarks(panel, wealth, cov, dates, exit_tc)
         w2, pf2 = run_ml_benchmarks(panel, wealth, cov, dates, cfg.investor.gamma, cfg.factor_ml.n_portfolios, exit_tc)
         weights, pf = pd.concat([w1, w2], ignore_index=True), pd.concat([pf1, pf2], ignore_index=True)
-        t2 = table2(pf, cfg.investor.gamma)
+        t2 = table2(pf, cfg.investor.gamma, cfg.dates)
         weights.to_parquet(out / f"weights_{name}.parquet", index=False)
         pf.to_parquet(out / f"pf_{name}.parquet", index=False)
         t2.to_csv(out / f"table2_{name}.csv")

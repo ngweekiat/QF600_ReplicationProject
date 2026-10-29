@@ -1,6 +1,9 @@
 """Offline tests for the pure helpers in jkmp.data.wrds_pull (no WRDS or network access)."""
 
 import io
+import subprocess
+import sys
+import types
 import zipfile
 
 import pandas as pd
@@ -77,3 +80,30 @@ def test_identifier_rejects_non_identifiers(bad):
 
 def test_qualified_table():
     assert wrds_pull._qualified("crsp.dsf_v2") == '"crsp"."dsf_v2"'
+
+
+def test_connect_reads_dotenv_and_shell_wins(tmp_path, monkeypatch):
+    from jkmp.data import wrds_pull
+
+    seen = {}
+    monkeypatch.setitem(sys.modules, "wrds", types.SimpleNamespace(Connection=lambda **kw: seen.update(kw) or "db"))
+    for var in ("WRDS_USERNAME", "WRDS_API_KEY", "WRDS_PASSWORD"):
+        monkeypatch.delenv(var, raising=False)
+    env = tmp_path / ".env"
+    env.write_text("WRDS_USERNAME=from_file\nWRDS_API_KEY=file_key\n")
+    monkeypatch.setenv("WRDS_API_KEY", "shell_key")
+    assert wrds_pull.connect(env) == "db"
+    assert seen == {"wrds_username": "from_file", "api_key": "shell_key"}
+    monkeypatch.delenv("WRDS_USERNAME")                      # load_dotenv set it; undo for other tests
+    seen.clear()
+    assert wrds_pull.connect(tmp_path / "missing.env") == "db" and seen == {"api_key": "shell_key"}
+
+
+def test_library_imports_without_wrds():
+    # wrds and sqlalchemy blocked: every jkmp module must still import (only connect() needs them).
+    code = ("import sys; sys.modules['wrds'] = None; sys.modules['sqlalchemy'] = None\n"
+            "import pkgutil, importlib, jkmp\n"
+            "for m in pkgutil.walk_packages(jkmp.__path__, 'jkmp.'): importlib.import_module(m.name)\n"
+            "print('ok')")
+    out = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True)
+    assert out.returncode == 0 and out.stdout.strip() == "ok", out.stderr

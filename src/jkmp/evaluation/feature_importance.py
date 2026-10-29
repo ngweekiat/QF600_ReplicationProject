@@ -30,7 +30,9 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
+from jkmp.config import DatesConfig  # noqa: E402
 from jkmp.covariance import CovParts  # noqa: E402
+from jkmp.evaluation.holdout import check_return_months  # noqa: E402
 from jkmp.models.random_features import rff_raw  # noqa: E402
 from jkmp.models.return_model import YearModel  # noqa: E402
 from jkmp.portfolio.accounting import add_start_weights, portfolio_returns  # noqa: E402
@@ -131,14 +133,26 @@ def markowitz_counterfactual(theme_features: Sequence[str] | None, universe: pd.
 
 # --- Importance and Figure 5 --------------------------------------------------------------------------
 
-def importance(pfs: pd.DataFrame, gamma: float) -> pd.DataFrame:
-    """``pfs``: monthly rows with ``type, theme, r, tc``. Utility per (type, theme) and the drop
-    ``fi = U(none) − U(theme)`` (R: ``cf_obj[cluster == "bm"] - cf_obj``)."""
-    u = pfs.groupby(["type", "theme"], sort=False).apply(
+def importance(pfs: pd.DataFrame, gamma: float, dates: DatesConfig) -> pd.DataFrame:
+    """``pfs``: monthly rows with ``type, theme, r, tc`` (and ``seed`` if several permutation draws). Utility
+    per (seed, type, theme) and the drop ``fi = U(none) − U(theme)`` (R: ``cf_obj[cluster == "bm"] - cf_obj``)."""
+    check_return_months(pfs, dates, "feature importance")
+    keys = ["seed", "type"] if "seed" in pfs else ["type"]
+    u = pfs.groupby([*keys, "theme"], sort=False).apply(
         lambda g: (g["r"].mean() - 0.5 * gamma * g["r"].var(ddof=1) - g["tc"].mean()) * 12, include_groups=False)
     u = u.rename("utility").reset_index()
-    base = u[u["theme"] == BASE].set_index("type")["utility"]
-    return u.assign(fi=u["type"].map(base) - u["utility"])
+    base = u[u["theme"] == BASE].set_index(keys)["utility"]
+    return u.assign(fi=base.reindex(pd.MultiIndex.from_frame(u[keys]) if len(keys) > 1 else u["type"]).to_numpy()
+                    - u["utility"])
+
+
+def summarise_seeds(imp: pd.DataFrame) -> pd.DataFrame:
+    """Mean utility and importance over permutation seeds per (type, theme), with the standard error of the
+    mean importance, sd(fi) / sqrt(n_seeds) (0 for the unshuffled run)."""
+    g = imp.groupby(["type", "theme"], sort=False)
+    out = g.agg(utility=("utility", "mean"), fi=("fi", "mean"), n_seeds=("seed", "nunique")).reset_index()
+    se = g["fi"].std(ddof=1).to_numpy() / np.sqrt(out["n_seeds"].to_numpy())
+    return out.assign(fi_se=np.nan_to_num(se))
 
 
 def plot_importance(fi: pd.DataFrame, types: Sequence[str], path: Path) -> list[Path]:
@@ -150,11 +164,12 @@ def plot_importance(fi: pd.DataFrame, types: Sequence[str], path: Path) -> list[
     for ax, t, colour in zip(axes, types, ["C0", "C4", "C2"]):
         s = d[d["type"] == t].set_index("theme").reindex(order)
         ax.barh([o.replace("_", " ").replace("short term", "short-term").title() for o in order], s["fi"],
-                color=colour)
+                xerr=1.96 * s["fi_se"] if "fi_se" in s else None, color=colour, error_kw={"lw": 0.8})
         ax.axvline(0, color="grey", lw=0.6)
         ax.set_title(f"{t} ({'gross' if t == 'Markowitz-ML' else 'net of TC'})", fontsize=9)
         ax.tick_params(labelsize=8)
-    fig.supxlabel("Drop in realised utility from permuting the theme's features (annualised)", fontsize=8)
+    se = " (bars: ±1.96 s.e. across permutation seeds)" if "fi_se" in d else ""
+    fig.supxlabel(f"Drop in realised utility from permuting the theme's features (annualised){se}", fontsize=8)
     fig.tight_layout()
     path.parent.mkdir(parents=True, exist_ok=True)
     out = [path.with_suffix(".png"), path.with_suffix(".pdf")]

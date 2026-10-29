@@ -7,9 +7,10 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from jkmp.config import load_config
 from jkmp.covariance import CovParts
 from jkmp.evaluation.feature_importance import (BASE, importance, permutations, pfml_counterfactual_aims, shuffled,
-                                                theme_list)
+                                                summarise_seeds, theme_list)
 
 pytestmark = pytest.mark.filterwarnings("ignore:.*encountered in matmul:RuntimeWarning")
 RNG = np.random.default_rng(4)
@@ -63,10 +64,29 @@ def test_linear_aims_ignore_shuffles_of_unused_signals():
 
 def test_importance_is_drop_from_unshuffled():
     r_base, r_cf = np.array([0.02, 0.01, 0.03]), np.array([0.0, 0.01, -0.01])
-    pfs = pd.concat([pd.DataFrame({"type": "M", "theme": BASE, "r": r_base, "tc": 0.001}),
-                     pd.DataFrame({"type": "M", "theme": "value", "r": r_cf, "tc": 0.002})])
-    out = importance(pfs, gamma=10).set_index("theme")
+    months = pd.date_range("2020-01-31", periods=3, freq="ME")
+    pfs = pd.concat([pd.DataFrame({"type": "M", "theme": BASE, "eom_ret": months, "r": r_base, "tc": 0.001}),
+                     pd.DataFrame({"type": "M", "theme": "value", "eom_ret": months, "r": r_cf, "tc": 0.002})])
+    out = importance(pfs, gamma=10, dates=load_config().dates).set_index("theme")
     u = lambda r, tc: (r.mean() - 5 * r.var(ddof=1) - tc) * 12
     assert out.loc["value", "fi"] == pytest.approx(u(r_base, 0.001) - u(r_cf, 0.002))
     assert out.loc[BASE, "fi"] == 0.0
     assert [t for t, _ in theme_list({"value": ["x"], "momentum": ["y"]})] == [BASE, "value", "momentum"]
+
+
+def test_importance_per_seed_and_standard_error():
+    months = pd.date_range("2020-01-31", periods=3, freq="ME")
+    r_base = np.array([0.02, 0.01, 0.03])
+    cf = {1: np.array([0.0, 0.01, -0.01]), 2: np.array([0.01, 0.02, 0.0]), 3: np.array([0.02, 0.0, 0.01])}
+    pfs = pd.concat([pd.DataFrame({"seed": s, "type": "M", "theme": th, "eom_ret": months, "r": r, "tc": 0.001})
+                     for s, r_cf in cf.items() for th, r in ((BASE, r_base), ("value", r_cf))])
+    by_seed = importance(pfs, gamma=10, dates=load_config().dates)
+    u = lambda r: (r.mean() - 5 * r.var(ddof=1) - 0.001) * 12
+    fis = np.array([u(r_base) - u(cf[s]) for s in (1, 2, 3)])
+    got = by_seed[by_seed["theme"] == "value"].sort_values("seed")["fi"].to_numpy()
+    np.testing.assert_allclose(got, fis, rtol=1e-12)
+    out = summarise_seeds(by_seed).set_index("theme")
+    assert out.loc["value", "fi"] == pytest.approx(fis.mean())
+    assert out.loc["value", "fi_se"] == pytest.approx(fis.std(ddof=1) / np.sqrt(3))
+    assert out.loc[BASE, "fi_se"] == 0.0 and out.loc["value", "n_seeds"] == 3
+    assert load_config().feature_importance.seeds(1) == tuple(range(1, 21))

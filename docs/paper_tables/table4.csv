@@ -1,0 +1,6 @@
+type,Portfolio-ML,Multiperiod-ML*,Static-ML*,Factor-ML,Markowitz-ML
+Portfolio-ML,1.00,0.61,0.52,0.26,0.26
+Multiperiod-ML*,0.61,1.00,0.80,0.35,0.48
+Static-ML*,0.52,0.80,1.00,0.40,0.58
+Factor-ML,0.26,0.35,0.40,1.00,0.40
+Markowitz-ML,0.26,0.48,0.58,0.40,1.00

@@ -61,13 +61,16 @@ formulas still apply.
 
 - **Universe:** top 80 US common stocks (NYSE + Nasdaq) by market cap; 70/100 rank buffer,
   reconstituted each December.
-- **Dates:** warm-up from 1993 (a full 10-year covariance window before 2005); train 2005–2014; validate 2015–2019; test 2020–2025.
+- **Dates (paper timeline, walk-forward):** data from 1952-12; estimation only to 1970; validation head start
+  1971–1980; test 1981-01 .. 2020-12 (480 return months). Holdout 2021-01 .. 2025-12 (data to `dates.data_end`)
+  is **locked** while `dates.holdout_locked: true`: `jkmp.evaluation.holdout.check_return_months` raises on any
+  performance number with a return month after `test_end`; every evaluation function takes `dates` and calls it.
 - **Features:** 18 JKP characteristics in 6 themes (value, momentum, quality, investment, low risk,
   short-term reversal), percentile-ranked monthly, missing values set to 0.5.
 - **Covariance:** Barra-style, Σ = X F Xᵀ + diag(idiosyncratic variance), with 12 industries + 6 theme
   factors; factor returns estimated on the **top 500** stocks; Σ is **monthly**.
 - **Trading cost:** Λ = 0.2 / `dolvol_126d` (diagonal); dollar cost = (w/2)·Δπᵀ Λ Δπ.
-- **Investor:** γ = 10 baseline; \$10B baseline wealth (end-2025); wealth grid \$1B–\$250B;
+- **Investor:** γ = 10 baseline; \$10B baseline wealth at end-2020 (rolled back before, forward after); wealth grid \$1B–\$250B;
   γ grid {1, 5, 10, 20, 100}.
 - **In scope:** Portfolio-ML, Static-ML(\*), Markowitz-ML, Factor-ML, Rank-ML, Market, 1/N, minimum
   variance. **Out of scope:** Multiperiod-ML, short-selling fees, size groups, simulations.
@@ -112,8 +115,8 @@ data/raw, data/processed, outputs/   git-ignored
 - **Tuning has no look-ahead:** hyperparameters and β used in year y are estimated on data ending
   before year y. `tests/test_models.py` checks this by scrambling future returns.
 - **Years and windows refer to the month the return is realised.** "Year y" = formation months
-  Dec y−1 .. Nov y (R `data_split`); the test window (returns 2020-01..2025-12) = formation
-  2019-12..2025-11.
+  Dec y−1 .. Nov y (R `data_split`); the test window (returns 1981-01..2020-12) = formation
+  1980-12..2020-11.
 - Use `float64` throughout.
 - **Cross-check** each ported function against its R counterpart (see the Code Map) on a small case.
 
@@ -140,9 +143,10 @@ uv venv --python 3.12 .venv && uv pip install --python .venv/bin/python -e ".[de
 **Python 3.11–3.13 only.** `wrds` pins pandas < 2.3, which has no Python 3.14 wheels; a source
 build on 3.14 segfaults against numpy 2.5. Versions are pinned in `pyproject.toml`.
 
-**WRDS credentials** come from environment variables only: `WRDS_USERNAME` and `WRDS_API_KEY`
-(passed as `wrds.Connection(wrds_username=..., api_key=...)`; the password itself is read from
-`~/.pgpass`). Never write credentials into code, config, notebooks or logs.
+**WRDS credentials** come from environment variables: `WRDS_USERNAME` and `WRDS_API_KEY`, set in the shell or in
+the git-ignored project `.env` (copy `.env.example`; `jkmp.data.wrds_pull.connect` loads it with python-dotenv,
+shell values win). The password itself is read from `~/.pgpass` (chmod 600). Never write credentials into code,
+config, notebooks, logs or chat messages.
 
 ## Raw data (`data/raw/`, from `scripts/00_download.py pull`)
 

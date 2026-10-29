@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from jkmp.config import load_config
 from jkmp.costs import wealth_path
 from jkmp.evaluation.frontier import scaled_frontier
 from jkmp.portfolio.accounting import portfolio_returns
@@ -35,14 +36,14 @@ def test_point_keys_and_grid_order():
 
 
 def test_scaled_frontier_hits_vol_target_and_costs_scale_quadratically():
-    dates = pd.date_range("2020-01-31", periods=30, freq="ME")
+    dates = pd.date_range("2018-01-31", periods=30, freq="ME")  # returns end 2020-07, before the holdout
     ids = np.arange(1, 6)
     panel = pd.DataFrame([{"id": i, "eom": d, "ret_ld1": RNG.normal(0, 0.06), "lambda": 1e-10 * i}
                           for d in dates for i in ids])
     wealth = pd.DataFrame({"eom": dates, "wealth": 1e10, "mu_ld1": 0.01})
     w = pd.DataFrame([{"id": i, "eom": d, "w": RNG.normal(0, 0.5), "w_start": RNG.normal(0, 0.5), "exit": False,
                        "type": "Markowitz-ML"} for d in dates for i in ids])
-    out = scaled_frontier(w, panel, wealth, [0.05, 0.1, 0.2], gamma=10.0)
+    out = scaled_frontier(w, panel, wealth, [0.05, 0.1, 0.2], gamma=10.0, dates=load_config().dates)
     np.testing.assert_allclose(out["Vol"], [0.05, 0.1, 0.2], rtol=1e-10)
     base = portfolio_returns(w, panel, wealth)
     k = 0.1 / (base["r"].std(ddof=1) * np.sqrt(12))

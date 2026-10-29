@@ -64,17 +64,17 @@ def main() -> None:
         Parallel(n_jobs=cfg.grids.n_jobs, verbose=10)(
             delayed(run_point)(inp, cfg, g, w, cache_root, out_root, args.force) for g, w in points)
         logging.info("grid done in %.1f min", (time.time() - start) / 60)
-    summary = summarise(pd.concat([load_point(out_root, g, w) for g, w in points], ignore_index=True))
+    summary = summarise(pd.concat([load_point(out_root, g, w) for g, w in points], ignore_index=True), cfg.dates)
     summary.to_csv(out_root / "summary.csv", index=False)
 
     # Markowitz-ML / Factor-ML scaled to target vols at the baseline wealth (R vol_range)
     bw = pd.read_parquet(outputs / "benchmarks" / "weights_test.parquet")
     bw = bw[bw["type"].isin(["Markowitz-ML", "Factor-ML"])]
     vols = np.arange(cfg.grids.frontier_vol_step, cfg.grids.frontier_vol_max + 1e-12, cfg.grids.frontier_vol_step)
-    scaled = scaled_frontier(bw, inp.panel, wealth, vols, inv.gamma)
+    scaled = scaled_frontier(bw, inp.panel, wealth, vols, inv.gamma, cfg.dates)
     scaled.to_csv(out_root / "scaled_benchmarks.csv", index=False)
     bench = pd.read_parquet(outputs / "benchmarks" / "pf_test.parquet")
-    sr_gross = float(table2(bench[bench["type"] == "Markowitz-ML"], inv.gamma)["SR_gross"].iloc[0])
+    sr_gross = float(table2(bench[bench["type"] == "Markowitz-ML"], inv.gamma, cfg.dates)["SR_gross"].iloc[0])
 
     figs = outputs / "figures"
     written = (plot_fig1a(summary, scaled, inv.wealth, inv.gamma, sr_gross, figs / "fig1a_frontier")

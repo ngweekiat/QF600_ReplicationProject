@@ -23,7 +23,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from jkmp.config import Config
+from jkmp.config import Config, DatesConfig
+from jkmp.evaluation.holdout import check_return_months, last_open_month
 from jkmp.models.random_features import base_draws, column_subset, rff, rff_raw, weights_for
 from jkmp.models.ridge import Moments, mse_from_moments, ridge_path
 
@@ -85,13 +86,20 @@ def prefix_moments(rows: pd.DataFrame, features: list[str], w: np.ndarray,
     return out
 
 
+def prediction_years(cfg: Config) -> list[int]:
+    """Return years to fit and predict: ``return_model.pred_years``, cut at the last open year while the holdout is
+    locked, so no validation MSE is ever computed on holdout return months."""
+    first, last = cfg.return_model.pred_years
+    return list(range(first, min(last, last_open_month(cfg.dates).year) + 1))
+
+
 def fit_return_model(panel: pd.DataFrame, cfg: Config) -> ReturnModelResult:
     rm = cfg.return_model
     feats = list(cfg.features.names)
     lambdas = np.asarray(cfg.ridge_grid.values)
     p_grid, g_grid = list(rm.p_grid), list(rm.rff_variance_grid)
     p_max = max(p_grid)
-    years = list(range(rm.pred_years[0], rm.pred_years[1] + 1))
+    years = prediction_years(cfg)
 
     rows = panel.loc[panel["valid_data"], ["id", "eom", *feats, "ret_ld1"]]
     cut = {y: cutoffs_for_year(y, rm.val_years) for y in years}
@@ -153,9 +161,10 @@ def load_models(path: Path) -> tuple[dict[int, YearModel], np.ndarray]:
         return models, f["z"]
 
 
-def prediction_diagnostics(predictions: pd.DataFrame, panel: pd.DataFrame) -> pd.DataFrame:
+def prediction_diagnostics(predictions: pd.DataFrame, panel: pd.DataFrame, dates: DatesConfig) -> pd.DataFrame:
     """Per return year: out-of-sample R² against a zero forecast (Gu, Kelly and Xiu, 2020) and the mean
     monthly Spearman rank IC, for all predicted stocks and for the portfolio universe."""
+    check_return_months(predictions, dates, "prediction_diagnostics")
     d = predictions.merge(panel[["id", "eom", "ret_ld1", "in_universe"]], on=["id", "eom"], how="left")
     out = []
     for (year, scope), g in pd.concat([d.assign(scope="all"), d[d["in_universe"]].assign(scope="universe")]).groupby(["year", "scope"]):

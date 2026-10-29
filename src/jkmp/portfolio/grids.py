@@ -18,8 +18,9 @@ from pathlib import Path
 
 import pandas as pd
 
-from jkmp.config import Config
+from jkmp.config import Config, DatesConfig
 from jkmp.covariance import CovParts
+from jkmp.evaluation.holdout import check_return_months
 from jkmp.evaluation.metrics import table2
 from jkmp.portfolio.portfolio_ml import (build_yearly_moments, load_yearly_moments, run_portfolio_ml,
                                          save_yearly_moments, search_yearly, signal_set)
@@ -38,7 +39,7 @@ class GridInputs:
     cov: Mapping[pd.Timestamp, CovParts]
     rf: pd.Series                  # French monthly RF by month-end
     pfml_dates: pd.DatetimeIndex   # Portfolio-ML formation months (first Σ + lb + 1 .. test end − 1)
-    val_dates: pd.DatetimeIndex    # Static-ML* validation formation months (returns from 2015)
+    val_dates: pd.DatetimeIndex    # Static-ML* validation formation months (returns from the first prediction year)
     eval_dates: pd.DatetimeIndex   # test window formation months
     hp_years: list[int]
 
@@ -54,13 +55,15 @@ def grid_inputs(cfg: Config, panel: pd.DataFrame, wealth: pd.DataFrame, cov: Map
     lb = cfg.universe.lookback_months
     first = formation[0] + MONTH * (lb + 1)
     keep = panel["id"].isin(panel.loc[panel["in_universe"], "id"].unique())
+    eval_dates = formation[(ret >= test_start) & (ret <= test_end)]
+    val_dates = formation[(ret >= pd.Timestamp(first_year, 1, 31)) & (ret <= test_end)]
+    check_return_months(eval_dates.union(val_dates) + MONTH, cfg.dates, "grid windows")
     cols = ["id", "eom", "me", "in_universe", "lambda", "g", "tr_ld1", "ret_ld1", "pred_ld1", *cfg.features.names]
     return GridInputs(
         panel=panel.loc[keep & (panel["eom"] >= formation[0]), cols].reset_index(drop=True),
         wealth=wealth, cov=cov, rf=rf,
         pfml_dates=formation[(formation >= first) & (ret <= test_end)],
-        val_dates=formation[(ret >= pd.Timestamp(first_year, 1, 31)) & (ret <= test_end)],
-        eval_dates=formation[(ret >= test_start) & (ret <= test_end)],
+        val_dates=val_dates, eval_dates=eval_dates,
         hp_years=list(range(first_year, test_end.year + 1)))
 
 
@@ -150,11 +153,11 @@ def load_point(out_root: Path, gamma: float, level: float) -> pd.DataFrame:
     return pd.concat([pd.read_parquet(f) for f in files], ignore_index=True)
 
 
-def summarise(pfs: pd.DataFrame) -> pd.DataFrame:
+def summarise(pfs: pd.DataFrame, dates: DatesConfig) -> pd.DataFrame:
     """Table 2 statistics per (type, γ, wealth), each with utility at its own γ."""
     rows = []
     for (gamma, level), g in pfs.groupby(["gamma", "wealth"]):
-        rows.append(table2(g, gamma).reset_index().assign(gamma=gamma, wealth=level))
+        rows.append(table2(g, gamma, dates).reset_index().assign(gamma=gamma, wealth=level))
     return pd.concat(rows, ignore_index=True)
 
 

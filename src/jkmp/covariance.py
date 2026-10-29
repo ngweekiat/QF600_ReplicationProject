@@ -27,8 +27,9 @@ import numpy as np
 import pandas as pd
 from scipy.signal import lfilter
 
-from jkmp.config import Config
+from jkmp.config import Config, DatesConfig
 from jkmp.data.prepare import FF12_RANGES
+from jkmp.evaluation.holdout import check_return_months
 from jkmp.features import THEME_PREFIX, standardize_by_month
 
 log = logging.getLogger(__name__)
@@ -338,3 +339,38 @@ def load_covariance(in_dir: Path) -> dict[pd.Timestamp, CovParts]:
         parts[eom] = CovParts(eom=eom, ids=L["id"].to_numpy(), factors=factors,
                               X=L[list(factors)].to_numpy(), F=F.to_numpy(), ivar=L["ivar"].to_numpy())
     return parts
+
+
+# --------------------------------------------------------------------------- calibration
+
+
+def vol_bias(parts: Mapping[pd.Timestamp, CovParts], panel: pd.DataFrame, months: Sequence[pd.Timestamp],
+             dates: DatesConfig) -> pd.DataFrame:
+    """Standardised next-month excess returns z = r / σ̂, with σ̂ from Σ at formation month ``eom``, for each
+    universe stock (``stock``) and the equal- and value-weighted universe portfolios (``ew``, ``vw``; weights
+    over the stocks with a return). A calibrated Σ has E[z²] = 1 (Barra bias statistic). Columns eom,
+    eom_ret, scope, z."""
+    months = pd.DatetimeIndex(sorted(months))
+    check_return_months(months + pd.offsets.MonthEnd(1), dates, "vol_bias")
+    rows = panel.loc[panel["in_universe"] & panel["eom"].isin(months) & panel["ret_ld1"].notna(),
+                     ["eom", "id", "me", "ret_ld1"]]
+    out = []
+    for eom, g in rows.groupby("eom", sort=True):
+        p = parts[eom]
+        ids, r = g["id"].to_numpy(), g["ret_ld1"].to_numpy()
+        out.append(pd.DataFrame({"eom": eom, "scope": "stock", "z": r / p.vol(ids)}))
+        sigma = p.full(ids)
+        for scope, w in (("ew", np.full(len(ids), 1.0 / len(ids))), ("vw", g["me"].to_numpy() / g["me"].sum())):
+            with np.errstate(all="ignore"):  # spurious Accelerate matmul flags; checked below
+                var = float(_finite(w @ sigma @ w, "portfolio variance"))
+            out.append(pd.DataFrame({"eom": [eom], "scope": [scope], "z": [w @ r / np.sqrt(var)]}))
+    z = pd.concat(out, ignore_index=True)
+    return z.assign(eom_ret=z["eom"] + pd.offsets.MonthEnd(1))[["eom", "eom_ret", "scope", "z"]]
+
+
+def bias_by_decade(z: pd.DataFrame) -> pd.DataFrame:
+    """Realised/predicted volatility ratio sqrt(mean z²) per (decade of the return month, scope)."""
+    d = z.assign(decade=z["eom_ret"].dt.year // 10 * 10)
+    return (d.groupby(["decade", "scope"])["z"].agg(n="size", ratio=lambda s: float(np.sqrt(np.mean(s ** 2))))
+            .reset_index())
+

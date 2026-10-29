@@ -20,7 +20,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("step", choices=["explore", "pull"])
     parser.add_argument("--config", default=None, help="YAML config (default: configs/base.yaml)")
-    parser.add_argument("--override", action="append", default=[], help="dotted override, e.g. dates.test_end=2024-12-31")
+    parser.add_argument("--override", action="append", default=[], help="dotted override, e.g. dates.data_end=2024-12-31")
     parser.add_argument("--force", action="store_true", help="pull: re-download files that already exist")
     args = parser.parse_args()
 

@@ -19,6 +19,8 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
+from jkmp.config import DatesConfig  # noqa: E402
+from jkmp.evaluation.holdout import check_return_months  # noqa: E402
 from jkmp.evaluation.metrics import summary_stats  # noqa: E402
 from jkmp.portfolio.accounting import portfolio_returns  # noqa: E402
 
@@ -28,9 +30,10 @@ MAIN = ["Portfolio-ML", "Portfolio-ML (linear)", "Static-ML*"]  # methods with a
 
 
 def scaled_frontier(weights: pd.DataFrame, panel: pd.DataFrame, wealth: pd.DataFrame,
-                    vol_targets: Sequence[float], gamma: float) -> pd.DataFrame:
+                    vol_targets: Sequence[float], gamma: float, dates: DatesConfig) -> pd.DataFrame:
     """R: scale a method's weights *and* inherited weights by vol_target / its realised vol, rerun
     ``pf_ts_fun``; trading costs grow with the square of the scale. One row per (type, vol_target)."""
+    check_return_months(weights, dates, "scaled_frontier")
     rows = []
     for t, w in weights.groupby("type", sort=False):
         base = portfolio_returns(w, panel, wealth)
@@ -114,7 +117,7 @@ def plot_fig1b(summary: pd.DataFrame, markowitz_sr_gross: float, path: Path) -> 
     ax.set(xlim=(0, xmax), ylim=(ylo, yhi), xlabel="Volatility (annualised)",
            ylabel="Excess return net of trading cost (annualised)",
            title="Portfolio-ML frontier by wealth (one point per γ)")
-    ax.legend(title="Wealth by 2025", fontsize=7, title_fontsize=7)
+    ax.legend(title="Wealth at anchor", fontsize=7, title_fontsize=7)
     return _save(fig, path)
 
 
@@ -126,7 +129,7 @@ def plot_capacity(summary: pd.DataFrame, gamma: float, path: Path) -> list[Path]
         ax.plot(g["wealth"] / 1e9, g["Utility"], "--o" if "linear" in t else "-o", color=COLOURS[t], ms=4, label=t)
     ax.axhline(0, color="grey", lw=0.5)
     ax.set_xscale("log")
-    ax.set(xlabel="Wealth by 2025 ($B, log scale)", ylabel="Realised utility (annualised, net of TC)",
+    ax.set(xlabel="Wealth at anchor date ($B, log scale)", ylabel="Realised utility (annualised, net of TC)",
            title=f"Capacity: utility vs wealth, γ = {gamma:g}")
     ax.legend(fontsize=8)
     return _save(fig, path)

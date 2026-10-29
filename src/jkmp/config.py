@@ -70,23 +70,24 @@ class DataSourcesConfig:
 @dataclass(frozen=True)
 class DatesConfig:
     warmup_start: dt.date
-    train_start: dt.date
-    train_end: dt.date
     validation_start: dt.date
     validation_end: dt.date
     test_start: dt.date
     test_end: dt.date
+    holdout_start: dt.date
+    holdout_end: dt.date
+    data_end: dt.date
+    holdout_locked: bool
 
     def __post_init__(self) -> None:
-        order = [
-            "warmup_start", "train_start", "train_end",
-            "validation_start", "validation_end", "test_start", "test_end",
-        ]
+        order = ["warmup_start", "validation_start", "validation_end", "test_start", "test_end", "holdout_start"]
         for earlier, later in zip(order, order[1:]):
             _require(
                 getattr(self, earlier) < getattr(self, later),
                 f"dates.{earlier} must be before dates.{later}",
             )
+        _require(self.holdout_start <= self.holdout_end <= self.data_end,
+                 "dates must satisfy holdout_start <= holdout_end <= data_end")
 
 
 @dataclass(frozen=True)
@@ -247,9 +248,15 @@ class FactorMLConfig:
 @dataclass(frozen=True)
 class FeatureImportanceConfig:
     markowitz_gamma: float
+    n_seeds: int
 
     def __post_init__(self) -> None:
         _require(self.markowitz_gamma > 0, "feature_importance.markowitz_gamma must be > 0")
+        _require(self.n_seeds >= 1, "feature_importance.n_seeds must be >= 1")
+
+    def seeds(self, seed: int) -> tuple[int, ...]:
+        """Permutation seeds: the run's seed and the next n_seeds - 1."""
+        return tuple(range(seed, seed + self.n_seeds))
 
 
 @dataclass(frozen=True)
@@ -275,6 +282,15 @@ class RegimesConfig:
         _require(self.fed_change_months >= 1, "regimes.fed_change_months must be >= 1")
         _require(self.fed_threshold >= 0, "regimes.fed_threshold must be >= 0")
         _require(self.vix_norm in ("window", "full"), "regimes.vix_norm must be 'window' or 'full'")
+
+
+@dataclass(frozen=True)
+class ReportingConfig:
+    main_types: tuple[str, ...]
+    subperiods: tuple[EpisodeConfig, ...]   # label, start, end (return months)
+
+    def __post_init__(self) -> None:
+        _require(len(self.main_types) >= 2, "reporting.main_types needs at least two methods")
 
 
 @dataclass(frozen=True)
@@ -307,6 +323,7 @@ class Config:
     factor_ml: FactorMLConfig
     grids: GridsConfig
     feature_importance: FeatureImportanceConfig
+    reporting: ReportingConfig
     regimes: RegimesConfig
 
     def as_dict(self) -> dict[str, Any]:

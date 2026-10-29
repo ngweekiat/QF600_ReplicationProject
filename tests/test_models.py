@@ -121,3 +121,11 @@ def test_return_model_predicts_signal_and_does_not_peek_at_the_future():
     a = res.predictions[res.predictions["year"] == 2008]["pred_ld1"].to_numpy()
     b = res2.predictions[res2.predictions["year"] == 2008]["pred_ld1"].to_numpy()
     np.testing.assert_allclose(a, b)
+
+
+def test_prediction_years_stop_at_the_last_open_year():
+    from jkmp.config import load_config
+    from jkmp.models.return_model import prediction_years
+
+    assert prediction_years(load_config()) == list(range(1971, 2021))                 # locked: 1971 .. 2020
+    assert prediction_years(load_config(overrides=["dates.holdout_locked=false"]))[-1] == 2025

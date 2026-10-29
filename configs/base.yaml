@@ -27,16 +27,22 @@ data_sources:
   fred_csv_url: https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}   # public CSV, no API key
 
 # ---------------------------------------------------------------------------
-# Sample periods (month-ends). R: estimation from 1952, rolling validation from 1971, OOS 1981–2020.
+# Sample periods (month-ends; windows refer to return months). Walk-forward, as R: models and β are
+# re-estimated every year on an expanding window from warmup_start; hyperparameters are picked each December
+# by cumulative validation utility since validation_start. R: data from 1952, validation from 1971, OOS 1981–2020.
+# The holdout is locked: jkmp.evaluation.holdout raises on any performance number with a return month after
+# test_end while holdout_locked is true.
 # ---------------------------------------------------------------------------
 dates:
-  warmup_start: 1993-01-31   # first month of data pulled: a full 10-year covariance window exists by early 2003 (O9)
-  train_start: 2005-01-31
-  train_end: 2014-12-31
-  validation_start: 2015-01-31
-  validation_end: 2019-12-31
-  test_start: 2020-01-31
-  test_end: 2025-12-31
+  warmup_start: 1952-12-31     # first month of data pulled (R: settings$screens$start); estimation only until validation_start
+  validation_start: 1971-01-31 # first validation return month (R: pf$dates$start_year)
+  validation_end: 1980-12-31   # validation head start before the test window
+  test_start: 1981-01-31
+  test_end: 2020-12-31         # R: settings$split$test_end; 480 test return months
+  holdout_start: 2021-01-31
+  holdout_end: 2025-12-31
+  data_end: 2025-12-31         # last month of data pulled and screened (needed for the holdout)
+  holdout_locked: true         # no performance number with a return month after test_end while true
 
 # ---------------------------------------------------------------------------
 # Investable universe. R: NYSE only, above-median market cap, 12/12 addition/deletion rule.
@@ -83,7 +89,7 @@ covariance:
     health: [Hlth]
     finance: [Money]
   window_days: 2520            # R: 252 * 10 (10 years of daily data)
-  min_window_days: 2520        # require the full 10-year window, as R does (data from 1993 makes this available by 2003)
+  min_window_days: 2520        # require the full 10-year window, as R does (daily data from 1952-12: first Σ in 1962-12)
   half_life_corr_days: 378     # R: hl_cor = 252 * 3 / 2
   half_life_var_days: 126      # R: hl_var = 252 / 2
   half_life_idio_days: 126     # R: hl_stock_var = 252 / 2
@@ -106,7 +112,7 @@ trading_costs:
 investor:
   gamma: 10.0                  # baseline relative risk aversion
   wealth: 1.0e+10              # baseline wealth at wealth_end_date (R: $10B by end-2020)
-  wealth_end_date: 2025-12-31  # wealth is rolled backwards from here with the market total return
+  wealth_end_date: 2020-12-31  # anchor: wealth rolled back before it and forward after it with the market total return
   mu: 0.007                    # R: pf_set$mu — expected monthly portfolio growth used in m (Lemma 1)
   m_iterations: 10             # fixed-point iterations for m
   gamma_grid: [1.0, 5.0, 10.0, 20.0, 100.0]                      # frontier (Fig 1A)
@@ -135,15 +141,15 @@ return_model:
   p_grid: [2, 4, 8, 16, 32, 64, 128, 256, 512]
   rff_variance_grid: [0.049787068367863944, 0.1353352832366127]  # exp(-3), exp(-2); a VARIANCE in R, not a std
   horizons: [1]                # 1-month only (Multiperiod-ML is out of scope; R uses 1..12)
-  val_years: 5                 # validate on return years y-5..y-1, train on everything up to y-6 (R: 10)
-  pred_years: [2015, 2025]     # first and last return year to predict (formation Dec y-1 .. Nov y)
+  val_years: 10                # validate on return years y-10..y-1, train on everything up to y-11 (R: settings$split$val_years)
+  pred_years: [1971, 2025]     # first and last return year to predict (formation Dec y-1 .. Nov y)
 
 # ---------------------------------------------------------------------------
 # Portfolio-ML. R: settings$pf_ml.
 # ---------------------------------------------------------------------------
 portfolio_ml:
   use_rff: true               # false: signals = the ranked characteristics (linear Portfolio-ML, configs/experiments/linear_pfml.yaml)
-  p_grid: [64, 128, 256, 512]
+  p_grid: [8, 16, 32, 64, 128, 256, 512]   # R: 2^(6:9); 8–32 added so small-p picks are not stuck at the edge (D33)
   rff_variance_grid: [0.049787068367863944, 0.1353352832366127]  # exp(-3), exp(-2)
   scale_by_vol: true           # R: scale = T — aim = diag(1/sigma) * RF * beta
   add_original_features: false # R: orig_feat = F
@@ -153,7 +159,7 @@ portfolio_ml:
 # ---------------------------------------------------------------------------
 static_ml:
   k_grid: [1.0, 0.3333333333333333, 0.2]  # multiplier on Lambda (= 1/phi)
-  u_grid: [0.25, 0.5, 1.0]                # shrinkage of predicted returns
+  u_grid: [0.0, 0.1, 0.25, 0.5, 1.0]      # shrinkage of predicted returns (R: 0.25, 0.5, 1; 0 and 0.1 added, D33)
   g_grid: [0.0, 1.0, 2.0]                 # gamma*Sigma + g*diag(gamma*Sigma) (R cov_add); paper's v = 1 + g
 
 # ---------------------------------------------------------------------------
@@ -176,6 +182,16 @@ grids:
 # ---------------------------------------------------------------------------
 feature_importance:
   markowitz_gamma: 100.0       # R tpf_cf_fun: gamma_rel = 100 and zero wealth (gross); utility still at investor.gamma
+  n_seeds: 20                  # permutation seeds seed .. seed + n_seeds - 1; importance = mean, with its standard error (R: one seed)
+
+# ---------------------------------------------------------------------------
+# Baseline tables (scripts/11_tables.py): Tables 3 and 4 compare main_types; the sub-period table splits the test window.
+# ---------------------------------------------------------------------------
+reporting:
+  main_types: [Portfolio-ML, Portfolio-ML (linear), Static-ML*, Factor-ML, Markowitz-ML]   # paper: also Multiperiod-ML* (out of scope)
+  subperiods:
+    - {label: 1981–2000, start: 1981-01-31, end: 2000-12-31}
+    - {label: 2001–2020, start: 2001-01-31, end: 2020-12-31}
 
 # ---------------------------------------------------------------------------
 # Market regimes over the test window (our extension). FRED: USREC (NBER recession, monthly),

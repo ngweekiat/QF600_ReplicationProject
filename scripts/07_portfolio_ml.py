@@ -1,8 +1,9 @@
 """Portfolio-ML (R pfml_implement): coefficient search, (g, p, λ) choice, aim portfolios, weights, Table 2.
 
-hp years run from return_model.pred_years[0] (2015) to the year of dates.test_end. For hp year y,
+hp years run from return_model.pred_years[0] to the year of dates.test_end. For hp year y,
 β = (Σ̄ + λI)⁻¹ r̄ uses every month with returns realised by Dec y−1; each December the (g, p, λ) with the
-highest cumulative realised utility since 2015 is used for the next return year, so aims start in 2016.
+highest cumulative realised utility since the first hp year is used for the next return year, so aims start a
+year after it.
 Weights π_t = m·π_start + (I − m)·aim_t run over the test window from VW initial weights.
 Reads data/processed/pfml/{tag}/ from scripts/06_pfml_inputs.py.
   portfolio_ml.use_rff = true  : search over g (rff_variance_grid), p (p_grid) and λ (ridge_grid) -> "rff"
@@ -69,7 +70,8 @@ def main() -> None:
 
     pfs = [outputs / "benchmarks" / "pf_test.parquet", outputs / "static_ml" / "pf.parquet",
            outputs / "portfolio_ml" / "rff" / "pf.parquet", outputs / "portfolio_ml" / "raw" / "pf.parquet"]
-    t2 = table2(pd.concat([pd.read_parquet(f) for f in pfs if f.exists()], ignore_index=True), cfg.investor.gamma)
+    t2 = table2(pd.concat([pd.read_parquet(f) for f in pfs if f.exists()], ignore_index=True), cfg.investor.gamma,
+            cfg.dates)
     t2.to_csv(outputs / "table2_test.csv")
 
     pd.set_option("display.width", 200)

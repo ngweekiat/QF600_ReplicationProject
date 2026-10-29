@@ -26,9 +26,23 @@ def test_wealth_path_rolls_back_exactly_and_ends_at_wealth_end():
     assert w["mu_ld1"].iloc[:-1].tolist() == [0.10, -0.05, 0.02] and np.isnan(w["mu_ld1"].iloc[-1])
 
 
+def test_wealth_path_rolls_forward_after_the_anchor():
+    # Anchor at Oct 2024: Sep is rolled back, Nov and Dec forward with w_{t+1} = w_t (1 + R_{t+1}).
+    w = wealth_path(1.0e10, dt.date(2024, 10, 31), _market([0.10, -0.05, 0.02])).set_index("eom")["wealth"]
+    assert w[EOMS[1]] == 1.0e10
+    assert w[EOMS[0]] == pytest.approx(1.0e10 / 1.10, rel=1e-14)
+    assert w[EOMS[2]] == pytest.approx(1.0e10 * 0.95, rel=1e-14)
+    assert w[EOMS[3]] == pytest.approx(1.0e10 * 0.95 * 1.02, rel=1e-14)
+    # The same market path anchored at its end gives the same shape, rescaled.
+    end = wealth_path(1.0e10, dt.date(2024, 12, 31), _market([0.10, -0.05, 0.02])).set_index("eom")["wealth"]
+    np.testing.assert_allclose(w / w[EOMS[1]], end / end[EOMS[1]], rtol=1e-14)
+
+
 def test_wealth_path_requires_returns_through_end():
     with pytest.raises(ValueError):
         wealth_path(1.0e10, dt.date(2025, 1, 31), _market([0.01, 0.01, 0.01]))
+    with pytest.raises(ValueError, match="missing"):
+        wealth_path(1.0e10, dt.date(2024, 12, 31), _market([0.01, np.nan, 0.01]))
 
 
 def test_timing_columns_use_the_right_months():

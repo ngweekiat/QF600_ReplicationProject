@@ -28,6 +28,8 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
+from jkmp.config import DatesConfig  # noqa: E402
+from jkmp.evaluation.holdout import check_return_months  # noqa: E402
 from jkmp.evaluation.metrics import summary_stats, utility_flow  # noqa: E402
 
 log = logging.getLogger(__name__)
@@ -90,16 +92,18 @@ def label_regimes(monthly: pd.DataFrame, months: Sequence[pd.Timestamp], fed_cha
 
 # --- analysis ----------------------------------------------------------------------------------------
 
-def cumulative_utility(pfs: pd.DataFrame, gamma: float) -> pd.DataFrame:
+def cumulative_utility(pfs: pd.DataFrame, gamma: float, dates: DatesConfig) -> pd.DataFrame:
     """Monthly utility flow r − tc − ½γ(r − r̄)² (Table 2's utility, month by month) and its running sum."""
+    check_return_months(pfs, dates, "cumulative_utility")
     d = pfs.sort_values(["type", "eom_ret"]).reset_index(drop=True)
     d["u"] = utility_flow(d, gamma)
     d["cum_u"] = d.groupby("type", sort=False)["u"].cumsum()
     return d[["type", "eom_ret", "u", "cum_u"]]
 
 
-def regime_table(pfs: pd.DataFrame, labels: pd.DataFrame, gamma: float) -> pd.DataFrame:
+def regime_table(pfs: pd.DataFrame, labels: pd.DataFrame, gamma: float, dates: DatesConfig) -> pd.DataFrame:
     """Table 2 statistics within each regime (rows labelled by the return month)."""
+    check_return_months(pfs, dates, "regime_table")
     d = pfs.merge(labels[["eom", *REGIME_COLUMNS]].rename(columns={"eom": "eom_ret"}), on="eom_ret", how="left")
     if d[list(REGIME_COLUMNS)].isna().any().any():
         raise ValueError("some return months have no regime label")
@@ -119,9 +123,10 @@ def vix_cost_scale(monthly: pd.DataFrame, months: Sequence[pd.Timestamp], norm: 
     return (v / base).rename("vix_scale")
 
 
-def recost_vix(pfs: pd.DataFrame, scale: pd.Series, gamma: float) -> pd.DataFrame:
+def recost_vix(pfs: pd.DataFrame, scale: pd.Series, gamma: float, dates: DatesConfig) -> pd.DataFrame:
     """Each method's trades re-costed with Λ_t = s_t·Λ (s at the formation month): Table 2 rows for the
     original and re-costed costs side by side."""
+    check_return_months(pfs, dates, "recost_vix")
     s = pfs["eom"].map(scale)
     if s.isna().any():
         raise ValueError("VIX scale missing for some formation months")
@@ -143,7 +148,8 @@ def _corr(a: pd.Series, b: pd.Series) -> float:
 # --- figure ------------------------------------------------------------------------------------------
 
 def plot_cumulative_utility(cum: pd.DataFrame, episodes, types: Sequence[str], gamma: float,
-                            path: Path) -> list[Path]:
+                            path: Path, dates: DatesConfig) -> list[Path]:
+    check_return_months(cum, dates, "plot_cumulative_utility")
     fig, ax = plt.subplots(figsize=(8, 4.6))
     for ep in episodes:
         ax.axvspan(pd.Timestamp(ep.start), pd.Timestamp(ep.end) + pd.Timedelta(days=1), color="grey", alpha=0.18, lw=0)
@@ -156,7 +162,7 @@ def plot_cumulative_utility(cum: pd.DataFrame, episodes, types: Sequence[str], g
             g = pd.concat([start, g[["eom_ret", "cum_u"]]])
             ax.plot(g["eom_ret"], g["cum_u"], lw=1.4 if "ML" in t else 1.0, label=t)
     ax.axhline(0, color="grey", lw=0.5)
-    ax.set(ylabel=f"Cumulative realised utility (γ = {gamma:g}, monthly flows)", title="Cumulative utility, 2020–2025")
+    ax.set(ylabel=f"Cumulative realised utility (γ = {gamma:g}, monthly flows)", title=f"Cumulative utility, {cum['eom_ret'].min():%Y}–{cum['eom_ret'].max():%Y}")
     ax.legend(fontsize=7, ncol=2, loc="lower left")
     path.parent.mkdir(parents=True, exist_ok=True)
     out = [path.with_suffix(".png"), path.with_suffix(".pdf")]

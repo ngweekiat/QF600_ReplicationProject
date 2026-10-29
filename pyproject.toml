@@ -18,6 +18,7 @@ dependencies = [
     "matplotlib",
     "joblib",
     "openpyxl",
+    "python-dotenv>=1.0,<2",  # WRDS credentials from the git-ignored .env (see .env.example)
 ]
 
 [project.optional-dependencies]

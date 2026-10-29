@@ -13,6 +13,7 @@ import logging
 import pandas as pd
 
 from jkmp.config import load_config
+from jkmp.evaluation.holdout import last_open_month
 from jkmp.models.return_model import fit_return_model, prediction_diagnostics, save_models
 
 
@@ -28,7 +29,9 @@ def main() -> None:
     panel = pd.read_parquet(processed / "panel.parquet")
 
     result = fit_return_model(panel, cfg)
-    diag = prediction_diagnostics(result.predictions, panel)
+    preds = result.predictions
+    open_preds = preds[preds["eom"] + pd.offsets.MonthEnd(1) <= last_open_month(cfg.dates)]  # no holdout diagnostics
+    diag = prediction_diagnostics(open_preds, panel, cfg.dates)
     out = processed / "return_model"
     out.mkdir(parents=True, exist_ok=True)
     result.predictions.to_parquet(processed / "predictions.parquet", index=False)
