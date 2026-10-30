@@ -2,7 +2,7 @@
 
 Windows are defined by the months in which returns are realised (formation month t earns over t+1),
 each started fresh from value weights (as R does per window):
-  test : returns in dates.test_start .. dates.test_end
+  test : returns in the evaluation window (dates.test_* or, with dates.evaluate: holdout, dates.holdout_*)
   oos  : returns in return_model.pred_years, up to the last month the holdout lock allows
 Writes outputs/benchmarks/{weights,pf,table2}_{window}.* and prints both Table 2s.
 
@@ -18,7 +18,7 @@ import pandas as pd
 
 from jkmp.config import load_config
 from jkmp.covariance import load_covariance
-from jkmp.evaluation.holdout import last_open_month
+from jkmp.evaluation.holdout import evaluation_window, last_open_month
 from jkmp.evaluation.metrics import table2
 from jkmp.portfolio.benchmarks import run_benchmarks
 from jkmp.portfolio.ml_benchmarks import run_ml_benchmarks
@@ -44,7 +44,7 @@ def main() -> None:
     returns = formation + MONTH
     first, last = cfg.return_model.pred_years
     windows = {
-        "test": formation[(returns >= pd.Timestamp(cfg.dates.test_start)) & (returns <= pd.Timestamp(cfg.dates.test_end))],
+        "test": formation[(returns >= evaluation_window(cfg.dates)[0]) & (returns <= evaluation_window(cfg.dates)[1])],
         "oos": formation[(returns >= pd.Timestamp(first, 1, 31))
                          & (returns <= min(pd.Timestamp(last, 12, 31), last_open_month(cfg.dates)))],
     }

@@ -82,3 +82,13 @@ def test_plot_frontier_and_diagnostics_raise_while_locked(tmp_path):
     with pytest.raises(HoldoutLockedError):
         prediction_diagnostics(preds, panel, LOCKED)
     assert len(prediction_diagnostics(preds, panel, OPEN)) == 2 * preds["year"].nunique()
+
+
+def test_evaluation_window_needs_the_lock_off_for_the_holdout():
+    from jkmp.config import ConfigError
+    from jkmp.evaluation.holdout import evaluation_window
+    assert evaluation_window(LOCKED) == (pd.Timestamp("1981-01-31"), pd.Timestamp("2020-12-31"))
+    hold = load_config(overrides=["dates.holdout_locked=false", "dates.evaluate=holdout"]).dates
+    assert evaluation_window(hold) == (pd.Timestamp("2021-01-31"), pd.Timestamp("2025-12-31"))
+    with pytest.raises(ConfigError, match="holdout_locked"):
+        load_config(overrides=["dates.evaluate=holdout"])

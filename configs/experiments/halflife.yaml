@@ -1,0 +1,9 @@
+# Trial 4 (docs/research_log.md): trial 3's top-250 active Portfolio-ML with time-decayed β estimation — the
+# half-life h is picked each December with (g, p, λ). γ_TE stays at trial 3's 2% calibration (D36).
+base: universe_250.yaml
+paths:
+  outputs: outputs/u250_hl
+investor:
+  gamma_te: 49.09
+portfolio_ml:
+  half_life_years: [3, 5, 10, null]

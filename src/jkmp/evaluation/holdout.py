@@ -48,3 +48,14 @@ def check_return_months(rows: pd.DataFrame | Sequence[pd.Timestamp], dates: Date
         raise HoldoutLockedError(
             f"{what}: return months up to {months.max().date()} but the holdout is locked after {last.date()} "
             f"(dates.holdout_locked = true)")
+
+
+def evaluation_window(dates: DatesConfig) -> tuple[pd.Timestamp, pd.Timestamp]:
+    """First and last return month evaluated by scripts 04–07 and 12: the test window, or — only with
+    ``dates.evaluate: holdout`` and the lock off — the holdout (the walk-forward continues through it: models,
+    β and hyperparameters keep updating each year on everything up to the year before)."""
+    if dates.evaluate == "test":
+        return pd.Timestamp(dates.test_start), pd.Timestamp(dates.test_end)
+    if dates.holdout_locked:
+        raise HoldoutLockedError("dates.evaluate: holdout while dates.holdout_locked is true")
+    return pd.Timestamp(dates.holdout_start), pd.Timestamp(dates.holdout_end)

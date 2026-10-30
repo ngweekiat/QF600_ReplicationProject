@@ -71,32 +71,36 @@ def signal_set(use_rff: bool, rff_variance_grid: Sequence[float]) -> tuple[str, 
     return "raw", ["raw"], "Portfolio-ML (linear)"
 
 
-def signal_names(features: Sequence[str], p_max: int | None, add_orig: bool = False) -> list[str]:
+def signal_names(features: Sequence[str], p_max: int | None, add_orig: bool = False,
+                 add_constant: bool = True) -> list[str]:
     """R ``pfml_feat_fun(p_max, orig_feat)``; ``p_max=None`` means the raw characteristics."""
+    const = ["constant"] if add_constant else []
     if p_max is None:
-        return ["constant", *features]
+        return [*const, *features]
     half = p_max // 2
-    names = ["constant", *[f"rff{j}_cos" for j in range(1, half + 1)], *[f"rff{j}_sin" for j in range(1, half + 1)]]
+    names = [*const, *[f"rff{j}_cos" for j in range(1, half + 1)], *[f"rff{j}_sin" for j in range(1, half + 1)]]
     return names + list(features) if add_orig else names
 
 
-def feature_index(p: int, p_max: int, n_orig: int = 0) -> np.ndarray:
-    """Columns of the p-feature model in the p_max layout: constant, cos 1..p/2, sin 1..p/2 (+ originals)."""
+def feature_index(p: int, p_max: int, n_orig: int = 0, constant: bool = True) -> np.ndarray:
+    """Columns of the p-feature model in the p_max layout: [constant], cos 1..p/2, sin 1..p/2 (+ originals)."""
     if p % 2 or p > p_max:
         raise ValueError(f"p must be even and <= {p_max}")
-    half, half_max = p // 2, p_max // 2
-    idx = [0, *range(1, 1 + half), *range(1 + half_max, 1 + half_max + half)]
-    return np.array(idx + list(range(1 + p_max, 1 + p_max + n_orig)))
+    half, half_max, c = p // 2, p_max // 2, int(constant)
+    idx = [0] * c + [*range(c, c + half), *range(c + half_max, c + half_max + half)]
+    return np.array(idx + list(range(c + p_max, c + p_max + n_orig)))
 
 
-def scale_signals(raw: np.ndarray, vol: np.ndarray | None) -> np.ndarray:
+def scale_signals(raw: np.ndarray, vol: np.ndarray | None, add_constant: bool = True) -> np.ndarray:
     """Demean each column, prepend a constant, scale every column to unit sum of squares, divide rows by vol.
 
     R (``balanced = F``): ``x - mean(x)``, ``constant := 1``, ``x*sqrt(1/sum(x^2))``, ``diag(1/vol_scale) %*% s``.
-    A column with no cross-sectional variation would be 0/0 in R; it is left at zero here.
+    A column with no cross-sectional variation would be 0/0 in R; it is left at zero here. Without
+    ``add_constant`` (``portfolio_ml.add_constant: false``) there is no constant column: after the 1/vol scaling it
+    is an inverse-volatility long book, which a benchmark-relative active book should not hold (D34).
     """
     x = raw - raw.mean(axis=0)
-    s = np.hstack([np.ones((len(raw), 1)), x])
+    s = np.hstack([np.ones((len(raw), 1)), x]) if add_constant else x
     ss = (s**2).sum(axis=0)
     s = np.divide(s, np.sqrt(ss), out=np.zeros_like(s), where=ss > 0)
     return s if vol is None else s / vol[:, None]
@@ -146,7 +150,8 @@ def build_moments(panel: pd.DataFrame, wealth: pd.DataFrame, cov_parts: Mapping[
                   rf: pd.Series, dates: Sequence[pd.Timestamp], features: Sequence[str], *, gamma: float,
                   mu: float, lb: int, iterations: int, scale_by_vol: bool = True, use_rff: bool = True,
                   rff_variance: float | None = None, p_max: int | None = None, seed: int | None = None,
-                  add_orig: bool = False, sink: Callable[[MonthMoments], None] | None = None) -> PfmlMoments:
+                  add_orig: bool = False, add_constant: bool = True,
+                  sink: Callable[[MonthMoments], None] | None = None) -> PfmlMoments:
     """R ``pfml_input_fun`` (``balanced = F``) for formation months ``dates``.
 
     With ``sink``, each month is passed to ``sink`` instead of being kept (``months`` stays empty), so
@@ -163,7 +168,7 @@ def build_moments(panel: pd.DataFrame, wealth: pd.DataFrame, cov_parts: Mapping[
         w_rff = weights_for(base_draws(len(features), p_max, seed), rff_variance)  # R: set.seed(seed); rff(p_max, g)
     else:
         w_rff, p_max, add_orig = None, None, False
-    columns = signal_names(features, p_max, add_orig)
+    columns = signal_names(features, p_max, add_orig, add_constant)
     dates = pd.DatetimeIndex(sorted(dates))
     w_by = wealth.set_index("eom")["wealth"]
     lag_months = [pd.DatetimeIndex(dates - MONTH * i) for i in range(lb + 2)]
@@ -196,7 +201,7 @@ def build_moments(panel: pd.DataFrame, wealth: pd.DataFrame, cov_parts: Mapping[
     out = PfmlMoments(columns=columns, rff_w=w_rff, meta={
         "use_rff": use_rff, "rff_variance": rff_variance, "p_max": p_max, "seed": seed, "add_orig": add_orig,
         "features": features, "gamma": gamma, "mu": mu, "lb": lb, "iterations": iterations,
-        "scale_by_vol": scale_by_vol})
+        "scale_by_vol": scale_by_vol, "add_constant": add_constant})
     for j, t in enumerate(dates):
         ids = np.sort(universe.loc[universe["eom"] == t, "id"].to_numpy())
         signals, growth, now = [], [], None
@@ -207,7 +212,7 @@ def build_moments(panel: pd.DataFrame, wealth: pd.DataFrame, cov_parts: Mapping[
             if (pos < 0).any():
                 raise ValueError(f"{(pos < 0).sum()} universe stocks at {t.date()} have no row at {s_month.date()}")
             r_idx = idx[pos]
-            signals.append(scale_signals(raw[r_idx], vol_for(s_month, ids)))
+            signals.append(scale_signals(raw[r_idx], vol_for(s_month, ids), add_constant))
             growth.append(row_g[r_idx])
             if i == 0:
                 now = r_idx
@@ -266,7 +271,8 @@ def model_columns(moments, p: int) -> np.ndarray:
     meta = moments.meta
     if not meta["use_rff"]:
         return np.arange(len(moments.columns))
-    return feature_index(p, meta["p_max"], len(meta["features"]) if meta["add_orig"] else 0)
+    return feature_index(p, meta["p_max"], len(meta["features"]) if meta["add_orig"] else 0,
+                         meta.get("add_constant", True))
 
 
 def p_values(moments, p_grid: Sequence[int]) -> list[int]:
@@ -309,16 +315,25 @@ def yearly_sums(months: Mapping[pd.Timestamp, MonthMoments]) -> dict[int, YearSu
 
 
 def coefs_from_sums(sums: Mapping[int, YearSums], owner, p_grid: Sequence[int], lambdas: Sequence[float],
-                    hp_years: Sequence[int]) -> dict[int, dict[int, np.ndarray]]:
+                    hp_years: Sequence[int], half_life: float | None = None) -> dict[int, dict[int, np.ndarray]]:
     """β for each hp year y from the running means of r̃ and Σ̃ over return years ≤ y−1.
-    ``owner`` supplies ``meta`` and ``columns`` (a PfmlMoments or YearlyMoments)."""
+    ``owner`` supplies ``meta`` and ``columns`` (a PfmlMoments or YearlyMoments).
+
+    ``half_life`` h (years, D36): year s gets weight δ^{y−s}, δ = 0.5^{1/h}, so r̄_y = Σ δ^{y−s} r_sum_s / Σ δ^{y−s} n_s.
+    The accumulators hold Σ δ^{−(s−s₀)} x_s (the common factor δ^{y−s₀} cancels in the ratio); ``None`` gives weight
+    1.0, i.e. exactly the equally weighted running means of R ``pfml_search_coef``."""
     n_cols = len(owner.columns)
-    r_sum, d_sum, n = np.zeros(n_cols), np.zeros((n_cols, n_cols)), 0
+    r_sum, d_sum, n = np.zeros(n_cols), np.zeros((n_cols, n_cols)), 0.0
     years, k, out = sorted(sums), 0, {}
     for y in sorted(hp_years):
         while k < len(years) and years[k] <= y - 1:
             ys = sums[years[k]]
-            r_sum, d_sum, n, k = r_sum + ys.r_sum, d_sum + ys.d_sum, n + ys.n, k + 1
+            wt = 1.0 if half_life is None else 0.5 ** (-(years[k] - years[0]) / half_life)
+            if wt == 1.0:
+                r_sum, d_sum, n = r_sum + ys.r_sum, d_sum + ys.d_sum, n + ys.n
+            else:
+                r_sum, d_sum, n = r_sum + wt * ys.r_sum, d_sum + wt * ys.d_sum, n + wt * ys.n
+            k += 1
         if n == 0:
             raise ValueError(f"no Portfolio-ML training months before return year {y}")
         r_bar, d_bar = r_sum / n, d_sum / n
@@ -371,6 +386,7 @@ class SearchResult:
     coefs: dict[int, dict[int, np.ndarray]]
     validation: pd.DataFrame
     signals: dict[pd.Timestamp, tuple[np.ndarray, np.ndarray]]  # eom -> (ids, S_t) for the aim months
+    coefs_by_h: dict[float, dict[int, dict[int, np.ndarray]]] | None = None  # half-life (inf = none) -> coefs (D36)
 
 
 def search(moments: PfmlMoments, tag: str, p_grid: Sequence[int], lambdas: Sequence[float],
@@ -470,22 +486,31 @@ def load_yearly_moments(path: Path) -> YearlyMoments:
 
 
 def search_yearly(ym: YearlyMoments, tag: str, p_grid: Sequence[int], lambdas: Sequence[float],
-                  hp_years: Sequence[int]) -> SearchResult:
-    """``search`` from yearly sums: same β and the same December selection, without monthly matrices."""
-    coefs = coefs_from_sums(ym.years, ym, p_grid, lambdas, hp_years)
+                  hp_years: Sequence[int], half_lives: Sequence[float | None] = (None,)) -> SearchResult:
+    """``search`` from yearly sums: same β and the same December selection, without monthly matrices.
+    With several ``half_lives`` (D36) every h gets its own β; the validation rows carry ``h`` (inf = no decay) and
+    are scored by the unchanged equally weighted cumulative utility, so h is picked each December like (g, p, λ)."""
     g = ym.meta["rff_variance"] if ym.meta["use_rff"] else float("nan")
-    validation = december_utility(ym.years, ym, coefs, lambdas).assign(tag=tag, g=g)
-    return SearchResult(tag, g, ym.columns, ym.meta, coefs, validation, ym.signals)
+    by_h, frames = {}, []
+    for h in half_lives:
+        key = np.inf if h is None else float(h)
+        by_h[key] = coefs_from_sums(ym.years, ym, p_grid, lambdas, hp_years, half_life=h)
+        frames.append(december_utility(ym.years, ym, by_h[key], lambdas).assign(h=key))
+    validation = pd.concat(frames, ignore_index=True).assign(tag=tag, g=g)
+    main = by_h.get(np.inf, next(iter(by_h.values())))
+    return SearchResult(tag, g, ym.columns, ym.meta, main, validation, ym.signals, coefs_by_h=by_h)
 
 
 def select_hypers(validation: pd.DataFrame) -> pd.DataFrame:
     """R ``pfml_implement``: across every (g, p, λ), the highest cumulative realised utility at each
     December return month; that (g, p, λ) is used in the next return year (column ``year``)."""
     v = validation.reset_index(drop=True)
+    if "h" not in v:
+        v = v.assign(h=np.inf)  # no half-life search: equal weights
     dec = v[v["eom_ret"].dt.month == 12]
     best = dec.loc[dec.groupby("eom_ret")["cum_obj"].idxmax()]
     best = best.assign(year=best["eom_ret"].dt.year + 1)
-    return best[["year", "eom_ret", "tag", "g", "p", "l_no", "l", "cum_obj"]].reset_index(drop=True)
+    return best[["year", "eom_ret", "tag", "g", "p", "l_no", "l", "h", "cum_obj"]].reset_index(drop=True)
 
 
 def aim_portfolios(results: Mapping[str, SearchResult], chosen: pd.DataFrame, dates: Sequence[pd.Timestamp]
@@ -503,7 +528,8 @@ def aim_portfolios(results: Mapping[str, SearchResult], chosen: pd.DataFrame, da
         res = results[h["tag"]]
         p, l_no = int(h["p"]), int(h["l_no"])
         c = model_columns(res, p)
-        beta = res.coefs[y][p][:, l_no]
+        res_coefs = res.coefs if res.coefs_by_h is None else res.coefs_by_h[float(h.get("h", np.inf))]
+        beta = res_coefs[y][p][:, l_no]
         ids, signal = res.signals[d]
         with np.errstate(all="ignore"):  # spurious Accelerate matmul flags; checked below
             w_aim = signal[:, c] @ beta
@@ -519,9 +545,17 @@ def aim_portfolios(results: Mapping[str, SearchResult], chosen: pd.DataFrame, da
 
 def pfml_weights(inputs: Mapping[pd.Timestamp, MonthInputs], aims: pd.DataFrame, panel: pd.DataFrame,
                  wealth: pd.DataFrame, rf: pd.Series, *, gamma: float, mu: float, iterations: int,
-                 charge_exit_tc: bool) -> pd.DataFrame:
+                 charge_exit_tc: bool, benchmark_relative: bool = False) -> pd.DataFrame:
     """R ``pfml_w``: π_t = m·π_start + (I − m)·aim_t, with m (Lemma 1) at t for the universe and π_start
     the VW universe in the first month, then the drifted π_{t−1} (new stocks at 0; ``accounting``).
+
+    ``benchmark_relative`` (D34): the aim is an *active* book A_t and the recursion runs on active weights,
+    a_t = m·a_inh + (I − m)·A_t with a_inh = π_start − π^VW_t, then π_t = π^VW_t + a_t (π^VW_t: value weights of
+    the universe at t, ``benchmarks.market_targets``). Defining a_inh against today's value weights makes the
+    traded Δπ = π_t − π_start equal Δa exactly, so the cost charged on the total portfolio is the cost of the
+    active trades. The approximation is in the objective only: its ΔΩ = Ω_t − diag(g)Ω_{t−1} lets the active
+    book drift with g and ignores the benchmark's own rebalancing (π^VW_t vs the drifted π^VW_{t−1}: universe
+    changes and issuance), which is small — the Market row's turnover and cost measure it.
 
     m uses RF of the return month t+1 (docs/deviations.md D20). Returns ``id, eom, w, w_start, exit``.
     """
@@ -535,8 +569,12 @@ def pfml_weights(inputs: Mapping[pd.Timestamp, MonthInputs], aims: pd.DataFrame,
             raise ValueError(f"{aim.isna().sum()} universe stocks lack an aim weight at {eom.date()}")
         aim = aim.to_numpy()
         m = trading_speed(x.sigma, x.lam, x.wealth, gamma, float(rf[eom + MONTH]), mu, iterations)
+        vw = np.zeros_like(held)
+        if benchmark_relative:
+            me = x.panel_t.set_index("id")["me"].reindex(x.ids).to_numpy()
+            vw = me / me.sum()
         with np.errstate(all="ignore"):  # spurious Accelerate matmul flags; checked in recursive_weights
-            return m @ held + aim - m @ aim
+            return vw + m @ (held - vw) + aim - m @ aim
 
     return recursive_weights(inputs, panel, wealth, target, charge_exit_tc)
 
@@ -544,7 +582,8 @@ def pfml_weights(inputs: Mapping[pd.Timestamp, MonthInputs], aims: pd.DataFrame,
 def run_portfolio_ml(results: Mapping[str, SearchResult], panel: pd.DataFrame, wealth: pd.DataFrame,
                      cov_parts: Mapping[pd.Timestamp, CovParts], rf: pd.Series, aim_dates: Sequence[pd.Timestamp],
                      eval_dates: Sequence[pd.Timestamp], *, gamma: float, mu: float, iterations: int,
-                     charge_exit_tc: bool, label: str = "Portfolio-ML") -> dict[str, pd.DataFrame]:
+                     charge_exit_tc: bool, label: str = "Portfolio-ML", benchmark_relative: bool = False
+                     ) -> dict[str, pd.DataFrame]:
     """R ``pfml_implement`` after the per-g search: pick (g, p, λ) each December across all g, build the
     aim portfolios for ``aim_dates`` and run the weights over ``eval_dates`` from VW initial weights."""
     validation = pd.concat([r.validation for r in results.values()], ignore_index=True)
@@ -554,7 +593,7 @@ def run_portfolio_ml(results: Mapping[str, SearchResult], panel: pd.DataFrame, w
     eval_dates = pd.DatetimeIndex(sorted(eval_dates))
     inputs = month_inputs(panel, wealth, cov_parts, eval_dates, mu_col=None)
     weights = pfml_weights(inputs, aims, panel, wealth, rf, gamma=gamma, mu=mu, iterations=iterations,
-                           charge_exit_tc=charge_exit_tc)
+                           charge_exit_tc=charge_exit_tc, benchmark_relative=benchmark_relative)
     pf = portfolio_returns(weights, panel, wealth).assign(type=label)
     log.info("%s: chose\n%s", label, chosen.to_string(index=False))
     return {"validation": validation, "chosen": chosen, "aims": aims, "aim_coefs": coefs,

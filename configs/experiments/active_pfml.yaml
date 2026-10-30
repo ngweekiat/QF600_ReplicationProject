@@ -1,0 +1,7 @@
+# Trial 2 (docs/research_log.md): benchmark-relative Portfolio-ML. Active book a_t = Ω_t β on top of the
+# value-weighted universe, active risk aversion investor.gamma_te, no constant signal column (D34).
+# Run: scripts/12_active_pfml.py calibrate, then run with --override investor.gamma_te=<value> per budget.
+base: ../base.yaml
+portfolio_ml:
+  add_constant: false
+  benchmark_relative: true

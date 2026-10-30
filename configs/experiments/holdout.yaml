@@ -1,0 +1,9 @@
+# Phase 7 ONLY: the holdout 2021-01 .. 2025-12, run once with no change to any model choice. The walk-forward
+# continues: return model, β and hyperparameters keep updating each year through 2025. Never unlock in base.yaml.
+base: ../base.yaml
+paths:
+  processed: data/processed_holdout
+  outputs: outputs/holdout
+dates:
+  holdout_locked: false
+  evaluate: holdout

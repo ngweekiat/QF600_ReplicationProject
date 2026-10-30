@@ -390,3 +390,95 @@ def test_yearly_search_picks_the_same_hyperparameters():
     a, b = select_hypers(monthly.validation), select_hypers(yearly.validation)
     pd.testing.assert_frame_equal(a[["year", "p", "l_no"]], b[["year", "p", "l_no"]])
     np.testing.assert_allclose(a["cum_obj"], b["cum_obj"], rtol=1e-10)
+
+
+# --- benchmark-relative (active) Portfolio-ML, D34 -------------------------------------------------
+
+def test_scale_signals_and_feature_index_without_constant():
+    raw = np.random.default_rng(1).normal(size=(6, 4))
+    with_c, without = scale_signals(raw, None), scale_signals(raw, None, add_constant=False)
+    assert with_c.shape == (6, 5) and without.shape == (6, 4)
+    np.testing.assert_allclose(without, with_c[:, 1:])
+    np.testing.assert_allclose(without.sum(axis=0), 0.0, atol=1e-12)            # every column demeaned
+    assert feature_index(4, 8, constant=False).tolist() == [0, 1, 4, 5]          # cos 1–2, sin 1–2
+    assert feature_index(4, 8).tolist() == [0, 1, 2, 5, 6]
+
+
+def test_active_recursion_tracks_vw_plus_active_book():
+    panel, wealth, cov, rf, aims = _weights_setup(1e10)
+    inputs = month_inputs(panel, wealth, cov, W_DATES, mu_col=None)
+    kw = dict(gamma=W_GAMMA, mu=W_MU, iterations=10, charge_exit_tc=True, benchmark_relative=True)
+    vw = np.array([1, 2, 3]) / 6
+    zero = aims.assign(w_aim=0.0)
+    w0 = pfml_weights(inputs, zero, panel, wealth, rf, **kw)    # no active view: VW, then trade drift back at speed m
+    for k, (eom, g) in enumerate(w0.groupby("eom")):
+        g = g.sort_values("id")
+        mk = trading_speed(cov[eom].full(W_IDS), 2e-10 * W_IDS, 1e10, W_GAMMA, W_RF, W_MU, 10)
+        expect = vw if k == 0 else vw + mk @ (g["w_start"].to_numpy() - vw)
+        np.testing.assert_allclose(g["w"], expect, atol=1e-12)
+    w = pfml_weights(inputs, aims, panel, wealth, rf, **kw)
+    m = trading_speed(cov[W_DATES[0]].full(W_IDS), 2e-10 * W_IDS, 1e10, W_GAMMA, W_RF, W_MU, 10)
+    aim0 = aims.loc[aims["eom"] == W_DATES[0], "w_aim"].to_numpy()
+    first = w[w["eom"] == W_DATES[0]].sort_values("id")
+    np.testing.assert_allclose(first["w"], vw + (np.eye(3) - m) @ aim0, rtol=1e-12)   # a_inh = 0 at the VW start
+    second = w[w["eom"] == W_DATES[1]].sort_values("id")
+    m1 = trading_speed(cov[W_DATES[1]].full(W_IDS), 2e-10 * W_IDS, 1e10, W_GAMMA, W_RF, W_MU, 10)
+    aim1 = aims.loc[aims["eom"] == W_DATES[1], "w_aim"].to_numpy()
+    a_inh = second["w_start"].to_numpy() - vw
+    np.testing.assert_allclose(second["w"], vw + m1 @ a_inh + (np.eye(3) - m1) @ aim1, rtol=1e-12)
+    # Δπ = Δa exactly: the trade is the change of the active book against today's value weights
+    np.testing.assert_allclose(second["w"] - second["w_start"], (second["w"].to_numpy() - vw) - a_inh, atol=1e-15)
+
+
+# --- half-life discounting of β, D36 -----------------------------------------------------------------
+
+def _toy_yearly():
+    from jkmp.portfolio.portfolio_ml import YearlyMoments
+    moments, data = _toy_moments(start="2009-12-31", end="2017-11-30")
+    d = pd.Timestamp("2016-06-30")
+    return YearlyMoments(moments.columns, moments.meta, yearly_sums(moments.months),
+                         {d: (moments.months[d].ids, moments.months[d].signal)}), data
+
+
+def test_infinite_half_life_reproduces_the_undiscounted_betas_exactly():
+    ym, _ = _toy_yearly()
+    years = [2013, 2014, 2015, 2016, 2017]
+    base = search_yearly(ym, "t", [2, 4, 6], LAMBDAS, years)
+    tuned = search_yearly(ym, "t", [2, 4, 6], LAMBDAS, years, half_lives=(3, 5, 10, None))
+    for y in years:
+        for p in (2, 4, 6):
+            np.testing.assert_array_equal(tuned.coefs_by_h[np.inf][y][p], base.coefs[y][p])   # bit for bit
+    inf_rows = tuned.validation[tuned.validation["h"] == np.inf].drop(columns="h").reset_index(drop=True)
+    pd.testing.assert_frame_equal(inf_rows, base.validation.reset_index(drop=True)[inf_rows.columns])
+    assert set(tuned.validation["h"]) == {3.0, 5.0, 10.0, np.inf}
+    assert "h" in select_hypers(tuned.validation)
+
+
+def test_discounted_beta_by_hand():
+    ym, _ = _toy_yearly()
+    h, y = 3.0, 2016
+    delta = 0.5 ** (1 / h)
+    use = [s for s in sorted(ym.years) if s <= y - 1]
+    wts = np.array([delta ** (y - s) for s in use])
+    r_bar = sum(w * ym.years[s].r_sum for w, s in zip(wts, use)) / sum(w * ym.years[s].n for w, s in zip(wts, use))
+    d_bar = sum(w * ym.years[s].d_sum for w, s in zip(wts, use)) / sum(w * ym.years[s].n for w, s in zip(wts, use))
+    from jkmp.portfolio.portfolio_ml import coefs_from_sums
+    got = coefs_from_sums(ym.years, ym, [4], LAMBDAS, [y], half_life=h)[y][4]
+    c = feature_index(4, P_MAX)
+    np.testing.assert_allclose(got, ridge_coefs(d_bar[np.ix_(c, c)], r_bar[c], LAMBDAS), rtol=1e-10)
+
+
+def test_aims_use_the_chosen_half_life():
+    ym, _ = _toy_yearly()
+    res = search_yearly(ym, "t", [2, 4, 6], LAMBDAS, [2016], half_lives=(3, None))
+    d = pd.Timestamp("2016-06-30")
+    chosen = pd.DataFrame({"year": [2016], "tag": ["t"], "p": [4], "l_no": [1], "l": [LAMBDAS[1]], "h": [3.0]})
+    aims, _ = aim_portfolios({"t": res}, chosen, [d])
+    c = feature_index(4, P_MAX)
+    np.testing.assert_allclose(aims["w_aim"], ym.signals[d][1][:, c] @ res.coefs_by_h[3.0][2016][4][:, 1])
+    assert not np.allclose(res.coefs_by_h[3.0][2016][4], res.coefs_by_h[np.inf][2016][4])
+
+
+def test_half_life_config_accepts_null():
+    from jkmp.config import load_config
+    assert load_config(overrides=["portfolio_ml.half_life_years=[3, 5, 10, null]"]).portfolio_ml.half_life_years == (3.0, 5.0, 10.0, None)

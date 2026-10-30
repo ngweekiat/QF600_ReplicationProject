@@ -90,7 +90,7 @@ def pfml_counterfactual_aims(universe: pd.DataFrame, perms: Mapping[pd.Timestamp
             raw = np.hstack([raw, x])
         ids = rows["id"].to_numpy()
         vol = cov_parts[eom].vol(ids) if meta["scale_by_vol"] else None
-        s = scale_signals(raw, vol)
+        s = scale_signals(raw, vol, meta.get("add_constant", True))
         idx = [columns.index(name) for name in c["column"]]
         with np.errstate(all="ignore"):  # spurious Accelerate matmul flags; checked below
             w_aim = s[:, idx] @ c["beta"].to_numpy()

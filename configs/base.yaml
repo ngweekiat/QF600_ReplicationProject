@@ -43,6 +43,7 @@ dates:
   holdout_end: 2025-12-31
   data_end: 2025-12-31         # last month of data pulled and screened (needed for the holdout)
   holdout_locked: true         # no performance number with a return month after test_end while true
+  evaluate: test               # evaluation window of scripts 04–07, 12: test, or holdout (configs/experiments/holdout*.yaml only)
 
 # ---------------------------------------------------------------------------
 # Investable universe. R: NYSE only, above-median market cap, 12/12 addition/deletion rule.
@@ -115,6 +116,9 @@ investor:
   wealth_end_date: 2020-12-31  # anchor: wealth rolled back before it and forward after it with the market total return
   mu: 0.007                    # R: pf_set$mu — expected monthly portfolio growth used in m (Lemma 1)
   m_iterations: 10             # fixed-point iterations for m
+  gamma_te: 100.0              # active risk aversion (benchmark_relative only); set per run from the calibration
+  te_targets: [0.01, 0.02, 0.04]                                  # ex-ante tracking-error budgets (annual) to calibrate gamma_te to
+  gamma_te_grid: [1.0, 2.5, 5.0, 10.0, 25.0, 50.0, 100.0, 250.0]  # calibration grid (scripts/12_active_pfml.py calibrate)
   gamma_grid: [1.0, 5.0, 10.0, 20.0, 100.0]                      # frontier (Fig 1A)
   wealth_grid: [1.0e+9, 1.0e+10, 5.0e+10, 1.0e+11, 2.5e+11]      # frontier by investor size (Fig 1B)
 
@@ -153,6 +157,9 @@ portfolio_ml:
   rff_variance_grid: [0.049787068367863944, 0.1353352832366127]  # exp(-3), exp(-2)
   scale_by_vol: true           # R: scale = T — aim = diag(1/sigma) * RF * beta
   add_original_features: false # R: orig_feat = F
+  add_constant: true           # R: constant := 1 signal column (with scale_by_vol an inverse-vol long book); false for the active book (D34)
+  benchmark_relative: false    # true: active book a_t = Ω_t β on top of the VW universe, risk aversion investor.gamma_te (D34)
+  half_life_years: [null]      # half-lives h for the yearly discount δ = 0.5^(1/h) of r̃, Σ̃ in β; null = equal weights (R); tuned each December (D36)
 
 # ---------------------------------------------------------------------------
 # Static-ML* second tuning layer (Eq. 41). R: settings$pf$hps$static, cov_type = "cov_add".
@@ -172,6 +179,17 @@ factor_ml:
 # Implementable efficient frontier (Fig. 1). R: settings$ef, 6 - Implementable efficient frontier.R.
 # Every (investor.gamma_grid x investor.wealth_grid) point re-tunes Static-ML* and Portfolio-ML.
 # ---------------------------------------------------------------------------
+monitor:                       # scripts/11_monitor.py: monthly flags for the live (holdout) strategy
+  ir_window: 36                # flag rolling 36-month net IR < 0
+  drawdown_te_multiple: 2.0    # flag drawdown of cumulative net active return > 2 × TE budget
+  te_budget: 0.02              # annual TE budget of the monitored active book
+  beta_limits: [0.8, 1.2]      # rolling-ir_window beta to the benchmark must stay inside
+  theme_limit: 1.0             # |active theme exposure Xᵀa| (cross-sectional sd units) must stay below
+  ic_window: 12                # rolling 12-month mean rank IC ...
+  ic_negative_months: 6        # ... flag if < 0 for 6 consecutive months
+  tc_months: 3                 # flag realised (vol-scaled Λ) trading cost above predicted for 3 consecutive months
+  bias_window: 36              # bias statistic sd(active / ex-ante TE) over 36 months, flag outside 1 ± √(2/T)
+
 grids:
   n_jobs: 5                    # joblib workers (each runs one (gamma, wealth) point)
   frontier_vol_max: 0.5        # Markowitz-ML / Factor-ML scaled to target vols 0 .. max (R: vol_range)
@@ -192,6 +210,10 @@ reporting:
   subperiods:
     - {label: 1981–2000, start: 1981-01-31, end: 2000-12-31}
     - {label: 2001–2020, start: 2001-01-31, end: 2020-12-31}
+  ic_size_buckets: [[1, 80], [81, 250]]   # market-cap rank buckets among screened stocks for rank IC by size (trial 3)
+  capacity_ir: 0.3                        # capacity = AUM where the net information ratio falls below this (trial 3)
+  cost_vix_start: 1990-01-31              # VIX-scaled cost sensitivity: VIXCLS starts in 1990
+  cost_vol_window: 60                     # stock-level cost sensitivity: σ̄_i,t = mean σ_i over the past 60 months (≤ t)
 
 # ---------------------------------------------------------------------------
 # Market regimes over the test window (our extension). FRED: USREC (NBER recession, monthly),

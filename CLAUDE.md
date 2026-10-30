@@ -37,7 +37,16 @@ against Markowitz-ML, Factor-ML, Static-ML\* and simple benchmarks on returns *n
   `scripts/09_feature_importance.py` → Fig. 5. Fitted return models saved by scripts/03 (`return_model/models.npz`).
 - Regimes done (extension): `evaluation/regimes.py`, `scripts/10_regimes.py` — FRED USREC/VIX/FEDFUNDS labels,
   cumulative utility with shaded episodes, Table 2 stats by regime, VIX-scaled re-costing → `outputs/regimes/`.
-- **Not yet:** Rank-ML, Table 3, Fig. 2.
+- **Rebaseline (Phases 0–3, 2026-10-30):** paper timeline, data 1952-12 → 2025-12, test 1981–2020, holdout 2021–2025 locked
+  by `jkmp.evaluation.holdout` (every evaluation function takes `dates`). Baseline = git tag `baseline-v1` (research log trial 1);
+  baseline tables `scripts/11_tables.py` → `outputs/tables/` (Table 2 vs paper `docs/paper_tables/`, Tables 3–4, sub-periods,
+  grid edges, Fig. D.1). Old 1993-design results archived in `outputs/_archive_1993/`, `data/processed/_archive_1993/`.
+- **Iterations (Phases 4–6; `docs/research_log.md`, 6 trials):** trial 2 benchmark-relative Portfolio-ML (`portfolio/active.py`,
+  `scripts/12_active_pfml.py`, kept); trial 3 top-250 universe (`configs/experiments/universe_250.yaml`, `scripts/13_breadth.py`,
+  kept = **final version**); trial 4 half-life β (`configs/experiments/halflife.yaml`, `scripts/14_halflife.py`, killed).
+- **Holdout (Phase 7, run once):** `configs/experiments/holdout{,_linear,_final}.yaml`, `scripts/15_holdout.py` → `outputs/holdout/tables/`;
+  monitor `scripts/11_monitor.py` → `outputs/holdout_final/monitor/`. Summary in `docs/results_summary.md`.
+- **Not yet:** Rank-ML, Fig. 2.
 
 New portfolio methods should produce target weights `id, eom, w` and reuse
 `accounting.add_start_weights` (targets independent of inherited weights) or
@@ -138,6 +147,13 @@ uv venv --python 3.12 .venv && uv pip install --python .venv/bin/python -e ".[de
 .venv/bin/python scripts/08_grids.py [--force] [--plots-only]  # γ × wealth frontier, Fig 1A/1B, capacity (needs 01–04)
 .venv/bin/python scripts/09_feature_importance.py  # theme permutations, Fig 5 (needs 03, 07)
 .venv/bin/python scripts/10_regimes.py [--force]   # FRED regimes, cumulative utility, VIX re-costing (needs 04, 05, 07)
+.venv/bin/python scripts/11_tables.py              # baseline Tables 2 (vs paper), 3, 4, sub-periods, grid edges, Fig D.1 (needs 03–07)
+.venv/bin/python scripts/12_active_pfml.py {calibrate|run|capacity|report} --config configs/experiments/active_pfml.yaml [--override investor.gamma_te=X]
+.venv/bin/python scripts/13_breadth.py --te 0.02     # trial 3: top-250 vs top-80, rank IC by size, capacity, cost sensitivity
+.venv/bin/python scripts/14_halflife.py              # trial 4: half-life β vs trial 3
+# Holdout (Phase 7 only): scripts 03–07 with --config configs/experiments/holdout{,_linear}.yaml; 04 and 12 run with holdout_final.yaml
+.venv/bin/python scripts/15_holdout.py               # holdout Tables 2–3, decay, final active stats, deflated Sharpe
+.venv/bin/python scripts/11_monitor.py               # monthly monitor flags + one-page dashboard (needs the holdout runs)
 ```
 
 **Python 3.11–3.13 only.** `wrds` pins pandas < 2.3, which has no Python 3.14 wheels; a source
@@ -171,7 +187,7 @@ config, notebooks, logs or chat messages.
 | `universe_stats.csv` | Per membership year: size, kept / added / filled, dropped, turnover, early exits |
 | `screen_log.csv` | Rows excluded by each screen |
 | `covariance/cov_loadings.parquet`, `cov_factor.parquet` | Σ parts per month-end for universe stocks; load with `jkmp.covariance.load_covariance()` → `{eom: CovParts}`, then `.full(ids)` / `.vol(ids)`. **Monthly** units |
-| `predictions.parquet` | `id, eom, year, pred_ld1` for all `valid_data` stocks, return years 2015–2025 |
+| `predictions.parquet` | `id, eom, year, pred_ld1` for all `valid_data` stocks, return years 1971–2020 (to 2025 in `processed_holdout/`) |
 | `return_model/models.npz` | Fitted model per return year (g, p, λ, β, intercept) + the shared draws Z; `return_model.load_models()` |
 | `return_model/hp_search.parquet`, `chosen.csv`, `diagnostics.csv` | Validation MSE for every (year, g, p, λ); chosen hyperparameters; OOS R² and rank IC per year |
 | `grids/{gammaG_wealthWB}/pfml_{rff_g*,raw}.npz` | Grid cache: Portfolio-ML yearly sums of r̃, Σ̃ + test-window signals per (γ, wealth, signal set), ~70 MB each (RFF); checked against the run's settings and rebuilt if stale |
@@ -182,8 +198,8 @@ config, notebooks, logs or chat messages.
 
 | File | Contents |
 | --- | --- |
-| `benchmarks/{weights,pf,table2}_{test,oos}.*` | Market, 1/N, Minimum variance, Markowitz-ML, Factor-ML; `test` = returns 2020–2025, `oos` = returns 2015–2025 |
-| `static_ml/validation.parquet` | Monthly `pf_ts_fun` rows for every (k, u, g), returns 2015–2025 (`hp_no, k, u, g`) |
+| `benchmarks/{weights,pf,table2}_{test,oos}.*` | Market, 1/N, Minimum variance, Markowitz-ML, Factor-ML; `test` = returns 1981–2020, `oos` = returns 1971–2020 |
+| `static_ml/validation.parquet` | Monthly `pf_ts_fun` rows for every (k, u, g), returns 1971–2020 (`hp_no, k, u, g`) |
 | `static_ml/chosen.csv` | Static-ML\* choice per return year (`year, eom_ret` of the December chosen, `k, u, g, cum_obj`) |
 | `static_ml/weights.parquet`, `pf.parquet` | Static-ML\* weights; Static-ML and Static-ML\* monthly performance over the test window |
 | `table2_test.csv` | Combined Table 2 for the test window (benchmarks, Static-ML(\*), Portfolio-ML, Portfolio-ML (linear)); rebuilt by 05 and 07 |
@@ -194,12 +210,13 @@ config, notebooks, logs or chat messages.
 | `figures/fig5_feature_importance` (.png, .pdf) | Fig. 5: utility drop by theme — Portfolio-ML (net), Portfolio-ML (linear, net), Markowitz-ML (gross) |
 | `regimes/labels.csv`, `regime_table.csv` | Month labels (VIX, Fed stance, recession); Table 2 stats per (dimension, regime, method) |
 | `regimes/vix_recost.csv`, `cumulative_utility.csv` | TC / R_TC / Utility with Λ ∝ VIX vs base; monthly utility flows and running sums |
-| `figures/cumulative_utility` (.png, .pdf) | Cumulative utility 2020–2025 with the shaded episodes in `regimes.episodes` |
+| `figures/cumulative_utility` (.png, .pdf) | Cumulative utility over the test window with the shaded episodes in `regimes.episodes` (not re-run for 1981–2020; episodes still list 2020–2025 events) |
 | `portfolio_ml/{rff,raw}/validation.parquet` | Realised utility `obj`, `cum_obj`, `rank` per (tag/g, p, λ) and return month, hp years 2015–2025 |
 | `portfolio_ml/{rff,raw}/chosen.csv`, `aims.parquet`, `aim_coefs.parquet` | (g, p, λ) picked each December for the next return year; aim weights `id, eom, w_aim` (formation 2015-12 → 2025-11); the β used each month |
 | `portfolio_ml/{rff,raw}/weights.parquet`, `pf.parquet` | Portfolio-ML weights π_t = m·π_start + (I − m)·aim and monthly performance over the test window (VW start) |
 
-Covariance calibration (2005–2025): Σ always positive definite; realised/predicted vol ≈ 0.85 for
+Covariance calibration (1963–2020, `covariance.vol_bias`): realised/predicted vol for the EW universe portfolio 1.30–1.46
+before 1990, 0.80–0.87 in 2000–2019, single stocks 0.88–1.06. Earlier (2005–2025): ≈ 0.85 for
 universe portfolios and 0.74 for single stocks — risk is overpredicted, mainly because daily → monthly
 ×21 scaling ignores the negative autocorrelation of daily returns (the R code does the same).
 

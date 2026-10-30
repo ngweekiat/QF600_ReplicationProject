@@ -1,6 +1,6 @@
 """Portfolio-ML inputs (R pfml_input_fun): per formation month r̃, Σ̃ = risk + tc, and the signals S_t.
 
-Formation months run from the first Σ + (lb+1) months (R dates_m2) to dates.test_end − 1 month.
+Formation months run from the first Σ + (lb+1) months (R dates_m2) to the end of the evaluation window − 1 month.
   portfolio_ml.use_rff = true  : random Fourier features at p_max = max(portfolio_ml.p_grid), one run per
                                  RFF variance g -> data/processed/pfml/rff_g{g:.4f}/
   portfolio_ml.use_rff = false : the ranked characteristics themselves (linear Portfolio-ML,
@@ -22,6 +22,7 @@ import pandas as pd
 from jkmp.config import load_config
 from jkmp.covariance import load_covariance
 from jkmp.data.prepare import risk_free_monthly
+from jkmp.evaluation.holdout import evaluation_window
 from jkmp.portfolio.portfolio_ml import build_moments, save_moments, signal_set
 
 MONTH = pd.offsets.MonthEnd(1)
@@ -43,7 +44,7 @@ def main() -> None:
 
     lb = cfg.universe.lookback_months
     first = min(cov) + MONTH * (lb + 1)
-    dates = pd.DatetimeIndex([d for d in sorted(cov) if first <= d <= pd.Timestamp(cfg.dates.test_end) - MONTH])
+    dates = pd.DatetimeIndex([d for d in sorted(cov) if first <= d <= evaluation_window(cfg.dates)[1] - MONTH])
     pm = cfg.portfolio_ml
     common = dict(gamma=cfg.investor.gamma, mu=cfg.investor.mu, lb=lb, iterations=cfg.investor.m_iterations,
                   scale_by_vol=pm.scale_by_vol)

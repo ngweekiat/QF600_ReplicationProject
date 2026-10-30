@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import logging
 import json
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -159,6 +160,34 @@ def load_models(path: Path) -> tuple[dict[int, YearModel], np.ndarray]:
         models = {d["year"]: YearModel(d["year"], d["g"], d["p"], d["lam"], f[f"coef_{d['year']}"], d["b0"])
                   for d in meta}
         return models, f["z"]
+
+
+def rank_ic_by_size(predictions: pd.DataFrame, panel: pd.DataFrame, buckets: Sequence[Sequence[int]],
+                    dates: DatesConfig) -> pd.DataFrame:
+    """Mean monthly Spearman rank IC of pred_ld1 vs ret_ld1 within market-cap rank buckets (rank among the
+    screened ``valid_data`` stocks each month, 1 = largest), per decade of the return month and overall."""
+    check_return_months(predictions, dates, "rank_ic_by_size")
+    d = predictions[["id", "eom", "pred_ld1"]].merge(panel.loc[panel["valid_data"], ["id", "eom", "me", "ret_ld1"]],
+                                                     on=["id", "eom"])
+    d["size_rank"] = d.groupby("eom")["me"].rank(ascending=False, method="first")
+    out = []
+    for lo, hi in buckets:
+        b = d[d["size_rank"].between(lo, hi)]
+        ic = b.groupby("eom")[["pred_ld1", "ret_ld1"]].apply(lambda x: x["pred_ld1"].rank().corr(x["ret_ld1"].rank()))
+        decade = (ic.index + pd.offsets.MonthEnd(1)).year // 10 * 10
+        label = f"{lo}-{hi}"
+        out.append(ic.groupby(decade).agg(["mean", "size"]).assign(bucket=label).rename_axis("decade").reset_index())
+        out.append(pd.DataFrame({"decade": ["all"], "mean": [ic.mean()], "size": [len(ic)], "bucket": [label]}))
+    return pd.concat(out, ignore_index=True).rename(columns={"mean": "rank_ic", "size": "months"})
+
+
+def monthly_rank_ic(predictions: pd.DataFrame, panel: pd.DataFrame, dates: DatesConfig) -> pd.Series:
+    """Spearman rank IC of pred_ld1 vs ret_ld1 across the portfolio universe, one value per return month."""
+    check_return_months(predictions, dates, "monthly_rank_ic")
+    d = predictions[["id", "eom", "pred_ld1"]].merge(panel.loc[panel["in_universe"], ["id", "eom", "ret_ld1"]],
+                                                     on=["id", "eom"])
+    ic = d.groupby("eom")[["pred_ld1", "ret_ld1"]].apply(lambda x: x["pred_ld1"].rank().corr(x["ret_ld1"].rank()))
+    return pd.Series(ic.to_numpy(), index=ic.index + pd.offsets.MonthEnd(1), name="rank_ic").rename_axis("eom_ret")
 
 
 def prediction_diagnostics(predictions: pd.DataFrame, panel: pd.DataFrame, dates: DatesConfig) -> pd.DataFrame:

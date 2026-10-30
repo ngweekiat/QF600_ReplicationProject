@@ -1,6 +1,6 @@
 """Portfolio-ML (R pfml_implement): coefficient search, (g, p, λ) choice, aim portfolios, weights, Table 2.
 
-hp years run from return_model.pred_years[0] to the year of dates.test_end. For hp year y,
+hp years run from return_model.pred_years[0] to the last year of the evaluation window. For hp year y,
 β = (Σ̄ + λI)⁻¹ r̄ uses every month with returns realised by Dec y−1; each December the (g, p, λ) with the
 highest cumulative realised utility since the first hp year is used for the next return year, so aims start a
 year after it.
@@ -26,6 +26,7 @@ import pandas as pd
 from jkmp.config import load_config
 from jkmp.covariance import load_covariance
 from jkmp.data.prepare import risk_free_monthly
+from jkmp.evaluation.holdout import evaluation_window
 from jkmp.evaluation.metrics import table2
 from jkmp.portfolio.portfolio_ml import load_moments, return_year, run_portfolio_ml, search, signal_set
 
@@ -42,7 +43,8 @@ def main() -> None:
     cfg = load_config(args.config, args.override)
     processed, outputs, pm = cfg.paths.processed, cfg.paths.outputs, cfg.portfolio_ml
     sig, tags, label = signal_set(pm.use_rff, pm.rff_variance_grid)
-    hp_years = list(range(cfg.return_model.pred_years[0], cfg.dates.test_end.year + 1))
+    start, end = evaluation_window(cfg.dates)
+    hp_years = list(range(cfg.return_model.pred_years[0], end.year + 1))
 
     results, aim_dates = {}, None
     for tag in tags:
@@ -56,8 +58,7 @@ def main() -> None:
     cov = load_covariance(processed / "covariance")
     rf = risk_free_monthly(pd.read_parquet(cfg.paths.raw / "ff_factors_monthly.parquet"))
     ret = pd.DatetimeIndex(aim_dates) + MONTH
-    eval_dates = pd.DatetimeIndex(aim_dates)[(ret >= pd.Timestamp(cfg.dates.test_start))
-                                             & (ret <= pd.Timestamp(cfg.dates.test_end))]
+    eval_dates = pd.DatetimeIndex(aim_dates)[(ret >= start) & (ret <= end)]
     res = run_portfolio_ml(results, panel, wealth, cov, rf, aim_dates, eval_dates, gamma=cfg.investor.gamma,
                            mu=cfg.investor.mu, iterations=cfg.investor.m_iterations,
                            charge_exit_tc=cfg.portfolio.charge_exit_tc, label=label)

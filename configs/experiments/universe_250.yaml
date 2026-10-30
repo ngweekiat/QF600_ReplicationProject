@@ -1,0 +1,11 @@
+# Trial 3 (docs/research_log.md): active Portfolio-ML (trial 2 design) on a top-250 universe. Separate data and
+# output folders so the top-80 baseline and trial 2 are untouched. Benchmark = this universe's VW portfolio
+# (the Market row of scripts/04 run with this config). gamma_te: re-calibrated to 2% ex-ante TE at N = 250.
+base: active_pfml.yaml
+paths:
+  processed: data/processed_u250
+  outputs: outputs/u250
+universe:
+  target_n: 250
+  entry_rank: 220
+  exit_rank: 300

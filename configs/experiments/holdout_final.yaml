@@ -1,0 +1,10 @@
+# Phase 7 ONLY: the final kept version (trial 3: active Portfolio-ML, top-250, γ_TE = 49.09) over the holdout.
+base: universe_250.yaml
+paths:
+  processed: data/processed_u250_holdout
+  outputs: outputs/holdout_final
+investor:
+  gamma_te: 49.09
+dates:
+  holdout_locked: false
+  evaluate: holdout

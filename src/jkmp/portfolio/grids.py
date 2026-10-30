@@ -20,7 +20,7 @@ import pandas as pd
 
 from jkmp.config import Config, DatesConfig
 from jkmp.covariance import CovParts
-from jkmp.evaluation.holdout import check_return_months
+from jkmp.evaluation.holdout import check_return_months, evaluation_window
 from jkmp.evaluation.metrics import table2
 from jkmp.portfolio.portfolio_ml import (build_yearly_moments, load_yearly_moments, run_portfolio_ml,
                                          save_yearly_moments, search_yearly, signal_set)
@@ -51,7 +51,7 @@ def grid_inputs(cfg: Config, panel: pd.DataFrame, wealth: pd.DataFrame, cov: Map
     formation = pd.DatetimeIndex(sorted(cov))
     ret = formation + MONTH
     first_year = cfg.return_model.pred_years[0]
-    test_start, test_end = pd.Timestamp(cfg.dates.test_start), pd.Timestamp(cfg.dates.test_end)
+    test_start, test_end = evaluation_window(cfg.dates)
     lb = cfg.universe.lookback_months
     first = formation[0] + MONTH * (lb + 1)
     keep = panel["id"].isin(panel.loc[panel["in_universe"], "id"].unique())

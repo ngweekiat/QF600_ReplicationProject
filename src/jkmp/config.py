@@ -22,8 +22,8 @@ import math
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from types import MappingProxyType
-from typing import Any, get_args, get_origin, get_type_hints
+from types import MappingProxyType, NoneType, UnionType
+from typing import Any, Union, get_args, get_origin, get_type_hints
 
 import yaml
 
@@ -78,6 +78,7 @@ class DatesConfig:
     holdout_end: dt.date
     data_end: dt.date
     holdout_locked: bool
+    evaluate: str
 
     def __post_init__(self) -> None:
         order = ["warmup_start", "validation_start", "validation_end", "test_start", "test_end", "holdout_start"]
@@ -88,6 +89,8 @@ class DatesConfig:
             )
         _require(self.holdout_start <= self.holdout_end <= self.data_end,
                  "dates must satisfy holdout_start <= holdout_end <= data_end")
+        _require(self.evaluate in ("test", "holdout"), "dates.evaluate must be 'test' or 'holdout'")
+        _require(self.evaluate == "test" or not self.holdout_locked, "dates.evaluate: holdout needs holdout_locked: false")
 
 
 @dataclass(frozen=True)
@@ -173,6 +176,9 @@ class InvestorConfig:
     wealth_end_date: dt.date
     mu: float
     m_iterations: int
+    gamma_te: float
+    te_targets: tuple[float, ...]
+    gamma_te_grid: tuple[float, ...]
     gamma_grid: tuple[float, ...]
     wealth_grid: tuple[float, ...]
 
@@ -180,6 +186,8 @@ class InvestorConfig:
         _require(self.gamma > 0 and all(g > 0 for g in self.gamma_grid), "risk aversion must be > 0")
         _require(self.wealth > 0 and all(w > 0 for w in self.wealth_grid), "wealth must be > 0")
         _require(self.m_iterations > 0, "investor.m_iterations must be > 0")
+        _require(self.gamma_te > 0 and all(g > 0 for g in self.gamma_te_grid), "gamma_te must be > 0")
+        _require(all(0 < t < 1 for t in self.te_targets), "investor.te_targets are annual fractions in (0, 1)")
 
 
 @dataclass(frozen=True)
@@ -228,9 +236,14 @@ class PortfolioMLConfig:
     rff_variance_grid: tuple[float, ...]
     scale_by_vol: bool
     add_original_features: bool
+    add_constant: bool
+    benchmark_relative: bool
+    half_life_years: tuple[float | None, ...]
 
     def __post_init__(self) -> None:
         _require_even(self.p_grid, "portfolio_ml.p_grid")
+        _require(len(self.half_life_years) >= 1 and all(h is None or h > 0 for h in self.half_life_years),
+                 "portfolio_ml.half_life_years: positive years or null (= no decay)")
 
 
 @dataclass(frozen=True)
@@ -288,9 +301,34 @@ class RegimesConfig:
 class ReportingConfig:
     main_types: tuple[str, ...]
     subperiods: tuple[EpisodeConfig, ...]   # label, start, end (return months)
+    ic_size_buckets: tuple[tuple[int, ...], ...]
+    capacity_ir: float
+    cost_vix_start: dt.date
+    cost_vol_window: int
 
     def __post_init__(self) -> None:
         _require(len(self.main_types) >= 2, "reporting.main_types needs at least two methods")
+        _require(all(len(b) == 2 and 1 <= b[0] <= b[1] for b in self.ic_size_buckets),
+                 "reporting.ic_size_buckets must be [first, last] rank pairs")
+        _require(self.cost_vol_window >= 1, "reporting.cost_vol_window must be >= 1")
+
+
+@dataclass(frozen=True)
+class MonitorConfig:
+    ir_window: int
+    drawdown_te_multiple: float
+    te_budget: float
+    beta_limits: tuple[float, ...]
+    theme_limit: float
+    ic_window: int
+    ic_negative_months: int
+    tc_months: int
+    bias_window: int
+
+    def __post_init__(self) -> None:
+        _require(len(self.beta_limits) == 2 and self.beta_limits[0] < self.beta_limits[1], "monitor.beta_limits: [low, high]")
+        _require(min(self.ir_window, self.ic_window, self.ic_negative_months, self.tc_months, self.bias_window) >= 1,
+                 "monitor windows must be >= 1")
 
 
 @dataclass(frozen=True)
@@ -321,6 +359,7 @@ class Config:
     portfolio_ml: PortfolioMLConfig
     static_ml: StaticMLConfig
     factor_ml: FactorMLConfig
+    monitor: MonitorConfig
     grids: GridsConfig
     feature_importance: FeatureImportanceConfig
     reporting: ReportingConfig
@@ -412,6 +451,9 @@ def _coerce(tp: Any, value: Any, where: str) -> Any:
     if dataclasses.is_dataclass(tp):
         return _build(tp, value, where)
     origin = get_origin(tp)
+    if origin in (Union, UnionType) and NoneType in get_args(tp):  # X | None: YAML null is allowed
+        (inner,) = [a for a in get_args(tp) if a is not NoneType]
+        return None if value is None else _coerce(inner, value, where)
     if origin is tuple:
         _require(isinstance(value, Sequence) and not isinstance(value, str), f"{where} must be a list")
         (item_tp, _ellipsis) = get_args(tp)

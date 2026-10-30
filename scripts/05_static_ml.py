@@ -15,6 +15,7 @@ import pandas as pd
 
 from jkmp.config import load_config
 from jkmp.covariance import load_covariance
+from jkmp.evaluation.holdout import evaluation_window
 from jkmp.evaluation.metrics import table2
 from jkmp.portfolio.static_ml import hyper_grid, run_static_ml
 
@@ -38,8 +39,9 @@ def main() -> None:
     formation = pd.DatetimeIndex(sorted(cov))
     ret = formation + MONTH
     first_year = cfg.return_model.pred_years[0]
-    val_dates = formation[(ret >= pd.Timestamp(first_year, 1, 31)) & (ret <= pd.Timestamp(cfg.dates.test_end))]
-    eval_dates = formation[(ret >= pd.Timestamp(cfg.dates.test_start)) & (ret <= pd.Timestamp(cfg.dates.test_end))]
+    start, end = evaluation_window(cfg.dates)
+    val_dates = formation[(ret >= pd.Timestamp(first_year, 1, 31)) & (ret <= end)]
+    eval_dates = formation[(ret >= start) & (ret <= end)]
     s = cfg.static_ml
     res = run_static_ml(panel, wealth, cov, val_dates, eval_dates, cfg.investor.gamma,
                         hyper_grid(s.k_grid, s.u_grid, s.g_grid), cfg.portfolio.charge_exit_tc)
