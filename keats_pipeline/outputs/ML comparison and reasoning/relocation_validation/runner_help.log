@@ -1,0 +1,19 @@
+usage: run_comparison.py [-h]
+                         [--only {all,performance,inference,robustness,audit}]
+                         [--universe {all,us_large,us_mid,eu_large}]
+                         [--output OUTPUT] [--bootstrap-reps BOOTSTRAP_REPS]
+                         [--seed SEED] [--run-tests]
+
+Evaluate immutable saved Keats outputs. No model runners are imported or
+invoked.
+
+options:
+  -h, --help            show this help message and exit
+  --only {all,performance,inference,robustness,audit}
+  --universe {all,us_large,us_mid,eu_large}
+  --output OUTPUT       New, non-existing directory under
+                        keats_pipeline/outputs/ML comparison and reasoning
+  --bootstrap-reps BOOTSTRAP_REPS
+  --seed SEED
+  --run-tests           Run comparison and existing Keats tests; save the log
+                        under validation/

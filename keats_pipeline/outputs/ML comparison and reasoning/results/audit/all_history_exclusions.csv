@@ -1,0 +1,3 @@
+dataset,stock_id,formation_month_end,return_month_end,missing_history_month_end,reason,scope
+us_mid/u250,88818,2011-12-31,2012-01-31,2010-12-31,Excluded for this stock/month: required lagged history not reported by WRDS,prepared inputs only; no saved primary portfolio
+us_mid/u250,91135,2011-12-31,2012-01-31,2010-12-31,Excluded for this stock/month: required lagged history not reported by WRDS,prepared inputs only; no saved primary portfolio

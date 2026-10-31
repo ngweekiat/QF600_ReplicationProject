@@ -1,0 +1,18 @@
+dataset,artifact,status,reason
+us_large/u250,portfolio_ml/raw/pf.parquet,SKIPPED,No saved output; no model was fitted.
+us_large/u250,active/gte*/pf.parquet,SKIPPED,No saved active/half-life strategy returns; no fitting or calibration performed.
+us_large/u250_hl,active/gte*/pf.parquet,SKIPPED,No saved active/half-life strategy returns; no fitting or calibration performed.
+us_mid/base,active/gte*/pf.parquet,SKIPPED,No saved active/half-life strategy returns; no fitting or calibration performed.
+us_mid/u250,benchmarks/pf_test.parquet,SKIPPED,No saved output; no model was fitted.
+us_mid/u250,static_ml/pf.parquet,SKIPPED,No saved output; no model was fitted.
+us_mid/u250,portfolio_ml/rff/pf.parquet,SKIPPED,No saved output; no model was fitted.
+us_mid/u250,portfolio_ml/raw/pf.parquet,SKIPPED,No saved output; no model was fitted.
+us_mid/u250,active/gte*/pf.parquet,SKIPPED,No saved active/half-life strategy returns; no fitting or calibration performed.
+us_mid/u250_hl,active/gte*/pf.parquet,SKIPPED,No saved active/half-life strategy returns; no fitting or calibration performed.
+eu_large/base,active/gte*/pf.parquet,SKIPPED,No saved active/half-life strategy returns; no fitting or calibration performed.
+eu_large/u250,benchmarks/pf_test.parquet,SKIPPED,No saved output; no model was fitted.
+eu_large/u250,static_ml/pf.parquet,SKIPPED,No saved output; no model was fitted.
+eu_large/u250,portfolio_ml/rff/pf.parquet,SKIPPED,No saved output; no model was fitted.
+eu_large/u250,portfolio_ml/raw/pf.parquet,SKIPPED,No saved output; no model was fitted.
+eu_large/u250,active/gte*/pf.parquet,SKIPPED,No saved active/half-life strategy returns; no fitting or calibration performed.
+eu_large/u250_hl,active/gte*/pf.parquet,SKIPPED,No saved active/half-life strategy returns; no fitting or calibration performed.

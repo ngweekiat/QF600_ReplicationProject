@@ -1,0 +1,5 @@
+dataset,strategy,k,u,g,source,interpretation
+us_large/base,Static-ML,1.0,1.0,0.0,"jkmp.portfolio.static_ml.run_static_ml fixed tuple (1,1,0)",fixed rule; no annual portfolio hyperparameter selection; inherited validation path begins before test
+us_large/u250,Static-ML,1.0,1.0,0.0,"jkmp.portfolio.static_ml.run_static_ml fixed tuple (1,1,0)",fixed rule; no annual portfolio hyperparameter selection; inherited validation path begins before test
+us_mid/base,Static-ML,1.0,1.0,0.0,"jkmp.portfolio.static_ml.run_static_ml fixed tuple (1,1,0)",fixed rule; no annual portfolio hyperparameter selection; inherited validation path begins before test
+eu_large/base,Static-ML,1.0,1.0,0.0,"jkmp.portfolio.static_ml.run_static_ml fixed tuple (1,1,0)",fixed rule; no annual portfolio hyperparameter selection; inherited validation path begins before test

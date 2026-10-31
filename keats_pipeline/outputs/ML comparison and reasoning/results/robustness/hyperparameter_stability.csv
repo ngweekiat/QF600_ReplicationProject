@@ -1,0 +1,68 @@
+dataset,strategy,parameter,scope,n_selections,n_distinct,n_year_to_year_changes,switch_fraction,mode,interpretation
+us_large/base,return_prediction_model,g,saved_primary_portfolio_inputs,11,2,3,0.3,0.0497870683678639,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,return_prediction_model,p,saved_primary_portfolio_inputs,11,5,4,0.4,64.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,return_prediction_model,lam,saved_primary_portfolio_inputs,11,10,9,0.9,0.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Static-ML*,g,saved_primary_portfolio_inputs,11,2,1,0.1,0.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Static-ML*,k,saved_primary_portfolio_inputs,11,3,5,0.5,0.3333333333333333,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Static-ML*,u,saved_primary_portfolio_inputs,11,2,2,0.2,0.5,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML,g,saved_primary_portfolio_inputs,11,2,3,0.3,0.0497870683678639,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML,p,saved_primary_portfolio_inputs,11,3,3,0.3,16.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML,l,saved_primary_portfolio_inputs,11,8,9,0.9,62.89169634596307,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML,h,saved_primary_portfolio_inputs,11,1,0,0.0,inf,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML (linear),g,saved_primary_portfolio_inputs,11,1,10,1.0,,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML (linear),p,saved_primary_portfolio_inputs,11,1,0,0.0,50.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML (linear),l,saved_primary_portfolio_inputs,11,8,9,0.9,28.03162489452615,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML (linear),h,saved_primary_portfolio_inputs,11,1,0,0.0,inf,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML (active; TE 4%),g,saved_primary_portfolio_inputs,11,2,3,0.3,0.0497870683678639,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML (active; TE 4%),p,saved_primary_portfolio_inputs,11,4,7,0.7,256.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML (active; TE 4%),l,saved_primary_portfolio_inputs,11,9,9,0.9,62.89169634596307,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML (active; TE 4%),h,saved_primary_portfolio_inputs,11,1,0,0.0,inf,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML (active; TE 2%),g,saved_primary_portfolio_inputs,11,2,3,0.3,0.0497870683678639,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML (active; TE 2%),p,saved_primary_portfolio_inputs,11,4,7,0.7,256.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML (active; TE 2%),l,saved_primary_portfolio_inputs,11,7,8,0.8,115.29277324551748,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML (active; TE 2%),h,saved_primary_portfolio_inputs,11,1,0,0.0,inf,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML (active; TE 1%),g,saved_primary_portfolio_inputs,11,1,0,0.0,0.0497870683678639,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML (active; TE 1%),p,saved_primary_portfolio_inputs,11,5,7,0.7,256.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML (active; TE 1%),l,saved_primary_portfolio_inputs,11,9,8,0.8,316.57993140287226,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/base,Portfolio-ML (active; TE 1%),h,saved_primary_portfolio_inputs,11,1,0,0.0,inf,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/u250,return_prediction_model,g,saved_primary_portfolio_inputs,11,2,3,0.3,0.0497870683678639,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/u250,return_prediction_model,p,saved_primary_portfolio_inputs,11,5,4,0.4,64.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/u250,return_prediction_model,lam,saved_primary_portfolio_inputs,11,10,9,0.9,0.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/u250,Static-ML*,g,saved_primary_portfolio_inputs,11,2,3,0.3,0.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/u250,Static-ML*,k,saved_primary_portfolio_inputs,11,3,3,0.3,1.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/u250,Static-ML*,u,saved_primary_portfolio_inputs,11,2,2,0.2,0.5,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/u250,Portfolio-ML,g,saved_primary_portfolio_inputs,11,2,2,0.2,0.0497870683678639,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/u250,Portfolio-ML,p,saved_primary_portfolio_inputs,11,6,7,0.7,256.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/u250,Portfolio-ML,l,saved_primary_portfolio_inputs,11,7,9,0.9,172.6929481747836,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_large/u250,Portfolio-ML,h,saved_primary_portfolio_inputs,11,1,0,0.0,inf,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_mid/base,return_prediction_model,g,saved_primary_portfolio_inputs,11,2,3,0.3,0.0497870683678639,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_mid/base,return_prediction_model,p,saved_primary_portfolio_inputs,11,5,4,0.4,64.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_mid/base,return_prediction_model,lam,saved_primary_portfolio_inputs,11,10,9,0.9,0.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_mid/base,Static-ML*,g,saved_primary_portfolio_inputs,11,2,1,0.1,2.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_mid/base,Static-ML*,k,saved_primary_portfolio_inputs,11,1,0,0.0,0.2,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_mid/base,Static-ML*,u,saved_primary_portfolio_inputs,11,4,5,0.5,0.25,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_mid/base,Portfolio-ML,g,saved_primary_portfolio_inputs,11,1,0,0.0,0.0497870683678639,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_mid/base,Portfolio-ML,p,saved_primary_portfolio_inputs,11,1,0,0.0,8.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_mid/base,Portfolio-ML,l,saved_primary_portfolio_inputs,11,8,8,0.8,41.987574840069946,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_mid/base,Portfolio-ML,h,saved_primary_portfolio_inputs,11,1,0,0.0,inf,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_mid/base,Portfolio-ML (linear),g,saved_primary_portfolio_inputs,11,1,10,1.0,,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_mid/base,Portfolio-ML (linear),p,saved_primary_portfolio_inputs,11,1,0,0.0,50.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_mid/base,Portfolio-ML (linear),l,saved_primary_portfolio_inputs,11,7,9,0.9,94.20323713238372,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_mid/base,Portfolio-ML (linear),h,saved_primary_portfolio_inputs,11,1,0,0.0,inf,saved_annual_choices; sample_includes_pretest_choices_when_saved
+eu_large/base,return_prediction_model,g,saved_primary_portfolio_inputs,11,2,5,0.5,0.0497870683678639,saved_annual_choices; sample_includes_pretest_choices_when_saved
+eu_large/base,return_prediction_model,p,saved_primary_portfolio_inputs,11,3,4,0.4,256.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+eu_large/base,return_prediction_model,lam,saved_primary_portfolio_inputs,11,7,7,0.7,0.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+eu_large/base,Static-ML*,g,saved_primary_portfolio_inputs,11,2,1,0.1,0.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+eu_large/base,Static-ML*,k,saved_primary_portfolio_inputs,11,2,2,0.2,0.3333333333333333,saved_annual_choices; sample_includes_pretest_choices_when_saved
+eu_large/base,Static-ML*,u,saved_primary_portfolio_inputs,11,4,7,0.7,0.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+eu_large/base,Portfolio-ML,g,saved_primary_portfolio_inputs,11,2,2,0.2,0.1353352832366127,saved_annual_choices; sample_includes_pretest_choices_when_saved
+eu_large/base,Portfolio-ML,p,saved_primary_portfolio_inputs,11,4,7,0.7,256.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+eu_large/base,Portfolio-ML,l,saved_primary_portfolio_inputs,11,7,9,0.9,22026.46579480672,saved_annual_choices; sample_includes_pretest_choices_when_saved
+eu_large/base,Portfolio-ML,h,saved_primary_portfolio_inputs,11,1,0,0.0,inf,saved_annual_choices; sample_includes_pretest_choices_when_saved
+eu_large/base,Portfolio-ML (linear),g,saved_primary_portfolio_inputs,11,1,10,1.0,,saved_annual_choices; sample_includes_pretest_choices_when_saved
+eu_large/base,Portfolio-ML (linear),p,saved_primary_portfolio_inputs,11,1,0,0.0,50.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+eu_large/base,Portfolio-ML (linear),l,saved_primary_portfolio_inputs,11,8,10,1.0,8021.646587095562,saved_annual_choices; sample_includes_pretest_choices_when_saved
+eu_large/base,Portfolio-ML (linear),h,saved_primary_portfolio_inputs,11,1,0,0.0,inf,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_mid/u250,return_prediction_model,g,input_only_no_saved_portfolio,11,2,3,0.3,0.0497870683678639,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_mid/u250,return_prediction_model,p,input_only_no_saved_portfolio,11,5,4,0.4,64.0,saved_annual_choices; sample_includes_pretest_choices_when_saved
+us_mid/u250,return_prediction_model,lam,input_only_no_saved_portfolio,11,10,9,0.9,0.0,saved_annual_choices; sample_includes_pretest_choices_when_saved

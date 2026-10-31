@@ -1,0 +1,56 @@
+..................................................................F..... [ 91%]
+.......                                                                  [100%]
+================================== FAILURES ===================================
+__________ test_original_sources_unchanged_and_every_script_compiles __________
+
+    def test_original_sources_unchanged_and_every_script_compiles():
+        assert originals_unchanged()
+        for path in ROOT.rglob("*.py"):
+            if ".deps" not in path.parts:
+>               ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+
+keats_pipeline\tests\test_keats.py:86:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = 'old model bytes\n'
+filename = 'C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_Replic...\\outputs\\ML comparison and reasoning\\t_b41134\\test_snapshot_is_read_only_and0\\keats_pipeline\\src\\jkmp\\model.py'
+mode = 'exec', type_comments = False, feature_version = -1, optimize = -1
+
+    def parse(source, filename='<unknown>', mode='exec', *,
+              type_comments=False, feature_version=None, optimize=-1):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if optimize > 0:
+            flags |= PyCF_OPTIMIZED_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if feature_version is None:
+            feature_version = -1
+        elif isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            if major != 3:
+                raise ValueError(f"Unsupported major version: {major}")
+            feature_version = minor
+        # Else it should be an int giving the minor version for 3.x.
+>       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version, optimize=optimize)
+E         File "C:\Users\katiravan\Desktop\SMU\Term 1\SMU QF 600 Asset Pricing\Assrt pricing replication project\QF600_ReplicationProject\keats_pipeline\outputs\ML comparison and reasoning\t_b41134\test_snapshot_is_read_only_and0\keats_pipeline\src\jkmp\model.py", line 1
+E           old model bytes
+E               ^^^^^
+E       SyntaxError: invalid syntax
+
+..\..\..\..\..\..\AppData\Local\Programs\Python\Python313\Lib\ast.py:50: SyntaxError
+============================== warnings summary ===============================
+..\..\..\..\..\..\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\config\__init__.py:1464
+  C:\Users\katiravan\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\config\__init__.py:1464: PytestConfigWarning: Unknown config option: cache_dir
+
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED keats_pipeline\tests\test_keats.py::test_original_sources_unchanged_and_every_script_compiles
+1 failed, 78 passed, 1 warning in 13.34s

@@ -1,0 +1,173 @@
+dataset,id,eom,ret_ld1_original,ret_ld1,tr_ld1,scope
+us_large/base,66026,1997-03-31,,0.0,0.0043,
+us_large/base,58827,1998-09-30,,0.0,0.0032,
+us_large/base,19553,1998-12-31,,0.0,0.0034999999999999,
+us_large/base,80094,1999-06-30,,0.0,0.0038,
+us_large/base,15966,1999-11-30,,0.0,0.0044,
+us_large/base,21004,2000-06-30,,0.0,0.0048,
+us_large/base,66122,2000-06-30,,0.0,0.0048,
+us_large/base,47159,2004-03-31,,0.0,0.0008,
+us_large/base,65138,2004-06-30,,0.0,0.001,
+us_large/base,16424,2005-09-30,,0.0,0.0027,
+us_large/base,76557,2005-12-31,,0.0,0.0034999999999999,
+us_large/base,65883,2006-12-31,,0.0,0.0044,
+us_large/base,88239,2015-01-31,,0.0,0.0,
+us_large/base,11703,2017-08-31,,0.0,0.0009,
+us_large/base,28310,2020-11-30,,0.0,0.0001,
+us_large/u250,40635,1995-01-31,,0.0,0.004,
+us_large/u250,53858,1995-11-30,,0.0,0.0049,
+us_large/u250,76635,1996-12-31,,0.0,0.0045,
+us_large/u250,79179,1996-12-31,,0.0,0.0045,
+us_large/u250,66026,1997-03-31,,0.0,0.0043,
+us_large/u250,26729,1997-07-31,,0.0,0.0040999999999999,
+us_large/u250,58827,1998-09-30,,0.0,0.0032,
+us_large/u250,19553,1998-12-31,,0.0,0.0034999999999999,
+us_large/u250,33312,1998-12-31,,0.0,0.0034999999999999,
+us_large/u250,80094,1999-06-30,,0.0,0.0038,
+us_large/u250,51772,1999-09-30,,0.0,0.0039,
+us_large/u250,15966,1999-11-30,,0.0,0.0044,
+us_large/u250,82647,2000-03-31,,0.0,0.0046,
+us_large/u250,21004,2000-06-30,,0.0,0.0048,
+us_large/u250,66122,2000-06-30,,0.0,0.0048,
+us_large/u250,79163,2000-08-31,,0.0,0.0051,
+us_large/u250,48071,2000-12-31,,0.0,0.0054,
+us_large/u250,38893,2001-01-31,,0.0,0.0038,
+us_large/u250,86927,2001-05-31,,0.0,0.0028,
+us_large/u250,50200,2001-08-31,,0.0,0.0028,
+us_large/u250,87029,2002-08-31,,0.0,0.0014,
+us_large/u250,47159,2004-03-31,,0.0,0.0008,
+us_large/u250,65138,2004-06-30,,0.0,0.001,
+us_large/u250,71686,2004-10-31,,0.0,0.0015,
+us_large/u250,83583,2004-11-30,,0.0,0.0016,
+us_large/u250,81188,2004-12-31,,0.0,0.0016,
+us_large/u250,16424,2005-09-30,,0.0,0.0027,
+us_large/u250,76557,2005-12-31,,0.0,0.0034999999999999,
+us_large/u250,75333,2006-03-31,,0.0,0.0036,
+us_large/u250,53479,2006-09-30,,0.0,0.0040999999999999,
+us_large/u250,76171,2006-11-30,,0.0,0.004,
+us_large/u250,83332,2006-11-30,,0.0,0.004,
+us_large/u250,65883,2006-12-31,,0.0,0.0044,
+us_large/u250,17806,2007-03-31,,0.0,0.0044,
+us_large/u250,59379,2007-06-30,,0.0,0.004,
+us_large/u250,24563,2007-10-31,,0.0,0.0034,
+us_large/u250,36469,2008-12-31,,0.0,0.0,
+us_large/u250,52919,2008-12-31,,0.0,0.0,
+us_large/u250,82232,2009-07-31,,0.0,0.0001,
+us_large/u250,50227,2010-02-28,,0.0,0.0001,
+us_large/u250,89813,2012-03-31,,0.0,0.0,
+us_large/u250,23114,2012-07-31,,0.0,0.0001,
+us_large/u250,11081,2013-10-31,,0.0,0.0,
+us_large/u250,88239,2015-01-31,,0.0,0.0,
+us_large/u250,89565,2015-12-31,,0.0,0.0001,
+us_large/u250,63830,2016-01-31,,0.0,0.0002,
+us_large/u250,85963,2016-01-31,,0.0,0.0002,
+us_large/u250,11703,2017-08-31,,0.0,0.0009,
+us_large/u250,20626,2017-08-31,,0.0,0.0009,
+us_large/u250,13314,2019-07-31,,0.0,0.0016,
+us_large/u250,28310,2020-11-30,,0.0,0.0001,
+us_large/u250,14704,2022-02-28,,0.0,0.0,
+us_large/u250,14295,2022-10-31,,0.0,0.0029,
+us_mid/base,10636,1995-02-28,,0.0,0.0046,
+us_mid/base,10343,1996-12-31,,0.0,0.0045,
+us_mid/base,84028,1999-07-31,,0.0,0.0039,
+us_mid/base,65024,1999-08-31,,0.0,0.0039,
+us_mid/base,85719,2000-02-29,,0.0,0.0046999999999999,
+us_mid/base,22496,2000-11-30,,0.0,0.005,
+us_mid/base,77708,2001-12-31,,0.0,0.0014,
+us_mid/base,87284,2003-10-31,,0.0,0.0007,
+us_mid/base,85073,2005-09-30,,0.0,0.0027,
+us_mid/base,83693,2006-01-31,,0.0,0.0034,
+us_mid/base,22032,2007-09-30,,0.0,0.0032,
+us_mid/base,86845,2008-03-31,,0.0,0.0018,
+us_mid/base,91067,2010-05-31,,0.0,0.0001,
+us_mid/base,12074,2011-05-31,,0.0,0.0,
+us_mid/base,75383,2011-06-30,,0.0,0.0,
+us_mid/base,87054,2011-08-31,,0.0,0.0,
+us_mid/base,15553,2016-06-30,,0.0,0.0002,
+us_mid/base,14570,2016-09-30,,0.0,0.0002,
+us_mid/base,14856,2017-08-31,,0.0,0.0009,
+us_mid/base,13914,2019-07-31,,0.0,0.0016,
+us_mid/base,16496,2021-12-31,,0.0,0.0,
+eu_large/base,310131005,1996-12-31,,0.0,0.0045,
+eu_large/base,314449602,1998-06-30,,0.0,0.004,
+eu_large/base,306248901,2000-02-29,,0.0,0.0046999999999999,
+eu_large/base,301329401,2000-04-30,,0.0,0.005,
+eu_large/base,301557701,2002-07-31,,0.0,0.0014,
+eu_large/base,301548202,2003-07-31,,0.0,0.0007,
+eu_large/base,321425902,2005-06-30,,0.0,0.0024,
+eu_large/base,300926701,2005-09-30,,0.0,0.0027,
+eu_large/base,336936401,2006-01-31,,0.0,0.0034,
+eu_large/base,314124301,2006-07-31,,0.0,0.0042,
+eu_large/base,301550403,2008-04-30,,0.0,0.0018,
+eu_large/base,301553701,2008-09-30,,0.0,0.0008,
+eu_large/base,310312402,2012-06-30,,0.0,0.0,
+eu_large/base,325077901,2013-04-30,,0.0,0.0,
+eu_large/base,301408701,2016-02-29,,0.0,0.0002,
+eu_large/base,310047203,2016-10-31,,0.0,0.0001,
+eu_large/base,324121601,2018-01-31,,0.0,0.0011,
+eu_large/base,301084602,2019-06-30,,0.0,0.0019,
+eu_large/base,310112001,2020-11-30,,0.0,0.0001,
+eu_large/base,322092001,2023-05-31,,0.0,0.004,
+us_mid/u250,10636,1995-02-28,,0.0,0.0046,prepared inputs only; no saved primary portfolio
+us_mid/u250,41081,1995-11-30,,0.0,0.0049,prepared inputs only; no saved primary portfolio
+us_mid/u250,78859,1996-11-30,,0.0,0.0046,prepared inputs only; no saved primary portfolio
+us_mid/u250,10343,1996-12-31,,0.0,0.0045,prepared inputs only; no saved primary portfolio
+us_mid/u250,81866,1997-12-31,,0.0,0.0043,prepared inputs only; no saved primary portfolio
+us_mid/u250,19377,1998-06-30,,0.0,0.004,prepared inputs only; no saved primary portfolio
+us_mid/u250,67571,1998-06-30,,0.0,0.004,prepared inputs only; no saved primary portfolio
+us_mid/u250,14883,1999-04-30,,0.0,0.0034,prepared inputs only; no saved primary portfolio
+us_mid/u250,53786,1999-07-31,,0.0,0.0039,prepared inputs only; no saved primary portfolio
+us_mid/u250,84028,1999-07-31,,0.0,0.0039,prepared inputs only; no saved primary portfolio
+us_mid/u250,65024,1999-08-31,,0.0,0.0039,prepared inputs only; no saved primary portfolio
+us_mid/u250,81671,1999-11-30,,0.0,0.0044,prepared inputs only; no saved primary portfolio
+us_mid/u250,85719,2000-02-29,,0.0,0.0046999999999999,prepared inputs only; no saved primary portfolio
+us_mid/u250,60441,2000-05-31,,0.0,0.004,prepared inputs only; no saved primary portfolio
+us_mid/u250,26586,2000-08-31,,0.0,0.0051,prepared inputs only; no saved primary portfolio
+us_mid/u250,22496,2000-11-30,,0.0,0.005,prepared inputs only; no saved primary portfolio
+us_mid/u250,46228,2001-01-31,,0.0,0.0038,prepared inputs only; no saved primary portfolio
+us_mid/u250,51588,2001-02-28,,0.0,0.0042,prepared inputs only; no saved primary portfolio
+us_mid/u250,77708,2001-12-31,,0.0,0.0014,prepared inputs only; no saved primary portfolio
+us_mid/u250,24184,2002-01-31,,0.0,0.0013,prepared inputs only; no saved primary portfolio
+us_mid/u250,87284,2003-10-31,,0.0,0.0007,prepared inputs only; no saved primary portfolio
+us_mid/u250,78263,2004-06-30,,0.0,0.001,prepared inputs only; no saved primary portfolio
+us_mid/u250,56275,2004-09-30,,0.0,0.0011,prepared inputs only; no saved primary portfolio
+us_mid/u250,80127,2004-09-30,,0.0,0.0011,prepared inputs only; no saved primary portfolio
+us_mid/u250,61065,2005-07-31,,0.0,0.003,prepared inputs only; no saved primary portfolio
+us_mid/u250,85073,2005-09-30,,0.0,0.0027,prepared inputs only; no saved primary portfolio
+us_mid/u250,83693,2006-01-31,,0.0,0.0034,prepared inputs only; no saved primary portfolio
+us_mid/u250,53381,2006-10-31,,0.0,0.0042,prepared inputs only; no saved primary portfolio
+us_mid/u250,10942,2007-01-31,,0.0,0.0038,prepared inputs only; no saved primary portfolio
+us_mid/u250,22032,2007-09-30,,0.0,0.0032,prepared inputs only; no saved primary portfolio
+us_mid/u250,54391,2007-09-30,,0.0,0.0032,prepared inputs only; no saved primary portfolio
+us_mid/u250,78638,2008-01-31,,0.0,0.0013,prepared inputs only; no saved primary portfolio
+us_mid/u250,86845,2008-03-31,,0.0,0.0018,prepared inputs only; no saved primary portfolio
+us_mid/u250,84721,2008-04-30,,0.0,0.0018,prepared inputs only; no saved primary portfolio
+us_mid/u250,64565,2008-06-30,,0.0,0.0015,prepared inputs only; no saved primary portfolio
+us_mid/u250,56232,2008-12-31,,0.0,0.0,prepared inputs only; no saved primary portfolio
+us_mid/u250,91218,2009-06-30,,0.0,0.0001,prepared inputs only; no saved primary portfolio
+us_mid/u250,81293,2009-12-31,,0.0,0.0,prepared inputs only; no saved primary portfolio
+us_mid/u250,38973,2010-02-28,,0.0,0.0001,prepared inputs only; no saved primary portfolio
+us_mid/u250,91067,2010-05-31,,0.0,0.0001,prepared inputs only; no saved primary portfolio
+us_mid/u250,90380,2010-08-31,,0.0,0.0001,prepared inputs only; no saved primary portfolio
+us_mid/u250,77976,2011-02-28,,0.0,0.0001,prepared inputs only; no saved primary portfolio
+us_mid/u250,12074,2011-05-31,,0.0,0.0,prepared inputs only; no saved primary portfolio
+us_mid/u250,75383,2011-06-30,,0.0,0.0,prepared inputs only; no saved primary portfolio
+us_mid/u250,87054,2011-08-31,,0.0,0.0,prepared inputs only; no saved primary portfolio
+us_mid/u250,21979,2012-11-30,,0.0,0.0001,prepared inputs only; no saved primary portfolio
+us_mid/u250,83541,2013-09-30,,0.0,0.0,prepared inputs only; no saved primary portfolio
+us_mid/u250,88811,2015-03-31,,0.0,0.0,prepared inputs only; no saved primary portfolio
+us_mid/u250,13567,2016-04-30,,0.0,0.0001,prepared inputs only; no saved primary portfolio
+us_mid/u250,86097,2016-05-31,,0.0,0.0002,prepared inputs only; no saved primary portfolio
+us_mid/u250,15553,2016-06-30,,0.0,0.0002,prepared inputs only; no saved primary portfolio
+us_mid/u250,14570,2016-09-30,,0.0,0.0002,prepared inputs only; no saved primary portfolio
+us_mid/u250,37807,2017-05-31,,0.0,0.0006,prepared inputs only; no saved primary portfolio
+us_mid/u250,14856,2017-08-31,,0.0,0.0009,prepared inputs only; no saved primary portfolio
+us_mid/u250,86021,2019-06-30,,0.0,0.0019,prepared inputs only; no saved primary portfolio
+us_mid/u250,13914,2019-07-31,,0.0,0.0016,prepared inputs only; no saved primary portfolio
+us_mid/u250,90272,2020-01-31,,0.0,0.0012,prepared inputs only; no saved primary portfolio
+us_mid/u250,12650,2021-12-31,,0.0,0.0,prepared inputs only; no saved primary portfolio
+us_mid/u250,16496,2021-12-31,,0.0,0.0,prepared inputs only; no saved primary portfolio
+us_mid/u250,14414,2022-01-31,,0.0,0.0,prepared inputs only; no saved primary portfolio
+us_mid/u250,12799,2022-02-28,,0.0,0.0,prepared inputs only; no saved primary portfolio
+us_mid/u250,82686,2022-09-30,,0.0,0.0023,prepared inputs only; no saved primary portfolio
+us_mid/u250,11786,2023-03-31,,0.0,0.0034999999999999,prepared inputs only; no saved primary portfolio

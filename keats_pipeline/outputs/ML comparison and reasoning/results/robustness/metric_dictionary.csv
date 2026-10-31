@@ -1,0 +1,34 @@
+metric,formula,unit,interpretation_and_method
+cost_factor,tc_scenario = cost_factor * tc_saved,multiplier,"0, 0.5, 1, 2, 3; saved weights and gross returns unchanged."
+evaluation_gamma,U=12*(mean(r-tc)-gamma*sample_var(r)/2),risk-aversion parameter,Evaluates saved total-return policy; does not refit or optimise weights.
+optimised_gamma,gamma parsed from existing absolute-return grid point/config,risk-aversion parameter,Parameter used when the original saved absolute-return point was optimised; missing for active capacity.
+optimised_gamma_te,gamma_TE parsed from saved active-capacity path,tracking-error risk-aversion parameter,Benchmark-relative optimisation parameter; not comparable to absolute-return gamma. Total-return evaluation_gamma remains 10.
+optimisation_objective,absolute_mean_variance or benchmark_relative_mean_variance,objective label,Separates originally optimised mandates; gamma and gamma_TE are not pooled.
+aum_anchor_usd,"wealth at configured anchor date, 2019-12-31",USD,AUM anchor; actual time-varying wealth follows the original saved market-linked path.
+cost_scale,new_AUM_anchor / saved_AUM_anchor,multiplier,Linear fractional-cost scaling under quadratic dollar impact at fixed weight trades.
+SR_net_paper,sqrt(12)*mean(r-tc)/sample_sd(r),ratio,Alias of Table 2 SR_net; gross-volatility denominator.
+utility_rank,descending rank of Utility within dataset and scenario,ordinal,"Includes all available saved models and benchmarks, ties use minimum rank."
+SR_rank,descending rank of SR_net_paper within dataset and cost scenario,ordinal,Ranks a different criterion from utility; no causal model comparison.
+net_excess_leq_minus_one_months,sum( r - tc_scenario <= -1 ),months,Invalid synthetic compounded excess index; funded bankruptcy requires total return including risk-free return.
+abs_weight_hhi,sum_i((abs(w_i)/sum_j(abs(w_j)))^2),"[0,1]",Concentration relative to gross leverage; NaN if all weights zero.
+top10_share_of_gross,sum(10 largest abs(w_i))/sum_i(abs(w_i)),fraction,"Concentration in ten largest positions, including longs and shorts by absolute weight."
+n_nonzero,count(not exit and w != 0),stocks/month,"Actual nonzero portfolio positions, distinct from universe membership count."
+long_count / short_count,"count(w>0) / count(w<0), excluding exit rows",stocks/month,Long/short security counts; no new leverage or borrowing constraint imposed.
+long_weight / short_weight,"sum(max(w,0)) / sum(max(-w,0))",weight,Long and absolute short exposure; gross leverage is their sum.
+net_investment,sum(w),weight,Signed invested exposure; may differ from one for unconstrained strategies.
+size_bucket,"average percentile rank of raw me within current universe, thirds",low / middle / high,me in USD millions; exits outside membership get a separate label.
+liquidity_bucket,"average percentile rank of raw dolvol within current universe, thirds",low / middle / high,dolvol in USD; ranked dolvol_126d feature is not a dollar amount.
+mean_gross_exposure,"sum_t sum_i_in_bucket abs(w_i,t) / T",gross weight,Additive exposure; absent buckets contribute zero exposure for that month.
+mean_signed_exposure,"sum_t sum_i_in_bucket w_i,t / T",signed weight,Additive long/short exposure; not a standalone tradable subgroup portfolio.
+annual_gross_return_contribution,"12/T * sum_t sum_i_in_bucket w_i,t * ret_ld1_i,t",decimal/year,"Additive arithmetic attribution, not subgroup standalone return."
+annual_tc_contribution,"12/T * sum_t sum_i_in_bucket wealth_t*lambda_i,t*(w_i,t-w_start_i,t)^2/2",fraction/year,Additive saved-impact attribution; includes exit cost where stored.
+mean_monthly_turnover,"sum_t sum_i_in_bucket abs(w_i,t-w_start_i,t) / T",fraction/month,"Full traded-weight turnover, not divided by two; bucket sum recovers portfolio turnover."
+ff12,saved Fama-French 12 industry classification,industry code,Uses existing panel labels; exposures preserve signed and gross weights.
+rank_ic,"Spearman(pred_ld1,ret_ld1) across stocks each month","[-1,1]",One-month saved forecast accuracy; held and broad populations and zero/observed targets separate.
+rmse,sqrt(mean_i((pred_ld1_i-ret_ld1_i)^2)),monthly excess-return units,Cross-sectional prediction error; monthly RMSE summaries are not pooled observation RMSE.
+theme_rank_association_ic,"Spearman(mean(saved ranked features in theme),observed ret_ld1)","[-1,1]","Descriptive association only; not fitted-model importance, permutation importance, or causal effect."
+fi,"saved annual utility_unshuffled - utility_theme_permuted, mean over seeds",decimal utility/year,"Economic importance: PF-ML saved net policy; separate Markowitz gamma=100 zero-wealth/no-TC construction evaluated at utility gamma=10, not main Markowitz portfolio."
+fi_se,sample_sd(seed importance) / sqrt(number_of_seeds),decimal utility/year,Permutation Monte Carlo standard error; not refitted-model uncertainty.
+switch_fraction,count(consecutive annual picks differ)/(n_picks-1),fraction,All saved yearly picks including pretest years; no inference about optimal new hyperparameters.
+december_formation,formation month == December,boolean,Reconstitution-season diagnostic; does not isolate causal reconstitution turnover.
+scope,saved_primary_portfolio_inputs or input_only_no_saved_portfolio,availability label,"Input-only predictions/choices never enter portfolio performance, rankings, cost/AUM scenarios or significance tests; no weights or returns inferred."

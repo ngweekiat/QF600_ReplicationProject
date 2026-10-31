@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "tests_passed": 79,
+  "original_keats_files_unchanged": 734,
+  "main_report_links_valid": 188,
+  "original_code_folder_absent": true,
+  "original_results_folder_absent": true,
+  "new_comparison_root": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\keats_pipeline\\outputs\\ML comparison and reasoning",
+  "completed_results": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\keats_pipeline\\outputs\\ML comparison and reasoning\\results",
+  "relocated_runner_smoke": "9 series,36 pairwise comparisons; unchanged original sources"
+}

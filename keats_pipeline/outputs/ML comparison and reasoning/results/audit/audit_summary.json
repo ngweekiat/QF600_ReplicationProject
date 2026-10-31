@@ -1,0 +1,20 @@
+{
+  "check_counts": {
+    "PASS": 333,
+    "SKIPPED": 8
+  },
+  "source_files_hashed": 106,
+  "history_exclusion_records": 2,
+  "zero_return_assumption_records": 172,
+  "unavailable_lag_history_input_records": 3,
+  "unavailable_source_gaps_without_applied_exclusion": 1,
+  "datasets": [
+    "eu_large/base",
+    "us_large/base",
+    "us_large/u250",
+    "us_mid/base"
+  ],
+  "accounting_reconstructed": 34,
+  "covariance_matrices_inspected": 288,
+  "non_executable_saved_months": 373
+}

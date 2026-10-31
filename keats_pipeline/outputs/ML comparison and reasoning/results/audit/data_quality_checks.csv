@@ -1,0 +1,342 @@
+dataset,strategy,check,status,detail
+eu_large/base,1/N,unique_monthly_rows,PASS,duplicate return dates=0
+eu_large/base,1/N,finite_saved_metrics,PASS,nonfinite values=0
+eu_large/base,1/N,nonnegative_costs,PASS,negative costs=0
+eu_large/base,1/N,consecutive_test_months,PASS,missing=
+eu_large/base,1/N,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+eu_large/base,Factor-ML,unique_monthly_rows,PASS,duplicate return dates=0
+eu_large/base,Factor-ML,finite_saved_metrics,PASS,nonfinite values=0
+eu_large/base,Factor-ML,nonnegative_costs,PASS,negative costs=0
+eu_large/base,Factor-ML,consecutive_test_months,PASS,missing=
+eu_large/base,Factor-ML,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+eu_large/base,Market,unique_monthly_rows,PASS,duplicate return dates=0
+eu_large/base,Market,finite_saved_metrics,PASS,nonfinite values=0
+eu_large/base,Market,nonnegative_costs,PASS,negative costs=0
+eu_large/base,Market,consecutive_test_months,PASS,missing=
+eu_large/base,Market,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+eu_large/base,Markowitz-ML,unique_monthly_rows,PASS,duplicate return dates=0
+eu_large/base,Markowitz-ML,finite_saved_metrics,PASS,nonfinite values=0
+eu_large/base,Markowitz-ML,nonnegative_costs,PASS,negative costs=0
+eu_large/base,Markowitz-ML,consecutive_test_months,PASS,missing=
+eu_large/base,Markowitz-ML,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+eu_large/base,Minimum variance,unique_monthly_rows,PASS,duplicate return dates=0
+eu_large/base,Minimum variance,finite_saved_metrics,PASS,nonfinite values=0
+eu_large/base,Minimum variance,nonnegative_costs,PASS,negative costs=0
+eu_large/base,Minimum variance,consecutive_test_months,PASS,missing=
+eu_large/base,Minimum variance,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+eu_large/base,Portfolio-ML,unique_monthly_rows,PASS,duplicate return dates=0
+eu_large/base,Portfolio-ML,finite_saved_metrics,PASS,nonfinite values=0
+eu_large/base,Portfolio-ML,nonnegative_costs,PASS,negative costs=0
+eu_large/base,Portfolio-ML,consecutive_test_months,PASS,missing=
+eu_large/base,Portfolio-ML,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+eu_large/base,Portfolio-ML (linear),unique_monthly_rows,PASS,duplicate return dates=0
+eu_large/base,Portfolio-ML (linear),finite_saved_metrics,PASS,nonfinite values=0
+eu_large/base,Portfolio-ML (linear),nonnegative_costs,PASS,negative costs=0
+eu_large/base,Portfolio-ML (linear),consecutive_test_months,PASS,missing=
+eu_large/base,Portfolio-ML (linear),formation_to_return_timing,PASS,eom_ret != eom+one month=0
+eu_large/base,Static-ML,unique_monthly_rows,PASS,duplicate return dates=0
+eu_large/base,Static-ML,finite_saved_metrics,PASS,nonfinite values=0
+eu_large/base,Static-ML,nonnegative_costs,PASS,negative costs=0
+eu_large/base,Static-ML,consecutive_test_months,PASS,missing=
+eu_large/base,Static-ML,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+eu_large/base,Static-ML*,unique_monthly_rows,PASS,duplicate return dates=0
+eu_large/base,Static-ML*,finite_saved_metrics,PASS,nonfinite values=0
+eu_large/base,Static-ML*,nonnegative_costs,PASS,negative costs=0
+eu_large/base,Static-ML*,consecutive_test_months,PASS,missing=
+eu_large/base,Static-ML*,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/base,1/N,unique_monthly_rows,PASS,duplicate return dates=0
+us_large/base,1/N,finite_saved_metrics,PASS,nonfinite values=0
+us_large/base,1/N,nonnegative_costs,PASS,negative costs=0
+us_large/base,1/N,consecutive_test_months,PASS,missing=
+us_large/base,1/N,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/base,Factor-ML,unique_monthly_rows,PASS,duplicate return dates=0
+us_large/base,Factor-ML,finite_saved_metrics,PASS,nonfinite values=0
+us_large/base,Factor-ML,nonnegative_costs,PASS,negative costs=0
+us_large/base,Factor-ML,consecutive_test_months,PASS,missing=
+us_large/base,Factor-ML,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/base,Market,unique_monthly_rows,PASS,duplicate return dates=0
+us_large/base,Market,finite_saved_metrics,PASS,nonfinite values=0
+us_large/base,Market,nonnegative_costs,PASS,negative costs=0
+us_large/base,Market,consecutive_test_months,PASS,missing=
+us_large/base,Market,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/base,Markowitz-ML,unique_monthly_rows,PASS,duplicate return dates=0
+us_large/base,Markowitz-ML,finite_saved_metrics,PASS,nonfinite values=0
+us_large/base,Markowitz-ML,nonnegative_costs,PASS,negative costs=0
+us_large/base,Markowitz-ML,consecutive_test_months,PASS,missing=
+us_large/base,Markowitz-ML,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/base,Minimum variance,unique_monthly_rows,PASS,duplicate return dates=0
+us_large/base,Minimum variance,finite_saved_metrics,PASS,nonfinite values=0
+us_large/base,Minimum variance,nonnegative_costs,PASS,negative costs=0
+us_large/base,Minimum variance,consecutive_test_months,PASS,missing=
+us_large/base,Minimum variance,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/base,Portfolio-ML,unique_monthly_rows,PASS,duplicate return dates=0
+us_large/base,Portfolio-ML,finite_saved_metrics,PASS,nonfinite values=0
+us_large/base,Portfolio-ML,nonnegative_costs,PASS,negative costs=0
+us_large/base,Portfolio-ML,consecutive_test_months,PASS,missing=
+us_large/base,Portfolio-ML,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/base,Portfolio-ML (active; TE 1%),unique_monthly_rows,PASS,duplicate return dates=0
+us_large/base,Portfolio-ML (active; TE 1%),finite_saved_metrics,PASS,nonfinite values=0
+us_large/base,Portfolio-ML (active; TE 1%),nonnegative_costs,PASS,negative costs=0
+us_large/base,Portfolio-ML (active; TE 1%),consecutive_test_months,PASS,missing=
+us_large/base,Portfolio-ML (active; TE 1%),formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/base,Portfolio-ML (active; TE 2%),unique_monthly_rows,PASS,duplicate return dates=0
+us_large/base,Portfolio-ML (active; TE 2%),finite_saved_metrics,PASS,nonfinite values=0
+us_large/base,Portfolio-ML (active; TE 2%),nonnegative_costs,PASS,negative costs=0
+us_large/base,Portfolio-ML (active; TE 2%),consecutive_test_months,PASS,missing=
+us_large/base,Portfolio-ML (active; TE 2%),formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/base,Portfolio-ML (active; TE 4%),unique_monthly_rows,PASS,duplicate return dates=0
+us_large/base,Portfolio-ML (active; TE 4%),finite_saved_metrics,PASS,nonfinite values=0
+us_large/base,Portfolio-ML (active; TE 4%),nonnegative_costs,PASS,negative costs=0
+us_large/base,Portfolio-ML (active; TE 4%),consecutive_test_months,PASS,missing=
+us_large/base,Portfolio-ML (active; TE 4%),formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/base,Portfolio-ML (linear),unique_monthly_rows,PASS,duplicate return dates=0
+us_large/base,Portfolio-ML (linear),finite_saved_metrics,PASS,nonfinite values=0
+us_large/base,Portfolio-ML (linear),nonnegative_costs,PASS,negative costs=0
+us_large/base,Portfolio-ML (linear),consecutive_test_months,PASS,missing=
+us_large/base,Portfolio-ML (linear),formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/base,Static-ML,unique_monthly_rows,PASS,duplicate return dates=0
+us_large/base,Static-ML,finite_saved_metrics,PASS,nonfinite values=0
+us_large/base,Static-ML,nonnegative_costs,PASS,negative costs=0
+us_large/base,Static-ML,consecutive_test_months,PASS,missing=
+us_large/base,Static-ML,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/base,Static-ML*,unique_monthly_rows,PASS,duplicate return dates=0
+us_large/base,Static-ML*,finite_saved_metrics,PASS,nonfinite values=0
+us_large/base,Static-ML*,nonnegative_costs,PASS,negative costs=0
+us_large/base,Static-ML*,consecutive_test_months,PASS,missing=
+us_large/base,Static-ML*,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/u250,1/N,unique_monthly_rows,PASS,duplicate return dates=0
+us_large/u250,1/N,finite_saved_metrics,PASS,nonfinite values=0
+us_large/u250,1/N,nonnegative_costs,PASS,negative costs=0
+us_large/u250,1/N,consecutive_test_months,PASS,missing=
+us_large/u250,1/N,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/u250,Factor-ML,unique_monthly_rows,PASS,duplicate return dates=0
+us_large/u250,Factor-ML,finite_saved_metrics,PASS,nonfinite values=0
+us_large/u250,Factor-ML,nonnegative_costs,PASS,negative costs=0
+us_large/u250,Factor-ML,consecutive_test_months,PASS,missing=
+us_large/u250,Factor-ML,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/u250,Market,unique_monthly_rows,PASS,duplicate return dates=0
+us_large/u250,Market,finite_saved_metrics,PASS,nonfinite values=0
+us_large/u250,Market,nonnegative_costs,PASS,negative costs=0
+us_large/u250,Market,consecutive_test_months,PASS,missing=
+us_large/u250,Market,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/u250,Markowitz-ML,unique_monthly_rows,PASS,duplicate return dates=0
+us_large/u250,Markowitz-ML,finite_saved_metrics,PASS,nonfinite values=0
+us_large/u250,Markowitz-ML,nonnegative_costs,PASS,negative costs=0
+us_large/u250,Markowitz-ML,consecutive_test_months,PASS,missing=
+us_large/u250,Markowitz-ML,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/u250,Minimum variance,unique_monthly_rows,PASS,duplicate return dates=0
+us_large/u250,Minimum variance,finite_saved_metrics,PASS,nonfinite values=0
+us_large/u250,Minimum variance,nonnegative_costs,PASS,negative costs=0
+us_large/u250,Minimum variance,consecutive_test_months,PASS,missing=
+us_large/u250,Minimum variance,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/u250,Portfolio-ML,unique_monthly_rows,PASS,duplicate return dates=0
+us_large/u250,Portfolio-ML,finite_saved_metrics,PASS,nonfinite values=0
+us_large/u250,Portfolio-ML,nonnegative_costs,PASS,negative costs=0
+us_large/u250,Portfolio-ML,consecutive_test_months,PASS,missing=
+us_large/u250,Portfolio-ML,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/u250,Static-ML,unique_monthly_rows,PASS,duplicate return dates=0
+us_large/u250,Static-ML,finite_saved_metrics,PASS,nonfinite values=0
+us_large/u250,Static-ML,nonnegative_costs,PASS,negative costs=0
+us_large/u250,Static-ML,consecutive_test_months,PASS,missing=
+us_large/u250,Static-ML,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/u250,Static-ML*,unique_monthly_rows,PASS,duplicate return dates=0
+us_large/u250,Static-ML*,finite_saved_metrics,PASS,nonfinite values=0
+us_large/u250,Static-ML*,nonnegative_costs,PASS,negative costs=0
+us_large/u250,Static-ML*,consecutive_test_months,PASS,missing=
+us_large/u250,Static-ML*,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_mid/base,1/N,unique_monthly_rows,PASS,duplicate return dates=0
+us_mid/base,1/N,finite_saved_metrics,PASS,nonfinite values=0
+us_mid/base,1/N,nonnegative_costs,PASS,negative costs=0
+us_mid/base,1/N,consecutive_test_months,PASS,missing=
+us_mid/base,1/N,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_mid/base,Factor-ML,unique_monthly_rows,PASS,duplicate return dates=0
+us_mid/base,Factor-ML,finite_saved_metrics,PASS,nonfinite values=0
+us_mid/base,Factor-ML,nonnegative_costs,PASS,negative costs=0
+us_mid/base,Factor-ML,consecutive_test_months,PASS,missing=
+us_mid/base,Factor-ML,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_mid/base,Market,unique_monthly_rows,PASS,duplicate return dates=0
+us_mid/base,Market,finite_saved_metrics,PASS,nonfinite values=0
+us_mid/base,Market,nonnegative_costs,PASS,negative costs=0
+us_mid/base,Market,consecutive_test_months,PASS,missing=
+us_mid/base,Market,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_mid/base,Markowitz-ML,unique_monthly_rows,PASS,duplicate return dates=0
+us_mid/base,Markowitz-ML,finite_saved_metrics,PASS,nonfinite values=0
+us_mid/base,Markowitz-ML,nonnegative_costs,PASS,negative costs=0
+us_mid/base,Markowitz-ML,consecutive_test_months,PASS,missing=
+us_mid/base,Markowitz-ML,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_mid/base,Minimum variance,unique_monthly_rows,PASS,duplicate return dates=0
+us_mid/base,Minimum variance,finite_saved_metrics,PASS,nonfinite values=0
+us_mid/base,Minimum variance,nonnegative_costs,PASS,negative costs=0
+us_mid/base,Minimum variance,consecutive_test_months,PASS,missing=
+us_mid/base,Minimum variance,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_mid/base,Portfolio-ML,unique_monthly_rows,PASS,duplicate return dates=0
+us_mid/base,Portfolio-ML,finite_saved_metrics,PASS,nonfinite values=0
+us_mid/base,Portfolio-ML,nonnegative_costs,PASS,negative costs=0
+us_mid/base,Portfolio-ML,consecutive_test_months,PASS,missing=
+us_mid/base,Portfolio-ML,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_mid/base,Portfolio-ML (linear),unique_monthly_rows,PASS,duplicate return dates=0
+us_mid/base,Portfolio-ML (linear),finite_saved_metrics,PASS,nonfinite values=0
+us_mid/base,Portfolio-ML (linear),nonnegative_costs,PASS,negative costs=0
+us_mid/base,Portfolio-ML (linear),consecutive_test_months,PASS,missing=
+us_mid/base,Portfolio-ML (linear),formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_mid/base,Static-ML,unique_monthly_rows,PASS,duplicate return dates=0
+us_mid/base,Static-ML,finite_saved_metrics,PASS,nonfinite values=0
+us_mid/base,Static-ML,nonnegative_costs,PASS,negative costs=0
+us_mid/base,Static-ML,consecutive_test_months,PASS,missing=
+us_mid/base,Static-ML,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_mid/base,Static-ML*,unique_monthly_rows,PASS,duplicate return dates=0
+us_mid/base,Static-ML*,finite_saved_metrics,PASS,nonfinite values=0
+us_mid/base,Static-ML*,nonnegative_costs,PASS,negative costs=0
+us_mid/base,Static-ML*,consecutive_test_months,PASS,missing=
+us_mid/base,Static-ML*,formation_to_return_timing,PASS,eom_ret != eom+one month=0
+us_large/base,ALL,panel_unique_security_month,PASS,duplicate rows=0
+us_large/base,ALL,lambda_equals_point_two_over_saved_usd_volume,PASS,"max absolute discrepancy=0.0; this verifies consistency with saved USD labels, not independent venue unit validation"
+us_large/base,ALL,risk_free_for_funded_growth_checks,PASS,"Formation months lacking a saved implied next-month risk-free return=0; funded-growth checks use r+RF, not excess r alone"
+us_large/base,ALL,zero_return_flags_preserve_missing_originals,PASS,flagged history rows=15; nonzero assumed excess=0; originally observed but flagged=0
+us_large/base,ALL,assumed_total_return_matches_other_stocks_implied_risk_free,PASS,total-return mismatches=0; rows without independent same-month observed-stock RF=0
+us_large/base,ALL,zero_return_flag_ledger_agreement,PASS,flagged rows=15; ledger rows=15; differing security-month keys=0
+us_large/base,ALL,covariance_test_coverage,PASS,missing formation months=0
+us_large/base,ALL,covariance_positive_definite,PASS,invalid matrices=0; inspected=72
+us_large/base,return model,prediction_dates_and_finiteness,PASS,duplicates=0; wrong return year=0; nonfinite=0
+us_large/base,return model,held_prediction_coverage,PASS,missing held security-month predictions=0
+us_large/base,Market,unique_weights,PASS,duplicates=0
+us_large/base,Market,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_large/base,Market,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_large/base,1/N,unique_weights,PASS,duplicates=0
+us_large/base,1/N,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_large/base,1/N,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_large/base,Minimum variance,unique_weights,PASS,duplicates=0
+us_large/base,Minimum variance,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_large/base,Minimum variance,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_large/base,Markowitz-ML,unique_weights,PASS,duplicates=0
+us_large/base,Markowitz-ML,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_large/base,Markowitz-ML,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_large/base,Factor-ML,unique_weights,PASS,duplicates=0
+us_large/base,Factor-ML,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_large/base,Factor-ML,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_large/base,Static-ML,independent_accounting,SKIPPED,No saved weights for this source type (fixed Static-ML weights are not retained)
+us_large/base,Static-ML*,unique_weights,PASS,duplicates=0
+us_large/base,Static-ML*,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_large/base,Static-ML*,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_large/base,Portfolio-ML,unique_weights,PASS,duplicates=0
+us_large/base,Portfolio-ML,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_large/base,Portfolio-ML,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_large/base,Portfolio-ML (linear),unique_weights,PASS,duplicates=0
+us_large/base,Portfolio-ML (linear),independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_large/base,Portfolio-ML (linear),inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_large/base,Portfolio-ML (active; TE 4%),unique_weights,PASS,duplicates=0
+us_large/base,Portfolio-ML (active; TE 4%),independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_large/base,Portfolio-ML (active; TE 4%),inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_large/base,Portfolio-ML (active; TE 2%),unique_weights,PASS,duplicates=0
+us_large/base,Portfolio-ML (active; TE 2%),independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_large/base,Portfolio-ML (active; TE 2%),inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_large/base,Portfolio-ML (active; TE 1%),unique_weights,PASS,duplicates=0
+us_large/base,Portfolio-ML (active; TE 1%),independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_large/base,Portfolio-ML (active; TE 1%),inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_large/u250,ALL,panel_unique_security_month,PASS,duplicate rows=0
+us_large/u250,ALL,lambda_equals_point_two_over_saved_usd_volume,PASS,"max absolute discrepancy=0.0; this verifies consistency with saved USD labels, not independent venue unit validation"
+us_large/u250,ALL,risk_free_for_funded_growth_checks,PASS,"Formation months lacking a saved implied next-month risk-free return=0; funded-growth checks use r+RF, not excess r alone"
+us_large/u250,ALL,zero_return_flags_preserve_missing_originals,PASS,flagged history rows=53; nonzero assumed excess=0; originally observed but flagged=0
+us_large/u250,ALL,assumed_total_return_matches_other_stocks_implied_risk_free,PASS,total-return mismatches=0; rows without independent same-month observed-stock RF=0
+us_large/u250,ALL,zero_return_flag_ledger_agreement,PASS,flagged rows=53; ledger rows=53; differing security-month keys=0
+us_large/u250,ALL,covariance_test_coverage,PASS,missing formation months=0
+us_large/u250,ALL,covariance_positive_definite,PASS,invalid matrices=0; inspected=72
+us_large/u250,return model,prediction_dates_and_finiteness,PASS,duplicates=0; wrong return year=0; nonfinite=0
+us_large/u250,return model,held_prediction_coverage,PASS,missing held security-month predictions=0
+us_large/u250,Market,unique_weights,PASS,duplicates=0
+us_large/u250,Market,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_large/u250,Market,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_large/u250,1/N,unique_weights,PASS,duplicates=0
+us_large/u250,1/N,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_large/u250,1/N,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_large/u250,Minimum variance,unique_weights,PASS,duplicates=0
+us_large/u250,Minimum variance,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_large/u250,Minimum variance,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_large/u250,Markowitz-ML,unique_weights,PASS,duplicates=0
+us_large/u250,Markowitz-ML,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_large/u250,Markowitz-ML,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_large/u250,Factor-ML,unique_weights,PASS,duplicates=0
+us_large/u250,Factor-ML,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_large/u250,Factor-ML,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_large/u250,Static-ML,independent_accounting,SKIPPED,No saved weights for this source type (fixed Static-ML weights are not retained)
+us_large/u250,Static-ML*,unique_weights,PASS,duplicates=0
+us_large/u250,Static-ML*,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_large/u250,Static-ML*,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_large/u250,Portfolio-ML,unique_weights,PASS,duplicates=0
+us_large/u250,Portfolio-ML,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_large/u250,Portfolio-ML,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_mid/base,ALL,panel_unique_security_month,PASS,duplicate rows=0
+us_mid/base,ALL,lambda_equals_point_two_over_saved_usd_volume,PASS,"max absolute discrepancy=0.0; this verifies consistency with saved USD labels, not independent venue unit validation"
+us_mid/base,ALL,risk_free_for_funded_growth_checks,PASS,"Formation months lacking a saved implied next-month risk-free return=0; funded-growth checks use r+RF, not excess r alone"
+us_mid/base,ALL,zero_return_flags_preserve_missing_originals,PASS,flagged history rows=21; nonzero assumed excess=0; originally observed but flagged=0
+us_mid/base,ALL,assumed_total_return_matches_other_stocks_implied_risk_free,PASS,total-return mismatches=0; rows without independent same-month observed-stock RF=0
+us_mid/base,ALL,zero_return_flag_ledger_agreement,PASS,flagged rows=21; ledger rows=21; differing security-month keys=0
+us_mid/base,ALL,covariance_test_coverage,PASS,missing formation months=0
+us_mid/base,ALL,covariance_positive_definite,PASS,invalid matrices=0; inspected=72
+us_mid/base,return model,prediction_dates_and_finiteness,PASS,duplicates=0; wrong return year=0; nonfinite=0
+us_mid/base,return model,held_prediction_coverage,PASS,missing held security-month predictions=0
+us_mid/base,Market,unique_weights,PASS,duplicates=0
+us_mid/base,Market,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_mid/base,Market,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_mid/base,1/N,unique_weights,PASS,duplicates=0
+us_mid/base,1/N,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_mid/base,1/N,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_mid/base,Minimum variance,unique_weights,PASS,duplicates=0
+us_mid/base,Minimum variance,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_mid/base,Minimum variance,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_mid/base,Markowitz-ML,unique_weights,PASS,duplicates=0
+us_mid/base,Markowitz-ML,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_mid/base,Markowitz-ML,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_mid/base,Factor-ML,unique_weights,PASS,duplicates=0
+us_mid/base,Factor-ML,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_mid/base,Factor-ML,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_mid/base,Static-ML,independent_accounting,SKIPPED,No saved weights for this source type (fixed Static-ML weights are not retained)
+us_mid/base,Static-ML*,unique_weights,PASS,duplicates=0
+us_mid/base,Static-ML*,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_mid/base,Static-ML*,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_mid/base,Portfolio-ML,unique_weights,PASS,duplicates=0
+us_mid/base,Portfolio-ML,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_mid/base,Portfolio-ML,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+us_mid/base,Portfolio-ML (linear),unique_weights,PASS,duplicates=0
+us_mid/base,Portfolio-ML (linear),independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+us_mid/base,Portfolio-ML (linear),inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+eu_large/base,ALL,panel_unique_security_month,PASS,duplicate rows=0
+eu_large/base,ALL,lambda_equals_point_two_over_saved_usd_volume,PASS,"max absolute discrepancy=0.0; this verifies consistency with saved USD labels, not independent venue unit validation"
+eu_large/base,ALL,risk_free_for_funded_growth_checks,PASS,"Formation months lacking a saved implied next-month risk-free return=0; funded-growth checks use r+RF, not excess r alone"
+eu_large/base,ALL,zero_return_flags_preserve_missing_originals,PASS,flagged history rows=20; nonzero assumed excess=0; originally observed but flagged=0
+eu_large/base,ALL,assumed_total_return_matches_other_stocks_implied_risk_free,PASS,total-return mismatches=0; rows without independent same-month observed-stock RF=0
+eu_large/base,ALL,zero_return_flag_ledger_agreement,PASS,flagged rows=20; ledger rows=20; differing security-month keys=0
+eu_large/base,ALL,covariance_test_coverage,PASS,missing formation months=0
+eu_large/base,ALL,covariance_positive_definite,PASS,invalid matrices=0; inspected=72
+eu_large/base,return model,prediction_dates_and_finiteness,PASS,duplicates=0; wrong return year=0; nonfinite=0
+eu_large/base,return model,held_prediction_coverage,PASS,missing held security-month predictions=0
+eu_large/base,Market,unique_weights,PASS,duplicates=0
+eu_large/base,Market,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+eu_large/base,Market,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+eu_large/base,1/N,unique_weights,PASS,duplicates=0
+eu_large/base,1/N,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+eu_large/base,1/N,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+eu_large/base,Minimum variance,unique_weights,PASS,duplicates=0
+eu_large/base,Minimum variance,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+eu_large/base,Minimum variance,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+eu_large/base,Markowitz-ML,unique_weights,PASS,duplicates=0
+eu_large/base,Markowitz-ML,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+eu_large/base,Markowitz-ML,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+eu_large/base,Factor-ML,unique_weights,PASS,duplicates=0
+eu_large/base,Factor-ML,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+eu_large/base,Factor-ML,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+eu_large/base,Static-ML,independent_accounting,SKIPPED,No saved weights for this source type (fixed Static-ML weights are not retained)
+eu_large/base,Static-ML*,unique_weights,PASS,duplicates=0
+eu_large/base,Static-ML*,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+eu_large/base,Static-ML*,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+eu_large/base,Portfolio-ML,unique_weights,PASS,duplicates=0
+eu_large/base,Portfolio-ML,independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+eu_large/base,Portfolio-ML,inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+eu_large/base,Portfolio-ML (linear),unique_weights,PASS,duplicates=0
+eu_large/base,Portfolio-ML (linear),independent_accounting,PASS,"months=72/72; max errors={'r': 0.0, 'tc': 0.0, 'turnover': 0.0, 'inv': 0.0, 'shorting': 0.0}"
+eu_large/base,Portfolio-ML (linear),inherited_weight_drift,PASS,max absolute error excluding first saved month=0.0
+ALL,ALL,saved_hyperparameter_year_separation,PASS,failed choices=0; choices=198
+ALL,ALL,point_in_time_vendor_availability,SKIPPED,Saved vendor research snapshots do not retain publication vintages; timestamp consistency cannot prove absence of revised fundamentals or survivorship bias
+ALL,ALL,fresh_holdout,SKIPPED,2021-2025 is within the declared 2020-2025 test; no separate unseen holdout
+ALL,ALL,lookahead_refit_counterfactual,SKIPPED,"No retraining authorized; saved predictions and code/date checks only, no future-return perturbation rerun"
+ALL,ALL,alternative_covariance_reoptimisation,SKIPPED,One saved factor covariance specification; no alternative covariance fits/reoptimisation authorized
