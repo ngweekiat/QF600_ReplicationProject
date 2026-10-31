@@ -1,0 +1,5 @@
+period,first_return_month,last_return_month
+warmup,1995-01,2004-12
+train,2005-01,2014-12
+validation,2015-01,2019-12
+test,2020-01,2025-12
