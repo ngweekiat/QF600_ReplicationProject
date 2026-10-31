@@ -1,0 +1,9 @@
+{
+  "source": "WRDS contrib.global_factor.ret versus compounded acquired European daily USD total returns",
+  "sample_months": [
+    "2019-01-31",
+    "2020-03-31",
+    "2020-01-31",
+    "2025-01-31"
+  ]
+}

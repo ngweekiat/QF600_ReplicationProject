@@ -1,0 +1,14 @@
+{
+  "currency": "USD",
+  "return_type": "total",
+  "identifier": "jkp_id",
+  "source": "WRDS comp.g_secd prices/adjustment factors + comp.g_exrt_dly FX + comp.g_security delisting status",
+  "construction_reference": "https://github.com/bkelly-lab/ReplicationCrisis/blob/master/GlobalFactors/project_macros.sas",
+  "construction": "ri=(prccd/qunit)/ajexdi*trfd*USD_per_local; ret=ri/lag(ri)-1; JKP inactive-issue/delisting treatment",
+  "FX": "GBP cross rates; past quotes carried forward, never backward",
+  "required_security_count": 1769,
+  "rows": 7811683,
+  "first_date": "1994-11-02",
+  "last_date": "2025-12-31",
+  "monthly_validation": "eu_monthly_validation.json"
+}

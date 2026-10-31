@@ -1,0 +1,5 @@
+{
+  "source": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=USREC",
+  "series": "USREC",
+  "last_included_date": "2025-12-31"
+}

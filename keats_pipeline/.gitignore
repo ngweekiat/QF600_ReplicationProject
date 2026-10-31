@@ -1,0 +1,7 @@
+/data/*
+!/data/inputs/
+/outputs/
+/.deps/
+__pycache__/
+.pytest_cache/
+*.pyc

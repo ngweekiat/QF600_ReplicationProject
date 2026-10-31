@@ -1,0 +1,149 @@
+{
+  "acquired_date": "2026-10-31",
+  "files": [
+    {
+      "file": "daily_EU.parquet",
+      "bytes": 77863814,
+      "rows": 7811683,
+      "columns": [
+        "id",
+        "date",
+        "ret"
+      ],
+      "sha256": "2b089de2fb657152add7217675299a4d3cee966ee3fd2a3269f6ea5423b3a4c0"
+    },
+    {
+      "file": "daily_US.parquet",
+      "bytes": 44229850,
+      "rows": 8760119,
+      "columns": [
+        "id",
+        "date",
+        "ret"
+      ],
+      "sha256": "c3cf4246e0f042feda5f1417fab9629b9fd1d5c5833b0d8077bc2485f6d2d579"
+    },
+    {
+      "file": "eu_delisting_metadata.parquet",
+      "bytes": 15373,
+      "rows": 1769,
+      "columns": [
+        "gvkey",
+        "iid",
+        "secstat",
+        "dlrsni"
+      ],
+      "sha256": "f7a25453ae47c0c24ebe26c8be93e773701dc0e2d81c5ed5325a03d6ae747441"
+    },
+    {
+      "file": "eu_monthly_reconciliation.parquet",
+      "bytes": 88743,
+      "rows": 3647,
+      "columns": [
+        "id",
+        "eom",
+        "ret",
+        "daily_compounded",
+        "absolute_difference"
+      ],
+      "sha256": "6e76e1aa660270f278f3f369683b3d1833516150dab874b12a9439f245bad1c9"
+    },
+    {
+      "file": "eu_security_mapping.parquet",
+      "bytes": 25314,
+      "rows": 1769,
+      "columns": [
+        "id",
+        "gvkey",
+        "iid"
+      ],
+      "sha256": "d1580cabb1eaea4e597fd92c0e7727f66d5f18c6a988789f52dd09074e70c3ac"
+    },
+    {
+      "file": "fred_FEDFUNDS.parquet",
+      "bytes": 6373,
+      "rows": 374,
+      "columns": [
+        "date",
+        "value"
+      ],
+      "sha256": "e1113e9cf1cb39772bb15e0cec1bf49390474399102b9fe73128d8fa48ad84ea"
+    },
+    {
+      "file": "fred_USREC.parquet",
+      "bytes": 5222,
+      "rows": 374,
+      "columns": [
+        "date",
+        "value"
+      ],
+      "sha256": "25d04cc0b1b2ad876d7edb604b1a7c4b174e90d15fdb1470bc5dfdeb63370781"
+    },
+    {
+      "file": "fred_VIXCLS.parquet",
+      "bytes": 95017,
+      "rows": 7870,
+      "columns": [
+        "date",
+        "value"
+      ],
+      "sha256": "e8e7760b9605e2d20435adebe29f8b1f4907d3472d38ade539629831b61c2f8b"
+    },
+    {
+      "file": "fx_GBP_crosses.parquet",
+      "bytes": 893863,
+      "rows": 188412,
+      "columns": [
+        "tocurd",
+        "date",
+        "exratd"
+      ],
+      "sha256": "13b1c59bddac21947edb78e7859385997fffe7d2f967e8ef1be70375cfa48a4f"
+    },
+    {
+      "file": "monthly_returns_EU.parquet",
+      "bytes": 4959,
+      "rows": 15,
+      "columns": [
+        "id",
+        "eom",
+        "gvkey",
+        "iid",
+        "ret",
+        "ret_exc",
+        "ret_exc_lead1m"
+      ],
+      "sha256": "105b7971f2154c3431388d2d7981b2c97b568bfe0eeac66d3eff0525de24335c"
+    },
+    {
+      "file": "monthly_returns_US.parquet",
+      "bytes": 5221,
+      "rows": 22,
+      "columns": [
+        "id",
+        "eom",
+        "gvkey",
+        "iid",
+        "ret",
+        "ret_exc",
+        "ret_exc_lead1m"
+      ],
+      "sha256": "6cef6f08fc40ffd9a0968810b2cd38d95d1b4709b2eaddef3121b62e88329a5c"
+    },
+    {
+      "file": "us_terminal_months.parquet",
+      "bytes": 9525,
+      "rows": 284,
+      "columns": [
+        "id",
+        "date",
+        "ret",
+        "mthdelflg",
+        "mthretx"
+      ],
+      "sha256": "e67e234eae0af296969d3685fb493bc8f09aee929aa55abf2f4f891ff213dda3"
+    }
+  ],
+  "normal_runner_downloads_enabled": false,
+  "source_missing_values_preserved": true
+}

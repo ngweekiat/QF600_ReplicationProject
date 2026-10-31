@@ -1,0 +1,15 @@
+universe,id,eom,return_month,source_status
+us_large,88239,2015-01-31,2015-02-28,JKP forward return also missing in WRDS; no value invented
+us_large,11703,2017-08-31,2017-09-30,JKP forward return also missing in WRDS; no value invented
+us_large,28310,2020-11-30,2020-12-31,JKP forward return also missing in WRDS; no value invented
+us_mid,15553,2016-06-30,2016-07-31,JKP forward return also missing in WRDS; no value invented
+us_mid,14570,2016-09-30,2016-10-31,JKP forward return also missing in WRDS; no value invented
+us_mid,14856,2017-08-31,2017-09-30,JKP forward return also missing in WRDS; no value invented
+us_mid,13914,2019-07-31,2019-08-31,JKP forward return also missing in WRDS; no value invented
+us_mid,16496,2021-12-31,2022-01-31,JKP forward return also missing in WRDS; no value invented
+eu_large,301408701,2016-02-29,2016-03-31,JKP forward return also missing in WRDS; no value invented
+eu_large,310047203,2016-10-31,2016-11-30,JKP forward return also missing in WRDS; no value invented
+eu_large,324121601,2018-01-31,2018-02-28,JKP forward return also missing in WRDS; no value invented
+eu_large,301084602,2019-06-30,2019-07-31,JKP forward return also missing in WRDS; no value invented
+eu_large,310112001,2020-11-30,2020-12-31,JKP forward return also missing in WRDS; no value invented
+eu_large,322092001,2023-05-31,2023-06-30,JKP forward return also missing in WRDS; no value invented

@@ -1,0 +1,5 @@
+{
+  "source": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=VIXCLS",
+  "series": "VIXCLS",
+  "last_included_date": "2025-12-31"
+}

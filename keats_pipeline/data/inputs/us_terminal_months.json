@@ -1,0 +1,7 @@
+{
+  "source": "WRDS crsp.msf_v2.mthret and delisting flags",
+  "currency": "USD",
+  "return_type": "total",
+  "identifier": "jkp_id",
+  "note": "Actual source monthly observations for securities with missing JKP forward returns; not an assumed zero return"
+}

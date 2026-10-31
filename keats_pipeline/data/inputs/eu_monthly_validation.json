@@ -1,0 +1,6 @@
+{
+  "observations": 3647,
+  "median_absolute_error": 2.0816681711721685e-16,
+  "share_within_10bp": 0.9986290101453249,
+  "max_absolute_error": 0.0037040311856968468
+}

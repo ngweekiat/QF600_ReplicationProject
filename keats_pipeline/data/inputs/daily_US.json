@@ -1,0 +1,10 @@
+{
+  "currency": "USD",
+  "return_type": "total",
+  "identifier": "jkp_id",
+  "source": "WRDS crsp.dsf_v2.dlyret (CRSP CIZ total return, including its delisting treatment)",
+  "first_date": "1994-11-01",
+  "last_date": "2025-12-31",
+  "required_security_count": 2028,
+  "rows": 8760119
+}

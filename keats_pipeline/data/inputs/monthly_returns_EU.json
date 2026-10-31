@@ -1,0 +1,7 @@
+{
+  "source": "WRDS contrib.global_factor, only requested missing stock/months and adjacent months",
+  "currency": "USD",
+  "return_type": "excess",
+  "identifier": "jkp_id",
+  "no_existing_observation_replaced": true
+}
