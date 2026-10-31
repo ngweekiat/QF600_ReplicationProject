@@ -4,6 +4,11 @@ This is a separate, offline copy of the project's script workflow and `jkmp` cal
 The original `scripts/`, `src/`, configs, downloaded Keats files and existing results are unchanged.
 Do not rerun `setup_workflow.py` or `adapt_scripts.py`: those are the one-time creation utilities.
 
+Saved-output ML comparisons, evaluation code, research reports and assumption/exclusion records are together in
+[outputs/ML comparison and reasoning](<outputs/ML comparison and reasoning/START_HERE.md>).
+Run `outputs/ML comparison and reasoning/run_comparison.py` with Python 3.13 to evaluate existing results;
+this comparison runner does not train models or optimise new portfolios.
+
 Supplementary source inputs are stored in `data/inputs/` with provenance and checksums and use Git LFS.
 See [the input catalogue](data/inputs/README.md) and `data/inputs/manifest.json` for the files actually included.
 Run `git lfs pull` after cloning. `run.py` remains offline; `acquire_missing.py` is a separate explicit downloader.
@@ -40,6 +45,11 @@ When a current realised return makes a row unsuitable for fitting, held stocks c
 from their current characteristics and an already fitted model; the runner checks and records that coverage.
 Static-ML grid calculations batch common monthly data and Cholesky factors; equivalence tests cover entry,
 exit costs and the original validation output. Existing moment caches are archived under `previous_runs/`, not deleted.
+Monthly portfolio recursion also indexes historical returns once rather than repeatedly merging the regional panel;
+direct equivalence tests cover stock entries, exits, zero positions and both exit-cost settings.
+Mid-cap rank-IC reports use ranks 461-540, 376-460 and 541-625 so they describe the actual central and added bands.
+Breadth reports identify rank-IC diagnostics as reference-model diagnostics: held-specific imputation means the
+two fitted models are not assumed to have identical predictions.
 
 Every Keats stage that reads a prepared dataset prints its zero-return assumptions automatically, including
 company labels where available, stable stock IDs, formation dates, affected next-month return dates, and assumed values.

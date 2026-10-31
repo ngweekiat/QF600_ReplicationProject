@@ -53,17 +53,43 @@ def recursive_weights(inputs: Mapping[pd.Timestamp, MonthInputs], panel: pd.Data
     Returns ``id, eom, w, w_start, exit`` (exit rows only with ``charge_exit_tc``), ready for
     ``accounting.portfolio_returns``.
     """
-    rows, drifted = [], None
+    rows, previous_ids, previous_start = [], None, None
+    # Index once: repeated counterfactual/grid runs must not rejoin the full panel
+    # for every individual month. Initial weights, drift and exit rules match accounting.py.
+    panel_returns = {date: group.set_index("id")["tr_ld1"] for date, group in
+                     panel.loc[panel["eom"].isin(inputs), ["id","eom","tr_ld1"]].groupby("eom", sort=False)}
+    market = wealth.set_index("eom")["mu_ld1"]
     for eom in sorted(inputs):
         x = inputs[eom]
-        start = start_weights_for(eom, x.ids, drifted, x.panel_t, charge_exit_tc)
-        held = start[~start["exit"]].set_index("id").loc[x.ids, "w_start"].to_numpy()
+        exit_ids, exit_start = np.array([],dtype=x.ids.dtype), np.array([],dtype=float)
+        if previous_ids is None:
+            capital=x.panel_t.set_index("id")["me"].reindex(x.ids).to_numpy()
+            held=capital/capital.sum()
+        else:
+            positions=pd.Index(previous_ids).get_indexer(x.ids)
+            held=np.zeros(len(x.ids))
+            found=positions>=0
+            held[found]=previous_start[positions[found]]
+            if charge_exit_tc:
+                leaving=(~pd.Index(previous_ids).isin(x.ids)) & (previous_start!=0.0)
+                leaving &= pd.Index(previous_ids).isin(x.panel_t["id"])
+                exit_ids,exit_start=previous_ids[leaving],previous_start[leaving]
         w = target(eom, x, held)
         if w.shape != held.shape or not np.isfinite(w).all():
             raise FloatingPointError(f"bad target weights at {eom.date()}")
-        month = start.assign(eom=eom, w=0.0)
-        keep = ~month["exit"]
-        month.loc[keep, "w"] = pd.Series(w, index=x.ids).loc[month.loc[keep, "id"]].to_numpy()
+        month=pd.DataFrame({"id":np.concatenate([x.ids,exit_ids]),"eom":eom,
+            "w":np.concatenate([w,np.zeros(len(exit_ids))]),
+            "w_start":np.concatenate([held,exit_start]),
+            "exit":np.concatenate([np.zeros(len(x.ids),dtype=bool),np.ones(len(exit_ids),dtype=bool)])})
         rows.append(month)
-        drifted = drift_weights(month[month["w"] != 0.0], panel, wealth)[["id", "w_start"]]
+        nonzero=w!=0.0
+        previous_ids=x.ids[nonzero]
+        if nonzero.any():
+            returns=panel_returns[eom].reindex(previous_ids).to_numpy()
+            growth=market.get(eom,np.nan)
+            if pd.isna(returns).any() or pd.isna(growth):
+                raise ValueError(f"Held positions lack tr_ld1/mu_ld1 at {eom.date()}")
+            previous_start=w[nonzero]*(1.0+returns)/(1.0+growth)
+        else:
+            previous_start=np.array([],dtype=float)
     return pd.concat(rows, ignore_index=True)[["id", "eom", "w", "w_start", "exit"]]

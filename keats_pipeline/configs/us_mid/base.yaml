@@ -90,6 +90,10 @@ investor:
 grids:
   n_jobs: 1
 reporting:
+  ic_size_buckets:
+  - [461, 540]
+  - [376, 460]
+  - [541, 625]
   subperiods:
   - label: 2020-2022
     start: '2020-01-31'

@@ -73,13 +73,14 @@ def main() -> None:
     print(f"\nP(net IR 250-stock > 80-stock) = {p_improve:.4f} -> {'KEEP' if p_improve >= 0.80 else 'KILL'} "
           f"(pre-registered bar 0.80)")
 
-    # 2. Rank IC by size bucket (predictions are the same for both universes)
+    # 2. Reference-model rank IC by size bucket. Held-specific zero targets can
+    # change fitted forecasts between the 80- and 250-stock variants.
     base = sides["80-stock"]
     preds = pd.read_parquet(base["cfg"].paths.processed / "predictions.parquet")
     preds = preds[preds["eom"] + pd.offsets.MonthEnd(1) <= pd.Timestamp(dates.test_end)]
     ic = rank_ic_by_size(preds, base["panel"], rep.ic_size_buckets, dates)
     ic.to_csv(out / "rank_ic_by_size.csv", index=False)
-    print("\nMean monthly rank IC by market-cap rank bucket (return years 2015–2025):")
+    print("\nReference 80-stock model: mean monthly rank IC by market-cap rank bucket (return years 2015–2025):")
     print(ic.pivot(index="decade", columns="bucket", values="rank_ic").to_string(float_format=lambda v: f"{v:.4f}"))
 
     # 3. Capacity and cost sensitivity: net IR vs wealth, base costs, VIX-scaled (2020–2025 (VIX subset)), stock-vol-scaled
