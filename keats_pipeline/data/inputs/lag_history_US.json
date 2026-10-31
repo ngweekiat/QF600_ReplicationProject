@@ -1,0 +1,9 @@
+{
+  "source": "lag_history_source_US.parquet",
+  "purpose": "Actual pre-entry signal history only; not training targets, membership or wealth benchmark inputs",
+  "rank_reference": "Saved screened regional population plus the queried observation; average ties; original ranks unchanged",
+  "missing_feature_or_reference_rank": 0.5,
+  "rows": 930,
+  "neutral_growth_rows": 0,
+  "unavailable_stock_months": 2
+}

@@ -1,0 +1,20 @@
+{
+  "source": "../configs/Keats universe code/data/universes Keats",
+  "reference_data": "../data/raw",
+  "universes": ["us_large", "us_mid", "eu_large"],
+  "features": "all_50",
+  "downloads_allowed": false,
+  "missing_forward_return_policy": "zero_excess",
+  "missing_lag_history_policy": "exclude_affected_stock_months",
+  "train_start": "2005-01-31",
+  "validation_start": "2015-01-31",
+  "validation_end": "2019-12-31",
+  "test_start": "2020-01-31",
+  "test_end": "2025-12-31",
+  "wealth_anchor": "2019-12-31",
+  "currency": "USD",
+  "daily_inputs": {
+    "US": "data/inputs/daily_US.parquet",
+    "EU": "data/inputs/daily_EU.parquet"
+  }
+}

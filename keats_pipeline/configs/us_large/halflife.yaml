@@ -1,0 +1,9 @@
+base: universe_250.yaml
+paths:
+  outputs: outputs/us_large/u250_hl
+portfolio_ml:
+  half_life_years:
+  - 3
+  - 5
+  - 10
+  - null

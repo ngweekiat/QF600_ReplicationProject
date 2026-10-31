@@ -17,6 +17,9 @@ The original Keats files have not been replaced.
 | `eu_delisting_metadata.parquet` | Source issue status and delisting reason used for European inactive issues |
 | `eu_monthly_reconciliation.parquet` | All sampled monthly comparisons, including the five differences above 10 basis points |
 | `unresolved_forward_returns.csv` | Exact remaining source gaps; no assumed zero returns |
+| `lag_history_source_US.parquet`, `lag_history_source_EU.parquet` | 930 / 441 actual WRDS historical rows absent from the saved screened panels; no forward targets requested |
+| `lag_history_US.parquet`, `lag_history_EU.parquet` | Ranked historical signal-only inputs; original ranks and membership are not modified |
+| `unavailable_lag_history_US.csv`, `unavailable_lag_history_EU.csv` | Three unavailable December 2010 stock/months; user selected explicit affected-month exclusions |
 
 Each source dataset has a JSON provenance file. Daily data uses `id,date,ret`; `ret` is total return,
 not excess return or a price change. No return after December 2025 enters the normalized daily datasets.

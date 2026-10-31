@@ -1,0 +1,8 @@
+base: active_pfml.yaml
+paths:
+  processed: data/processed/eu_large/universe_250
+  outputs: outputs/eu_large/u250
+universe:
+  target_n: 250
+  entry_rank: 220
+  exit_rank: 300

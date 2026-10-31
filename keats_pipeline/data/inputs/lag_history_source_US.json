@@ -1,0 +1,8 @@
+{
+  "source": "WRDS contrib.global_factor",
+  "purpose": "Actual historical characteristics/current excess returns for lagged signals only; no forward targets downloaded",
+  "currency": "USD",
+  "requested_stock_months": 932,
+  "returned_stock_months": 930,
+  "original_saved_panels_unchanged": true
+}

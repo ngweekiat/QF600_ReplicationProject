@@ -1,0 +1,100 @@
+base: ../keats_base.yaml
+paths:
+  raw: data/raw/us_mid
+  processed: data/processed/us_mid/with_zero_returns
+  outputs: outputs/us_mid/base
+  reference_r: ../reference/jkmp_r
+dates:
+  warmup_start: '1994-12-31'
+  validation_start: '2015-01-31'
+  validation_end: '2019-12-31'
+  test_start: '2020-01-31'
+  test_end: '2025-12-31'
+  holdout_start: null
+  holdout_end: null
+  data_end: '2025-12-31'
+  holdout_locked: true
+  evaluate: test
+features:
+  themes:
+    value:
+    - be_me
+    - sale_me
+    - ebitda_mev
+    - ni_me
+    - fcf_me
+    - div12m_me
+    momentum:
+    - ret_12_1
+    - ret_6_1
+    - prc_highprc_252d
+    - ret_9_1
+    - ret_3_1
+    quality:
+    - qmj_prof
+    - qmj_safety
+    - gp_at
+    - op_at
+    - cop_at
+    - at_turnover
+    investment:
+    - at_gr1
+    - ppeinv_gr1a
+    - noa_gr1a
+    - capx_gr1
+    - emp_gr1
+    low_risk:
+    - ivol_capm_252d
+    - beta_60m
+    - rvol_21d
+    - betadown_252d
+    - zero_trades_126d
+    short_term_reversal:
+    - ret_1_0
+    - rskew_21d
+    - iskew_capm_21d
+    profitability:
+    - ocf_at
+    - ni_be
+    - ebit_sale
+    - ope_be
+    profit_growth:
+    - ocf_at_chg1
+    - sale_emp_gr1
+    - tax_gr1a
+    - ret_12_7
+    low_leverage:
+    - cash_at
+    - netdebt_me
+    - tangibility
+    accruals:
+    - oaccruals_at
+    - taccruals_at
+    - cowc_gr1a
+    size:
+    - market_equity
+    - ami_126d
+    - dolvol_126d
+    debt_issuance:
+    - noa_at
+    - fnl_gr1a
+    seasonality:
+    - seas_11_15an
+return_model:
+  pred_years:
+  - 2015
+  - 2025
+  val_years: 5
+investor:
+  wealth_end_date: '2019-12-31'
+grids:
+  n_jobs: 1
+reporting:
+  subperiods:
+  - label: 2020-2022
+    start: '2020-01-31'
+    end: '2022-12-31'
+  - label: 2023-2025
+    start: '2023-01-31'
+    end: '2025-12-31'
+  cost_vix_start: '2020-01-31'
