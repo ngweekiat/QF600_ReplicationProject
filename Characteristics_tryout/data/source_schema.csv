@@ -1,0 +1,445 @@
+name,dtype,description
+id,double precision,Id
+permno,double precision,CRSP permno
+permco,double precision,CRSP permno
+gvkey,character varying(8),Compustat gvkey
+iid,character varying(5),Compustat iid
+excntry,character varying(5),Exchange country
+exch_main,double precision,Indicator: Main exchange observation
+common,double precision,Indicator: Common stock
+primary_sec,double precision,Indicator: Primary security
+bidask,double precision,Indicator: Price based on average between bid and ask
+crsp_shrcd,double precision,CRSP: Share code
+crsp_exchcd,double precision,CRSP: Exchange code
+comp_tpci,character varying(1),Compustat: TPCI
+comp_exchg,character varying(4),Compustat: Exchg
+curcd,character varying(5),Local currency code
+fx,double precision,Exchange rate local to USD
+date,date,Day of last price observation
+eom,date,End of month
+adjfct,double precision,Share price adjustment factor
+shares,double precision,Shares outstanding
+me,double precision,Market equity
+me_company,double precision,Market equity company
+prc,double precision,Price per share in dollars
+prc_local,double precision,Price per share in local currency
+prc_high,double precision,Highest daily closing price during month
+prc_low,double precision,Lowest daily closing price during month
+dolvol,double precision,Dollar trading volume
+tvol,double precision,Number of shares traded during month
+ret,double precision,Total return in USD
+ret_local,double precision,Total return in local currency
+ret_exc,double precision,Excess return in USD
+ret_lag_dif,double precision,Months between prices used to calculate returns
+source_crsp,double precision,Indicator: Return data from CRSP
+ret_exc_lead1m,double precision,Excess return in USD in month t+1
+obs_main,double precision,Indicator: Main return observation
+gics,character varying(10),GICS code
+sic,double precision,SIC code
+naics,double precision,NAICS code
+ff49,double precision,Fama-French 49 industry code
+size_grp,character varying(7),Size group
+market_equity,double precision,Market equity (characteristic)
+div1m_me,double precision,Dividend to Price - 1 Month
+divspc1m_me,double precision,Special Dividend to Price - 1 Month
+div3m_me,double precision,Dividend to Price - 3 Months
+div6m_me,double precision,Dividend to Price - 6 Months
+div12m_me,double precision,Dividend yield
+divspc12m_me,double precision,Special Dividend to Price - 12 Month
+eqnpo_1m,double precision,Net Equity Payout - 1 Month
+eqnpo_3m,double precision,Net Equity Payout - 3 Month
+eqnpo_6m,double precision,Net Equity Payout - 6 Month
+eqnpo_12m,double precision,Equity net payout
+chcsho_1m,double precision,Change in Shares - 1 Month
+chcsho_3m,double precision,Change in Shares - 3 Month
+chcsho_6m,double precision,Change in Shares - 6 Month
+chcsho_12m,double precision,Net stock issues
+ret_1_0,double precision,Short-term reversal
+ret_2_0,double precision,Momentum 0-2 Months
+ret_3_0,double precision,Momentum 0-3 Months
+ret_3_1,double precision,Price momentum t-3 to t-1
+ret_6_0,double precision,Momentum 0-6 Months
+ret_6_1,double precision,Price momentum t-6 to t-1
+ret_9_0,double precision,Momentum 0-9 Months
+ret_9_1,double precision,Price momentum t-9 to t-1
+ret_12_0,double precision,Momentum 0-12 Months
+ret_12_1,double precision,Price momentum t-12 to t-1
+ret_12_7,double precision,Price momentum t-12 to t-7
+ret_18_1,double precision,Momentum 1-18 Months
+ret_24_1,double precision,Momentum 1-24 Months
+ret_24_12,double precision,Momentum 12-24 Months
+ret_36_1,double precision,Momentum 1-36 Months
+ret_36_12,double precision,Momentum 12-36 Months
+ret_48_12,double precision,Momentum 12-48 Months
+ret_48_1,double precision,Momentum 1-48 Months
+ret_60_1,double precision,Momentum 1-60 Months
+ret_60_12,double precision,Long-term reversal
+ret_60_36,double precision,Momentum 36-60 Months
+seas_1_1an,double precision,"Year 1-lagged return, annual"
+seas_1_1na,double precision,"Year 1-lagged return, nonannual"
+seas_2_5an,double precision,"Years 2-5 lagged returns, annual"
+seas_2_5na,double precision,"Years 2-5 lagged returns, nonannual"
+seas_6_10an,double precision,"Years 6-10 lagged returns, annual"
+seas_6_10na,double precision,"Years 6-10 lagged returns, nonannual"
+seas_11_15an,double precision,"Years 11-15 lagged returns, annual"
+seas_11_15na,double precision,"Years 11-15 lagged returns, nonannual"
+seas_16_20an,double precision,"Years 16-20 lagged returns, annual"
+seas_16_20na,double precision,"Years 16-20 lagged returns, nonannual"
+assets,double precision,Assets
+sales,double precision,Sales
+book_equity,double precision,Book Equity
+net_income,double precision,Net Income
+enterprise_value,double precision,Enterprise Value
+at_gr1,double precision,Asset Growth
+ca_gr1,double precision,Current Asset Growth 1yr
+nca_gr1,double precision,Non-Current Asset Growth 1yr
+lt_gr1,double precision,Total Liabilities Growth 1yr
+cl_gr1,double precision,Current Liabilities Growth 1yr
+ncl_gr1,double precision,Non-Current Liabilities Growth 1yr
+be_gr1,double precision,Book Equity Growth 1yr
+pstk_gr1,double precision,Preferred Stock Growth 1 yr
+debt_gr1,double precision,Total Debt Growth 1yr
+sale_gr1,double precision,Sales Growth (1 year)
+cogs_gr1,double precision,Cost of Goods Sold Growth 1yr
+sga_gr1,double precision,"Selling, General, and Administrative Expenses Growth 1yr"
+opex_gr1,double precision,Operating Expenses Growth 1yr
+at_gr3,double precision,Asset Growth 3yr
+ca_gr3,double precision,Current Asset Growth 3yr
+nca_gr3,double precision,Non-Current Asset Growth 3yr
+lt_gr3,double precision,Total Liabilities Growth 3yr
+cl_gr3,double precision,Current Liabilities Growth 3yr
+ncl_gr3,double precision,Non-Current Liabilities Growth 3yr
+be_gr3,double precision,Book Equity Growth 3yr
+pstk_gr3,double precision,Preferred Stock Growth 3yr
+debt_gr3,double precision,Growth in book debt (3 years)
+sale_gr3,double precision,Sales Growth (3 years)
+cogs_gr3,double precision,Cost of Goods Sold Growth 3yr
+sga_gr3,double precision,"Selling, General, and Administrative Expenses Growth 3yr"
+opex_gr3,double precision,Operating Expenses Growth 3yr
+cash_gr1a,double precision,Cash and Short-Term Investments Change 1yr
+inv_gr1a,double precision,Inventory change
+rec_gr1a,double precision,Receivables Change 1yr
+ppeg_gr1a,double precision,"Property, Plans and Equipment Gross Change 1yr"
+lti_gr1a,double precision,Change in long-term investments
+intan_gr1a,double precision,Intangible Assets Change 1yr
+debtst_gr1a,double precision,Short-Term Debt Change 1yr
+ap_gr1a,double precision,Accounts Payable Change 1yr
+txp_gr1a,double precision,Income Tax Payable Change 1yr
+debtlt_gr1a,double precision,Long-Term Debt Change 1yr
+txditc_gr1a,double precision,Deferred Taxes and Investment Credit Change 1yr
+coa_gr1a,double precision,Change in current operating assets
+col_gr1a,double precision,Change in current operating liabilities
+cowc_gr1a,double precision,Change in current operating working capital
+ncoa_gr1a,double precision,Change in noncurrent operating assets
+ncol_gr1a,double precision,Change in noncurrent operating liabilities
+nncoa_gr1a,double precision,Change in net noncurrent operating assets
+oa_gr1a,double precision,Operating Assets Change 1yr
+ol_gr1a,double precision,Operating Liabilities Change 1yr
+noa_gr1a,double precision,Change in net operating assets
+fna_gr1a,double precision,Financial Assets Change 1yr
+fnl_gr1a,double precision,Change in financial liabilities
+nfna_gr1a,double precision,Change in net financial assets
+gp_gr1a,double precision,Gross Profit Change 1yr
+ebitda_gr1a,double precision,Operating Profit before Depreciation Change 1yr
+ebit_gr1a,double precision,Operating Profit after Depreciation Change 1yr
+ope_gr1a,double precision,Operating Earnings to Equity Change 1yr
+ni_gr1a,double precision,Net Income Change 1yr
+nix_gr1a,double precision,Net Income Including Extraordinary Items Change 1yr
+dp_gr1a,double precision,Depreciation and Amortization Change 1yr
+ocf_gr1a,double precision,Operating Cash Flow Change 1yr
+fcf_gr1a,double precision,Free Cash Flow Change 1yr
+nwc_gr1a,double precision,Net Working Capital Change 1yr
+eqnetis_gr1a,double precision,Equity Net Issuance Change 1yr
+dltnetis_gr1a,double precision,Net Long-Term Debt Issuance Change 1yr
+dstnetis_gr1a,double precision,Net Short-Term Debt Issuance Change 1yr
+dbnetis_gr1a,double precision,Net Debt Issuance Change 1yr
+netis_gr1a,double precision,Net Issuance Change 1yr
+fincf_gr1a,double precision,Financial Cash Flow Change 1yr
+eqnpo_gr1a,double precision,Equity Net Payout Change 1yr
+tax_gr1a,double precision,Tax expense surprise
+div_gr1a,double precision,Dividend Payout Ratio Change 1yr
+eqbb_gr1a,double precision,Equity Buyback Change 1yr
+eqis_gr1a,double precision,Equity Issuance Change 1yr
+eqpo_gr1a,double precision,Net Equity Payout Change 1yr
+capx_gr1a,double precision,Capital Expenditures Change 1yr
+cash_gr3a,double precision,Cash and Short-Term Investments Change 3yr
+inv_gr3a,double precision,Inventory Change 3yr
+rec_gr3a,double precision,Receivables Change 3yr
+ppeg_gr3a,double precision,"Property, Plans and Equipment Gross Change 3yr"
+lti_gr3a,double precision,Investment and Advances Change 3yr
+intan_gr3a,double precision,Intangible Assets Change 3yr
+debtst_gr3a,double precision,Short-Term Debt Change 3yr
+ap_gr3a,double precision,Accounts Payable Change 3yr
+txp_gr3a,double precision,Income Tax Payable Change 3yr
+debtlt_gr3a,double precision,Long-Term Debt Change 3yr
+txditc_gr3a,double precision,Deferred Taxes and Investment Credit Change 3yr
+coa_gr3a,double precision,Current Operating Assets Change 3yr
+col_gr3a,double precision,Current Operating Liabilities Change 3yr
+cowc_gr3a,double precision,Current Operating Working Capital Change 3yr
+ncoa_gr3a,double precision,Non-Current Operating Assets Change 3yr
+ncol_gr3a,double precision,Non-Current Operating Liabilities Change 3yr
+nncoa_gr3a,double precision,Net Non-Current Operating Assets Change 3yr
+oa_gr3a,double precision,Operating Assets Change 3yr
+ol_gr3a,double precision,Operating Liabilities Change 3yr
+fna_gr3a,double precision,Financial Assets Change 3yr
+fnl_gr3a,double precision,Financial Liabilities Change 3yr
+nfna_gr3a,double precision,Net Financial Assets Change 3yr
+gp_gr3a,double precision,Gross Profit Change 3yr
+ebitda_gr3a,double precision,Operating Profit before Depreciation Change 3yr
+ebit_gr3a,double precision,Operating Profit after Depreciation Change 3yr
+ope_gr3a,double precision,Operating Earnings to Equity Change 3yr
+ni_gr3a,double precision,Net Income Change 3yr
+nix_gr3a,double precision,Net Income Including Extraordinary Items Change 3yr
+dp_gr3a,double precision,Depreciation and Amortization Change 3yr
+ocf_gr3a,double precision,Operating Cash Flow Change 3yr
+fcf_gr3a,double precision,Free Cash Flow Change 3yr
+nwc_gr3a,double precision,Net Working Capital Change 3yr
+eqnetis_gr3a,double precision,Equity Net Issuance Change 3yr
+dltnetis_gr3a,double precision,Net Long-Term Debt Issuance Change 3yr
+dstnetis_gr3a,double precision,Net Short-Term Debt Issuance Change 3yr
+dbnetis_gr3a,double precision,Net Debt Issuance Change 3yr
+netis_gr3a,double precision,Net Issuance Change 3yr
+fincf_gr3a,double precision,Financial Cash Flow Change 3yr
+eqnpo_gr3a,double precision,Equity Net Payout Change 3yr
+tax_gr3a,double precision,Effective Tax Rate Change 3yr
+div_gr3a,double precision,Dividend Payout Ratio Change 3yr
+eqbb_gr3a,double precision,Equity Buyback Change 3yr
+eqis_gr3a,double precision,Equity Issuance Change 3yr
+eqpo_gr3a,double precision,Net Equity Payout Change 3yr
+capx_gr3a,double precision,Capital Expenditures Change 3yr
+capx_at,double precision,Capital Expenditures scaled by Assets
+rd_at,double precision,R+D scaled by Assets
+gp_sale,double precision,Gross Profit Margin
+ebitda_sale,double precision,Operating Profit Margin before Depreciation
+ebit_sale,double precision,Profit margin
+pi_sale,double precision,Pretax Profit Margin
+ni_sale,double precision,Net Profit Margin before extraordinary income
+nix_sale,double precision,Net Profit Margin
+ocf_sale,double precision,Operating Cash Flow Margin
+fcf_sale,double precision,Free Cash Flow Margin
+gp_at,double precision,Gross profits-to-assets
+ebitda_at,double precision,Operating Profit before Depreciation scaled by Assets
+ebit_at,double precision,Operating Profit after Depreciation scaled by Assets
+fi_at,double precision,Firm Income scaled by Assets
+cop_at,double precision,Cash-based operating profits-to-book assets
+ope_be,double precision,Operating profits-to-book equity
+ni_be,double precision,Return on equity
+nix_be,double precision,Net Income Including Extraordinary Items scaled by BE
+ocf_be,double precision,Operating Cash Flow scaled by BE
+fcf_be,double precision,Free Cash Flow scaled by BE
+gp_bev,double precision,Gross Profit scaled by BEV
+ebitda_bev,double precision,Operating Profit before Depreciation scaled by BEV
+ebit_bev,double precision,Return on net operating assets
+fi_bev,double precision,Firm Income scaled by BEV
+cop_bev,double precision,Cash Based Operating Profitability scaled by BEV
+gp_ppen,double precision,Gross Profit scaled by PPEN
+ebitda_ppen,double precision,Operating Profit before Depreciation scaled by PPEN
+fcf_ppen,double precision,Free Cash Flow scaled by PPEN
+fincf_at,double precision,Financial Cash Flow scaled by Assets
+netis_at,double precision,Net total issuance
+eqnetis_at,double precision,Net equity issuance
+eqis_at,double precision,Equity Issuance scaled by Assets
+dbnetis_at,double precision,Net debt issuance
+dltnetis_at,double precision,Net Long-Term Debt Issuance scaled by Assets
+dstnetis_at,double precision,Net Short-Term Debt Issuance scaled by Assets
+eqnpo_at,double precision,Equity Net Payout scaled by Assets
+eqbb_at,double precision,Net Equity Payout scaled by Assets
+div_at,double precision,Total Dividends scaled by Assets
+oaccruals_at,double precision,Operating accruals
+oaccruals_ni,double precision,Percent operating accruals
+taccruals_at,double precision,Total accruals
+taccruals_ni,double precision,Percent total accruals
+noa_at,double precision,Net operating assets
+be_bev,double precision,Common Equity scaled by BEV
+debt_bev,double precision,Total Debt scaled by BEV
+cash_bev,double precision,Cash and Short-Term Investments scaled by BEV
+pstk_bev,double precision,Preferred Stock scaled by BEV
+debtlt_bev,double precision,Long-Term Debt scaled by BEV
+debtst_bev,double precision,Short-Term Debt scaled by BEV
+debt_mev,double precision,Total Debt scaled by MEV
+pstk_mev,double precision,Preferred Stock scaled by MEV
+debtlt_mev,double precision,Long-Term Debt scaled by MEV
+debtst_mev,double precision,Short-Term Debt scaled by MEV
+int_debtlt,double precision,Interest scaled by Long-Term Debt
+int_debt,double precision,Interest scaled by Total Debt
+cash_lt,double precision,Cash Balance scaled by Total Liabilities
+inv_act,double precision,Inventory scaled by Current Assets
+rec_act,double precision,Receivables scaled by Current Assets
+ebitda_debt,double precision,Operating Profit before Depreciation scaled by Total Debt
+debtst_debt,double precision,Short-Term Debt scaled by Total Debt
+cl_lt,double precision,Current Liabilities scaled by Total Liabilities
+debtlt_debt,double precision,Long-Term Debt scaled by Total Debt
+profit_cl,double precision,Profit before D1 scaled by Current Liabilities
+ocf_cl,double precision,Operating Cash Flow scaled by Current Liabilities
+ocf_debt,double precision,Operating Cash Flow scaled by Total Debt
+lt_ppen,double precision,Total Liabilities scaled by Total Tangible Assets
+debtlt_be,double precision,Long-Term Debt to Book Equity
+fcf_ocf,double precision,Free Cash Flow scaled by Operating Cash Flow
+opex_at,double precision,Operating leverage
+nwc_at,double precision,Working Capital scaled by Assets
+debt_at,double precision,Debt-to-Assets
+debt_be,double precision,Debt to Shareholders Equity Ratio
+ebit_int,double precision,Interest Coverage Ratio
+cash_cl,double precision,Cash Ratio
+caliq_cl,double precision,Quick Ratio
+ca_cl,double precision,Current Ratio
+inv_days,double precision,Days Inventory Outstanding
+rec_days,double precision,Days Sales Outstanding
+ap_days,double precision,Days Accounts Payable Outstanding
+cash_conversion,double precision,Cash Conversion Cycle
+inv_turnover,double precision,Inventory Turnover
+at_turnover,double precision,Capital turnover
+rec_turnover,double precision,Receivables Turnover
+ap_turnover,double precision,Account Payables Turnover
+spi_at,double precision,Special Items scaled by Assets
+xido_at,double precision,Extraordinary Items and Discontinued Operations scaled by Assets
+nri_at,double precision,Non-Recurring Items scaled by Assets
+adv_sale,double precision,Advertising scaled by Sales
+staff_sale,double precision,Labor Expense scaled by Sales
+rd_sale,double precision,R+D-to-sales
+div_ni,double precision,Dividend Payout Ratio
+sale_bev,double precision,Assets turnover
+sale_be,double precision,Sales scaled by Total Stockholders Equity
+sale_nwc,double precision,Sales scaled by Working Capital
+tax_pi,double precision,Effective Tax Rate
+be_me,double precision,Book-to-market equity
+at_me,double precision,Assets-to-market
+cash_me,double precision,Cash and Short-Term Investments scaled by Market Equity
+gp_me,double precision,Gross Profit scaled by ME
+ebitda_me,double precision,Operating Profit before Depreciation scaled by ME
+ebit_me,double precision,Operating Profit after Depreciation scaled by ME
+ope_me,double precision,Operating Earnings to Equity scaled by ME
+ni_me,double precision,Earnings-to-price
+nix_me,double precision,Net Income Including Extraordinary Items scaled by ME
+sale_me,double precision,Sales-to-market
+ocf_me,double precision,Operating cash flow-to-market
+fcf_me,double precision,Free cash flow-to-price
+cop_me,double precision,Cash Based Operating Profitability scaled by ME
+rd_me,double precision,R+D-to-market
+div_me,double precision,Total Dividends scaled by ME
+eqbb_me,double precision,Equity Buyback scaled by ME
+eqis_me,double precision,Equity Issuance scaled by ME
+eqpo_me,double precision,Payout yield
+eqnpo_me,double precision,Net payout yield
+eqnetis_me,double precision,Equity Net Issuance scaled by ME
+dltnetis_mev,double precision,Net Long-Term Debt Issuance scaled by MEV
+dstnetis_mev,double precision,Net Short-Term Debt Issuance scaled by MEV
+dbnetis_mev,double precision,Net Debt Issuance scaled by MEV
+netis_mev,double precision,Net Issuance scaled by MEV
+at_mev,double precision,Total Assets scaled by MEV
+be_mev,double precision,Book Equity scaled by MEV
+bev_mev,double precision,Book-to-market enterprise value
+ppen_mev,double precision,"Property, Plans and Equipment Net scaled by MEV"
+cash_mev,double precision,Cash and Short-Term Investments scaled by MEV
+gp_mev,double precision,Gross Profit scaled by MEV
+ebitda_mev,double precision,Ebitda-to-market enterprise value
+ebit_mev,double precision,Operating Profit after Depreciation scaled by MEV
+cop_mev,double precision,Cash Based Operating Profitability scaled by MEV
+sale_mev,double precision,Sales scaled by MEV
+ocf_mev,double precision,Operating Cash Flow scaled by MEV
+fcf_mev,double precision,Free Cash Flow scaled by MEV
+fincf_mev,double precision,Financial Cash Flow Change scaled by MEV
+ni_inc8q,double precision,Number of consecutive quarters with earnings increases
+ppeinv_gr1a,double precision,Change PPE and Inventory
+lnoa_gr1a,double precision,Change in long-term net operating assets
+capx_gr1,double precision,CAPEX growth (1 year)
+capx_gr2,double precision,CAPEX growth (2 years)
+capx_gr3,double precision,CAPEX growth (3 years)
+sti_gr1a,double precision,Change in short-term investments
+niq_at,double precision,Quarterly return on assets
+niq_at_chg1,double precision,Change in quarterly return on assets
+niq_be,double precision,Quarterly return on equity
+niq_be_chg1,double precision,Change in quarterly return on equity
+saleq_gr1,double precision,Sales growth (1 quarter)
+rd5_at,double precision,R&D capital-to-book assets
+dsale_dinv,double precision,Change sales minus change Inventory
+dsale_drec,double precision,Change sales minus change receivables
+dgp_dsale,double precision,Change gross margin minus change sales
+dsale_dsga,double precision,Change sales minus change SG1
+saleq_su,double precision,Standardized Revenue surprise
+niq_su,double precision,Standardized earnings surprise
+debt_me,double precision,Debt-to-market
+netdebt_me,double precision,Net debt-to-price
+capex_abn,double precision,Abnormal corporate investment
+inv_gr1,double precision,Inventory growth
+be_gr1a,double precision,Change in common equity
+op_at,double precision,Operating profits-to-book assets
+pi_nix,double precision,Taxable income-to-book income
+op_atl1,double precision,Operating profits-to-lagged book assets
+gp_atl1,double precision,Gross profits-to-lagged assets
+ope_bel1,double precision,Operating profits-to-lagged book equity
+cop_atl1,double precision,Cash-based operating profits-to-lagged book assets
+at_be,double precision,Book leverage
+ocfq_saleq_std,double precision,Cash flow volatility
+aliq_at,double precision,Liquidity of book assets
+aliq_mat,double precision,Liquidity of market assets
+tangibility,double precision,Asset tangibility
+eq_dur,double precision,Equity duration
+f_score,double precision,Pitroski F-score
+o_score,double precision,Ohlson O-score
+z_score,double precision,Altman Z-score
+kz_index,double precision,Kaplan-Zingales index
+intrinsic_value,double precision,Intrinsic Value
+ival_me,double precision,Intrinsic value-to-market
+sale_emp_gr1,double precision,Labor force efficiency
+emp_gr1,double precision,Hiring rate
+cash_at,double precision,Cash-to-assets
+earnings_variability,double precision,Earnings variability
+ni_ar1,double precision,Earnings persistence
+ni_ivol,double precision,Earnings volatility
+niq_saleq_std,double precision,Net Income to Sales Quarterly Volatility
+ni_emp,double precision,Net Income scaled by Employees
+sale_emp,double precision,Sales scaled by Employees
+ni_at,double precision,Net Income scaled by Assets
+ocf_at,double precision,Operating cash flow to assets
+ocf_at_chg1,double precision,Change in operating cash flow to assets
+roeq_be_std,double precision,Quarterly ROE Volatility
+roe_be_std,double precision,ROE Volatility
+gpoa_ch5,double precision,Gross Product to Assets 5 yr Change
+roe_ch5,double precision,ROE 5 yr Change
+roa_ch5,double precision,ROA 5 yr Change
+cfoa_ch5,double precision,Operating Cash Flow to Assets 5 yr Change
+gmar_ch5,double precision,Gross Product to Sales 5 yr Change
+beta_60m,double precision,Market Beta
+ivol_capm_60m,double precision,Idiosyncratic volatility from the CAPM (60 months)
+resff3_12_1,double precision,Residual momentum t-12 to t-1
+resff3_6_1,double precision,Residual momentum t-6 to t-1
+mispricing_perf,double precision,Mispricing factor: Performance
+mispricing_mgmt,double precision,Mispricing factor: Management
+bidaskhl_21d,double precision,The high-low bid-ask spread
+rvolhl_21d,double precision,The high-low return volatility
+rskew_21d,double precision,Total skewness
+zero_trades_252d,double precision,Number of zero trades with turnover as tiebreaker (12 months)
+rvol_252d,double precision,Return volatility (252 days)
+dolvol_126d,double precision,Dollar trading volume
+dolvol_var_126d,double precision,Coefficient of variation for dollar trading volume
+corr_1260d,double precision,Market correlation
+ivol_ff3_21d,double precision,Idiosyncratic volatility from the Fama-French 3-factor model
+iskew_ff3_21d,double precision,Idiosyncratic skewness from the Fama-French 3-factor model
+beta_21d,double precision,Market beta (21 days)
+ivol_capm_21d,double precision,Idiosyncratic volatility from the CAPM (21 days)
+iskew_capm_21d,double precision,Idiosyncratic skewness from the CAPM
+coskew_21d,double precision,Coskewness
+betadown_252d,double precision,Downside beta
+prc_highprc_252d,double precision,Current price to high price over last year
+zero_trades_126d,double precision,Number of zero trades with turnover as tiebreaker (6 months)
+rvol_21d,double precision,Return volatility
+ami_126d,double precision,Amihud Measure
+turnover_126d,double precision,Share turnover
+turnover_var_126d,double precision,Coefficient of variation for share turnover
+beta_dimson_21d,double precision,Dimson beta
+beta_252d,double precision,Market beta (252 days)
+ivol_capm_252d,double precision,Idiosyncratic volatility from the CAPM (252 days)
+rmax5_21d,double precision,Highest 5 days of return
+rmax1_21d,double precision,Maximum daily return
+ivol_hxz4_21d,double precision,Idiosyncratic volatility from the q-factor model
+iskew_hxz4_21d,double precision,Idiosyncratic skewness from the q-factor model
+zero_trades_21d,double precision,Number of zero trades with turnover as tiebreaker (1 month)
+betabab_1260d,double precision,Frazzini-Pedersen market beta
+rmax5_rvol_21d,double precision,Highest 5 days of return scaled by volatility
+age,double precision,Firm age
+qmj_prof,double precision,Quality minus Junk: Profitability
+qmj_growth,double precision,Quality minus Junk: Growth
+qmj_safety,double precision,Quality minus Junk: Safety
+qmj,double precision,Quality minus Junk: Composite
+me_lag1,double precision,

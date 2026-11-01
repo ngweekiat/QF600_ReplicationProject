@@ -35,16 +35,16 @@ def registry(schema):
     schema=schema.copy()
     start=int(schema.index[schema.name.eq('market_equity')][0])
     end=int(schema.index[schema.name.eq('qmj')][0])
-    published=pd.read_parquet(PROJECT/'data/raw/cluster_labels.parquet').characteristic
+    published=pd.read_parquet((DATA/'reference/cluster_labels.parquet' if (DATA/'reference/cluster_labels.parquet').exists() else PROJECT/'data/raw/cluster_labels.parquet')).characteristic
     # Price is outside the contiguous block but is an explicitly published JKP
     # characteristic. Never discard a published predictor as generic metadata.
     frame=schema.loc[schema.index.to_series().between(start,end)|schema.name.isin(published)].rename(columns={'name':'characteristic'})
     if set(frame.characteristic)&EXCLUDED_FIELDS:raise ValueError('Non-characteristic field in predictor block')
     if not frame.dtype.eq('double precision').all():raise ValueError('Unexpected nonnumeric candidate schema')
     if frame.characteristic.duplicated().any():raise ValueError('Duplicate characteristic names')
-    details=pd.read_parquet(PROJECT/'data/raw/factor_details.parquet')
+    details=pd.read_parquet((DATA/'reference/factor_details.parquet' if (DATA/'reference/factor_details.parquet').exists() else PROJECT/'data/raw/factor_details.parquet'))
     details=details.loc[details.abr_jkp.notna(),['abr_jkp','name_new','direction']]
-    clusters=pd.read_parquet(PROJECT/'data/raw/cluster_labels.parquet').rename(columns={'cluster':'published_theme'})
+    clusters=pd.read_parquet((DATA/'reference/cluster_labels.parquet' if (DATA/'reference/cluster_labels.parquet').exists() else PROJECT/'data/raw/cluster_labels.parquet')).rename(columns={'cluster':'published_theme'})
     frame=frame.merge(details,left_on='characteristic',right_on='abr_jkp',how='left',validate='one_to_one')
     frame=frame.merge(clusters,on='characteristic',how='left',validate='one_to_one').drop(columns=['abr_jkp'])
     if not frame.characteristic.str.fullmatch('[a-z][a-z0-9_]*').all():raise ValueError('Unexpected source SQL identifier')

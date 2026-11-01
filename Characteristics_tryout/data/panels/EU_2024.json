@@ -1,0 +1,11 @@
+{
+  "path": "panels\\EU_2024.parquet",
+  "region": "EU",
+  "year": 2024,
+  "requested": 51839,
+  "found": 51839,
+  "missing_source_rows": 0,
+  "features": 200,
+  "sha256": "93c07d1ab19ed30ee3a69adc19b6b655c6655ed7b87618b1e49dc2c3fc7ec168",
+  "seconds": 30.27
+}

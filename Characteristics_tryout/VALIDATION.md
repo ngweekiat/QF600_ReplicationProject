@@ -10,3 +10,11 @@ Validated on 1 November 2026 using Python 3.13:
 - A mocked first-acquisition test verifies that missing source column metadata is fetched once and cached.
 
 No WRDS connection, new download, full analysis run or model refit was performed for this code upload. Existing Downloads data and Keats model settings were not changed. Local test scratch/cache files and logs are ignored by Git.
+
+## Dataset publication validation
+
+- Copied and SHA256-verified 179 source files (3,441,974,551 bytes), including 101 Parquet files.
+- All 64 regional panel schemas contain the frozen 200 characteristics; total 2,886,029 stock-months.
+- All 18 tests passed against the included default dataset.
+- Definition lookup now prefers included reference metadata, with the previous project location as fallback.
+- Derived ranked exports are excluded; no model refit or fresh source download was run.

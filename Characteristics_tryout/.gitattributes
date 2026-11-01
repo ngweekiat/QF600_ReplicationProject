@@ -2,3 +2,5 @@
 *.md text eol=lf
 *.json text eol=lf
 *.ini text eol=lf
+data/*.parquet filter=lfs diff=lfs merge=lfs -text
+data/**/*.parquet filter=lfs diff=lfs merge=lfs -text

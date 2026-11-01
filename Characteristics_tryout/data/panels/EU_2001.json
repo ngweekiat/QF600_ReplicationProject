@@ -1,0 +1,11 @@
+{
+  "path": "panels\\EU_2001.parquet",
+  "region": "EU",
+  "year": 2001,
+  "requested": 36909,
+  "found": 36909,
+  "missing_source_rows": 0,
+  "features": 200,
+  "sha256": "ed69c58b03997564abd0c15e09dd65a8e7ac253a13117ee48a5d1e2dc32e68b2",
+  "seconds": 22.0
+}

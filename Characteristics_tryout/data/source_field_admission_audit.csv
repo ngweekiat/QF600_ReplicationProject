@@ -1,0 +1,445 @@
+name,dtype,description,included_predictor,reason
+id,double precision,Id,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+permno,double precision,CRSP permno,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+permco,double precision,CRSP permno,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+gvkey,character varying(8),Compustat gvkey,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+iid,character varying(5),Compustat iid,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+excntry,character varying(5),Exchange country,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+exch_main,double precision,Indicator: Main exchange observation,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+common,double precision,Indicator: Common stock,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+primary_sec,double precision,Indicator: Primary security,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+bidask,double precision,Indicator: Price based on average between bid and ask,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+crsp_shrcd,double precision,CRSP: Share code,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+crsp_exchcd,double precision,CRSP: Exchange code,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+comp_tpci,character varying(1),Compustat: TPCI,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+comp_exchg,character varying(4),Compustat: Exchg,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+curcd,character varying(5),Local currency code,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+fx,double precision,Exchange rate local to USD,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+date,date,Day of last price observation,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+eom,date,End of month,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+adjfct,double precision,Share price adjustment factor,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+shares,double precision,Shares outstanding,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+me,double precision,Market equity,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+me_company,double precision,Market equity company,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+prc,double precision,Price per share in dollars,True,documented characteristic block or published JKP characteristic
+prc_local,double precision,Price per share in local currency,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+prc_high,double precision,Highest daily closing price during month,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+prc_low,double precision,Lowest daily closing price during month,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+dolvol,double precision,Dollar trading volume,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+tvol,double precision,Number of shares traded during month,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+ret,double precision,Total return in USD,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+ret_local,double precision,Total return in local currency,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+ret_exc,double precision,Excess return in USD,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+ret_lag_dif,double precision,Months between prices used to calculate returns,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+source_crsp,double precision,Indicator: Return data from CRSP,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+ret_exc_lead1m,double precision,Excess return in USD in month t+1,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+obs_main,double precision,Indicator: Main return observation,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+gics,character varying(10),GICS code,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+sic,double precision,SIC code,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+naics,double precision,NAICS code,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+ff49,double precision,Fama-French 49 industry code,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+size_grp,character varying(7),Size group,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"
+market_equity,double precision,Market equity (characteristic),True,documented characteristic block or published JKP characteristic
+div1m_me,double precision,Dividend to Price - 1 Month,True,documented characteristic block or published JKP characteristic
+divspc1m_me,double precision,Special Dividend to Price - 1 Month,True,documented characteristic block or published JKP characteristic
+div3m_me,double precision,Dividend to Price - 3 Months,True,documented characteristic block or published JKP characteristic
+div6m_me,double precision,Dividend to Price - 6 Months,True,documented characteristic block or published JKP characteristic
+div12m_me,double precision,Dividend yield,True,documented characteristic block or published JKP characteristic
+divspc12m_me,double precision,Special Dividend to Price - 12 Month,True,documented characteristic block or published JKP characteristic
+eqnpo_1m,double precision,Net Equity Payout - 1 Month,True,documented characteristic block or published JKP characteristic
+eqnpo_3m,double precision,Net Equity Payout - 3 Month,True,documented characteristic block or published JKP characteristic
+eqnpo_6m,double precision,Net Equity Payout - 6 Month,True,documented characteristic block or published JKP characteristic
+eqnpo_12m,double precision,Equity net payout,True,documented characteristic block or published JKP characteristic
+chcsho_1m,double precision,Change in Shares - 1 Month,True,documented characteristic block or published JKP characteristic
+chcsho_3m,double precision,Change in Shares - 3 Month,True,documented characteristic block or published JKP characteristic
+chcsho_6m,double precision,Change in Shares - 6 Month,True,documented characteristic block or published JKP characteristic
+chcsho_12m,double precision,Net stock issues,True,documented characteristic block or published JKP characteristic
+ret_1_0,double precision,Short-term reversal,True,documented characteristic block or published JKP characteristic
+ret_2_0,double precision,Momentum 0-2 Months,True,documented characteristic block or published JKP characteristic
+ret_3_0,double precision,Momentum 0-3 Months,True,documented characteristic block or published JKP characteristic
+ret_3_1,double precision,Price momentum t-3 to t-1,True,documented characteristic block or published JKP characteristic
+ret_6_0,double precision,Momentum 0-6 Months,True,documented characteristic block or published JKP characteristic
+ret_6_1,double precision,Price momentum t-6 to t-1,True,documented characteristic block or published JKP characteristic
+ret_9_0,double precision,Momentum 0-9 Months,True,documented characteristic block or published JKP characteristic
+ret_9_1,double precision,Price momentum t-9 to t-1,True,documented characteristic block or published JKP characteristic
+ret_12_0,double precision,Momentum 0-12 Months,True,documented characteristic block or published JKP characteristic
+ret_12_1,double precision,Price momentum t-12 to t-1,True,documented characteristic block or published JKP characteristic
+ret_12_7,double precision,Price momentum t-12 to t-7,True,documented characteristic block or published JKP characteristic
+ret_18_1,double precision,Momentum 1-18 Months,True,documented characteristic block or published JKP characteristic
+ret_24_1,double precision,Momentum 1-24 Months,True,documented characteristic block or published JKP characteristic
+ret_24_12,double precision,Momentum 12-24 Months,True,documented characteristic block or published JKP characteristic
+ret_36_1,double precision,Momentum 1-36 Months,True,documented characteristic block or published JKP characteristic
+ret_36_12,double precision,Momentum 12-36 Months,True,documented characteristic block or published JKP characteristic
+ret_48_12,double precision,Momentum 12-48 Months,True,documented characteristic block or published JKP characteristic
+ret_48_1,double precision,Momentum 1-48 Months,True,documented characteristic block or published JKP characteristic
+ret_60_1,double precision,Momentum 1-60 Months,True,documented characteristic block or published JKP characteristic
+ret_60_12,double precision,Long-term reversal,True,documented characteristic block or published JKP characteristic
+ret_60_36,double precision,Momentum 36-60 Months,True,documented characteristic block or published JKP characteristic
+seas_1_1an,double precision,"Year 1-lagged return, annual",True,documented characteristic block or published JKP characteristic
+seas_1_1na,double precision,"Year 1-lagged return, nonannual",True,documented characteristic block or published JKP characteristic
+seas_2_5an,double precision,"Years 2-5 lagged returns, annual",True,documented characteristic block or published JKP characteristic
+seas_2_5na,double precision,"Years 2-5 lagged returns, nonannual",True,documented characteristic block or published JKP characteristic
+seas_6_10an,double precision,"Years 6-10 lagged returns, annual",True,documented characteristic block or published JKP characteristic
+seas_6_10na,double precision,"Years 6-10 lagged returns, nonannual",True,documented characteristic block or published JKP characteristic
+seas_11_15an,double precision,"Years 11-15 lagged returns, annual",True,documented characteristic block or published JKP characteristic
+seas_11_15na,double precision,"Years 11-15 lagged returns, nonannual",True,documented characteristic block or published JKP characteristic
+seas_16_20an,double precision,"Years 16-20 lagged returns, annual",True,documented characteristic block or published JKP characteristic
+seas_16_20na,double precision,"Years 16-20 lagged returns, nonannual",True,documented characteristic block or published JKP characteristic
+assets,double precision,Assets,True,documented characteristic block or published JKP characteristic
+sales,double precision,Sales,True,documented characteristic block or published JKP characteristic
+book_equity,double precision,Book Equity,True,documented characteristic block or published JKP characteristic
+net_income,double precision,Net Income,True,documented characteristic block or published JKP characteristic
+enterprise_value,double precision,Enterprise Value,True,documented characteristic block or published JKP characteristic
+at_gr1,double precision,Asset Growth,True,documented characteristic block or published JKP characteristic
+ca_gr1,double precision,Current Asset Growth 1yr,True,documented characteristic block or published JKP characteristic
+nca_gr1,double precision,Non-Current Asset Growth 1yr,True,documented characteristic block or published JKP characteristic
+lt_gr1,double precision,Total Liabilities Growth 1yr,True,documented characteristic block or published JKP characteristic
+cl_gr1,double precision,Current Liabilities Growth 1yr,True,documented characteristic block or published JKP characteristic
+ncl_gr1,double precision,Non-Current Liabilities Growth 1yr,True,documented characteristic block or published JKP characteristic
+be_gr1,double precision,Book Equity Growth 1yr,True,documented characteristic block or published JKP characteristic
+pstk_gr1,double precision,Preferred Stock Growth 1 yr,True,documented characteristic block or published JKP characteristic
+debt_gr1,double precision,Total Debt Growth 1yr,True,documented characteristic block or published JKP characteristic
+sale_gr1,double precision,Sales Growth (1 year),True,documented characteristic block or published JKP characteristic
+cogs_gr1,double precision,Cost of Goods Sold Growth 1yr,True,documented characteristic block or published JKP characteristic
+sga_gr1,double precision,"Selling, General, and Administrative Expenses Growth 1yr",True,documented characteristic block or published JKP characteristic
+opex_gr1,double precision,Operating Expenses Growth 1yr,True,documented characteristic block or published JKP characteristic
+at_gr3,double precision,Asset Growth 3yr,True,documented characteristic block or published JKP characteristic
+ca_gr3,double precision,Current Asset Growth 3yr,True,documented characteristic block or published JKP characteristic
+nca_gr3,double precision,Non-Current Asset Growth 3yr,True,documented characteristic block or published JKP characteristic
+lt_gr3,double precision,Total Liabilities Growth 3yr,True,documented characteristic block or published JKP characteristic
+cl_gr3,double precision,Current Liabilities Growth 3yr,True,documented characteristic block or published JKP characteristic
+ncl_gr3,double precision,Non-Current Liabilities Growth 3yr,True,documented characteristic block or published JKP characteristic
+be_gr3,double precision,Book Equity Growth 3yr,True,documented characteristic block or published JKP characteristic
+pstk_gr3,double precision,Preferred Stock Growth 3yr,True,documented characteristic block or published JKP characteristic
+debt_gr3,double precision,Growth in book debt (3 years),True,documented characteristic block or published JKP characteristic
+sale_gr3,double precision,Sales Growth (3 years),True,documented characteristic block or published JKP characteristic
+cogs_gr3,double precision,Cost of Goods Sold Growth 3yr,True,documented characteristic block or published JKP characteristic
+sga_gr3,double precision,"Selling, General, and Administrative Expenses Growth 3yr",True,documented characteristic block or published JKP characteristic
+opex_gr3,double precision,Operating Expenses Growth 3yr,True,documented characteristic block or published JKP characteristic
+cash_gr1a,double precision,Cash and Short-Term Investments Change 1yr,True,documented characteristic block or published JKP characteristic
+inv_gr1a,double precision,Inventory change,True,documented characteristic block or published JKP characteristic
+rec_gr1a,double precision,Receivables Change 1yr,True,documented characteristic block or published JKP characteristic
+ppeg_gr1a,double precision,"Property, Plans and Equipment Gross Change 1yr",True,documented characteristic block or published JKP characteristic
+lti_gr1a,double precision,Change in long-term investments,True,documented characteristic block or published JKP characteristic
+intan_gr1a,double precision,Intangible Assets Change 1yr,True,documented characteristic block or published JKP characteristic
+debtst_gr1a,double precision,Short-Term Debt Change 1yr,True,documented characteristic block or published JKP characteristic
+ap_gr1a,double precision,Accounts Payable Change 1yr,True,documented characteristic block or published JKP characteristic
+txp_gr1a,double precision,Income Tax Payable Change 1yr,True,documented characteristic block or published JKP characteristic
+debtlt_gr1a,double precision,Long-Term Debt Change 1yr,True,documented characteristic block or published JKP characteristic
+txditc_gr1a,double precision,Deferred Taxes and Investment Credit Change 1yr,True,documented characteristic block or published JKP characteristic
+coa_gr1a,double precision,Change in current operating assets,True,documented characteristic block or published JKP characteristic
+col_gr1a,double precision,Change in current operating liabilities,True,documented characteristic block or published JKP characteristic
+cowc_gr1a,double precision,Change in current operating working capital,True,documented characteristic block or published JKP characteristic
+ncoa_gr1a,double precision,Change in noncurrent operating assets,True,documented characteristic block or published JKP characteristic
+ncol_gr1a,double precision,Change in noncurrent operating liabilities,True,documented characteristic block or published JKP characteristic
+nncoa_gr1a,double precision,Change in net noncurrent operating assets,True,documented characteristic block or published JKP characteristic
+oa_gr1a,double precision,Operating Assets Change 1yr,True,documented characteristic block or published JKP characteristic
+ol_gr1a,double precision,Operating Liabilities Change 1yr,True,documented characteristic block or published JKP characteristic
+noa_gr1a,double precision,Change in net operating assets,True,documented characteristic block or published JKP characteristic
+fna_gr1a,double precision,Financial Assets Change 1yr,True,documented characteristic block or published JKP characteristic
+fnl_gr1a,double precision,Change in financial liabilities,True,documented characteristic block or published JKP characteristic
+nfna_gr1a,double precision,Change in net financial assets,True,documented characteristic block or published JKP characteristic
+gp_gr1a,double precision,Gross Profit Change 1yr,True,documented characteristic block or published JKP characteristic
+ebitda_gr1a,double precision,Operating Profit before Depreciation Change 1yr,True,documented characteristic block or published JKP characteristic
+ebit_gr1a,double precision,Operating Profit after Depreciation Change 1yr,True,documented characteristic block or published JKP characteristic
+ope_gr1a,double precision,Operating Earnings to Equity Change 1yr,True,documented characteristic block or published JKP characteristic
+ni_gr1a,double precision,Net Income Change 1yr,True,documented characteristic block or published JKP characteristic
+nix_gr1a,double precision,Net Income Including Extraordinary Items Change 1yr,True,documented characteristic block or published JKP characteristic
+dp_gr1a,double precision,Depreciation and Amortization Change 1yr,True,documented characteristic block or published JKP characteristic
+ocf_gr1a,double precision,Operating Cash Flow Change 1yr,True,documented characteristic block or published JKP characteristic
+fcf_gr1a,double precision,Free Cash Flow Change 1yr,True,documented characteristic block or published JKP characteristic
+nwc_gr1a,double precision,Net Working Capital Change 1yr,True,documented characteristic block or published JKP characteristic
+eqnetis_gr1a,double precision,Equity Net Issuance Change 1yr,True,documented characteristic block or published JKP characteristic
+dltnetis_gr1a,double precision,Net Long-Term Debt Issuance Change 1yr,True,documented characteristic block or published JKP characteristic
+dstnetis_gr1a,double precision,Net Short-Term Debt Issuance Change 1yr,True,documented characteristic block or published JKP characteristic
+dbnetis_gr1a,double precision,Net Debt Issuance Change 1yr,True,documented characteristic block or published JKP characteristic
+netis_gr1a,double precision,Net Issuance Change 1yr,True,documented characteristic block or published JKP characteristic
+fincf_gr1a,double precision,Financial Cash Flow Change 1yr,True,documented characteristic block or published JKP characteristic
+eqnpo_gr1a,double precision,Equity Net Payout Change 1yr,True,documented characteristic block or published JKP characteristic
+tax_gr1a,double precision,Tax expense surprise,True,documented characteristic block or published JKP characteristic
+div_gr1a,double precision,Dividend Payout Ratio Change 1yr,True,documented characteristic block or published JKP characteristic
+eqbb_gr1a,double precision,Equity Buyback Change 1yr,True,documented characteristic block or published JKP characteristic
+eqis_gr1a,double precision,Equity Issuance Change 1yr,True,documented characteristic block or published JKP characteristic
+eqpo_gr1a,double precision,Net Equity Payout Change 1yr,True,documented characteristic block or published JKP characteristic
+capx_gr1a,double precision,Capital Expenditures Change 1yr,True,documented characteristic block or published JKP characteristic
+cash_gr3a,double precision,Cash and Short-Term Investments Change 3yr,True,documented characteristic block or published JKP characteristic
+inv_gr3a,double precision,Inventory Change 3yr,True,documented characteristic block or published JKP characteristic
+rec_gr3a,double precision,Receivables Change 3yr,True,documented characteristic block or published JKP characteristic
+ppeg_gr3a,double precision,"Property, Plans and Equipment Gross Change 3yr",True,documented characteristic block or published JKP characteristic
+lti_gr3a,double precision,Investment and Advances Change 3yr,True,documented characteristic block or published JKP characteristic
+intan_gr3a,double precision,Intangible Assets Change 3yr,True,documented characteristic block or published JKP characteristic
+debtst_gr3a,double precision,Short-Term Debt Change 3yr,True,documented characteristic block or published JKP characteristic
+ap_gr3a,double precision,Accounts Payable Change 3yr,True,documented characteristic block or published JKP characteristic
+txp_gr3a,double precision,Income Tax Payable Change 3yr,True,documented characteristic block or published JKP characteristic
+debtlt_gr3a,double precision,Long-Term Debt Change 3yr,True,documented characteristic block or published JKP characteristic
+txditc_gr3a,double precision,Deferred Taxes and Investment Credit Change 3yr,True,documented characteristic block or published JKP characteristic
+coa_gr3a,double precision,Current Operating Assets Change 3yr,True,documented characteristic block or published JKP characteristic
+col_gr3a,double precision,Current Operating Liabilities Change 3yr,True,documented characteristic block or published JKP characteristic
+cowc_gr3a,double precision,Current Operating Working Capital Change 3yr,True,documented characteristic block or published JKP characteristic
+ncoa_gr3a,double precision,Non-Current Operating Assets Change 3yr,True,documented characteristic block or published JKP characteristic
+ncol_gr3a,double precision,Non-Current Operating Liabilities Change 3yr,True,documented characteristic block or published JKP characteristic
+nncoa_gr3a,double precision,Net Non-Current Operating Assets Change 3yr,True,documented characteristic block or published JKP characteristic
+oa_gr3a,double precision,Operating Assets Change 3yr,True,documented characteristic block or published JKP characteristic
+ol_gr3a,double precision,Operating Liabilities Change 3yr,True,documented characteristic block or published JKP characteristic
+fna_gr3a,double precision,Financial Assets Change 3yr,True,documented characteristic block or published JKP characteristic
+fnl_gr3a,double precision,Financial Liabilities Change 3yr,True,documented characteristic block or published JKP characteristic
+nfna_gr3a,double precision,Net Financial Assets Change 3yr,True,documented characteristic block or published JKP characteristic
+gp_gr3a,double precision,Gross Profit Change 3yr,True,documented characteristic block or published JKP characteristic
+ebitda_gr3a,double precision,Operating Profit before Depreciation Change 3yr,True,documented characteristic block or published JKP characteristic
+ebit_gr3a,double precision,Operating Profit after Depreciation Change 3yr,True,documented characteristic block or published JKP characteristic
+ope_gr3a,double precision,Operating Earnings to Equity Change 3yr,True,documented characteristic block or published JKP characteristic
+ni_gr3a,double precision,Net Income Change 3yr,True,documented characteristic block or published JKP characteristic
+nix_gr3a,double precision,Net Income Including Extraordinary Items Change 3yr,True,documented characteristic block or published JKP characteristic
+dp_gr3a,double precision,Depreciation and Amortization Change 3yr,True,documented characteristic block or published JKP characteristic
+ocf_gr3a,double precision,Operating Cash Flow Change 3yr,True,documented characteristic block or published JKP characteristic
+fcf_gr3a,double precision,Free Cash Flow Change 3yr,True,documented characteristic block or published JKP characteristic
+nwc_gr3a,double precision,Net Working Capital Change 3yr,True,documented characteristic block or published JKP characteristic
+eqnetis_gr3a,double precision,Equity Net Issuance Change 3yr,True,documented characteristic block or published JKP characteristic
+dltnetis_gr3a,double precision,Net Long-Term Debt Issuance Change 3yr,True,documented characteristic block or published JKP characteristic
+dstnetis_gr3a,double precision,Net Short-Term Debt Issuance Change 3yr,True,documented characteristic block or published JKP characteristic
+dbnetis_gr3a,double precision,Net Debt Issuance Change 3yr,True,documented characteristic block or published JKP characteristic
+netis_gr3a,double precision,Net Issuance Change 3yr,True,documented characteristic block or published JKP characteristic
+fincf_gr3a,double precision,Financial Cash Flow Change 3yr,True,documented characteristic block or published JKP characteristic
+eqnpo_gr3a,double precision,Equity Net Payout Change 3yr,True,documented characteristic block or published JKP characteristic
+tax_gr3a,double precision,Effective Tax Rate Change 3yr,True,documented characteristic block or published JKP characteristic
+div_gr3a,double precision,Dividend Payout Ratio Change 3yr,True,documented characteristic block or published JKP characteristic
+eqbb_gr3a,double precision,Equity Buyback Change 3yr,True,documented characteristic block or published JKP characteristic
+eqis_gr3a,double precision,Equity Issuance Change 3yr,True,documented characteristic block or published JKP characteristic
+eqpo_gr3a,double precision,Net Equity Payout Change 3yr,True,documented characteristic block or published JKP characteristic
+capx_gr3a,double precision,Capital Expenditures Change 3yr,True,documented characteristic block or published JKP characteristic
+capx_at,double precision,Capital Expenditures scaled by Assets,True,documented characteristic block or published JKP characteristic
+rd_at,double precision,R+D scaled by Assets,True,documented characteristic block or published JKP characteristic
+gp_sale,double precision,Gross Profit Margin,True,documented characteristic block or published JKP characteristic
+ebitda_sale,double precision,Operating Profit Margin before Depreciation,True,documented characteristic block or published JKP characteristic
+ebit_sale,double precision,Profit margin,True,documented characteristic block or published JKP characteristic
+pi_sale,double precision,Pretax Profit Margin,True,documented characteristic block or published JKP characteristic
+ni_sale,double precision,Net Profit Margin before extraordinary income,True,documented characteristic block or published JKP characteristic
+nix_sale,double precision,Net Profit Margin,True,documented characteristic block or published JKP characteristic
+ocf_sale,double precision,Operating Cash Flow Margin,True,documented characteristic block or published JKP characteristic
+fcf_sale,double precision,Free Cash Flow Margin,True,documented characteristic block or published JKP characteristic
+gp_at,double precision,Gross profits-to-assets,True,documented characteristic block or published JKP characteristic
+ebitda_at,double precision,Operating Profit before Depreciation scaled by Assets,True,documented characteristic block or published JKP characteristic
+ebit_at,double precision,Operating Profit after Depreciation scaled by Assets,True,documented characteristic block or published JKP characteristic
+fi_at,double precision,Firm Income scaled by Assets,True,documented characteristic block or published JKP characteristic
+cop_at,double precision,Cash-based operating profits-to-book assets,True,documented characteristic block or published JKP characteristic
+ope_be,double precision,Operating profits-to-book equity,True,documented characteristic block or published JKP characteristic
+ni_be,double precision,Return on equity,True,documented characteristic block or published JKP characteristic
+nix_be,double precision,Net Income Including Extraordinary Items scaled by BE,True,documented characteristic block or published JKP characteristic
+ocf_be,double precision,Operating Cash Flow scaled by BE,True,documented characteristic block or published JKP characteristic
+fcf_be,double precision,Free Cash Flow scaled by BE,True,documented characteristic block or published JKP characteristic
+gp_bev,double precision,Gross Profit scaled by BEV,True,documented characteristic block or published JKP characteristic
+ebitda_bev,double precision,Operating Profit before Depreciation scaled by BEV,True,documented characteristic block or published JKP characteristic
+ebit_bev,double precision,Return on net operating assets,True,documented characteristic block or published JKP characteristic
+fi_bev,double precision,Firm Income scaled by BEV,True,documented characteristic block or published JKP characteristic
+cop_bev,double precision,Cash Based Operating Profitability scaled by BEV,True,documented characteristic block or published JKP characteristic
+gp_ppen,double precision,Gross Profit scaled by PPEN,True,documented characteristic block or published JKP characteristic
+ebitda_ppen,double precision,Operating Profit before Depreciation scaled by PPEN,True,documented characteristic block or published JKP characteristic
+fcf_ppen,double precision,Free Cash Flow scaled by PPEN,True,documented characteristic block or published JKP characteristic
+fincf_at,double precision,Financial Cash Flow scaled by Assets,True,documented characteristic block or published JKP characteristic
+netis_at,double precision,Net total issuance,True,documented characteristic block or published JKP characteristic
+eqnetis_at,double precision,Net equity issuance,True,documented characteristic block or published JKP characteristic
+eqis_at,double precision,Equity Issuance scaled by Assets,True,documented characteristic block or published JKP characteristic
+dbnetis_at,double precision,Net debt issuance,True,documented characteristic block or published JKP characteristic
+dltnetis_at,double precision,Net Long-Term Debt Issuance scaled by Assets,True,documented characteristic block or published JKP characteristic
+dstnetis_at,double precision,Net Short-Term Debt Issuance scaled by Assets,True,documented characteristic block or published JKP characteristic
+eqnpo_at,double precision,Equity Net Payout scaled by Assets,True,documented characteristic block or published JKP characteristic
+eqbb_at,double precision,Net Equity Payout scaled by Assets,True,documented characteristic block or published JKP characteristic
+div_at,double precision,Total Dividends scaled by Assets,True,documented characteristic block or published JKP characteristic
+oaccruals_at,double precision,Operating accruals,True,documented characteristic block or published JKP characteristic
+oaccruals_ni,double precision,Percent operating accruals,True,documented characteristic block or published JKP characteristic
+taccruals_at,double precision,Total accruals,True,documented characteristic block or published JKP characteristic
+taccruals_ni,double precision,Percent total accruals,True,documented characteristic block or published JKP characteristic
+noa_at,double precision,Net operating assets,True,documented characteristic block or published JKP characteristic
+be_bev,double precision,Common Equity scaled by BEV,True,documented characteristic block or published JKP characteristic
+debt_bev,double precision,Total Debt scaled by BEV,True,documented characteristic block or published JKP characteristic
+cash_bev,double precision,Cash and Short-Term Investments scaled by BEV,True,documented characteristic block or published JKP characteristic
+pstk_bev,double precision,Preferred Stock scaled by BEV,True,documented characteristic block or published JKP characteristic
+debtlt_bev,double precision,Long-Term Debt scaled by BEV,True,documented characteristic block or published JKP characteristic
+debtst_bev,double precision,Short-Term Debt scaled by BEV,True,documented characteristic block or published JKP characteristic
+debt_mev,double precision,Total Debt scaled by MEV,True,documented characteristic block or published JKP characteristic
+pstk_mev,double precision,Preferred Stock scaled by MEV,True,documented characteristic block or published JKP characteristic
+debtlt_mev,double precision,Long-Term Debt scaled by MEV,True,documented characteristic block or published JKP characteristic
+debtst_mev,double precision,Short-Term Debt scaled by MEV,True,documented characteristic block or published JKP characteristic
+int_debtlt,double precision,Interest scaled by Long-Term Debt,True,documented characteristic block or published JKP characteristic
+int_debt,double precision,Interest scaled by Total Debt,True,documented characteristic block or published JKP characteristic
+cash_lt,double precision,Cash Balance scaled by Total Liabilities,True,documented characteristic block or published JKP characteristic
+inv_act,double precision,Inventory scaled by Current Assets,True,documented characteristic block or published JKP characteristic
+rec_act,double precision,Receivables scaled by Current Assets,True,documented characteristic block or published JKP characteristic
+ebitda_debt,double precision,Operating Profit before Depreciation scaled by Total Debt,True,documented characteristic block or published JKP characteristic
+debtst_debt,double precision,Short-Term Debt scaled by Total Debt,True,documented characteristic block or published JKP characteristic
+cl_lt,double precision,Current Liabilities scaled by Total Liabilities,True,documented characteristic block or published JKP characteristic
+debtlt_debt,double precision,Long-Term Debt scaled by Total Debt,True,documented characteristic block or published JKP characteristic
+profit_cl,double precision,Profit before D1 scaled by Current Liabilities,True,documented characteristic block or published JKP characteristic
+ocf_cl,double precision,Operating Cash Flow scaled by Current Liabilities,True,documented characteristic block or published JKP characteristic
+ocf_debt,double precision,Operating Cash Flow scaled by Total Debt,True,documented characteristic block or published JKP characteristic
+lt_ppen,double precision,Total Liabilities scaled by Total Tangible Assets,True,documented characteristic block or published JKP characteristic
+debtlt_be,double precision,Long-Term Debt to Book Equity,True,documented characteristic block or published JKP characteristic
+fcf_ocf,double precision,Free Cash Flow scaled by Operating Cash Flow,True,documented characteristic block or published JKP characteristic
+opex_at,double precision,Operating leverage,True,documented characteristic block or published JKP characteristic
+nwc_at,double precision,Working Capital scaled by Assets,True,documented characteristic block or published JKP characteristic
+debt_at,double precision,Debt-to-Assets,True,documented characteristic block or published JKP characteristic
+debt_be,double precision,Debt to Shareholders Equity Ratio,True,documented characteristic block or published JKP characteristic
+ebit_int,double precision,Interest Coverage Ratio,True,documented characteristic block or published JKP characteristic
+cash_cl,double precision,Cash Ratio,True,documented characteristic block or published JKP characteristic
+caliq_cl,double precision,Quick Ratio,True,documented characteristic block or published JKP characteristic
+ca_cl,double precision,Current Ratio,True,documented characteristic block or published JKP characteristic
+inv_days,double precision,Days Inventory Outstanding,True,documented characteristic block or published JKP characteristic
+rec_days,double precision,Days Sales Outstanding,True,documented characteristic block or published JKP characteristic
+ap_days,double precision,Days Accounts Payable Outstanding,True,documented characteristic block or published JKP characteristic
+cash_conversion,double precision,Cash Conversion Cycle,True,documented characteristic block or published JKP characteristic
+inv_turnover,double precision,Inventory Turnover,True,documented characteristic block or published JKP characteristic
+at_turnover,double precision,Capital turnover,True,documented characteristic block or published JKP characteristic
+rec_turnover,double precision,Receivables Turnover,True,documented characteristic block or published JKP characteristic
+ap_turnover,double precision,Account Payables Turnover,True,documented characteristic block or published JKP characteristic
+spi_at,double precision,Special Items scaled by Assets,True,documented characteristic block or published JKP characteristic
+xido_at,double precision,Extraordinary Items and Discontinued Operations scaled by Assets,True,documented characteristic block or published JKP characteristic
+nri_at,double precision,Non-Recurring Items scaled by Assets,True,documented characteristic block or published JKP characteristic
+adv_sale,double precision,Advertising scaled by Sales,True,documented characteristic block or published JKP characteristic
+staff_sale,double precision,Labor Expense scaled by Sales,True,documented characteristic block or published JKP characteristic
+rd_sale,double precision,R+D-to-sales,True,documented characteristic block or published JKP characteristic
+div_ni,double precision,Dividend Payout Ratio,True,documented characteristic block or published JKP characteristic
+sale_bev,double precision,Assets turnover,True,documented characteristic block or published JKP characteristic
+sale_be,double precision,Sales scaled by Total Stockholders Equity,True,documented characteristic block or published JKP characteristic
+sale_nwc,double precision,Sales scaled by Working Capital,True,documented characteristic block or published JKP characteristic
+tax_pi,double precision,Effective Tax Rate,True,documented characteristic block or published JKP characteristic
+be_me,double precision,Book-to-market equity,True,documented characteristic block or published JKP characteristic
+at_me,double precision,Assets-to-market,True,documented characteristic block or published JKP characteristic
+cash_me,double precision,Cash and Short-Term Investments scaled by Market Equity,True,documented characteristic block or published JKP characteristic
+gp_me,double precision,Gross Profit scaled by ME,True,documented characteristic block or published JKP characteristic
+ebitda_me,double precision,Operating Profit before Depreciation scaled by ME,True,documented characteristic block or published JKP characteristic
+ebit_me,double precision,Operating Profit after Depreciation scaled by ME,True,documented characteristic block or published JKP characteristic
+ope_me,double precision,Operating Earnings to Equity scaled by ME,True,documented characteristic block or published JKP characteristic
+ni_me,double precision,Earnings-to-price,True,documented characteristic block or published JKP characteristic
+nix_me,double precision,Net Income Including Extraordinary Items scaled by ME,True,documented characteristic block or published JKP characteristic
+sale_me,double precision,Sales-to-market,True,documented characteristic block or published JKP characteristic
+ocf_me,double precision,Operating cash flow-to-market,True,documented characteristic block or published JKP characteristic
+fcf_me,double precision,Free cash flow-to-price,True,documented characteristic block or published JKP characteristic
+cop_me,double precision,Cash Based Operating Profitability scaled by ME,True,documented characteristic block or published JKP characteristic
+rd_me,double precision,R+D-to-market,True,documented characteristic block or published JKP characteristic
+div_me,double precision,Total Dividends scaled by ME,True,documented characteristic block or published JKP characteristic
+eqbb_me,double precision,Equity Buyback scaled by ME,True,documented characteristic block or published JKP characteristic
+eqis_me,double precision,Equity Issuance scaled by ME,True,documented characteristic block or published JKP characteristic
+eqpo_me,double precision,Payout yield,True,documented characteristic block or published JKP characteristic
+eqnpo_me,double precision,Net payout yield,True,documented characteristic block or published JKP characteristic
+eqnetis_me,double precision,Equity Net Issuance scaled by ME,True,documented characteristic block or published JKP characteristic
+dltnetis_mev,double precision,Net Long-Term Debt Issuance scaled by MEV,True,documented characteristic block or published JKP characteristic
+dstnetis_mev,double precision,Net Short-Term Debt Issuance scaled by MEV,True,documented characteristic block or published JKP characteristic
+dbnetis_mev,double precision,Net Debt Issuance scaled by MEV,True,documented characteristic block or published JKP characteristic
+netis_mev,double precision,Net Issuance scaled by MEV,True,documented characteristic block or published JKP characteristic
+at_mev,double precision,Total Assets scaled by MEV,True,documented characteristic block or published JKP characteristic
+be_mev,double precision,Book Equity scaled by MEV,True,documented characteristic block or published JKP characteristic
+bev_mev,double precision,Book-to-market enterprise value,True,documented characteristic block or published JKP characteristic
+ppen_mev,double precision,"Property, Plans and Equipment Net scaled by MEV",True,documented characteristic block or published JKP characteristic
+cash_mev,double precision,Cash and Short-Term Investments scaled by MEV,True,documented characteristic block or published JKP characteristic
+gp_mev,double precision,Gross Profit scaled by MEV,True,documented characteristic block or published JKP characteristic
+ebitda_mev,double precision,Ebitda-to-market enterprise value,True,documented characteristic block or published JKP characteristic
+ebit_mev,double precision,Operating Profit after Depreciation scaled by MEV,True,documented characteristic block or published JKP characteristic
+cop_mev,double precision,Cash Based Operating Profitability scaled by MEV,True,documented characteristic block or published JKP characteristic
+sale_mev,double precision,Sales scaled by MEV,True,documented characteristic block or published JKP characteristic
+ocf_mev,double precision,Operating Cash Flow scaled by MEV,True,documented characteristic block or published JKP characteristic
+fcf_mev,double precision,Free Cash Flow scaled by MEV,True,documented characteristic block or published JKP characteristic
+fincf_mev,double precision,Financial Cash Flow Change scaled by MEV,True,documented characteristic block or published JKP characteristic
+ni_inc8q,double precision,Number of consecutive quarters with earnings increases,True,documented characteristic block or published JKP characteristic
+ppeinv_gr1a,double precision,Change PPE and Inventory,True,documented characteristic block or published JKP characteristic
+lnoa_gr1a,double precision,Change in long-term net operating assets,True,documented characteristic block or published JKP characteristic
+capx_gr1,double precision,CAPEX growth (1 year),True,documented characteristic block or published JKP characteristic
+capx_gr2,double precision,CAPEX growth (2 years),True,documented characteristic block or published JKP characteristic
+capx_gr3,double precision,CAPEX growth (3 years),True,documented characteristic block or published JKP characteristic
+sti_gr1a,double precision,Change in short-term investments,True,documented characteristic block or published JKP characteristic
+niq_at,double precision,Quarterly return on assets,True,documented characteristic block or published JKP characteristic
+niq_at_chg1,double precision,Change in quarterly return on assets,True,documented characteristic block or published JKP characteristic
+niq_be,double precision,Quarterly return on equity,True,documented characteristic block or published JKP characteristic
+niq_be_chg1,double precision,Change in quarterly return on equity,True,documented characteristic block or published JKP characteristic
+saleq_gr1,double precision,Sales growth (1 quarter),True,documented characteristic block or published JKP characteristic
+rd5_at,double precision,R&D capital-to-book assets,True,documented characteristic block or published JKP characteristic
+dsale_dinv,double precision,Change sales minus change Inventory,True,documented characteristic block or published JKP characteristic
+dsale_drec,double precision,Change sales minus change receivables,True,documented characteristic block or published JKP characteristic
+dgp_dsale,double precision,Change gross margin minus change sales,True,documented characteristic block or published JKP characteristic
+dsale_dsga,double precision,Change sales minus change SG1,True,documented characteristic block or published JKP characteristic
+saleq_su,double precision,Standardized Revenue surprise,True,documented characteristic block or published JKP characteristic
+niq_su,double precision,Standardized earnings surprise,True,documented characteristic block or published JKP characteristic
+debt_me,double precision,Debt-to-market,True,documented characteristic block or published JKP characteristic
+netdebt_me,double precision,Net debt-to-price,True,documented characteristic block or published JKP characteristic
+capex_abn,double precision,Abnormal corporate investment,True,documented characteristic block or published JKP characteristic
+inv_gr1,double precision,Inventory growth,True,documented characteristic block or published JKP characteristic
+be_gr1a,double precision,Change in common equity,True,documented characteristic block or published JKP characteristic
+op_at,double precision,Operating profits-to-book assets,True,documented characteristic block or published JKP characteristic
+pi_nix,double precision,Taxable income-to-book income,True,documented characteristic block or published JKP characteristic
+op_atl1,double precision,Operating profits-to-lagged book assets,True,documented characteristic block or published JKP characteristic
+gp_atl1,double precision,Gross profits-to-lagged assets,True,documented characteristic block or published JKP characteristic
+ope_bel1,double precision,Operating profits-to-lagged book equity,True,documented characteristic block or published JKP characteristic
+cop_atl1,double precision,Cash-based operating profits-to-lagged book assets,True,documented characteristic block or published JKP characteristic
+at_be,double precision,Book leverage,True,documented characteristic block or published JKP characteristic
+ocfq_saleq_std,double precision,Cash flow volatility,True,documented characteristic block or published JKP characteristic
+aliq_at,double precision,Liquidity of book assets,True,documented characteristic block or published JKP characteristic
+aliq_mat,double precision,Liquidity of market assets,True,documented characteristic block or published JKP characteristic
+tangibility,double precision,Asset tangibility,True,documented characteristic block or published JKP characteristic
+eq_dur,double precision,Equity duration,True,documented characteristic block or published JKP characteristic
+f_score,double precision,Pitroski F-score,True,documented characteristic block or published JKP characteristic
+o_score,double precision,Ohlson O-score,True,documented characteristic block or published JKP characteristic
+z_score,double precision,Altman Z-score,True,documented characteristic block or published JKP characteristic
+kz_index,double precision,Kaplan-Zingales index,True,documented characteristic block or published JKP characteristic
+intrinsic_value,double precision,Intrinsic Value,True,documented characteristic block or published JKP characteristic
+ival_me,double precision,Intrinsic value-to-market,True,documented characteristic block or published JKP characteristic
+sale_emp_gr1,double precision,Labor force efficiency,True,documented characteristic block or published JKP characteristic
+emp_gr1,double precision,Hiring rate,True,documented characteristic block or published JKP characteristic
+cash_at,double precision,Cash-to-assets,True,documented characteristic block or published JKP characteristic
+earnings_variability,double precision,Earnings variability,True,documented characteristic block or published JKP characteristic
+ni_ar1,double precision,Earnings persistence,True,documented characteristic block or published JKP characteristic
+ni_ivol,double precision,Earnings volatility,True,documented characteristic block or published JKP characteristic
+niq_saleq_std,double precision,Net Income to Sales Quarterly Volatility,True,documented characteristic block or published JKP characteristic
+ni_emp,double precision,Net Income scaled by Employees,True,documented characteristic block or published JKP characteristic
+sale_emp,double precision,Sales scaled by Employees,True,documented characteristic block or published JKP characteristic
+ni_at,double precision,Net Income scaled by Assets,True,documented characteristic block or published JKP characteristic
+ocf_at,double precision,Operating cash flow to assets,True,documented characteristic block or published JKP characteristic
+ocf_at_chg1,double precision,Change in operating cash flow to assets,True,documented characteristic block or published JKP characteristic
+roeq_be_std,double precision,Quarterly ROE Volatility,True,documented characteristic block or published JKP characteristic
+roe_be_std,double precision,ROE Volatility,True,documented characteristic block or published JKP characteristic
+gpoa_ch5,double precision,Gross Product to Assets 5 yr Change,True,documented characteristic block or published JKP characteristic
+roe_ch5,double precision,ROE 5 yr Change,True,documented characteristic block or published JKP characteristic
+roa_ch5,double precision,ROA 5 yr Change,True,documented characteristic block or published JKP characteristic
+cfoa_ch5,double precision,Operating Cash Flow to Assets 5 yr Change,True,documented characteristic block or published JKP characteristic
+gmar_ch5,double precision,Gross Product to Sales 5 yr Change,True,documented characteristic block or published JKP characteristic
+beta_60m,double precision,Market Beta,True,documented characteristic block or published JKP characteristic
+ivol_capm_60m,double precision,Idiosyncratic volatility from the CAPM (60 months),True,documented characteristic block or published JKP characteristic
+resff3_12_1,double precision,Residual momentum t-12 to t-1,True,documented characteristic block or published JKP characteristic
+resff3_6_1,double precision,Residual momentum t-6 to t-1,True,documented characteristic block or published JKP characteristic
+mispricing_perf,double precision,Mispricing factor: Performance,True,documented characteristic block or published JKP characteristic
+mispricing_mgmt,double precision,Mispricing factor: Management,True,documented characteristic block or published JKP characteristic
+bidaskhl_21d,double precision,The high-low bid-ask spread,True,documented characteristic block or published JKP characteristic
+rvolhl_21d,double precision,The high-low return volatility,True,documented characteristic block or published JKP characteristic
+rskew_21d,double precision,Total skewness,True,documented characteristic block or published JKP characteristic
+zero_trades_252d,double precision,Number of zero trades with turnover as tiebreaker (12 months),True,documented characteristic block or published JKP characteristic
+rvol_252d,double precision,Return volatility (252 days),True,documented characteristic block or published JKP characteristic
+dolvol_126d,double precision,Dollar trading volume,True,documented characteristic block or published JKP characteristic
+dolvol_var_126d,double precision,Coefficient of variation for dollar trading volume,True,documented characteristic block or published JKP characteristic
+corr_1260d,double precision,Market correlation,True,documented characteristic block or published JKP characteristic
+ivol_ff3_21d,double precision,Idiosyncratic volatility from the Fama-French 3-factor model,True,documented characteristic block or published JKP characteristic
+iskew_ff3_21d,double precision,Idiosyncratic skewness from the Fama-French 3-factor model,True,documented characteristic block or published JKP characteristic
+beta_21d,double precision,Market beta (21 days),True,documented characteristic block or published JKP characteristic
+ivol_capm_21d,double precision,Idiosyncratic volatility from the CAPM (21 days),True,documented characteristic block or published JKP characteristic
+iskew_capm_21d,double precision,Idiosyncratic skewness from the CAPM,True,documented characteristic block or published JKP characteristic
+coskew_21d,double precision,Coskewness,True,documented characteristic block or published JKP characteristic
+betadown_252d,double precision,Downside beta,True,documented characteristic block or published JKP characteristic
+prc_highprc_252d,double precision,Current price to high price over last year,True,documented characteristic block or published JKP characteristic
+zero_trades_126d,double precision,Number of zero trades with turnover as tiebreaker (6 months),True,documented characteristic block or published JKP characteristic
+rvol_21d,double precision,Return volatility,True,documented characteristic block or published JKP characteristic
+ami_126d,double precision,Amihud Measure,True,documented characteristic block or published JKP characteristic
+turnover_126d,double precision,Share turnover,True,documented characteristic block or published JKP characteristic
+turnover_var_126d,double precision,Coefficient of variation for share turnover,True,documented characteristic block or published JKP characteristic
+beta_dimson_21d,double precision,Dimson beta,True,documented characteristic block or published JKP characteristic
+beta_252d,double precision,Market beta (252 days),True,documented characteristic block or published JKP characteristic
+ivol_capm_252d,double precision,Idiosyncratic volatility from the CAPM (252 days),True,documented characteristic block or published JKP characteristic
+rmax5_21d,double precision,Highest 5 days of return,True,documented characteristic block or published JKP characteristic
+rmax1_21d,double precision,Maximum daily return,True,documented characteristic block or published JKP characteristic
+ivol_hxz4_21d,double precision,Idiosyncratic volatility from the q-factor model,True,documented characteristic block or published JKP characteristic
+iskew_hxz4_21d,double precision,Idiosyncratic skewness from the q-factor model,True,documented characteristic block or published JKP characteristic
+zero_trades_21d,double precision,Number of zero trades with turnover as tiebreaker (1 month),True,documented characteristic block or published JKP characteristic
+betabab_1260d,double precision,Frazzini-Pedersen market beta,True,documented characteristic block or published JKP characteristic
+rmax5_rvol_21d,double precision,Highest 5 days of return scaled by volatility,True,documented characteristic block or published JKP characteristic
+age,double precision,Firm age,True,documented characteristic block or published JKP characteristic
+qmj_prof,double precision,Quality minus Junk: Profitability,True,documented characteristic block or published JKP characteristic
+qmj_growth,double precision,Quality minus Junk: Growth,True,documented characteristic block or published JKP characteristic
+qmj_safety,double precision,Quality minus Junk: Safety,True,documented characteristic block or published JKP characteristic
+qmj,double precision,Quality minus Junk: Composite,True,documented characteristic block or published JKP characteristic
+me_lag1,double precision,,False,"identifier, observation flag, industry/currency metadata, realised/forward return, or auxiliary field"

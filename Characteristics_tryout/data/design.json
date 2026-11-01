@@ -1,0 +1,26 @@
+{
+  "source": "WRDS contrib.global_factor",
+  "candidate_count": 404,
+  "cap": 200,
+  "recommendation_count": 50,
+  "screen_return_start": "2005-01-31",
+  "screen_return_end": "2014-12-31",
+  "validation_return_start": "2015-01-31",
+  "validation_return_end": "2019-12-31",
+  "untouched_test_start": "2020-01-31",
+  "untouched_test_end": "2025-12-31",
+  "selection_target": "existing observed next-month USD excess return; assumed-zero targets excluded",
+  "scope": "both existing broad regional training panels and all three held-stock universes",
+  "source_vintage": "2026-11-01T06:43:42.183440+00:00",
+  "reference_paper": {
+    "pdf": "research paper 1.pdf",
+    "signals": 115,
+    "feature_themes": 13,
+    "printed_page_3056": "115 features; drops poorly covered early features from JKP153; rank to [0,1], missing=0.5",
+    "economic_feature_importance": "utility value loss after removing signals; distinct from predictive correlation"
+  },
+  "preselection_score": "0.55 abs equally weighted signed mean monthly rank IC percentile +0.20 minimum universe coverage percentile +0.15 yearly directional stability percentile +0.10 persistence percentile",
+  "final_selection": "pre-2020 balanced-universe evidence with theme quotas and redundancy penalty; never ranks test returns",
+  "missing_characteristics": "source NaNs preserved; no source zeros inserted",
+  "preselection_pilot": "all held stock-months across all three universes in 2005-2014; full capped data then includes broad training populations"
+}

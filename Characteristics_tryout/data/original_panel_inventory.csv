@@ -1,0 +1,4 @@
+universe,path,sha256,rows,member_rows,securities,first_formation,last_formation
+us_large,data\processed\us_large\with_zero_returns\panel.parquet,dbb18a8e21d2d8bfb0d2f8a11d970214a535725455fa58fa195d2b8e1822fd13,1615718,30353,16134,1994-12-31,2025-11-30
+us_mid,data\processed\us_mid\with_zero_returns\panel.parquet,6224c8fbb81eb070900a99206eb7c2f67fb16c091c6e5021a554ac8d32feb8f3,1615718,29215,16134,1994-12-31,2025-11-30
+eu_large,data\processed\eu_large\with_zero_returns\panel.parquet,cf56e45b9ef4ff25326a2746d320158962b49a381f2b94b908ef1bb95960ab91,1270311,30530,11222,1994-12-31,2025-11-30

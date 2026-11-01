@@ -1,0 +1,11 @@
+{
+  "path": "panels\\US_1998.parquet",
+  "region": "US",
+  "year": 1998,
+  "requested": 73007,
+  "found": 73007,
+  "missing_source_rows": 0,
+  "features": 200,
+  "sha256": "bca306cc5180ae653e51481c77036012af3442473e7505339e42c1f4ff401d08",
+  "seconds": 40.97
+}

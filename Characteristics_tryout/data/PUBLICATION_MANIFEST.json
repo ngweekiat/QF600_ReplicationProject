@@ -1,0 +1,1086 @@
+{
+  "status": "copied_and_verified",
+  "files": 179,
+  "bytes": 3441974551,
+  "scope": "200-characteristic full panels, supporting metadata, training pilot, lag history and definition metadata",
+  "excluded_derived_exports": [
+    "selected50_ranked",
+    "selected50_ranked_initial_proxy_selection"
+  ],
+  "records": [
+    {
+      "file": "acquisition_status.json",
+      "bytes": 61,
+      "sha256": "8dd708f6337f810f8206fba2c8c669e7e971d7a246f61cce75ee0156716740db",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "candidate_registry.csv",
+      "bytes": 54679,
+      "sha256": "ad206a4a516366e3002bcc12777133ab545600d2826a93a0ee43d7257dc84a95",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "candidate_registry_with_themes.csv",
+      "bytes": 84551,
+      "sha256": "1c7397a2a4084799afa05899e7a8ba29c395c693d1f1a9b35bb2360cb9c26676",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "design.json",
+      "bytes": 1541,
+      "sha256": "5a59a1233a20af20852b7a33487b8d0fb563dc7dd846ecf6181fde3d3a3de1a2",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "download_200.json",
+      "bytes": 3192,
+      "sha256": "0890766b143ec5b47c001915824934a86855727f3b8453f370576f2189234a7e",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "download_200_selection.csv",
+      "bytes": 80673,
+      "sha256": "afd0339b3a833e600f697e7348772bfe18c9c20073bd9054d8891b4deaf492aa",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "download_manifest.csv",
+      "bytes": 7803,
+      "sha256": "bbcc417d1cb007c9d8ae839cc4e777774f4b9ceae3a92131bf05bd57d9c0285b",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "lag_history/EU.parquet",
+      "bytes": 541207,
+      "sha256": "412ed48559621bef71cfb01026c99407d47a84a1af25ab3401adc3175be83eee",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "lag_history/US.parquet",
+      "bytes": 990821,
+      "sha256": "6e559c06dca2fda508d52f3a92f9c0c57d6ae77bcd71c9220fedcf71f47c906b",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "lag_history_manifest.csv",
+      "bytes": 308,
+      "sha256": "5da815f0db8d7ca0e32c6fb63b755f52597ec08e76cb320df2bb812ef0906c84",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "metadata_EU.parquet",
+      "bytes": 45010767,
+      "sha256": "9fa0dc935d86bf892ca3ff433e25cf1646f87884b9039d92fe514b673331ec68",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "metadata_US.parquet",
+      "bytes": 54810016,
+      "sha256": "da47b514f121cc33b3648d0c7b705a7bead6238e30d0b3c3c01334a7aba7173f",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "original_panel_inventory.csv",
+      "bytes": 596,
+      "sha256": "cf38cad86eff7a16555d66dd61eb72374647d7d68cda56283a54b5cfb2335e52",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_1994.json",
+      "bytes": 267,
+      "sha256": "d0cfa64301a5b4c19fd7c6c2d12773d51f622123080d104279de571db6d1667b",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_1994.parquet",
+      "bytes": 1108526,
+      "sha256": "e329e59bac9c28d3fc4dbaf1f62ad62554341647ee4a4c860314921baded4a81",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_1995.json",
+      "bytes": 269,
+      "sha256": "f1418c4b812dbe6bf962acac89e2b684b09b3127c682a863bfed5b2106f092e0",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_1995.parquet",
+      "bytes": 9193951,
+      "sha256": "b5be64dcf43b0abd198d77549e6aeffe73a4c699ca46dc46b8716ed6ca002471",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_1996.json",
+      "bytes": 270,
+      "sha256": "a0d740f568222c85385fca307b1c216e3d5b2d8494c7a7fecd6a0aa0bac75423",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_1996.parquet",
+      "bytes": 12949684,
+      "sha256": "2d79b0fe4459b79089f38575e6fdabdfff1d74400c363794581596532e97b0ed",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_1997.json",
+      "bytes": 272,
+      "sha256": "4c51a7c97004c74020a4f8e56c16e66c60e13933dc19f636ae959073723b35bf",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_1997.parquet",
+      "bytes": 16457575,
+      "sha256": "0191f3b111206a0c565e866b398caf523e1e133f5f6a9323fc2d8407ee65d408",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_1998.json",
+      "bytes": 272,
+      "sha256": "887b65852643f964b9630f1a7c0971220d815ecffce5eaaf98f88f3716a8c955",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_1998.parquet",
+      "bytes": 21384507,
+      "sha256": "e6686e1a041417430ee5da6dfd29e45ff83ad8c92c19ff041140ec526064ff4d",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_1999.json",
+      "bytes": 272,
+      "sha256": "3b71feadb2afe29f90db3299b3bafe16481d561a8635b03aad2c6faca0c15e15",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_1999.parquet",
+      "bytes": 24307763,
+      "sha256": "e0ec34b590659012f8af24f8875f317904cae19e58293be35076148e1ea1ef12",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2000.json",
+      "bytes": 272,
+      "sha256": "e1d0a7fb4343f3a3b49149f176ac8eeef70af2b10d1eefb702761bf8a5188b5f",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2000.parquet",
+      "bytes": 28549677,
+      "sha256": "a57f781a3658d4ec3e1ffc28958923dd903256de7afc89ec03424fcea6b912c8",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2001.json",
+      "bytes": 271,
+      "sha256": "c803c0a3354116f0e4a47e53f2456ed2f83d42097d26e165d132acb3e330489f",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2001.parquet",
+      "bytes": 35305331,
+      "sha256": "ed69c58b03997564abd0c15e09dd65a8e7ac253a13117ee48a5d1e2dc32e68b2",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2002.json",
+      "bytes": 272,
+      "sha256": "950fdf13a85db5a213b220f6e15701ab9faa6d7c4e61cc44ef856c5fdbeccf9a",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2002.parquet",
+      "bytes": 39304307,
+      "sha256": "07ea3faa1ccd97e304ed90e7bbab0279bbc17698c84f54831c3fb24a811ab504",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2003.json",
+      "bytes": 272,
+      "sha256": "c6af66575c81198ea1403654a34684a50b3d33fe5730c259b7ae0d4764fa0f5d",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2003.parquet",
+      "bytes": 39060658,
+      "sha256": "ded8d6a02320816d9ee0dd8b2c3bc585bfdd2945392d244f391b437493cfcfc2",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2004.json",
+      "bytes": 272,
+      "sha256": "9069b2e929c1a467922862f6dcf813a788893f56051c0c05bbc5c23ded020326",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2004.parquet",
+      "bytes": 39735051,
+      "sha256": "9c0b9ca5097d6e1174ceaecb1bf21ccfef8e1d410c0185ecfdcef71634af3bd1",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2005.json",
+      "bytes": 272,
+      "sha256": "46b0e84898da7d5d72d650abde3c4ed81754d5a9ad0842ffe495b2a3923b4c01",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2005.parquet",
+      "bytes": 41733987,
+      "sha256": "839c43a3e5a5c6893870fc654dca3d410fd7e72ea3a08959e9a955cefe599be3",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2006.json",
+      "bytes": 272,
+      "sha256": "c6600fb9b7cd8d6d86c5903b599af9057526da71dcee8faa0c483d06e2324d74",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2006.parquet",
+      "bytes": 46695055,
+      "sha256": "1b5b563f13b94e95d56280996530b5a24e540952ff0b9db23a029f23c2c527b5",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2007.json",
+      "bytes": 272,
+      "sha256": "1f2634240e58669f16a09baeed920b75559c37831a9d989c9d9bc0001156b023",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2007.parquet",
+      "bytes": 51769993,
+      "sha256": "77f587a98062614607a93ffde9d945829d91f87c8dfacb5d77b74cd9ffeacc3b",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2008.json",
+      "bytes": 272,
+      "sha256": "664bedefe026b181fabd662e45a514bb876ec0dccaf56168cebfa3e08f0e9a75",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2008.parquet",
+      "bytes": 53913393,
+      "sha256": "3a14621b9ee98857ba54395ba8b082822ec59a96cc006565f0fb65b985bef3eb",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2009.json",
+      "bytes": 272,
+      "sha256": "3d3fd2951cd8fdee37982995851d80b9e089d4a90495bd53070315cae86c06c4",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2009.parquet",
+      "bytes": 51682682,
+      "sha256": "48a698ca19dea2db853444cbbdeacbe647b44b04fa333179ebe024907c6bc3f4",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2010.json",
+      "bytes": 272,
+      "sha256": "9f3ec8f2d6e2d9e90e532d90b12b459de1e9bc2f5a7acd60c153269e6cee0f29",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2010.parquet",
+      "bytes": 51212297,
+      "sha256": "229cc56435107db8d7adf94048515371afc6d820f807ba9bb97212193dc6bd51",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2011.json",
+      "bytes": 272,
+      "sha256": "6299670cc3c983c3ec3521a86c8bc9f3bf19568c4194bf0b3e6761f8b5fd517a",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2011.parquet",
+      "bytes": 51940758,
+      "sha256": "db82d7949429ed580dccd640a576b281439b8642ad9b9def60ab18c5dae3036f",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2012.json",
+      "bytes": 272,
+      "sha256": "13c536d2b7fa4be9d7659bb8a9158ffc98e9fa7464afd457ec4c3d854451fbed",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2012.parquet",
+      "bytes": 51188151,
+      "sha256": "39d478f9880144690f1f1d5c235608d3e0c16440dda6032e7ca85f3c55655d9f",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2013.json",
+      "bytes": 271,
+      "sha256": "82b1b1df2a7e02f57559f9547ef936f0917fbdd001ce6b459e7bd226c4524257",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2013.parquet",
+      "bytes": 50501657,
+      "sha256": "fd43b615a390772552a62b9f517c51007a23ecb6ea435e6b718aecad63166cf9",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2014.json",
+      "bytes": 272,
+      "sha256": "4c1628e12d014b3a863f41878b3f4d0182858d7abb243bce1b0e5a371d9b3a61",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2014.parquet",
+      "bytes": 51241409,
+      "sha256": "5615a0c31c24ad0f5c960a23cfd5b8850ed6650d1774fe42116b61afdf437617",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2015.json",
+      "bytes": 272,
+      "sha256": "2d3991366fbe7515b51193740b746c6712fd9ef86e83da9a1f4153599cdb6c75",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2015.parquet",
+      "bytes": 51623820,
+      "sha256": "0bd871eeaf3331ea97a83dd9795d5520285200b054d7b7f33247ea45ada68b34",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2016.json",
+      "bytes": 272,
+      "sha256": "11ced23de982c6964c59230bbd2444c83ad5519969a1e1650b690c391b43d110",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2016.parquet",
+      "bytes": 52703216,
+      "sha256": "ef90b478cd0e8f5ee6465667703b943cc0c0a68ebcd0b5558c83303c11ebbdb6",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2017.json",
+      "bytes": 272,
+      "sha256": "ea7b6d086a66b629fb9a5dfcb6b0c7bc800a2b861a055e38bf0d1f83a9054e9e",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2017.parquet",
+      "bytes": 52963925,
+      "sha256": "8dc695eadd022ca5bb0211542d22a130e79149a4b1bdc16ee08f2f0686840071",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2018.json",
+      "bytes": 271,
+      "sha256": "af102a7e7bbe78b3ca106abbccff6af3750fbfbd0ca2043e56dbb653fe673353",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2018.parquet",
+      "bytes": 50793740,
+      "sha256": "63494095a2ea73f233ebf4aee9448f5f78f12f5b545a85c0a69f3163379c88a8",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2019.json",
+      "bytes": 272,
+      "sha256": "ff001b514da162069f81e51fe7cb14acbd786d1ee785e5e8d83ed486dfacf71b",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2019.parquet",
+      "bytes": 54101624,
+      "sha256": "0325a643a7aa7e3e8c1312f312d2bf3aba19a635c8e25cefde2954580e4c8323",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2020.json",
+      "bytes": 272,
+      "sha256": "88d9725e5b25b37e0a6c18435ce2a4b7454ec7caf4689f7d5bc8b12c9a607f37",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2020.parquet",
+      "bytes": 54830410,
+      "sha256": "8486574d14760e1ddcdbb25b277cda85eba0a0c3e3871d1392755f2124b4031f",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2021.json",
+      "bytes": 271,
+      "sha256": "f2013fe8cd4b5af790db6b0309d1454543888676c790e0533aad990f3dc0e553",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2021.parquet",
+      "bytes": 55887693,
+      "sha256": "3d434794fb12cbc1104f4f4a73926cd174f30456bb8c1c5ad5a9a64de29ed402",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2022.json",
+      "bytes": 272,
+      "sha256": "5e7c47bdd60d91a04187e9a72cd644503439247a1a554e39f6f7d36dc8126d07",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2022.parquet",
+      "bytes": 57382792,
+      "sha256": "c25d001d9f367f529e252d12e206cd23083a38d3d51bd31356406bb5efae9234",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2023.json",
+      "bytes": 271,
+      "sha256": "e35aa8e3dd9fabbf28ab7a74322487e187b33a86e1b9c3f30df7c63c29ec10a4",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2023.parquet",
+      "bytes": 58171188,
+      "sha256": "99a939808bd6e60c3f005d778838971d562bde721a6546b7444c1db62346a548",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2024.json",
+      "bytes": 272,
+      "sha256": "dbafe627caac866b36db67cfa8b1b0f0e0728f361fe486556a287039e4052c14",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2024.parquet",
+      "bytes": 57837335,
+      "sha256": "93c07d1ab19ed30ee3a69adc19b6b655c6655ed7b87618b1e49dc2c3fc7ec168",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2025.json",
+      "bytes": 272,
+      "sha256": "2170bd3a5469c72e493ed9878e0725095c52d2d4bdc82a73fdd4fc0f8b84715f",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/EU_2025.parquet",
+      "bytes": 47064569,
+      "sha256": "2fb73772607ec982799e594ec494eca725d52faec7f8bdaa5071989ce11eb082",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_1994.json",
+      "bytes": 269,
+      "sha256": "d18f58215a527b2476fef5fdefd8959cefa9d13fcea80b7d6156e995626e89e7",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_1994.parquet",
+      "bytes": 7593832,
+      "sha256": "8d3808e2dfe329d290e9ebfe7522d4b6ba01723c5bdb59c92a9f608298d7520a",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_1995.json",
+      "bytes": 272,
+      "sha256": "5a9bd9cca8b463446e67eb732eebca575dfb9d2b5f7e5ec93a46fff4ccc8c6f7",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_1995.parquet",
+      "bytes": 71726233,
+      "sha256": "2024d02d35b53cfb4ac5ea383a6ccef1da7ba4e2550eedec05f4f69aeaae4f68",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_1996.json",
+      "bytes": 272,
+      "sha256": "03986e599ee0c567c0442039cdacc50c4f2ba3520ce44d305e9e527e94a2b913",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_1996.parquet",
+      "bytes": 76203429,
+      "sha256": "4860b4e00998c53f57217544440fa4cbc0ef8e94e7baa7634a8fa9b6008d4859",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_1997.json",
+      "bytes": 272,
+      "sha256": "4b6ce390d9ff13497c84e444087b8034c54bada980dbe932a5d03f065e73a798",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_1997.parquet",
+      "bytes": 81040172,
+      "sha256": "e89e9cc036089cec9bc292c52e335068ff5de616de7af21d3c309cced14f9b91",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_1998.json",
+      "bytes": 272,
+      "sha256": "514c6f28683519faac007a0def4d665e662b0ab5f691795b157b77849ab26c34",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_1998.parquet",
+      "bytes": 82689826,
+      "sha256": "bca306cc5180ae653e51481c77036012af3442473e7505339e42c1f4ff401d08",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_1999.json",
+      "bytes": 272,
+      "sha256": "3d3b51b3d0c10c4932a0fd0480cb511a9a11e9ccb547da832736dd6d0ed637b9",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_1999.parquet",
+      "bytes": 79310234,
+      "sha256": "272cd257a488b25bf6cd7db5177ed7ac8166515eab3c65bf7feee0787d5989cc",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2000.json",
+      "bytes": 272,
+      "sha256": "4fa51d5b836a131bda15abb40532acbf714f6439e4f933e7ab4c83b527b005cc",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2000.parquet",
+      "bytes": 76184772,
+      "sha256": "38701a07e625acad7466bc8f249f8b363311e43fe54955e9cbda93b32414c0c6",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2001.json",
+      "bytes": 272,
+      "sha256": "b6a80215b2cc05c473664a61fc5618cff7daa39e73ab1703d4313c80984120f1",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2001.parquet",
+      "bytes": 74003562,
+      "sha256": "f1951a8a04b5186baca4c32cd38173ec8bc67213afb89ad8b7b54e653d1e3333",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2002.json",
+      "bytes": 272,
+      "sha256": "c7d6c2776da1b5bcd0b5987bf7b137d3fdd1c0ae7340cfb9fd617d04d98ed976",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2002.parquet",
+      "bytes": 70774900,
+      "sha256": "33bc8861e9d2165ed5253b35964e0bc06f6c43b57e7b64bfc44d06a879f80c4c",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2003.json",
+      "bytes": 271,
+      "sha256": "0651a489cbbc5f5769660cba2b3b68d0d8f017f854e6080062303d114f48e3d5",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2003.parquet",
+      "bytes": 66578109,
+      "sha256": "f8d8d1c767f17062a758b46a09ec995e4533ca1d2cd9d47c6fdb52994293c41d",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2004.json",
+      "bytes": 272,
+      "sha256": "6edf9042e86aa0d90045e54afbb5e357586d2dd74fdf25814c7df8e1bd594684",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2004.parquet",
+      "bytes": 63267031,
+      "sha256": "896df972007f201d060b3ff3efa588a5f735639e7fc9ff3c0dd8a06b38a882ab",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2005.json",
+      "bytes": 272,
+      "sha256": "e6783ec782b5f1d566160b30a4557a59dd9e1a42eae12aad7d0d45c0e429b115",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2005.parquet",
+      "bytes": 62235995,
+      "sha256": "7cf5f27a914e7cc00a984d9f3d7700fa7a865eb6c36f7e15daa499e9439108ec",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2006.json",
+      "bytes": 272,
+      "sha256": "5810cdbf8fa3652aa4c79d77d868fd95347f61b3d44f867e605eebb4c11e84a4",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2006.parquet",
+      "bytes": 61228717,
+      "sha256": "a335f2a0f30b78d93414fdd061d8bc0346102f81d913cc571eb149f61c5cb129",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2007.json",
+      "bytes": 272,
+      "sha256": "851f427b2567ba8005f65ab70573270e16595a8a51fd77b22db563cb3a7266c4",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2007.parquet",
+      "bytes": 59752294,
+      "sha256": "269bcece5433e0064633d4bb157964a6eff6762be252693940f0cb5771db136a",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2008.json",
+      "bytes": 272,
+      "sha256": "6bad89b668efdb644d78519073eda13e1ef14823677d1b61716c44e8f2acb52e",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2008.parquet",
+      "bytes": 58786423,
+      "sha256": "22e57dc068e8fd660e9b38722e146d765cbbb47541c1f8f602ee4eabe964ba12",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2009.json",
+      "bytes": 272,
+      "sha256": "f31db9952d2453e245163790487c217659b69a085b051703031c196854fca012",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2009.parquet",
+      "bytes": 57945453,
+      "sha256": "fae671cda50f7e95cfa79026d434a683cc50f4823b8eeea9248bf9fb1ebc9aa3",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2010.json",
+      "bytes": 272,
+      "sha256": "6ba5218d8eaef22aede499043c5f0c79bdb6c5bfc02bec59870622e52c4f9244",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2010.parquet",
+      "bytes": 56053937,
+      "sha256": "15d302ebd8a3d2d4942d395bd9caa046ef6ee867e542c327ded635cdfeed3a1e",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2011.json",
+      "bytes": 272,
+      "sha256": "d2dba30b556ed8acfedba52c6ab7bae00d5fd99718b131c09fe56e2b9e6ce2a1",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2011.parquet",
+      "bytes": 54364303,
+      "sha256": "b4bf140d87d48a0c75d8c17a311de6f7855409af3c6bd8533a4a61df6c3bc104",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2012.json",
+      "bytes": 272,
+      "sha256": "b35c98c2d75b4ac63c97cc1e19635f0a06c500255cc334d4fa1c0f49f2fe74e8",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2012.parquet",
+      "bytes": 53273073,
+      "sha256": "37f6fc634573a1fd90f1afcbedbefa6cf58bdfbd534ea75c5e6460cdcd7f5b94",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2013.json",
+      "bytes": 272,
+      "sha256": "07429ab504a706940cb8b4c4bfd39a111b5ed5e7feb0a4579afb890e9ebc7caf",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2013.parquet",
+      "bytes": 51942196,
+      "sha256": "1c1a005b9d054283acbe23e92aea6034d3955586c84ccd9f8666424a736fc7cd",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2014.json",
+      "bytes": 272,
+      "sha256": "beaa6b5e22255217bf1177c612491be46f29698a64678bb02f9abb434f358247",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2014.parquet",
+      "bytes": 51526500,
+      "sha256": "9bd24393d00679d1305278bc24de91ca86cc4cae284cc2a9de7b6611f09d1b04",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2015.json",
+      "bytes": 272,
+      "sha256": "3749595727367726721d4072adc6586cf0e3add9c00a5179eacfc439b95054be",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2015.parquet",
+      "bytes": 52617900,
+      "sha256": "11f4571b3a3e2d7165a6c858de4fcfe0fa436ad7fd94e547becba795ffd1d2a6",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2016.json",
+      "bytes": 272,
+      "sha256": "21b7244b04388a79e19c6d09b9b5f73c54726f691bb4925c25a1bbfb33e45eab",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2016.parquet",
+      "bytes": 52715136,
+      "sha256": "61c0efaefea3bc4ff9f7133d0521e2727bd0d212288fe7e00482942b2b5ab1b1",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2017.json",
+      "bytes": 272,
+      "sha256": "7e43ce467ba2b901f226522612e2533e7580cd70a04ce7ef9bc3e10b7efaa2cb",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2017.parquet",
+      "bytes": 51710382,
+      "sha256": "266190cfd300495dc0d4a47982f37935f41f06e38191d8901fbb8d5cb72b5973",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2018.json",
+      "bytes": 272,
+      "sha256": "e675352f15c35b6ecb8ea6a5d5c4ef0a46a5dc85520076e657e8f560cf092f30",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2018.parquet",
+      "bytes": 50959704,
+      "sha256": "799f9ce23983821b526b392c67daf51d6220a3ea623a1b786ab5604f5da280f0",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2019.json",
+      "bytes": 272,
+      "sha256": "2c90c7551cfbb3163c58ff7afd9d3d95c98f906ef9209504a3ad038bff5b85a6",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2019.parquet",
+      "bytes": 51624764,
+      "sha256": "ac6da77f96b6d9e66f1610e386d75b4a9a384339ef8001f099bba6ce3de8d510",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2020.json",
+      "bytes": 272,
+      "sha256": "ad4fbdccd729467e89861dc25b9e92f6280b248d0e018b2f70a84ebc88da1d70",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2020.parquet",
+      "bytes": 52448674,
+      "sha256": "fb88db1f8fa05a5c4b2a663456052a290c297f8031bd20e847087f8b3056ee50",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2021.json",
+      "bytes": 272,
+      "sha256": "1dcb17fb7214b804ee5c2ad0968acc862604c2429d3f7939b884a97fd077075c",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2021.parquet",
+      "bytes": 52769440,
+      "sha256": "0ab8b5f47701cc8324c43734d12ed2dd208d0f8f2c5e8b0fe929499f070b3f2a",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2022.json",
+      "bytes": 272,
+      "sha256": "0c7af19986e72f9d2b9c11b02827d41af0edac6bda04a48033682fb93f0650ba",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2022.parquet",
+      "bytes": 55893970,
+      "sha256": "91183bf1d66bf3b43498508c5eff3ea6441d67d09fee661e8ac6b74f13efd987",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2023.json",
+      "bytes": 272,
+      "sha256": "e7cd0cf67d0223055990a307c6567a0d6d0af59efe8ddce4785b10caa91b5b63",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2023.parquet",
+      "bytes": 59265731,
+      "sha256": "54b165f8390f26f5434387244821b69b837e32aebbafc88f1aac8d3d2247a801",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2024.json",
+      "bytes": 272,
+      "sha256": "5a5a70e84e5c714b6dc37d2ca3aa4d5d53faa9d1c2a1f8a53adf72f9b6cf3551",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2024.parquet",
+      "bytes": 58976739,
+      "sha256": "b65ba1be9640e43f6949fdc1b52a0d543436cbd9f6f660c41b54ace2dc246e4d",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2025.json",
+      "bytes": 272,
+      "sha256": "1dcd14a919b136ec6d6aeb349ffb0c72c422ad1c3656214017c59f183aa51ca3",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "panels/US_2025.parquet",
+      "bytes": 54232021,
+      "sha256": "bb34d57bbf0945c1f0159b9fc1cd88a160e42e1faf0ebd713bf1ec351084dde6",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/EU_year2004.parquet",
+      "bytes": 457070,
+      "sha256": "89b9d31105ba3951c20ef9d8dfd4185308a843b8c750be1e353434a8af1e3091",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/EU_year2005.parquet",
+      "bytes": 1730322,
+      "sha256": "91588fe5df5285ea557dde969235764890df97abd2baa3a9b46cfad8dfc34f04",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/EU_year2006.parquet",
+      "bytes": 1802633,
+      "sha256": "1304f5de7c3adf81ba257ed74acf2ad053262128d9e85c66b4d9d11f058df2c3",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/EU_year2007.parquet",
+      "bytes": 1894864,
+      "sha256": "b8f59779a16ed5475f5267f58c1014c4a5f9128110de786b446d091f2b05e8b9",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/EU_year2008.parquet",
+      "bytes": 2000775,
+      "sha256": "5c6765750e40fb02c5efb16498c1ae36437484ead9e443774117b9d2f67cd58c",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/EU_year2009.parquet",
+      "bytes": 2031751,
+      "sha256": "7f191331a5a24a590bbb24201eeb01e5287c689283c15745e31ee96b16ecd17b",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/EU_year2010.parquet",
+      "bytes": 1998822,
+      "sha256": "86fc572f06ae5256507f3ec7511f299c1e9d32ba1c163c15a39322e0e35e6972",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/EU_year2011.parquet",
+      "bytes": 2007231,
+      "sha256": "06cd4a061642009762e4154d3d5dc06df391c37cf336241c32c89df6e90265ae",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/EU_year2012.parquet",
+      "bytes": 1983732,
+      "sha256": "874a4413da469dd7ead1a8352b402e5d2797033600ac8ac66b19671aeccb4f4d",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/EU_year2013.parquet",
+      "bytes": 2082043,
+      "sha256": "9dc7e784f08355f2dcdf0b04b68099c7c191fd5dcfffeea1e4a2d6f1bc11025d",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/EU_year2014.parquet",
+      "bytes": 2040786,
+      "sha256": "efcc7d3710b2933c52ee66f98536f08549d0fe4993acc1b20fdab041ef997e38",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/prc_US.parquet",
+      "bytes": 154607,
+      "sha256": "7e19eff58b3f9a46bab8513ea598ccb34cf7eb70150b8c1a294048109b7fd754",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_000.parquet",
+      "bytes": 2518053,
+      "sha256": "0c1e67c98cb922d75a0df2286e42d5c51366416e7a06dcdae2afbcefb4808a50",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_001.parquet",
+      "bytes": 2443121,
+      "sha256": "c3e9b746770b0696c1a22f818e6cde8a6f41949d5edc13ef8776c42fc66bc0c1",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_002.parquet",
+      "bytes": 2376761,
+      "sha256": "72e8da43fb93400512fcbbe70596769e30bcb799399638d49251d3d20523ec21",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_003.parquet",
+      "bytes": 2406682,
+      "sha256": "a62ccddd14a125de10cf4759ad535efec02fb21eb0b441db77c8db5ee7c28a52",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_004.parquet",
+      "bytes": 2450091,
+      "sha256": "a7a543970c933265819225f85cc42286feb372bd4ca7eb75771efa3363220348",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_005.parquet",
+      "bytes": 2572795,
+      "sha256": "bd2d95dbb89bc2cf371f718d51f600a315aaeb5ffc35463f4e4076bb224bc85b",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_006.parquet",
+      "bytes": 2519121,
+      "sha256": "1f43b29699450edfb8aac8472be05c2f0af66f1bed17a2b986a4d64757f4d6dc",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_007.parquet",
+      "bytes": 2629659,
+      "sha256": "3bc7c104901c928652f891520d4fb023bf5fdf5b915d8dfa8e612f0c7f744815",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_008.parquet",
+      "bytes": 2551328,
+      "sha256": "fe134486454f46838a19e5daf5139ed45b6528dc749261a6ac93bfa31472efc4",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_009.parquet",
+      "bytes": 2610304,
+      "sha256": "ec0c35836751a5781002cae99a8fd9f7e7973eb922736b20a483d4382b286dbc",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_010.parquet",
+      "bytes": 2511199,
+      "sha256": "c79f12e5a6d7890f2b017a26323e93e7f20946ba852bb84d740ea2d96cba8260",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_011.parquet",
+      "bytes": 2497278,
+      "sha256": "09f60c5650166b6687a3dadd1a81e9e504bd1bd3b5e884b0a23efa21391a1348",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_012.parquet",
+      "bytes": 2401192,
+      "sha256": "23652325a2ff3d58994ce1ef73f3423fd21f021b9ad9231a58781d7b03affd3b",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_013.parquet",
+      "bytes": 2440469,
+      "sha256": "ba7f10488d8aa4c8dfe87b4d3dec1d2e727d8b9c84bf662a009eef690defe614",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_014.parquet",
+      "bytes": 2425088,
+      "sha256": "56064035dec95c932af8f8cfd13ae1fb70904f274958f2fac0ca2fad0e1b8217",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_015.parquet",
+      "bytes": 2546086,
+      "sha256": "88579d1b2997a116a508e8d4beb3fc16d3c290b0d785d878d03bd632f6be1223",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_016.parquet",
+      "bytes": 2542560,
+      "sha256": "17662b09c804b97eaff3906d2b5400bfcafc432db1abe7141ec64b204778f5b0",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_017.parquet",
+      "bytes": 2614558,
+      "sha256": "f1cfdedf5f0f24e52991ed7661f9ab9d3b1034be178d913572896cb38a2fb82c",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot/US_year2014.parquet",
+      "bytes": 2719319,
+      "sha256": "168aa1e35b4815d687a84e5f1d609d9771866795e9dabc1cd43abfaf64abf0ca",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot_download_manifest.csv",
+      "bytes": 1397,
+      "sha256": "0aba3889818596301753f8bdbe6b09d6ec0aeed5e11b1474d0d13684be80275f",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "pilot_file_inventory.csv",
+      "bytes": 4166,
+      "sha256": "fba5cae66d2ff8e42771e9d4ba61cc4d4206bdabfa7aca451a8f6a5b4d444397",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "recommended_50.json",
+      "bytes": 801,
+      "sha256": "415174e4218841788b4a60cc3faadea522631d4a68b8898c6b5a6cc085840340",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "source_field_admission_audit.csv",
+      "bytes": 57834,
+      "sha256": "5cd66bc2d8951368192396da7f96951f2cf91381806a363f34e98880788fef4a",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "source_schema.csv",
+      "bytes": 25532,
+      "sha256": "aa826482e7ddc89eca7f02340bcd529f9418d46c657f1615e30b8c9c6186dd79",
+      "source": "Downloads/characteristcs archived study"
+    },
+    {
+      "file": "reference/cluster_labels.parquet",
+      "bytes": 3397,
+      "sha256": "10d12ac05601c6bebd0bf4e0f65e2a13968bdb658c435a3a6c1038c626cfe19f",
+      "source": "Existing project JKP definition metadata"
+    },
+    {
+      "file": "reference/factor_details.parquet",
+      "bytes": 25344,
+      "sha256": "5624304c5aebe9adc1b0fa423badcde9f5b3128b79548ea7ae405fc258bd09a0",
+      "source": "Existing project JKP definition metadata"
+    }
+  ]
+}

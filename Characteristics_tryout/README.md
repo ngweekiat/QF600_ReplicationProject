@@ -18,11 +18,11 @@ The source study's proposed 50 are a research recommendation, not an activated r
 Characteristics_tryout/
   run.py                 command entry point
   characteristics/       original calculation modules, relocated paths and tests
-  data/                  optional local cache (Git-ignored)
+  data/                  200-characteristic dataset (Git LFS)
   outputs/               generated reports and validation logs (Git-ignored)
 ```
 
-This Git upload contains code, tests and documentation only. The downloaded data and existing study results remain in Downloads/characteristcs/keats_pipeline/data/characteristics and its corresponding outputs folder.
+The dataset is included under data using Git LFS. After cloning, run `git lfs pull --include="Characteristics_tryout/data/**"`. See data/README.md for scope and checks. The original Downloads archive remains intact; generated study reports remain there.
 
 ## Run from the repository root
 
@@ -56,7 +56,7 @@ Pass the same --data-dir on every stage. --output-dir can select a separate repo
 
 ## Input dependencies and credentials
 
-The code reads the existing keats_pipeline/data/processed/<market>/with_zero_returns/panel.parquet files, Keats' original feature list, original supplemental lag keys, and the repository's data/raw/{cluster_labels,factor_details}.parquet metadata. These input datasets must exist locally; copying the code is not a substitute for acquiring/preparing them.
+The code reads the existing keats_pipeline/data/processed/<market>/with_zero_returns/panel.parquet files, Keats' original feature list, original supplemental lag keys, and the included data/reference/{cluster_labels,factor_details}.parquet metadata (with repository data/raw as fallback). These input datasets must exist locally; copying the code is not a substitute for acquiring/preparing them.
 
 Explicit acquisition reuses keats_pipeline/acquire_missing.py's local credential loader. Credentials are read into memory, never copied into this folder or committed. The normal help, paths and offline stages do not connect to WRDS. Fresh acquisition fetches missing source column metadata before preparation.
 

@@ -1,0 +1,11 @@
+{
+  "path": "panels\\US_2018.parquet",
+  "region": "US",
+  "year": 2018,
+  "requested": 42604,
+  "found": 42604,
+  "missing_source_rows": 0,
+  "features": 200,
+  "sha256": "799f9ce23983821b526b392c67daf51d6220a3ea623a1b786ab5604f5da280f0",
+  "seconds": 23.49
+}
