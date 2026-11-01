@@ -1,0 +1,9 @@
+/data/
+/outputs/
+.pytest_cache/
+__pycache__/
+*.py[cod]
+*.log
+.env
+.env.*
+*.local.json

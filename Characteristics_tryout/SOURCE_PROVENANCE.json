@@ -1,0 +1,50 @@
+{
+  "source": "Downloads/characteristcs/keats_pipeline/characteristics",
+  "scope": "Code and tests only; no dataset or result files copied",
+  "files": [
+    {
+      "file": "acquire.py",
+      "source_sha256": "faec4ab33f7335ded4912dcbfeb248a73d9656a40266edc70562568badd02681"
+    },
+    {
+      "file": "analysis.py",
+      "source_sha256": "4b65f97e4b757f753f460a6d7a9dcd54672239006dbeb789b341c3f0cc0aed2d"
+    },
+    {
+      "file": "finalize.py",
+      "source_sha256": "7abf863a59da296156025a629077df623fde4a68120ad9e167570472263c2713"
+    },
+    {
+      "file": "README.md",
+      "source_sha256": "ea019028f6afd388302313159cdd0411aaf46db1bc5251a923e9c3ca543c3965"
+    },
+    {
+      "file": "report.py",
+      "source_sha256": "d587d730b52ceaec2a101da1d5878221ace73f1e66ec59a956e4690ffbfb1dd3"
+    },
+    {
+      "file": "run.py",
+      "source_sha256": "ddf6634cfc7929b148a01abfff2d831d173c981f8737eaf0d8618dabba197ef6"
+    },
+    {
+      "file": "selection.py",
+      "source_sha256": "8a89b45c4ed650b81f39a734ec98186c7c91372ed53ecc359eba23691451239b"
+    },
+    {
+      "file": "statistics.py",
+      "source_sha256": "e76f327003aada582d4f14c7e244303e0da1dd611861eae60c59a5a2eae4a6b3"
+    },
+    {
+      "file": "verification.py",
+      "source_sha256": "84d770f148081500715af5a8f4abd6e5fb0ddb274747f6d735c9431aad9117da"
+    },
+    {
+      "file": "__init__.py",
+      "source_sha256": "9eb47fe372ffed5032e7c7f27b4ce9b83d17d0b065b90af6e892ab71eafb1ccc"
+    },
+    {
+      "file": "tests/test_statistics.py",
+      "source_sha256": "fc9f488cb293f2389dc0189afc2100bc967ab571bb7b0ff3b49123c7c3519834"
+    }
+  ]
+}
