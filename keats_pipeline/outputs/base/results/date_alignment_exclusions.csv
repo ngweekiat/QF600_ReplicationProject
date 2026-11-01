@@ -1,0 +1,7 @@
+dataset,strategy,original_months,common_months,excluded_months,excluded_dates
+us_large/base,Portfolio-ML,72,72,0,
+us_large/base,Static-ML,72,72,0,
+us_mid/base,Portfolio-ML,72,72,0,
+us_mid/base,Static-ML,72,72,0,
+eu_large/base,Portfolio-ML,72,72,0,
+eu_large/base,Static-ML,72,72,0,

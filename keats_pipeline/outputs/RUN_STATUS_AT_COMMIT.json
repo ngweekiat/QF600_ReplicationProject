@@ -1,0 +1,14 @@
+{
+  "snapshot_scope": "Code and completed organisation reports; the later full experiment run is still in progress",
+  "state_updated_utc": "2026-11-01T11:03:19.100410+00:00",
+  "job_status_counts": {
+    "complete": 8,
+    "reused": 21,
+    "running": 1
+  },
+  "running_jobs": [
+    "us_large.iteration_2.capacity"
+  ],
+  "completed_research_run": false,
+  "report_status": "Organisation snapshot; later live experiment outputs are excluded until complete"
+}

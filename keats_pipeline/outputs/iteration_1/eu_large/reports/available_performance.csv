@@ -1,0 +1,2 @@
+strategy,role,months,first_return,last_return,annual_gross_return,annual_cost,annual_net_return,annual_gross_volatility,net_sharpe_paper,mean_leverage,mean_monthly_turnover,annual_active_net,tracking_error_realised,information_ratio_net,benchmark_cost_convention
+Market,reference_or_preparatory,72,2020-01-31,2025-12-31,0.08591645501942617,0.06324104933355773,0.022675405685868427,0.182747019048102,0.12408085124441831,1.0,0.01588487867524812,0.0,0.0,,net strategy minus net same-universe Market

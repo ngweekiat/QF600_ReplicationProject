@@ -1,0 +1,4 @@
+group,market,status,experiment_series,reference_series,new_experiments_run
+base,us_large,available,2,0,False
+base,us_mid,available,2,0,False
+base,eu_large,available,2,0,False

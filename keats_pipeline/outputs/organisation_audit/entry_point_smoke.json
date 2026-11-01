@@ -1,0 +1,62 @@
+[
+  {
+    "command": [
+      "run.py",
+      "--help"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "run_all.py",
+      "--group",
+      "all",
+      "--scope",
+      "full",
+      "--list-jobs"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "scripts/iteration_1/run.py",
+      "--help"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "scripts/iteration_2/run.py",
+      "--help"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "scripts/iteration_3/run.py",
+      "--help"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "scripts/iteration_2/compare_breadth.py",
+      "--help"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "scripts/iteration_3/compare_halflife.py",
+      "--help"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "scripts/iteration_2/monitor.py",
+      "--help"
+    ],
+    "exit_code": 0
+  }
+]

@@ -1,0 +1,9 @@
+# base: us_large
+
+Original Static ML and default Portfolio ML only.
+
+**Status: available.**
+
+Existing Keats outputs restored and organised only. No missing experiment was run. Keats test returns are 2020-2025; no separate unseen 2021-2025 holdout is claimed. Reference/preparatory statistics are not a completed iteration result.
+
+Open index.html. Original CSV, Parquet and chart files remain in their restored subfolders. Newly generated descriptive summaries/charts are under reports/.

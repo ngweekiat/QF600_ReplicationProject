@@ -1,0 +1,410 @@
+[
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\calibrated.csv",
+    "destination": "outputs\\iteration_1\\us_large\\active\\calibrated.csv",
+    "role": "original iteration 1 outputs",
+    "sha256": "5cd8376bb39a05d76a7ff9b139bf121d2d1b0fa88950e475199d4af7772dc440"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\calibration.csv",
+    "destination": "outputs\\iteration_1\\us_large\\active\\calibration.csv",
+    "role": "original iteration 1 outputs",
+    "sha256": "e51309268e8103f37b66571ce3bd903702429194d961a3df76d2793819b95639"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\exposures.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\exposures.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "fb19558bf171737075cf05a1ba5d382f598f95ee7d62b260684713d7d281f0c2"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\summary.csv",
+    "destination": "outputs\\iteration_1\\us_large\\active\\summary.csv",
+    "role": "original iteration 1 outputs",
+    "sha256": "55cfdf495628a16525ae3784e7eb9df317be56d1da090c47ae2ffdc2f4756606"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\gte12.57\\aims.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\gte12.57\\aims.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "2017230480a4be5a8a3f6a01d9625aba4318ca7a397d2b6ea1f1da07072a908f"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\gte12.57\\chosen.csv",
+    "destination": "outputs\\iteration_1\\us_large\\active\\gte12.57\\chosen.csv",
+    "role": "original iteration 1 outputs",
+    "sha256": "80b0f67bb5cddb3fab363d47273ea1706b750986c22ea05fff31d883244292d3"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\gte12.57\\pf.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\gte12.57\\pf.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "908b967667c35043f103f726e98a23ba5920f6c5e285d7e67706ecf458574809"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\gte12.57\\weights.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\gte12.57\\weights.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "250fddd3353a92dacacf2df1404be7fd11502ca09ee05c1d681dca765ec3d8ed"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\gte29.29\\aims.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\gte29.29\\aims.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "736678e2c1a42085ec26674bf4e2cab6e296585952e5a8da9f33e35437c1a671"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\gte29.29\\chosen.csv",
+    "destination": "outputs\\iteration_1\\us_large\\active\\gte29.29\\chosen.csv",
+    "role": "original iteration 1 outputs",
+    "sha256": "5ee742c47011f2857445d0a24412a2f0039829b2ccf14f195af663f7dc810074"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\gte29.29\\pf.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\gte29.29\\pf.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "aee3c18bb9462f53a3026155de4aee13ca3b20926dfba4b068dc792ad9237224"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\gte29.29\\weights.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\gte29.29\\weights.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "6a4015350633c1c1a55661033f5d815be8cb6da2dfd6ca4126aeb92fb269eb4d"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\gte77.1\\aims.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\gte77.1\\aims.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "e871f308005d149f17b4f739701341787bfb4179b6b4d768a7dc052778acfe98"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\gte77.1\\chosen.csv",
+    "destination": "outputs\\iteration_1\\us_large\\active\\gte77.1\\chosen.csv",
+    "role": "original iteration 1 outputs",
+    "sha256": "a58edbb89296656bf1f663c8dce20c6e7061c0396b6aa9f6ab8aa8446f7e56f1"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\gte77.1\\pf.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\gte77.1\\pf.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "4330caaf7c6bf4d6a16cedab1d77bfd02289b4c683e16ed7d70abe45b39fc38e"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\gte77.1\\weights.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\gte77.1\\weights.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "066511b80d16625e35b0d733fdc3c24a01cd43f3e0d0c0b302072469362e0f34"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\capacity\\gte29.29_w100B\\pf.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\capacity\\gte29.29_w100B\\pf.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "24d9688cfb8d80c72c3f503409658bbe628f4880db9b5a82aae67482dee0ebf6"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\capacity\\gte29.29_w100B\\weights.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\capacity\\gte29.29_w100B\\weights.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "6bfa896acb2424ac7588013fdaef407cb67748de636415b25d4643735740fd95"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\capacity\\gte29.29_w10B\\pf.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\capacity\\gte29.29_w10B\\pf.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "aee3c18bb9462f53a3026155de4aee13ca3b20926dfba4b068dc792ad9237224"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\capacity\\gte29.29_w10B\\weights.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\capacity\\gte29.29_w10B\\weights.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "6a4015350633c1c1a55661033f5d815be8cb6da2dfd6ca4126aeb92fb269eb4d"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\capacity\\gte29.29_w1B\\pf.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\capacity\\gte29.29_w1B\\pf.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "d8668b494d1fdd7efb2375c6087be2dfa8f51613fc3399aaedb6ad297cb010a8"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\capacity\\gte29.29_w1B\\weights.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\capacity\\gte29.29_w1B\\weights.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "34778d97e16a91e96e259118ebfb83999236bcefe0fc58fadf5e651d91447531"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\capacity\\gte29.29_w250B\\pf.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\capacity\\gte29.29_w250B\\pf.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "90b2e230f7da6422f953c593f6b80d7b037a72d09c47c5a29ce060e2c062f4b0"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\capacity\\gte29.29_w250B\\weights.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\capacity\\gte29.29_w250B\\weights.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "d397cd2299c7d18f02ba10a1888655be33172f2d05a31bf967787e8690882622"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\capacity\\gte29.29_w50B\\pf.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\capacity\\gte29.29_w50B\\pf.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "fd963b55ecc38c2ec044b14ca9d523720aa7f07165b4c7b18ca89e4ea42baa7a"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\active\\capacity\\gte29.29_w50B\\weights.parquet",
+    "destination": "outputs\\iteration_1\\us_large\\active\\capacity\\gte29.29_w50B\\weights.parquet",
+    "role": "original iteration 1 outputs",
+    "sha256": "a352e1886842d426bd333c0071d93a37eda2fc2256e9b8c2e79533caadbbe271"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\figures\\active_theme_exposure.pdf",
+    "destination": "outputs\\iteration_1\\us_large\\figures\\active_theme_exposure.pdf",
+    "role": "original iteration 1 charts",
+    "sha256": "83c7c0f81d1c7236d1e4f4e4dcc79529996b5b3e50f5d97a89c0ba4ad9173c39"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\base\\figures\\active_theme_exposure.png",
+    "destination": "outputs\\iteration_1\\us_large\\figures\\active_theme_exposure.png",
+    "role": "original iteration 1 charts",
+    "sha256": "7ac8a176a98512a281480795e8f4d88f0c6bfa8025a0991b899f8d061b68362c"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\table2_test.csv",
+    "destination": "outputs\\iteration_2\\us_large\\table2_test.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "8144c7bed2cf42a7c4056177c3c667e34feb136a882958e80d5cb6c856bd05e7"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\benchmarks\\pf_oos.parquet",
+    "destination": "outputs\\iteration_2\\us_large\\benchmarks\\pf_oos.parquet",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "485a63d3c9a309fefce64b55d8c57bb534f69a29b9eec358261ba81cda021254"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\benchmarks\\pf_test.parquet",
+    "destination": "outputs\\iteration_2\\us_large\\benchmarks\\pf_test.parquet",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "c16e6125fd1106aa9bd95392acef4d3846721225c9e6e61dfa1938fba0e94787"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\benchmarks\\table2_oos.csv",
+    "destination": "outputs\\iteration_2\\us_large\\benchmarks\\table2_oos.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "8e9569bceeb69de4fac433f7ed560eafd6dd275554d52426f8740417bee6d0f3"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\benchmarks\\table2_test.csv",
+    "destination": "outputs\\iteration_2\\us_large\\benchmarks\\table2_test.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "ade61cd026c9700c1ff3a8c65f0ffe66193f60ac0efc731df6cb2f56983ff025"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\benchmarks\\weights_oos.parquet",
+    "destination": "outputs\\iteration_2\\us_large\\benchmarks\\weights_oos.parquet",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "92d6158723be6ff809a659605c30b50b17343b81473578bbf664dc43362c5b51"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\benchmarks\\weights_test.parquet",
+    "destination": "outputs\\iteration_2\\us_large\\benchmarks\\weights_test.parquet",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "59e66dc056ad90f00428b820ab5466636f914cec743a19f88ea14e50675ba366"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\imputation_audit\\02_us_large_universe_250_te_0.02.csv",
+    "destination": "outputs\\iteration_2\\us_large\\imputation_audit\\02_us_large_universe_250_te_0.02.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "dbe1e406f7e63dc2d0d4f9ef389dfa3a33a5da3b12dc9da3836257b8174b37df"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\imputation_audit\\02_us_large_universe_250_te_0.02_history_exclusions.csv",
+    "destination": "outputs\\iteration_2\\us_large\\imputation_audit\\02_us_large_universe_250_te_0.02_history_exclusions.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "4879b21369b96d24f9c88c41c90286043ef563bfeff923b9a46624db62974c75"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\imputation_audit\\03_us_large_universe_250_te_0.02.csv",
+    "destination": "outputs\\iteration_2\\us_large\\imputation_audit\\03_us_large_universe_250_te_0.02.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "dbe1e406f7e63dc2d0d4f9ef389dfa3a33a5da3b12dc9da3836257b8174b37df"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\imputation_audit\\04_us_large_universe_250_te_0.02.csv",
+    "destination": "outputs\\iteration_2\\us_large\\imputation_audit\\04_us_large_universe_250_te_0.02.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "dbe1e406f7e63dc2d0d4f9ef389dfa3a33a5da3b12dc9da3836257b8174b37df"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\imputation_audit\\04_us_large_universe_250_te_0.02_history_exclusions.csv",
+    "destination": "outputs\\iteration_2\\us_large\\imputation_audit\\04_us_large_universe_250_te_0.02_history_exclusions.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "4879b21369b96d24f9c88c41c90286043ef563bfeff923b9a46624db62974c75"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\imputation_audit\\05_us_large_universe_250_te_0.02.csv",
+    "destination": "outputs\\iteration_2\\us_large\\imputation_audit\\05_us_large_universe_250_te_0.02.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "dbe1e406f7e63dc2d0d4f9ef389dfa3a33a5da3b12dc9da3836257b8174b37df"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\imputation_audit\\05_us_large_universe_250_te_0.02_history_exclusions.csv",
+    "destination": "outputs\\iteration_2\\us_large\\imputation_audit\\05_us_large_universe_250_te_0.02_history_exclusions.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "4879b21369b96d24f9c88c41c90286043ef563bfeff923b9a46624db62974c75"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\imputation_audit\\06_us_large_universe_250_te_0.02.csv",
+    "destination": "outputs\\iteration_2\\us_large\\imputation_audit\\06_us_large_universe_250_te_0.02.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "dbe1e406f7e63dc2d0d4f9ef389dfa3a33a5da3b12dc9da3836257b8174b37df"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\imputation_audit\\06_us_large_universe_250_te_0.02_history_exclusions.csv",
+    "destination": "outputs\\iteration_2\\us_large\\imputation_audit\\06_us_large_universe_250_te_0.02_history_exclusions.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "4879b21369b96d24f9c88c41c90286043ef563bfeff923b9a46624db62974c75"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\imputation_audit\\07_us_large_universe_250_te_0.02.csv",
+    "destination": "outputs\\iteration_2\\us_large\\imputation_audit\\07_us_large_universe_250_te_0.02.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "dbe1e406f7e63dc2d0d4f9ef389dfa3a33a5da3b12dc9da3836257b8174b37df"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\imputation_audit\\07_us_large_universe_250_te_0.02_history_exclusions.csv",
+    "destination": "outputs\\iteration_2\\us_large\\imputation_audit\\07_us_large_universe_250_te_0.02_history_exclusions.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "4879b21369b96d24f9c88c41c90286043ef563bfeff923b9a46624db62974c75"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\imputation_audit\\12_calibrate_us_large_universe_250_te_0.02.csv",
+    "destination": "outputs\\iteration_2\\us_large\\imputation_audit\\12_calibrate_us_large_universe_250_te_0.02.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "dbe1e406f7e63dc2d0d4f9ef389dfa3a33a5da3b12dc9da3836257b8174b37df"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\imputation_audit\\12_calibrate_us_large_universe_250_te_0.02_history_exclusions.csv",
+    "destination": "outputs\\iteration_2\\us_large\\imputation_audit\\12_calibrate_us_large_universe_250_te_0.02_history_exclusions.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "4879b21369b96d24f9c88c41c90286043ef563bfeff923b9a46624db62974c75"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\imputation_audit\\prepare_us_large_universe_250_te_0.02.csv",
+    "destination": "outputs\\iteration_2\\us_large\\imputation_audit\\prepare_us_large_universe_250_te_0.02.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "dbe1e406f7e63dc2d0d4f9ef389dfa3a33a5da3b12dc9da3836257b8174b37df"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\static_ml\\chosen.csv",
+    "destination": "outputs\\iteration_2\\us_large\\static_ml\\chosen.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "ff0054c5f9e5b95ab710b9c8a84e2b1cdc7ae4250cf14d1fd56969cfee6a51a0"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\static_ml\\pf.parquet",
+    "destination": "outputs\\iteration_2\\us_large\\static_ml\\pf.parquet",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "d3be43977cfd4867510c1470a470ab0e4a14b10121bccddf8a224d40d79d9aa9"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\static_ml\\validation.parquet",
+    "destination": "outputs\\iteration_2\\us_large\\static_ml\\validation.parquet",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "104d6e4c201bad17aa0b021f81cd6acc69a4e99eb2c3188453946a520c584af7"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\static_ml\\weights.parquet",
+    "destination": "outputs\\iteration_2\\us_large\\static_ml\\weights.parquet",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "f27c78414287c7d74fa064ea940dface2a1faf367cb5b4cfaa1fe5c8434d392a"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\portfolio_ml\\rff\\aims.parquet",
+    "destination": "outputs\\iteration_2\\us_large\\portfolio_ml\\rff\\aims.parquet",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "216f2329ff78ad4c7572528f2b2e54f1164e38f5a25d4106099b9c1a2dd3486b"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\portfolio_ml\\rff\\aim_coefs.parquet",
+    "destination": "outputs\\iteration_2\\us_large\\portfolio_ml\\rff\\aim_coefs.parquet",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "594ba2d86fea455bd84e9d92d160bea23e042e56ae2c7b04d147a5837844df4e"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\portfolio_ml\\rff\\chosen.csv",
+    "destination": "outputs\\iteration_2\\us_large\\portfolio_ml\\rff\\chosen.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "d39b582fa043224dced1696824bee4cb4c17b9701ff28eb535bbb2195b288200"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\portfolio_ml\\rff\\pf.parquet",
+    "destination": "outputs\\iteration_2\\us_large\\portfolio_ml\\rff\\pf.parquet",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "29fce81bea8e1b0800afc75601604f55abf537568642572a3019fc3d2b3bf19b"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\portfolio_ml\\rff\\validation.parquet",
+    "destination": "outputs\\iteration_2\\us_large\\portfolio_ml\\rff\\validation.parquet",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "5a2db3a3778084044428544bc244ff136cf5124194eb6061dcfd9e201d19186f"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_large\\u250\\portfolio_ml\\rff\\weights.parquet",
+    "destination": "outputs\\iteration_2\\us_large\\portfolio_ml\\rff\\weights.parquet",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "cdb2848cde1ea6b7c3e771e65345810ddc801b85ca68bdbb188dfaee7886d520"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_mid\\u250\\imputation_audit\\02_us_mid_universe_250_te_0.02.csv",
+    "destination": "outputs\\iteration_2\\us_mid\\imputation_audit\\02_us_mid_universe_250_te_0.02.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "59a9cb2db014f5dcc33b9f248a059386a562a1232630afe12b8195a076c041fe"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_mid\\u250\\imputation_audit\\03_us_mid_universe_250_te_0.02.csv",
+    "destination": "outputs\\iteration_2\\us_mid\\imputation_audit\\03_us_mid_universe_250_te_0.02.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "59a9cb2db014f5dcc33b9f248a059386a562a1232630afe12b8195a076c041fe"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\removed\\keats_pipeline\\outputs\\us_mid\\u250\\imputation_audit\\prepare_us_mid_universe_250_te_0.02.csv",
+    "destination": "outputs\\iteration_2\\us_mid\\imputation_audit\\prepare_us_mid_universe_250_te_0.02.csv",
+    "role": "original iteration 2 preparation/reference outputs",
+    "sha256": "59a9cb2db014f5dcc33b9f248a059386a562a1232630afe12b8195a076c041fe"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\code_before\\keats_pipeline\\scripts\\12_active_pfml.py",
+    "destination": "scripts\\shared\\active_engine.py",
+    "role": "restored original iteration engine",
+    "sha256": "d4cd494d0e2ea3656825bb8e53148c2a81f4e18b1b6884751c22014c2e0b0098"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\code_before\\keats_pipeline\\scripts\\13_breadth.py",
+    "destination": "scripts\\iteration_2\\compare_breadth.py",
+    "role": "restored original iteration 2 report",
+    "sha256": "b98429697c9c4864c96afd1f3e784728b01079e12dfd07f86f4966917de4b3ff"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\code_before\\keats_pipeline\\scripts\\14_halflife.py",
+    "destination": "scripts\\iteration_3\\compare_halflife.py",
+    "role": "restored original iteration 3 report",
+    "sha256": "987430cb91ca7013edd1fd2f7a8e3439e8a1fcb8b94bc88786bf7ee1c8a0a694"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\code_before\\keats_pipeline\\monitor_stage.py",
+    "destination": "scripts\\iteration_2\\monitor.py",
+    "role": "restored original iteration 2 monitoring",
+    "sha256": "92b5be2f5120e6e3ec6a8d13f69945970eaf19497047e1564f871ea2f70669d2"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\code_before\\keats_pipeline\\scripts\\05_static_ml.py",
+    "destination": "scripts\\iteration_2\\reference_static_ml.py",
+    "role": "restored original wider-universe reference calculation",
+    "sha256": "24e75803f8e095a708e8875c5716e0f1e9b3b5384f75e59d0ebfd2300297132f"
+  },
+  {
+    "source": "C:\\Users\\katiravan\\Downloads\\keats_removed_models_20261101\\code_before\\keats_pipeline\\scripts\\07_portfolio_ml.py",
+    "destination": "scripts\\iteration_2\\reference_portfolio_ml.py",
+    "role": "restored original wider-universe reference calculation",
+    "sha256": "32ea9ac248e6608949860d30359736fa720cc6eb752cabe49f803c41fff0ceef"
+  }
+]

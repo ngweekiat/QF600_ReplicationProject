@@ -393,6 +393,11 @@ def load_config(
     raw = _read_yaml(path, seen=())
     raw = _apply_overrides(raw, overrides)
     cfg = _build(Config, raw, "")
+    if cfg.paths.outputs.parent.name == "base":
+        _require(cfg.reporting.main_types == ("Static-ML","Portfolio-ML"), "Base reports contain exactly Static-ML and Portfolio-ML")
+        _require(cfg.portfolio_ml.use_rff and not cfg.portfolio_ml.benchmark_relative
+                 and cfg.portfolio_ml.add_constant and cfg.portfolio_ml.half_life_years == (None,),
+                 "Base requires the original default Portfolio-ML; choose an iteration group for experimental options")
     from jkmp.imputation_audit import report_if_enabled
     report_if_enabled(cfg)
     return cfg

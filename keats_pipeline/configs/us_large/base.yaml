@@ -2,7 +2,7 @@ base: ../keats_base.yaml
 paths:
   raw: data/raw/us_large
   processed: data/processed/us_large/with_zero_returns
-  outputs: outputs/us_large/base
+  outputs: outputs/base/us_large
   reference_r: ../reference/jkmp_r
 dates:
   warmup_start: '1994-12-31'
@@ -87,8 +87,6 @@ return_model:
   val_years: 5
 investor:
   wealth_end_date: '2019-12-31'
-grids:
-  n_jobs: 1
 reporting:
   subperiods:
   - label: 2020-2022
@@ -98,3 +96,5 @@ reporting:
     start: '2023-01-31'
     end: '2025-12-31'
   cost_vix_start: '2020-01-31'
+grids:
+  n_jobs: 1

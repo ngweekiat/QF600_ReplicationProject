@@ -13,13 +13,13 @@ data_sources:
   ff_factors_daily_url: https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_daily_CSV.zip
   fred_csv_url: https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}
 dates:
-  warmup_start: 1952-12-31
-  validation_start: 1971-01-31
-  validation_end: 1980-12-31
-  test_start: 1981-01-31
-  test_end: 2020-12-31
-  holdout_start: 2021-01-31
-  holdout_end: 2025-12-31
+  warmup_start: '1994-12-31'
+  validation_start: '2015-01-31'
+  validation_end: '2019-12-31'
+  test_start: '2020-01-31'
+  test_end: '2025-12-31'
+  holdout_start: null
+  holdout_end: null
   data_end: 2025-12-31
   holdout_locked: true
   evaluate: test
@@ -145,7 +145,7 @@ trading_costs:
 investor:
   gamma: 10.0
   wealth: 10000000000.0
-  wealth_end_date: 2020-12-31
+  wealth_end_date: '2019-12-31'
   mu: 0.007
   m_iterations: 10
   gamma_te: 100.0
@@ -197,9 +197,9 @@ return_model:
   - 0.1353352832366127
   horizons:
   - 1
-  val_years: 10
+  val_years: 5
   pred_years:
-  - 1971
+  - 2015
   - 2025
 portfolio_ml:
   use_rff: true
@@ -258,11 +258,8 @@ feature_importance:
   n_seeds: 20
 reporting:
   main_types:
+  - Static-ML
   - Portfolio-ML
-  - Portfolio-ML (linear)
-  - Static-ML*
-  - Factor-ML
-  - Markowitz-ML
   subperiods:
   - label: "1981\u20132000"
     start: 1981-01-31
@@ -287,13 +284,8 @@ regimes:
   fed_threshold: 0.1
   vix_norm: window
   plot_types:
-  - Market
-  - 1/N
-  - Minimum variance
   - Static-ML
-  - Static-ML*
   - Portfolio-ML
-  - Portfolio-ML (linear)
   episodes:
   - label: COVID crash
     start: 2020-02-01

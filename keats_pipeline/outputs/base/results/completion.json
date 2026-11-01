@@ -1,0 +1,20 @@
+{
+  "status": "complete",
+  "strategies": [
+    "Static-ML",
+    "Portfolio-ML"
+  ],
+  "universes": [
+    "us_large",
+    "us_mid",
+    "eu_large"
+  ],
+  "series": 6,
+  "monthly_rows": 432,
+  "test_months_per_series": 72,
+  "independent_checks": 72,
+  "all_checks_pass": true,
+  "separate_holdout_available": false,
+  "annually_refitted": true,
+  "original_50_retained": true
+}

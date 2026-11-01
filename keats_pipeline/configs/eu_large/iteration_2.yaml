@@ -1,0 +1,8 @@
+base: iteration_1.yaml
+paths:
+  processed: data/processed/eu_large/universe_250
+  outputs: outputs/iteration_2/eu_large
+universe:
+  target_n: 250
+  entry_rank: 220
+  exit_rank: 300

@@ -1,0 +1,13 @@
+group,market,status,experiment_series,reference_series,new_experiments_run
+base,us_large,available,2,0,False
+base,us_mid,available,2,0,False
+base,eu_large,available,2,0,False
+iteration_1,us_large,saved experiment results available,3,1,False
+iteration_1,us_mid,preparatory/reference outputs only; experiment unfinished,0,1,False
+iteration_1,eu_large,preparatory/reference outputs only; experiment unfinished,0,1,False
+iteration_2,us_large,preparatory/reference outputs only; experiment unfinished,0,8,False
+iteration_2,us_mid,input audits/references only; experiment unfinished,0,0,False
+iteration_2,eu_large,not run; no saved experiment performance,0,0,False
+iteration_3,us_large,not run; no saved experiment performance,0,0,False
+iteration_3,us_mid,not run; no saved experiment performance,0,0,False
+iteration_3,eu_large,not run; no saved experiment performance,0,0,False

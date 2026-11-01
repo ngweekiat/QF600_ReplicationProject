@@ -1,0 +1,27 @@
+{
+  "status": "complete",
+  "groups": [
+    "base",
+    "iteration_1",
+    "iteration_2",
+    "iteration_3"
+  ],
+  "markets": [
+    "us_large",
+    "us_mid",
+    "eu_large"
+  ],
+  "base_methods": [
+    "Static-ML",
+    "Portfolio-ML"
+  ],
+  "tests_passed": 101,
+  "organisation_checks": 205,
+  "base_independent_checks": 72,
+  "restored_native_artifacts": 62,
+  "missing_experiments_run": false,
+  "original_50_preserved": true,
+  "result_directory": "outputs/index.html",
+  "script_guide": "scripts/README.md",
+  "availability": "outputs/availability_by_group_and_market.csv"
+}

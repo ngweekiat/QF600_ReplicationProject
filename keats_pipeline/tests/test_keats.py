@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from workflow import ROOT, UNIVERSES, VARIANTS, broaden_membership, config_path, covariance, originals_unchanged, recover_current_returns
+from workflow import ROOT, UNIVERSES, VARIANTS, config_path, covariance, originals_unchanged, recover_current_returns
 from jkmp.config import ConfigError, load_config
 from jkmp.evaluation.holdout import evaluation_window
 
@@ -68,15 +68,6 @@ def test_wrds_and_reference_downloads_are_disabled():
             _http_get("https://example.invalid")
 
 
-def test_midcap_breadth_stays_near_rank_500_and_drops_after_gap():
-    dates = pd.to_datetime(["2019-12-31", "2020-01-31", "2020-03-31"])
-    frame = pd.DataFrame([(i, date, 1001 - i) for date in dates for i in range(1, 1001)], columns=["id", "eom", "me"])
-    result = broaden_membership(frame, "us_mid")
-    december = result[result.eom.eq(dates[0])]
-    assert len(december) == 250
-    assert december.id.min() == 376
-    assert december.id.max() == 625
-    assert not result.eom.eq(dates[2]).any()
 
 
 def test_original_sources_unchanged_and_every_script_compiles():
@@ -131,3 +122,15 @@ def test_small_model_fit_on_actual_keats_members_does_not_use_future_returns(uni
     assert result.chosen.n_train.gt(0).all()
     assert result.chosen.n_val.gt(0).all()
     assert result.chosen.n_test.gt(0).all()
+
+
+def test_midcap_breadth_stays_near_rank_500_and_drops_after_gap():
+    from workflow import broaden_membership
+    dates = pd.to_datetime(["2019-12-31", "2020-01-31", "2020-03-31"])
+    frame = pd.DataFrame([(i, date, 1001 - i) for date in dates for i in range(1, 1001)], columns=["id", "eom", "me"])
+    result = broaden_membership(frame, "us_mid")
+    december = result[result.eom.eq(dates[0])]
+    assert len(december) == 250
+    assert december.id.min() == 376
+    assert december.id.max() == 625
+    assert not result.eom.eq(dates[2]).any()

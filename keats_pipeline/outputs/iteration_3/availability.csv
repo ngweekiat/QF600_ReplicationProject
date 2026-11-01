@@ -1,0 +1,4 @@
+group,market,status,experiment_series,reference_series,new_experiments_run
+iteration_3,us_large,not run; no saved experiment performance,0,0,False
+iteration_3,us_mid,not run; no saved experiment performance,0,0,False
+iteration_3,eu_large,not run; no saved experiment performance,0,0,False

@@ -24,7 +24,7 @@ from jkmp.evaluation.holdout import check_return_months, evaluation_window
 from jkmp.evaluation.metrics import table2
 from jkmp.portfolio.portfolio_ml import (build_yearly_moments, load_yearly_moments, run_portfolio_ml,
                                          save_yearly_moments, search_yearly, signal_set)
-from jkmp.portfolio.static_ml import hyper_grid, run_static_ml
+from jkmp.portfolio.iteration_static_ml import hyper_grid, run_static_ml
 
 log = logging.getLogger(__name__)
 

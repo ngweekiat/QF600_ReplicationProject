@@ -24,7 +24,7 @@ from jkmp.data.wrds_pull import RAW_FILES
 
 MONTH = pd.offsets.MonthEnd(1)
 UNIVERSES = ("us_large", "us_mid", "eu_large")
-VARIANTS = ("base", "linear_pfml", "active_pfml", "universe_250", "halflife")
+VARIANTS = ("base", "active_pfml", "universe_250", "halflife")
 
 
 def settings():
@@ -36,9 +36,10 @@ def source_dir():
 
 
 def config_path(universe, variant="base"):
-    if universe not in UNIVERSES or variant not in VARIANTS:
-        raise ValueError("Unknown universe or experiment variant")
-    return ROOT / "configs" / universe / f"{variant}.yaml"
+    from script_groups import normalise_group
+    if universe not in UNIVERSES:raise ValueError("Unknown market")
+    group=normalise_group(variant)
+    return ROOT/"configs"/universe/f"{group}.yaml"
 
 
 def region(universe):

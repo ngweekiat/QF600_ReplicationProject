@@ -1,0 +1,147 @@
+[
+  {
+    "group": "base",
+    "script": "scripts/base/05_static_ml.py",
+    "purpose": "Original Static ML and default Portfolio ML; reports exclude Market and experimental variants."
+  },
+  {
+    "group": "shared",
+    "script": "scripts/shared/06_pfml_inputs.py",
+    "purpose": "Shared Portfolio ML signal inputs for base and iteration 2 reference calculations."
+  },
+  {
+    "group": "base",
+    "script": "scripts/base/07_portfolio_ml.py",
+    "purpose": "Original Static ML and default Portfolio ML; reports exclude Market and experimental variants."
+  },
+  {
+    "group": "base",
+    "script": "scripts/base/10_regimes.py",
+    "purpose": "Original Static ML and default Portfolio ML; reports exclude Market and experimental variants."
+  },
+  {
+    "group": "base",
+    "script": "scripts/base/11_tables.py",
+    "purpose": "Original Static ML and default Portfolio ML; reports exclude Market and experimental variants."
+  },
+  {
+    "group": "base",
+    "script": "scripts/base/compare_results.py",
+    "purpose": "Original Static ML and default Portfolio ML; reports exclude Market and experimental variants."
+  },
+  {
+    "group": "iteration_1",
+    "script": "scripts/iteration_1/run.py",
+    "purpose": "Benchmark-relative active Portfolio ML at 1/2/4% TE; original engine retained."
+  },
+  {
+    "group": "iteration_2",
+    "script": "scripts/iteration_2/compare_breadth.py",
+    "purpose": "250-stock reference preparation, active/capacity runs, breadth/cost reports and monitoring."
+  },
+  {
+    "group": "iteration_2",
+    "script": "scripts/iteration_2/monitor.py",
+    "purpose": "250-stock reference preparation, active/capacity runs, breadth/cost reports and monitoring."
+  },
+  {
+    "group": "iteration_2",
+    "script": "scripts/iteration_2/reference_benchmarks.py",
+    "purpose": "250-stock reference preparation, active/capacity runs, breadth/cost reports and monitoring."
+  },
+  {
+    "group": "iteration_2",
+    "script": "scripts/iteration_2/reference_portfolio_ml.py",
+    "purpose": "250-stock reference preparation, active/capacity runs, breadth/cost reports and monitoring."
+  },
+  {
+    "group": "iteration_2",
+    "script": "scripts/iteration_2/reference_static_ml.py",
+    "purpose": "250-stock reference preparation, active/capacity runs, breadth/cost reports and monitoring."
+  },
+  {
+    "group": "iteration_2",
+    "script": "scripts/iteration_2/run.py",
+    "purpose": "250-stock reference preparation, active/capacity runs, breadth/cost reports and monitoring."
+  },
+  {
+    "group": "iteration_3",
+    "script": "scripts/iteration_3/compare_halflife.py",
+    "purpose": "Original half-life search and comparison against iteration 2."
+  },
+  {
+    "group": "iteration_3",
+    "script": "scripts/iteration_3/run.py",
+    "purpose": "Original half-life search and comparison against iteration 2."
+  },
+  {
+    "group": "shared",
+    "script": "scripts/shared/00_download.py",
+    "purpose": "Input audit/preparation, covariance, return forecaster, Market references and common active engine."
+  },
+  {
+    "group": "shared",
+    "script": "scripts/shared/01_prepare.py",
+    "purpose": "Input audit/preparation, covariance, return forecaster, Market references and common active engine."
+  },
+  {
+    "group": "shared",
+    "script": "scripts/shared/02_covariance.py",
+    "purpose": "Input audit/preparation, covariance, return forecaster, Market references and common active engine."
+  },
+  {
+    "group": "shared",
+    "script": "scripts/shared/03_return_model.py",
+    "purpose": "Input audit/preparation, covariance, return forecaster, Market references and common active engine."
+  },
+  {
+    "group": "shared",
+    "script": "scripts/shared/04_benchmarks.py",
+    "purpose": "Input audit/preparation, covariance, return forecaster, Market references and common active engine."
+  },
+  {
+    "group": "shared",
+    "script": "scripts/shared/15_holdout.py",
+    "purpose": "Input audit/preparation, covariance, return forecaster, Market references and common active engine."
+  },
+  {
+    "group": "shared",
+    "script": "scripts/shared/active_engine.py",
+    "purpose": "Input audit/preparation, covariance, return forecaster, Market references and common active engine."
+  },
+  {
+    "group": "shared",
+    "script": "scripts/shared/download_once.py",
+    "purpose": "Input audit/preparation, covariance, return forecaster, Market references and common active engine."
+  },
+  {
+    "group": "shared coordinator",
+    "script": "run.py",
+    "purpose": "Group dispatch, common data handling or read-only report organisation."
+  },
+  {
+    "group": "shared coordinator",
+    "script": "run_all.py",
+    "purpose": "Group dispatch, common data handling or read-only report organisation."
+  },
+  {
+    "group": "shared coordinator",
+    "script": "workflow.py",
+    "purpose": "Group dispatch, common data handling or read-only report organisation."
+  },
+  {
+    "group": "shared coordinator",
+    "script": "script_groups.py",
+    "purpose": "Group dispatch, common data handling or read-only report organisation."
+  },
+  {
+    "group": "shared coordinator",
+    "script": "organise_results.py",
+    "purpose": "Group dispatch, common data handling or read-only report organisation."
+  },
+  {
+    "group": "shared coordinator",
+    "script": "verify_organisation.py",
+    "purpose": "Read-only group separation, restoration hash, input and report-link verification."
+  }
+]
