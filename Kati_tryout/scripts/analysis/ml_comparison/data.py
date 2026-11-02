@@ -4,7 +4,7 @@ import hashlib
 import numpy as np
 import pandas as pd
 from jkmp.config import load_config
-from jkmp.strategies import STRATEGIES,require_strategies
+from jkmp.strategies import base_result_paths,require_strategies
 
 def sha256(path: Path) -> str:
     h = hashlib.sha256()
@@ -53,8 +53,7 @@ def discover(root,universes=None):
     for universe in universes or ("us_large","us_mid","eu_large"):
         cfg=load_config(root/"configs"/universe/"base.yaml")
         output=cfg.paths.outputs
-        paths=(("Static-ML",output/"static_ml/pf.parquet",output/"static_ml/weights.parquet"),
-               ("Portfolio-ML",output/"portfolio_ml/rff/pf.parquet",output/"portfolio_ml/rff/weights.parquet"))
+        paths=[("Static-ML*" if p.parent.name=="static_ml_star" else "Portfolio-ML",p,p.parent/"weights.parquet") for p in base_result_paths(output)]
         for strategy,pf_path,weight_path in paths:
             pf=pd.read_parquet(pf_path)
             if set(pf.type)!={strategy}:raise ValueError(f"Unexpected strategy in {pf_path}")
@@ -62,9 +61,9 @@ def discover(root,universes=None):
             expected=pd.date_range(cfg.dates.test_start,cfg.dates.test_end,freq="ME")
             if not pd.DatetimeIndex(sorted(pf.eom_ret)).equals(expected):raise ValueError("Incomplete test calendar")
             if not (pf.eom+pd.offsets.MonthEnd(1)).eq(pf.eom_ret).all():raise ValueError("Formation/return mismatch")
-            require_strategies(pf)
+            require_strategies(pf,universe=universe)
             frames.append(pf.assign(dataset=f"{universe}/base",strategy=strategy,universe=universe))
             inventory.append(dict(universe=universe,strategy=strategy,pf_path=str(pf_path),weights_path=str(weight_path),
                                   processed_path=str(cfg.paths.processed),sha256=sha256(pf_path)))
-        require_strategies(pd.concat([f for f in frames if f.universe.iloc[0]==universe]),complete=True)
+        require_strategies(pd.concat([f for f in frames if f.universe.iloc[0]==universe]),complete=True,universe=universe)
     return pd.DataFrame(inventory),pd.concat(frames,ignore_index=True)

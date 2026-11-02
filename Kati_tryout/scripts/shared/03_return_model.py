@@ -20,7 +20,7 @@ import pandas as pd
 
 from jkmp.config import load_config
 from jkmp.evaluation.holdout import last_open_month
-from jkmp.models.return_model import fit_return_model, prediction_diagnostics, save_models
+from jkmp.models.return_model import fit_return_model, prediction_diagnostics, save_models, tuning_marker, tuning_provenance
 
 
 def main() -> None:
@@ -33,6 +33,8 @@ def main() -> None:
     cfg = load_config(args.config, args.override)
     processed = cfg.paths.processed
     panel = pd.read_parquet(processed / "panel.parquet")
+    logging.info("RFF return-model market=%s; validation_scope=%s; fitting=screened regional panel",
+                 cfg.paths.raw.name, cfg.return_model.validation_scope)
 
     result = fit_return_model(panel, cfg)
     preds = result.predictions
@@ -45,10 +47,12 @@ def main() -> None:
     result.chosen.to_csv(out / "chosen.csv", index=False)
     save_models(result, out / "models.npz")
     diag.to_csv(out / "diagnostics.csv", index=False)
+    import json
+    tuning_marker(cfg).write_text(json.dumps(tuning_provenance(cfg), indent=2, default=str), encoding="utf-8")
 
     pd.set_option("display.width", 200)
     print("\nChosen hyperparameters by return year:")
-    print(result.chosen[["year", "g", "p", "log_lam", "val_mse", "n_train", "n_val", "n_test"]].to_string(index=False))
+    print(result.chosen[["market", "validation_scope", "year", "g", "p", "log_lam", "val_mse", "n_train", "n_val", "n_val_regional", "n_test"]].to_string(index=False))
     print("\nOut-of-sample diagnostics (R² vs zero forecast; mean monthly rank IC):")
     print(diag.pivot(index="year", columns="scope", values=["r2_oos", "rank_ic"]).round(4).to_string())
 

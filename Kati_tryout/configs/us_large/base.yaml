@@ -1,4 +1,9 @@
 base: ../kati_base.yaml
+static_ml:
+  # Expanded base-only candidate range; the Static ML* formula is unchanged.
+  k_grid: [1.0, 0.3333333333333333, 0.2, 0.1, 0.05]
+  u_grid: [0.0, 0.1, 0.25, 0.5, 1.0]
+  g_grid: [0.0, 1.0, 2.0, 3.0]
 paths:
   raw: data/raw/us_large
   processed: data/processed/us_large/with_zero_returns
@@ -81,6 +86,7 @@ features:
     - debt_me
     - at_me
 return_model:
+  validation_scope: universe
   pred_years:
   - 2015
   - 2025

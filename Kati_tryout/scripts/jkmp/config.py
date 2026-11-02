@@ -214,7 +214,7 @@ class RidgeGridConfig:
 
     @property
     def values(self) -> tuple[float, ...]:
-        """Penalties: optional 0, then exp of n evenly spaced points (R: c(0, exp(seq(...))))."""
+        """Penalties: optional zero, then exp of n evenly spaced log penalties."""
         step = (self.log_max - self.log_min) / (self.n - 1)
         grid = tuple(math.exp(self.log_min + i * step) for i in range(self.n))
         return ((0.0,) + grid) if self.include_zero else grid
@@ -227,11 +227,14 @@ class ReturnModelConfig:
     horizons: tuple[int, ...]
     val_years: int
     pred_years: tuple[int, ...]
+    validation_scope: str
 
     def __post_init__(self) -> None:
         _require_even(self.p_grid, "return_model.p_grid")
         _require(all(h >= 1 for h in self.horizons), "return_model.horizons must be >= 1")
         _require(self.val_years >= 1, "return_model.val_years must be >= 1")
+        _require(self.validation_scope in ("all", "universe"),
+                 "return_model.validation_scope must be all or universe")
         _require(len(self.pred_years) == 2 and self.pred_years[0] <= self.pred_years[1],
                  "return_model.pred_years must be [first, last]")
 
@@ -314,7 +317,7 @@ class ReportingConfig:
     cost_vol_window: int
 
     def __post_init__(self) -> None:
-        _require(len(self.main_types) >= 2, "reporting.main_types needs at least two methods")
+        _require(len(self.main_types) >= 1, "reporting.main_types needs at least one method")
         _require(all(len(b) == 2 and 1 <= b[0] <= b[1] for b in self.ic_size_buckets),
                  "reporting.ic_size_buckets must be [first, last] rank pairs")
         _require(self.cost_vol_window >= 1, "reporting.cost_vol_window must be >= 1")
@@ -393,11 +396,20 @@ def load_config(
     raw = _read_yaml(path, seen=())
     raw = _apply_overrides(raw, overrides)
     cfg = _build(Config, raw, "")
+    if cfg.paths.outputs.parent.name.startswith("iteration_"):
+        # Iteration YAML inherits base.yaml. Preserve its historical reference
+        # labels when the base mandate changes to Static-ML*.
+        cfg=dataclasses.replace(cfg,
+            return_model=dataclasses.replace(cfg.return_model,validation_scope="all"),
+            static_ml=_build(StaticMLConfig,_read_yaml(PROJECT_ROOT/"configs/kati_base.yaml",seen=())["static_ml"],"static_ml"),
+            reporting=dataclasses.replace(cfg.reporting,main_types=tuple(t.replace("Static-ML*","Static-ML") for t in cfg.reporting.main_types)),
+            regimes=dataclasses.replace(cfg.regimes,plot_types=tuple(t.replace("Static-ML*","Static-ML") for t in cfg.regimes.plot_types)))
     for target in (cfg.paths.raw, cfg.paths.processed, cfg.paths.outputs):
         _require(target.resolve().is_relative_to(PROJECT_ROOT.resolve()),
                  f"Kati writes must stay inside its own folder: {target}")
     if cfg.paths.outputs.parent.name == "base":
-        _require(cfg.reporting.main_types == ("Static-ML","Portfolio-ML"), "Base reports contain exactly Static-ML and Portfolio-ML")
+        from jkmp.strategies import base_strategies
+        _require(cfg.reporting.main_types == base_strategies(cfg.paths.outputs.name), "Base reports require US high-cap Static-ML* and regional Portfolio-ML only")
         _require(cfg.portfolio_ml.use_rff and not cfg.portfolio_ml.benchmark_relative
                  and cfg.portfolio_ml.add_constant and cfg.portfolio_ml.half_life_years == (None,),
                  "Base requires the original default Portfolio-ML; choose an iteration group for experimental options")

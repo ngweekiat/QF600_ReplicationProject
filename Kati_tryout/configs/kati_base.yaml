@@ -182,6 +182,7 @@ ridge_grid:
   log_max: 10.0
   n: 100
 return_model:
+  validation_scope: all
   p_grid:
   - 2
   - 4
@@ -258,7 +259,7 @@ feature_importance:
   n_seeds: 20
 reporting:
   main_types:
-  - Static-ML
+  - Static-ML*
   - Portfolio-ML
   subperiods:
   - label: "1981\u20132000"
@@ -284,7 +285,7 @@ regimes:
   fed_threshold: 0.1
   vix_norm: window
   plot_types:
-  - Static-ML
+  - Static-ML*
   - Portfolio-ML
   episodes:
   - label: COVID crash

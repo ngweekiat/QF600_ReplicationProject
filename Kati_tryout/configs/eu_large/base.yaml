@@ -81,6 +81,7 @@ features:
     - debt_me
     - at_me
 return_model:
+  validation_scope: universe
   pred_years:
   - 2015
   - 2025
@@ -88,6 +89,7 @@ return_model:
 investor:
   wealth_end_date: '2019-12-31'
 reporting:
+  main_types: [Portfolio-ML]
   subperiods:
   - label: 2020-2022
     start: '2020-01-31'
@@ -98,3 +100,5 @@ reporting:
   cost_vix_start: '2020-01-31'
 grids:
   n_jobs: 1
+regimes:
+  plot_types: [Portfolio-ML]

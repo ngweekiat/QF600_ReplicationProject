@@ -9,14 +9,17 @@ with the validation window shortened to ``val_years`` (R: 10). For each return y
 * test  : predict for formation months Dec y−1 .. Nov y (returns realised in year y)
 
 Training rows are all screened stocks with a 12-month history (``valid_data``), not just the portfolio
-universe — R also fits its return models on all US stocks. The target is ``ret_ld1``; inputs are the
-ranked characteristics in [0, 1].
+universe — R also fits its return models on all US stocks. With ``validation_scope=universe``,
+only this market's historical members score the candidate (g, p, lambda) settings. Each market
+uses its own panel, memberships, selected settings and saved coefficients. The target is
+``ret_ld1``; inputs are the ranked characteristics in [0, 1].
 """
 
 from __future__ import annotations
 
 import logging
 import json
+import hashlib
 from collections.abc import Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -30,6 +33,43 @@ from jkmp.models.random_features import base_draws, column_subset, rff, rff_raw,
 from jkmp.models.ridge import Moments, mse_from_moments, ridge_path
 
 log = logging.getLogger(__name__)
+
+
+def validation_rows(rows: pd.DataFrame, scope: str) -> pd.DataFrame:
+    """Choose scoring stocks using membership at each historical formation month.
+
+    Coefficient fitting still uses the screened regional panel, as in the paper.
+    No present-day membership list or future stock return enters this filter.
+    """
+    if scope == "all":
+        return rows
+    if scope != "universe":
+        raise ValueError(f"Unknown return-model validation scope: {scope}")
+    if "in_universe" not in rows:
+        raise ValueError("Market-specific RFF validation requires historical in_universe membership")
+    selected = rows.loc[rows["in_universe"].eq(True)]
+    if selected.empty:
+        raise ValueError("No eligible historical market members for RFF validation")
+    return selected
+
+
+def tuning_provenance(cfg: Config) -> dict:
+    """Identify the market, search settings, source and prepared panel without fitting."""
+    panel = cfg.paths.processed / "panel.parquet"
+    info = panel.stat() if panel.exists() else None
+    source = Path(__file__).resolve()
+    return dict(version=2, market=cfg.paths.raw.name, processed=str(cfg.paths.processed),
+                return_model=cfg.as_dict()["return_model"], ridge_grid=cfg.as_dict()["ridge_grid"],
+                features=list(cfg.features.names), seed=cfg.seed,
+                panel=dict(size=info.st_size, mtime_ns=info.st_mtime_ns) if info else None,
+                sources={name: hashlib.sha256((source.parent / name).read_bytes()).hexdigest()
+                         for name in (source.name, "random_features.py", "ridge.py")})
+
+
+def tuning_marker(cfg: Config) -> Path:
+    """Old broad-panel fits cannot satisfy a market-specific tuning checkpoint."""
+    token = hashlib.sha256(json.dumps(tuning_provenance(cfg), sort_keys=True).encode()).hexdigest()[:16]
+    return cfg.paths.processed / "return_model" / f"tuning_{token}.json"
 
 
 @dataclass
@@ -102,7 +142,11 @@ def fit_return_model(panel: pd.DataFrame, cfg: Config) -> ReturnModelResult:
     p_max = max(p_grid)
     years = prediction_years(cfg)
 
-    rows = panel.loc[panel["valid_data"] & ((panel["eom"] + pd.offsets.MonthEnd(1)) >= pd.Timestamp("2005-01-31")), ["id", "eom", *feats, "ret_ld1"]]
+    columns = ["id", "eom", *feats, "ret_ld1"]
+    if "in_universe" in panel:
+        columns.append("in_universe")
+    rows = panel.loc[panel["valid_data"] & ((panel["eom"] + pd.offsets.MonthEnd(1)) >= pd.Timestamp("2005-01-31")), columns]
+    scoring_rows = validation_rows(rows, rm.validation_scope)
     # A held stock can be forecast from current characteristics even when its
     # current realised return makes that row ineligible for fitting.
     prediction_rows = panel.loc[panel["valid_data"] | panel["in_universe"], ["id", "eom", *feats, "ret_ld1"]] if "in_universe" in panel else rows
@@ -110,6 +154,8 @@ def fit_return_model(panel: pd.DataFrame, cfg: Config) -> ReturnModelResult:
     snapshots = sorted({c for pair in cut.values() for c in pair})
     z = base_draws(len(feats), p_max, cfg.seed)  # same draws for every g (R: set.seed before each g)
     moments = {g: prefix_moments(rows, feats, weights_for(z, g), snapshots) for g in g_grid}
+    scoring_moments = moments if rm.validation_scope == "all" else {
+        g: prefix_moments(scoring_rows, feats, weights_for(z, g), snapshots) for g in g_grid}
     log.info("Moments: %d rows, %d snapshot months, p_max %d, %d variances", len(rows), len(snapshots), p_max, len(g_grid))
 
     searches, chosen, preds, models = [], [], [], {}
@@ -118,12 +164,16 @@ def fit_return_model(panel: pd.DataFrame, cfg: Config) -> ReturnModelResult:
         records = []
         for g in g_grid:
             m_train, m_full = moments[g][tr_cut], moments[g][full_cut]
-            m_val = m_full - m_train
+            m_val = scoring_moments[g][full_cut] - scoring_moments[g][tr_cut]
+            if m_val.n <= 0:
+                raise ValueError(f"No {cfg.paths.raw.name} validation rows for return year {y}")
             for p in p_grid:
                 cols, scale = column_subset(p, p_max), p ** -0.5
                 coef, b0 = ridge_path(m_train.select(cols, scale), lambdas)
                 mse = mse_from_moments(m_val.select(cols, scale), coef, b0)
-                records.append(pd.DataFrame({"year": y, "g": g, "p": p, "lam": lambdas, "val_mse": mse}))
+                records.append(pd.DataFrame({"year": y, "g": g, "p": p, "lam": lambdas, "val_mse": mse,
+                                             "market": cfg.paths.raw.name, "validation_scope": rm.validation_scope,
+                                             "n_val": m_val.n}))
         search = pd.concat(records, ignore_index=True)
         best = search.loc[search["val_mse"].idxmin()]
         g, p, lam = float(best["g"]), int(best["p"]), float(best["lam"])
@@ -137,13 +187,15 @@ def fit_return_model(panel: pd.DataFrame, cfg: Config) -> ReturnModelResult:
         pred = models[y].predict(test[feats].to_numpy(), z)
         preds.append(test[["id", "eom"]].assign(year=y, pred_ld1=pred))
         n_train = moments[g][tr_cut].n
+        n_val = scoring_moments[g][full_cut].n - scoring_moments[g][tr_cut].n
         chosen.append({"year": y, "g": g, "p": p, "lam": lam, "log_lam": np.log(lam) if lam > 0 else -np.inf,
-                       "val_mse": float(best["val_mse"]), "n_train": n_train, "n_val": m_full.n - n_train,
-                       "n_full": m_full.n, "n_test": len(test)})
+                       "val_mse": float(best["val_mse"]), "n_train": n_train, "n_val": n_val,
+                       "n_val_regional": m_full.n - n_train, "n_full": m_full.n, "n_test": len(test),
+                       "market": cfg.paths.raw.name, "validation_scope": rm.validation_scope})
         searches.append(search)
         log.info("Year %d: g=%.3f p=%d log(λ)=%s val MSE %.6f; %d train / %d val / %d test rows",
                  y, g, p, f"{np.log(lam):.1f}" if lam > 0 else "-inf (λ=0)", best["val_mse"],
-                 n_train, m_full.n - n_train, len(test))
+                 n_train, n_val, len(test))
     return ReturnModelResult(pd.concat(preds, ignore_index=True), pd.concat(searches, ignore_index=True),
                              pd.DataFrame(chosen), models, z)
 

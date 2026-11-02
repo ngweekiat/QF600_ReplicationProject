@@ -1,7 +1,7 @@
 {
   "status": "PASS",
-  "checks": 253,
-  "passed": 253,
+  "checks": 273,
+  "passed": 273,
   "models_refitted": false,
   "model_backtest_complete": false,
   "data_stock_months": 2886029,
@@ -47,12 +47,52 @@
       "detail": ""
     },
     {
-      "check": "existing_ml_and_weight_learning_source_preserved",
+      "check": "other_ml_and_weight_learning_source_preserved",
       "status": "PASS",
       "detail": ""
     },
     {
-      "check": "non_feature_model_settings_preserved",
+      "check": "only_authorised_static_star_library_added",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "configs\\kati_base.yaml:authorised_rff_validation_scope",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "configs\\eu_large\\base.yaml:authorised_rff_validation_scope",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "configs\\us_large\\base.yaml:authorised_rff_validation_scope",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "configs\\us_large\\iteration_1.yaml:authorised_rff_validation_scope",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "configs\\us_large\\iteration_2.yaml:authorised_rff_validation_scope",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "configs\\us_large\\iteration_3.yaml:authorised_rff_validation_scope",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "configs\\us_mid\\base.yaml:authorised_rff_validation_scope",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "non_feature_economic_model_settings_preserved",
       "status": "PASS",
       "detail": ""
     },
@@ -77,6 +117,16 @@
       "detail": ""
     },
     {
+      "check": "us_large/base:rff_tuning_scope",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/base:ridge_penalties",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
       "check": "us_large/base:frozen_50_only",
       "status": "PASS",
       "detail": ""
@@ -88,6 +138,16 @@
     },
     {
       "check": "us_large/base:all_covariance_themes_supported",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_mid/base:rff_tuning_scope",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_mid/base:ridge_penalties",
       "status": "PASS",
       "detail": ""
     },
@@ -107,6 +167,16 @@
       "detail": ""
     },
     {
+      "check": "eu_large/base:rff_tuning_scope",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "eu_large/base:ridge_penalties",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
       "check": "eu_large/base:frozen_50_only",
       "status": "PASS",
       "detail": ""
@@ -118,6 +188,16 @@
     },
     {
       "check": "eu_large/base:all_covariance_themes_supported",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_1:rff_tuning_scope",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_1:ridge_penalties",
       "status": "PASS",
       "detail": ""
     },
@@ -137,6 +217,16 @@
       "detail": ""
     },
     {
+      "check": "us_large/iteration_2:rff_tuning_scope",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_2:ridge_penalties",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
       "check": "us_large/iteration_2:frozen_50_only",
       "status": "PASS",
       "detail": ""
@@ -148,6 +238,16 @@
     },
     {
       "check": "us_large/iteration_2:all_covariance_themes_supported",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_3:rff_tuning_scope",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_3:ridge_penalties",
       "status": "PASS",
       "detail": ""
     },
@@ -602,16 +702,6 @@
       "detail": ""
     },
     {
-      "check": "plan:us_mid.base.static:dependencies_precede_job",
-      "status": "PASS",
-      "detail": ""
-    },
-    {
-      "check": "plan:us_mid.base.static:script_available",
-      "status": "PASS",
-      "detail": ""
-    },
-    {
       "check": "plan:us_mid.base.inputs:dependencies_precede_job",
       "status": "PASS",
       "detail": ""
@@ -673,16 +763,6 @@
     },
     {
       "check": "plan:eu_large.base.returns:script_available",
-      "status": "PASS",
-      "detail": ""
-    },
-    {
-      "check": "plan:eu_large.base.static:dependencies_precede_job",
-      "status": "PASS",
-      "detail": ""
-    },
-    {
-      "check": "plan:eu_large.base.static:script_available",
       "status": "PASS",
       "detail": ""
     },
@@ -768,6 +848,16 @@
     },
     {
       "check": "iterations_only_us_high_cap",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "static_star_only_us_high_cap_base",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "expanded_static_star_grid_has_100_candidates",
       "status": "PASS",
       "detail": ""
     },
@@ -1182,6 +1272,11 @@
       "detail": ""
     },
     {
+      "check": "notebook_cell:scripts/jkmp/portfolio/static_ml_star.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
       "check": "notebook_cell:scripts/jkmp/portfolio/trading_speed.py",
       "status": "PASS",
       "detail": ""
@@ -1203,6 +1298,11 @@
     },
     {
       "check": "notebook_cell:tests/test_active_math.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:tests/test_base_static_star.py",
       "status": "PASS",
       "detail": ""
     },

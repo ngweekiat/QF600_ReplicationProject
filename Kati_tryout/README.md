@@ -19,7 +19,13 @@ Old characteristic archives, inputs and fits were removed at the user's request.
 | `docs/` | [User guide](docs/USER_GUIDE.md) and [assumptions/changes](docs/ASSUMPTIONS_AND_CHANGES.md) |
 | `tests/` | Verification tests |
 
-Base retains Static ML and Portfolio ML for US high-cap, US mid-cap and EU high-cap. Iterations 1–3 apply only to US high-cap Portfolio ML. Market is a comparison reference. Every iteration comparison includes the earlier Portfolio ML versions and the unchanged base references.
+Base uses **Static ML\*** for US high-cap only, and Portfolio ML for US high-cap, US mid-cap and EU high-cap. Market is a comparison reference. See [base changes and tuning](docs/BASE_STATIC_ML_STAR_AND_FIGURE1.md). Iterations 1–3 retain their existing US high-cap Portfolio ML experiments and original fixed Static ML reference.
+
+Base ridge calibration uses **validation selection from 101 penalties** (zero plus 100 positive log-spaced values). Return-model selection is market-specific. Portfolio ML selects its own penalties independently. Iterations retain their original ridge grid.
+
+The [combined base Figure 1](outputs/base/overall%20analysis/figure1/index.html) includes all retained markets' frontiers, by portfolio method and investor size. The PDF is `outputs/base/overall analysis/figure1/charts/figure1_combined.pdf`.
+
+Base return-forecast RFF tuning now scores each market's historical members separately: US high-cap, US mid-cap and EU high-cap. Coefficients still fit on the corresponding screened regional training panel; annual dates and RFF/ridge formulas are preserved. Portfolio ML already has its own separately tuned RFF portfolio-weight model in each market. See [market-specific RFF tuning](docs/MARKET_SPECIFIC_RFF_TUNING.md). This configuration update has not been fitted; saved results predate the market-specific validation change. The US high-cap Static ML* grid has 100 candidates.
 
 From the repository root, using the project's Python 3.11–3.13 environment:
 

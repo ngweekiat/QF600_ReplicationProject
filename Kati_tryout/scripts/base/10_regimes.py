@@ -39,11 +39,11 @@ def main() -> None:
     if cfg.paths.outputs.parent.name != "base":raise ValueError("This script writes base results; choose the matching iteration script")
     outputs, rc, gamma = cfg.paths.outputs, cfg.regimes, cfg.investor.gamma
 
-    files = [outputs / "static_ml" / "pf.parquet",
-             outputs / "portfolio_ml" / "rff" / "pf.parquet"]
+    from jkmp.strategies import base_result_paths
+    files = base_result_paths(outputs)
     pfs = pd.concat([pd.read_parquet(f) for f in files if f.exists()], ignore_index=True)
     from jkmp.strategies import require_strategies
-    require_strategies(pfs,complete=True)
+    require_strategies(pfs,complete=True,universe=outputs.name)
     pfs = pfs[["type", "eom", "eom_ret", "r", "tc", "turnover", "inv", "shorting"]]
     ret_months = pd.DatetimeIndex(sorted(pfs["eom_ret"].unique()))
     form_months = pd.DatetimeIndex(sorted(pfs["eom"].unique()))
@@ -62,6 +62,8 @@ def main() -> None:
     table.to_csv(out / "regime_table.csv", index=False)
     recost.to_csv(out / "vix_recost.csv", index=False)
     cum.to_csv(out / "cumulative_utility.csv", index=False)
+    import json
+    (out/"model_scope.json").write_text(json.dumps(sorted(pfs.type.unique())),encoding="utf-8")
     written = rg.plot_cumulative_utility(cum, rc.episodes, rc.plot_types, gamma,
                                          outputs / "figures" / "cumulative_utility", cfg.dates)
     logging.info("wrote %s", ", ".join(p.name for p in written))
@@ -77,6 +79,8 @@ def main() -> None:
         print(piv.to_string(float_format=lambda v: f"{v:.4f}"))
     print(f"\nVIX re-costing (Λ_t = Λ · VIX_t / mean VIX, mean over the {rc.vix_norm}):")
     print(recost.to_string(index=False, float_format=lambda v: f"{v:.4f}"))
+    from jkmp.strategies import base_sources_marker
+    base_sources_marker(outputs,"regimes").write_text(json.dumps(dict(types=sorted(pfs.type.unique()))),encoding="utf-8")
 
 
 if __name__ == "__main__":

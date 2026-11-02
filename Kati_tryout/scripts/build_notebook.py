@@ -55,7 +55,7 @@ def source_groups():
     grouped = [
         ("Workflow entry points and preparation", [p for p in scripts if p.parent == ROOT / "scripts"]),
         ("Shared data and estimation stages", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "shared"]),
-        ("Base: Static ML and Portfolio ML", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "base"]),
+        ("Base: US high-cap Static ML* and regional Portfolio ML", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "base"]),
         ("Iteration 1: benchmark-relative US high-cap Portfolio ML", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_1"]),
         ("Iteration 2: broader US high-cap Portfolio ML and capacity", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_2"]),
         ("Iteration 3: recent-history weighting", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_3"]),
@@ -117,11 +117,15 @@ print("Python:", sys.executable)
 
 | Run | Markets and methods | Comparison |
 |---|---|---|
-| Base | US high-cap, US mid-cap and EU high-cap; Static ML and Portfolio ML | All retained base ML models and the requested Market references |
+| Base | Static ML* in US high-cap only; Portfolio ML in US high-cap, US mid-cap and EU high-cap | Four retained base ML results and the requested Market references |
 | Iteration 1 | US high-cap Portfolio ML; benchmark-relative construction, 1%/2%/4% tracking-error targets | Base Portfolio ML, base Static ML and Market |
 | Iteration 2 | US high-cap Portfolio ML; 250-stock breadth and capacity | Iteration 1 and unchanged base references |
 | Iteration 3 | US high-cap Portfolio ML; recent-history weighting | Iterations 1–2 and unchanged base references |
 | Final | US high-cap Portfolio ML base and iterations 1–3 | Four-version progression, with Market/Static references in the wider reports |
+
+Base return-forecast RFF settings are selected separately on historical members of each market, using `return_model.validation_scope: universe`. Coefficients still fit on screened regional training data. Portfolio ML has its own separate RFF portfolio-weight model and market-specific utility tuning. See `docs/MARKET_SPECIFIC_RFF_TUNING.md`. This source update has not fitted models or refreshed backtest results.
+
+Base ridge calibration uses **validation selection from 101 penalties**. Return-model settings are selected on each market's historical validation members; Portfolio ML selects its own coefficients and settings using preceding portfolio utility. RFF and Static ML* k/u/g procedures and iteration settings are retained.
 
 The current 50 are selected using **US high-cap observations from 2005–2014 only**, within the verified published JKP whitelist. Selection uses association statistics without ML training. No later outcome or other-market observation enters the shortlist. The existing model-refit and portfolio-weighting implementation is preserved for a later explicit run. See outputs/us_high_cap_selection/charts/selection_decision_path_jkp_only.pdf and recommended_50_jkp_only.csv for current results.
 

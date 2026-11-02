@@ -6,7 +6,71 @@ import pytest
 from workflow import config_path
 from jkmp.config import load_config
 from jkmp.models.random_features import base_draws, weights_for, rff, rff_raw, column_subset
-from jkmp.models.return_model import fit_return_model
+from jkmp.models.return_model import fit_return_model, validation_rows, tuning_marker
+
+
+def test_validation_rows_follow_historical_membership():
+    rows = pd.DataFrame(dict(id=[1, 2, 1, 2],
+        eom=pd.to_datetime(["2013-12-31", "2013-12-31", "2014-12-31", "2014-12-31"]),
+        in_universe=[True, False, False, True], ret_ld1=[.01, 99., 99., .02]))
+    selected = validation_rows(rows, "universe")
+    assert list(zip(selected.id, selected.eom.dt.year)) == [(1, 2013), (2, 2014)]
+    assert validation_rows(rows, "all") is rows
+    with pytest.raises(ValueError, match="historical in_universe"):
+        validation_rows(rows.drop(columns="in_universe"), "universe")
+    with pytest.raises(ValueError, match="No eligible"):
+        validation_rows(rows.assign(in_universe=False), "universe")
+
+
+def test_market_configs_and_checkpoints_are_independent():
+    from run_all import Job, output_paths
+    paths=[]
+    for market in ("us_large", "us_mid", "eu_large"):
+        cfg=load_config(config_path(market))
+        assert cfg.return_model.validation_scope=="universe"
+        marker=tuning_marker(cfg)
+        assert marker.parent==cfg.paths.processed/"return_model"
+        assert marker in output_paths(Job(f"{market}.base.returns", "03", market))
+        legacy=load_config(config_path(market), {"return_model.validation_scope":"all"})
+        assert marker!=tuning_marker(legacy)
+        paths.append(marker)
+    assert len(set(paths))==3
+    for i in (1,2,3):
+        assert load_config(config_path("us_large",f"iteration_{i}")).return_model.validation_scope=="all"
+
+
+def test_base_and_iteration_ridge_grid_checkpoints():
+    from jkmp.strategies import portfolio_tuning_marker
+    from run_all import Job, output_paths
+    for market in ("us_large","us_mid","eu_large"):
+        cfg=load_config(config_path(market))
+        assert len(cfg.ridge_grid.values)==101 and cfg.ridge_grid.values[0]==0.0
+        different=load_config(config_path(market),{"ridge_grid.n":3})
+        assert len(different.ridge_grid.values)==4
+        assert tuning_marker(cfg)!=tuning_marker(different)
+        assert portfolio_tuning_marker(cfg)!=portfolio_tuning_marker(different)
+        assert portfolio_tuning_marker(cfg) in output_paths(Job(market,"07",market))
+    for i in (1,2,3):
+        cfg=load_config(config_path("us_large",f"iteration_{i}"))
+        assert len(cfg.ridge_grid.values)==101
+
+
+def test_restore_does_not_reuse_stale_outputs_with_an_old_marker(tmp_path):
+    import os
+    from run_all import cached_outputs_ready
+    output=tmp_path/"table.csv"
+    old_marker=tmp_path/"sources_old.json"
+    new_marker=tmp_path/"sources_new.json"
+    output.write_text("old result")
+    old_marker.write_text("old settings")
+    os.utime(output,ns=(100,100));os.utime(old_marker,ns=(200,200))
+    assert cached_outputs_ready([output,old_marker])
+    output.write_text("new result")
+    os.utime(output,ns=(300,300))
+    new_marker.write_text("new settings")
+    os.utime(new_marker,ns=(400,400))
+    assert not cached_outputs_ready([output,old_marker])
+    assert cached_outputs_ready([output,new_marker])
 
 
 def test_fourier_pairs_scaling_and_nested_model_sizes():
@@ -52,6 +116,9 @@ def test_forecaster_learns_coefficients_without_seeing_forecast_year_returns():
     assert np.linalg.norm(first.models[2015].coef) > 0
     assert first.predictions.pred_ld1.std() > 0
     assert first.chosen.n_test.iloc[0] == 72
+    assert first.chosen.validation_scope.iloc[0] == "universe"
+    assert first.chosen.n_val.iloc[0] == 5 * 12 * 3
+    assert first.chosen.n_val_regional.iloc[0] == 5 * 12 * 6
 
     # A changed past target changes the fit: these are learned coefficients,
     # rather than fixed characteristic weights or only a random projection.

@@ -23,10 +23,10 @@ def test_new_build_displays_unavailable_results_without_substituting_keats(tmp_p
 
 
 def test_viewer_uses_net_returns_and_costs_from_completed_local_file(tmp_path):
-    folder = tmp_path / "outputs/base/us_large/static_ml"
+    folder = tmp_path / "outputs/base/us_large/static_ml_star"
     folder.mkdir(parents=True)
     frame = pd.DataFrame(dict(eom_ret=pd.date_range("2020-01-31", periods=3, freq="ME"),
-        r=[.02, -.01, .03], tc=[.001, .002, .003], turnover=[.1, .2, .3], type="Static-ML"))
+        r=[.02, -.01, .03], tc=[.001, .002, .003], turnover=[.1, .2, .3], type="Static-ML*"))
     frame.to_parquet(folder / "pf.parquet", index=False)
     rows = collect_series(tmp_path)
     assert len(rows) == 1

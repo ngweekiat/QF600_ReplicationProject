@@ -1,5 +1,9 @@
 # Current assumptions, exclusions and changes
 
+Base calibration selects the ridge penalty from the original 101-value validation grid. This applies to return models and regional Portfolio ML models. Market-specific validation, the equations, other hyperparameter selection and iteration settings are retained.
+
+The latest authorised base adaptation is [market-specific RFF tuning](MARKET_SPECIFIC_RFF_TUNING.md): return-forecast hyperparameters are scored on historical members of each market separately, while fitting still uses its screened regional training panel. Portfolio ML already tunes its own RFF portfolio-weight model separately by market. No models or backtests were run for this change. The saved 100-candidate Static ML* results predate it.
+
 The current methodology is documented in [US_HIGH_CAP_SELECTION.md](US_HIGH_CAP_SELECTION.md). It replaces the earlier three-market feature-selection method. Old characteristic archives and their fits were deleted at the user's request; active calculations use the new US high-cap-selected 50.
 
 | Item | Current behavior |

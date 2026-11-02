@@ -44,8 +44,9 @@ def test_plan_keeps_all_base_markets_and_only_us_high_cap_iterations():
     assert len(names) == len(jobs)
     assert all(set(job.dependencies).issubset(names) for job in jobs)
     for market in UNIVERSES:
-        for stage in ("static", "portfolio", "tables", "market_reference"):
+        for stage in ("portfolio", "tables", "market_reference"):
             assert f"{market}.base.{stage}" in names
+        assert (f"{market}.base.static" in names)==(market=="us_large")
     for group in ("iteration_1", "iteration_2", "iteration_3"):
         assert any(f"us_large.{group}." in name for name in names)
     assert not any(job.universe in ("us_mid", "eu_large") and job.variant != "base" for job in jobs)

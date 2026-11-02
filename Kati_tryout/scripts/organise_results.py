@@ -10,7 +10,7 @@ ROOT=Path(__file__).resolve().parents[1]
 GROUPS=('base','iteration_1','iteration_2','iteration_3')
 MARKETS=('us_large','us_mid','eu_large')
 DESCRIPTIONS={
-    'base':'Kati Static ML and default Portfolio ML with the suggested 50 characteristics for all markets; overall analysis adds Market references.',
+    'base':'US high-cap Static ML* and default Portfolio ML in all three markets; overall analysis adds Market references.',
     'iteration_1':'Benchmark-relative Portfolio ML, with 1%, 2% and 4% tracking-error targets.',
     'iteration_2':'Wider 250-stock universe, capacity and cost sensitivity; references iteration 1.',
     'iteration_3':'Time-decayed estimation with 3/5/10-year half-lives and no decay; references iteration 2.'}
@@ -40,7 +40,7 @@ def discover(group,market):
     root=ROOT/'outputs'/group/market
     files=[]
     if group=='base':
-        files=[(root/'static_ml/pf.parquet','experiment',None),(root/'portfolio_ml/rff/pf.parquet','experiment',None)]
+        files=([(root/'static_ml_star/pf.parquet','experiment',None)] if market=='us_large' else [])+[(root/'portfolio_ml/rff/pf.parquet','experiment',None)]
     else:
         files=[(p,'experiment',active_label(p,root)) for p in sorted((root/'active').glob('gte*/pf.parquet'))]
         for rel in ('benchmarks/pf_test.parquet','static_ml/pf.parquet','portfolio_ml/rff/pf.parquet','portfolio_ml/raw/pf.parquet'):
@@ -51,7 +51,9 @@ def discover(group,market):
         if not path.exists():continue
         data=pd.read_parquet(path)
         for name,d in data.groupby('type',sort=False):
-            if group=='base' and name not in ('Static-ML','Portfolio-ML'):raise ValueError('Other method in base')
+            if group=='base':
+                from jkmp.strategies import base_strategies
+                if name not in base_strategies(market):raise ValueError('Other method in base')
             d=d.copy();d['strategy']=label or name;d['role']=role;d['group']=group;d['market']=market
             frames.append(d)
             inventory.append(dict(group=group,market=market,strategy=label or name,role=role,
@@ -102,16 +104,20 @@ def plot(data,destination,title):
     plt.close(fig)
 
 
-def main():
+def main(argv=None):
+    import argparse
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--only-group',choices=GROUPS,default=None)
+    args=parser.parse_args(argv)
     availability=[];inventory=[]
     style='<style>body{max-width:1300px;margin:36px auto;padding:0 20px;font:15px/1.5 system-ui;color:#21323e}table{border-collapse:collapse;font-size:13px}td,th{border:1px solid #ced8df;padding:8px}th{background:#e8eff4}.scroll{overflow-x:auto}img{width:100%}</style>'
-    for group in GROUPS:
+    for group in ([args.only_group] if args.only_group else GROUPS):
         group_root=ROOT/'outputs'/group;group_root.mkdir(exist_ok=True)
         for market in markets_for_group(group):
             root=group_root/market;reports=root/'reports';reports.mkdir(parents=True,exist_ok=True)
             data,files=discover(group,market);inventory.extend(files)
             experiment=data.loc[data.role.eq('experiment')];reference=data.loc[data.role.ne('experiment')]
-            if group=='base':status='available' if experiment.strategy.nunique()==2 else 'not run' if experiment.empty else 'partial'
+            if group=='base':status='available' if experiment.strategy.nunique()==(2 if market=='us_large' else 1) else 'not run' if experiment.empty else 'partial'
             elif not experiment.empty:status='saved experiment results available'
             elif not reference.empty:status='preparatory/reference outputs only; experiment unfinished'
             elif any(p.is_file() for p in root.rglob('*') if 'reports' not in p.relative_to(root).parts and p.name not in ('status.json','README.md','index.html')):status='input audits/references only; experiment unfinished'
@@ -128,7 +134,7 @@ def main():
             plot(experiment,reports/'charts/experiment_returns_and_costs',f'{group} | {market} | saved experiment results')
             plot(reference,reports/'charts/reference_returns_and_costs',f'{group} | {market} | reference/preparatory results')
             intro=f'<h1>{group}: {market}</h1><p>{html.escape(DESCRIPTIONS[group])}</p><p><strong>Status: {html.escape(status)}</strong></p>'
-            text='Only freshly fitted Kati outputs are indexed here. This reporting step does not fit models. Test returns are 2020-2025; feature selection used 2015-2019 and is not unseen evidence. Iterations apply only to US high-cap Portfolio ML. Reference/preparatory statistics are not a completed iteration result.'
+            text='Only freshly fitted Kati outputs are indexed here. This reporting step does not fit models. Test returns are 2020-2025; characteristic selection used US high-cap 2005-2014 only. Iterations apply only to US high-cap Portfolio ML. Reference/preparatory statistics are not a completed iteration result.'
             body=intro+'<p>'+text+'</p>'
             if not table.empty:body+='<h2>Available saved performance</h2><p>Returns and costs are annual decimal fractions; leverage and turnover are ratios.</p><div class="scroll">'+table.to_html(index=False,float_format=lambda x:f'{x:.5g}')+'</div>'
             if (root/'active/summary.csv').exists():body+='<p><a href="active/summary.csv">Original iteration summary (unchanged)</a></p>'
@@ -144,14 +150,19 @@ def main():
         if group!='base' or not (group_root/'index.html').exists():
             (group_root/'index.html').write_text('<!doctype html><meta charset="utf-8">'+style+f'<h1>{group}</h1><p>{DESCRIPTIONS[group]}</p>'+rows.to_html(index=False)+f'<ul>{links}</ul><p>Only completed Kati results are shown; experiments without new-feature outputs remain unfinished.</p>',encoding='utf-8')
     out=ROOT/'outputs'
+    if args.only_group:
+        previous=out/'availability_by_group_and_market.csv'
+        if previous.exists():availability += pd.read_csv(previous).query('group != @args.only_group').to_dict('records')
+        previous_inventory=out/'organisation_audit/result_source_inventory.csv'
+        if previous_inventory.exists():inventory += pd.read_csv(previous_inventory).query('group != @args.only_group').to_dict('records')
     pd.DataFrame(availability).to_csv(out/'availability_by_group_and_market.csv',index=False)
     (out/'organisation_audit').mkdir(exist_ok=True)
     pd.DataFrame(inventory).to_csv(out/'organisation_audit/result_source_inventory.csv',index=False)
     links='<li><a href="us_high_cap_selection/index.html">US high-cap 2005–2014 characteristic selection, correlation and covariance</a></li><li><a href="dashboard.html">Interactive results explorer</a></li>'+''.join(f'<li><a href="{g}/index.html">{g}</a>: {DESCRIPTIONS[g]}</li>' for g in GROUPS)
-    (out/'index.html').write_text('<!doctype html><meta charset="utf-8">'+style+'<h1>Kati results by run group</h1><ul>'+links+'</ul>'+pd.DataFrame(availability).to_html(index=False)+'<p>Base contains only Static ML and Portfolio ML. Iteration scope follows Keats; results require fresh fits with the new 50. Open dashboard.html for interactive comparisons.</p>',encoding='utf-8')
+    (out/'index.html').write_text('<!doctype html><meta charset="utf-8">'+style+'<h1>Kati results by run group</h1><ul>'+links+'</ul>'+pd.DataFrame(availability).to_html(index=False)+'<p>Base contains US high-cap Static ML* and regional Portfolio ML. Iteration scope follows Keats; results require fresh fits with the new 50. Open dashboard.html for interactive comparisons.</p>',encoding='utf-8')
     print(pd.DataFrame(availability).to_string(index=False))
     from comparison_analysis import add_navigation
-    add_navigation()
+    add_navigation(include_iterations=args.only_group!="base")
     return 0
 
 

@@ -45,8 +45,9 @@ def plan(universes,scope,group="base",skip_figure1=False):
         def add(label,stage,variant="base",extra=(),target=.02,deps=()):
             name=f"{u}.{label}";jobs.append(Job(name,stage,u,variant,tuple(extra),target,tuple(deps)));return name
         cov=add("base.covariance","02",deps=("validate",));ret=add("base.returns","03",deps=("validate",))
-        static=add("base.static","05",deps=(cov,ret));inputs=add("base.inputs","06",deps=(cov,));pf=add("base.portfolio","07",deps=(inputs,))
-        table=add("base.tables","11",deps=(static,pf));tables.append(table)
+        static=add("base.static","05",deps=(cov,ret)) if u=="us_large" else None
+        inputs=add("base.inputs","06",deps=(cov,));pf=add("base.portfolio","07",deps=(inputs,))
+        table=add("base.tables","11",deps=tuple(x for x in (static,pf) if x));tables.append(table)
         if scope=="full":add("base.regimes","10",deps=(table,));add("base.availability","15",deps=(table,))
         add("base.market_reference","market",deps=(cov,))
         if level<1 or u!="us_large":continue
@@ -81,7 +82,7 @@ def plan(universes,scope,group="base",skip_figure1=False):
         extras=("--jobs","3")+(("--include-iterations",) if level==3 and "us_large" in universes else ())
         deps=tuple(tables)+(("us_large.final_comparison",) if level==3 and "us_large" in universes else ())
         jobs.append(Job("figure1.frontiers","figure1",chosen,extra=extras,dependencies=deps))
-    jobs.append(Job("organisation","organise","all"))
+    jobs.append(Job("organisation","organise","all",extra=("--only-group","base") if group=="base" else ()))
     jobs.append(Job("dashboard","dashboard","all"))
     return jobs
 
@@ -91,14 +92,23 @@ def output_paths(job):
     cfg=load_config(config_path(job.universe,job.variant));p,o=cfg.paths.processed,cfg.paths.outputs
     if job.stage=="prepare":return [p/"preparation.json",p/"panel.parquet"]
     if job.stage=="02":return [p/"covariance"/n for n in ("cov_factor.parquet","cov_loadings.parquet","cov_diagnostics.csv","provenance.json")]
-    if job.stage=="03":return [p/n for n in ("predictions.parquet","return_model/models.npz","return_model/chosen.csv","return_model/diagnostics.csv")]
+    if job.stage=="03":
+        from jkmp.models.return_model import tuning_marker
+        return [p/n for n in ("predictions.parquet","return_model/models.npz","return_model/chosen.csv","return_model/diagnostics.csv")]+[tuning_marker(cfg)]
     if job.stage=="04":return [o/"benchmarks"/n for n in ("pf_test.parquet","weights_test.parquet","table2_test.csv")]
     if job.stage=="market":return [ROOT/"outputs/base/overall analysis/market_references"/job.universe/n for n in ("pf.parquet","weights.parquet","provenance.json")]
-    if job.stage=="05":return [o/"static_ml"/n for n in (("pf.parquet","weights.parquet","pf_oos.parquet","weights_oos.parquet") if job.variant=="base" else ("pf.parquet","weights.parquet","chosen.csv"))]
+    if job.stage=="05":
+        from jkmp.portfolio.static_ml_star import tuning_grid_marker
+        return [o/"static_ml_star"/n for n in ("pf.parquet","weights.parquet","validation.parquet","chosen.csv")]+[tuning_grid_marker(cfg)]
     if job.stage=="06":return [p/"pfml"/f"rff_g{g:.4f}"/n for g in cfg.portfolio_ml.rff_variance_grid for n in ("meta.json","2025-11-30.npz")]
-    if job.stage=="07":return [o/"portfolio_ml/rff"/n for n in ("pf.parquet","weights.parquet","aim_coefs.parquet","chosen.csv")]
-    if job.stage=="10":return [o/"regimes/regime_table.csv"]
-    if job.stage=="11":return [o/"tables"/n for n in ("table2.csv","table3.csv","table4.csv","subperiods.csv")]
+    if job.stage=="07":
+        from jkmp.strategies import portfolio_tuning_marker
+        return [o/"portfolio_ml/rff"/n for n in ("pf.parquet","weights.parquet","aim_coefs.parquet","chosen.csv")]+[portfolio_tuning_marker(cfg)]
+    if job.stage in ("10","11"):
+        from jkmp.strategies import base_sources_marker
+        folder="regimes" if job.stage=="10" else "tables"
+        names=("regime_table.csv","model_scope.json") if job.stage=="10" else ("table2.csv","table3.csv","table4.csv","subperiods.csv","model_scope.json")
+        return [o/folder/n for n in names]+[base_sources_marker(o,folder)]
     if job.stage=="13":return [o/"breadth/capacity_aum.csv"]
     if job.stage=="14":return [o/"halflife/summary.csv"]
     if job.stage=="monitor":return [o/"monitor/monitor.csv"]
@@ -111,6 +121,21 @@ def output_paths(job):
         if job.extra[0]=="run":return [o/"active"/f"gte{g:g}"/n for n in ("pf.parquet","weights.parquet","chosen.csv")]
         return [o/"active/capacity"/f"gte{g:g}_w{w/1e9:g}B/pf.parquet" for w in cfg.investor.wealth_grid]
     return []
+
+
+def cached_outputs_ready(paths):
+    """A historical marker cannot validate files overwritten by a later run.
+
+    This matters when restoring an earlier parameter choice: its old marker
+    may still exist even though the shared output files describe another fit.
+    Versioned completion markers are written after their output files.
+    """
+    if not paths or not all(p.is_file() and p.stat().st_size for p in paths):
+        return False
+    marker=paths[-1]
+    if marker.name.startswith(("tuning_","sources_")):
+        return marker.stat().st_mtime_ns >= max(p.stat().st_mtime_ns for p in paths[:-1])
+    return True
 
 
 def main():
@@ -154,7 +179,7 @@ def main():
             print(f"[{index}/{len(jobs)}] BLOCKED {job.name}: {', '.join(unmet)}", flush=True)
             continue
         markers = output_paths(job) if job.universe != "all" else []
-        if markers and all(path.is_file() and path.stat().st_size for path in markers):
+        if cached_outputs_ready(markers):
             statuses[job.name] = "reused"
             state["jobs"][job.name] = {"status": "reused", "outputs": [str(p) for p in markers]}
             save()

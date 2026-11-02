@@ -1,4 +1,4 @@
-"""Compare and independently verify only the two base Kati strategies."""
+"""Compare US high-cap Static ML* and the three regional base Portfolio ML models."""
 from __future__ import annotations
 import argparse
 import html
@@ -31,7 +31,7 @@ TIMING='''# Training, testing and out-of-sample timing
 | Broader return-forecast OOS history | 2015-2025; this overlaps validation and test |
 | Separate unseen holdout | None available after the saved test |
 | Market (iteration reference only) | No ML fitting; market-cap weights updated monthly |
-| Static ML | Return forecaster refitted annually on expanding past history; weights updated monthly; fixed portfolio multipliers k=1, u=1, g=0 |
+| Static ML* (US high-cap only) | Annual expanding return forecasts; k/u/g selected each December from cumulative preceding utility and applied to the next return year; monthly weights |
 | Portfolio ML | Coefficients refitted annually using past return years; variance/model-size/ridge candidates selected from cumulative past utility each December; weights updated monthly |
 
 The models are **not frozen after 2014 or 2019**. For example, the 2020 return forecaster is fitted through December 2019 returns, while the 2021 fit includes 2020 returns. This is an expanding walk-forward backtest: a completed test year may train a later year's model. No future return from the forecast year enters that year's coefficient fit. Hyperparameter candidates are internal choices of a retained strategy, not separate reported strategies.
@@ -42,7 +42,7 @@ The current characteristic recommendation uses only US high-cap observations fro
 
 Return-forecast tuning for year Y uses an earlier training segment and the trailing five available years as internal validation, then refits the selected candidate on all data through year Y-1. For the first 2015 forecast, internal training is 2005-2009, internal validation is 2010-2014, and the final refit uses 2005-2014. The schedule moves forward annually.
 
-Static ML's portfolio recursion continues from January 2015 into the test, preserving the original non-starred strategy's inherited positions. Market and Portfolio ML test portfolios start with the original value-weighted initialization at the beginning of the test. These existing initialization conventions are retained and disclosed; this cleanup does not silently change the retained strategies' definitions.
+Static ML* validates fixed k/u/g candidates from January 2015, chooses each next return year using completed preceding Decembers, and starts its test portfolio with value weights in January 2020. Later choices may use completed earlier test years. US mid-cap and EU high-cap have Portfolio ML and Market only. The existing iterations retain their historical fixed Static ML reference.
 
 Portfolio ML's candidate utility history begins in 2015; the first December candidate choice supports aims from 2016. The saved headline portfolio is evaluated in 2020-2025. There is no separate third dataset named OOS beyond the test: the existing OOS label denotes historical forward predictions, not an additional unseen holdout. The scripts are finite backtests, not a continuously running live service.
 
@@ -60,7 +60,7 @@ def verify(inventory,monthly,stats,out):
         universe,strategy=row.universe,row.strategy
         pf=monthly.loc[(monthly.universe==universe)&(monthly.strategy==strategy)].sort_values('eom').reset_index(drop=True)
         fields=['r','tc','turnover','inv','shorting']
-        if baseline is not None:
+        if baseline is not None and strategy != "Static-ML*":
             original=baseline.loc[(baseline.universe==universe)&(baseline.type==strategy)].sort_values('eom').reset_index(drop=True)
             same=len(pf)==len(original) and pf.eom.equals(original.eom) and np.allclose(pf[fields],original[fields],rtol=1e-10,atol=1e-12)
             check('retained_strategy_matches_original',f'{universe}/{strategy}',same,'Original 72-month performance preserved within numerical tolerance')
@@ -96,7 +96,7 @@ def verify(inventory,monthly,stats,out):
         expected=json.loads((KATI/'data/characteristics/recommended_50.json').read_text())
         check('recommended_50_inputs_active',universe,len(cfg.features.names)==50 and set(cfg.features.names)==set(expected))
     result=pd.DataFrame(findings);result.to_csv(out/'independent_verification.csv',index=False)
-    if result.status.eq('FAIL').any():raise AssertionError('Independent two-strategy base verification failed; inspect independent_verification.csv')
+    if result.status.eq('FAIL').any():raise AssertionError('Independent base verification failed; inspect independent_verification.csv')
     return result
 
 
@@ -172,7 +172,7 @@ def main(argv=None):
     charts(monthly,stats,out)
     assumptions='''# Assumptions, exclusions and changes
 
-The base report contains Static ML and default Fourier-signal Portfolio ML for US high-cap, US mid-cap and European high-cap, freshly fitted with the frozen suggested 50 from Characteristics_tryout. The original memberships, return and liquidity infrastructure, portfolio mathematics and annual expanding timing are retained. Covariance and model caches are rebuilt for the new inputs.
+The base report contains Static ML* only for US high-cap and default Fourier-signal Portfolio ML for US high-cap, US mid-cap and European high-cap, freshly fitted with the frozen suggested 50 from Characteristics_tryout. The original memberships, return and liquidity infrastructure, portfolio mathematics and annual expanding timing are retained. Covariance and model caches are rebuilt for the new inputs.
 
 Base covers all three markets. Iterations 1–3 apply only to US high-cap Portfolio ML. The 50 inputs are selected exclusively from US high-cap 2005–2014 association data, within a whitelist verified against both published JKP reference files and WRDS source availability. All 50 have published group labels and directions. Raw ML ranks are unflipped. Earlier-feature fits have been removed; current-feature performance requires new fits.
 
@@ -180,7 +180,7 @@ This reporting command reads only completed Kati outputs; fitting is performed b
 
 The user-selected zero-excess-return assumption remains for 15 US-large, 21 US-mid and 20 European saved held-stock observations over full history. They are flagged assumptions, not observed zeros. No original 80-stock membership is removed by the separate unavailable-lag-history rule. Missing characteristics retain the original neutral rank 0.5 convention. Existing daily-data currency, source-vintage and terminal-return limitations remain; the cleanup does not establish point-in-time or survivorship-free data.
 
-All headline methods use the same 72 return months, January 2020 through December 2025, separately within each market. No returns or stocks are pooled across regions. OOS overlaps test; no additional unseen holdout is claimed. Static ML continues its inherited 2015 portfolio state into test; Market and Portfolio ML retain their original test-start initialization.
+All headline methods use the same 72 return months, January 2020 through December 2025, separately within each market. No returns or stocks are pooled across regions. OOS overlaps test; no additional unseen holdout is claimed. Static ML* uses 2015-onward candidate validation and value-weighted test-start initialization; Market and Portfolio ML retain their original test-start initialization.
 
 Paper-convention annual mean return, cost and utility multiply monthly figures by 12. Volatility multiplies gross-return SD by sqrt(12); net Sharpe uses gross-return SD. Utility uses gamma=10 and sample gross variance. Monthly turnover is two-sided with no half factor. Other geometric path measures are undefined if a monthly net excess return is at or below -100%; no return is silently removed.
 
@@ -192,13 +192,13 @@ Cost sensitivities scale modelled costs at fixed weights and do not re-optimise.
     show=stats[['dataset','strategy','n','R','TC','R_TC','Vol','SR_net','Utility','Lev','Turnover']].copy()
     for c in ['R','TC','R_TC','Vol','Utility']:show[c]=100*show[c]
     show=show.rename(columns={'R':'Gross return %','TC':'Cost %','R_TC':'Net return %','Vol':'Volatility %','Utility':'Utility %'})
-    description='''<h1>Kati base: Static ML and Portfolio ML</h1><p>Test return months: January 2020–December 2025. Each region is evaluated separately. Returns, costs, volatility and utility below are annualised percentages; leverage and turnover are ratios.</p><p><strong>Timing:</strong> annual expanding refits and monthly weight updates. Models are not frozen after the initial training period. OOS is the broader forward-prediction history, not a separate unseen holdout.</p><h2>Current results</h2>'''
-    economic='''<h2>Economic interpretation</h2><p>Read net return and utility after costs alongside gross return, leverage and turnover. High gross forecasting performance can be outweighed by quadratic trading costs. Large estimated costs indicate infeasibility under the existing unconstrained implementation; removing other strategies does not fix that constraint problem. These are new-feature walk-forward backtests, subject to the documented feature-selection and data-vintage limits.</p><p>Static ML converts annual return forecasts into monthly cost-aware holdings with fixed portfolio multipliers. Portfolio ML estimates signal coefficients against a risk-and-trading-cost objective and moves monthly holdings toward its aim portfolio. Differences measure these existing portfolio rules; they do not isolate a causal benefit of ML.</p>'''
+    description='''<h1>Kati base: US high-cap Static ML* and regional Portfolio ML</h1><p>Test return months: January 2020–December 2025. Each region is evaluated separately. Returns, costs, volatility and utility below are annualised percentages; leverage and turnover are ratios.</p><p><strong>Timing:</strong> annual expanding refits and monthly weight updates. Models are not frozen after the initial training period. OOS is the broader forward-prediction history, not a separate unseen holdout.</p><h2>Current results</h2>'''
+    economic='''<h2>Economic interpretation</h2><p>Read net return and utility after costs alongside gross return, leverage and turnover. High gross forecasting performance can be outweighed by quadratic trading costs. Large estimated costs indicate infeasibility under the existing unconstrained implementation; removing other strategies does not fix that constraint problem. These are new-feature walk-forward backtests, subject to the documented feature-selection and data-vintage limits.</p><p>US high-cap Static ML* converts annual return forecasts into monthly cost-aware holdings with k/u/g parameters selected each December using preceding utility. Portfolio ML estimates signal coefficients against a risk-and-trading-cost objective and moves monthly holdings toward its aim portfolio. Differences measure these existing portfolio rules; they do not isolate a causal benefit of ML.</p>'''
     links='''<p><a href="../index.html">All four run groups</a></p><p>Market folders: <a href="us_large/index.html">US high cap</a> | <a href="us_mid/index.html">US mid cap</a> | <a href="eu_large/index.html">European high cap</a></p><h2>Files</h2><ul><li><a href="TRAIN_TEST_AND_OOS.md">Training, test and OOS timing</a></li><li><a href="EXCLUSIONS_ASSUMPTIONS_AND_CHANGES.md">Assumptions, exclusions and changes</a></li><li><a href="results/performance_summary.csv">Full performance table and feasibility flags</a></li><li><a href="results/paired_inference.csv">Paired HAC tests and block-bootstrap intervals</a></li><li><a href="results/independent_verification.csv">Independent accounting and preservation checks</a></li></ul>'''
     style='<style>body{max-width:1300px;margin:36px auto;padding:0 20px;font:15px/1.5 system-ui;color:#21323e}table{border-collapse:collapse;font-size:13px}td,th{border:1px solid #ced8df;padding:8px}th{background:#e7eff4}.table{overflow-x:auto}img{width:100%;margin:20px 0}</style>'
     images=''.join(f'<img src="results/charts/{u}__base.png" alt="{u} gross returns and trading costs">' for u in universes)
     (COMPARISON/'index.html').write_text('<!doctype html><meta charset="utf-8"><title>Kati base results</title>'+style+description+'<div class="table">'+show.to_html(index=False,float_format=lambda x:f'{x:,.4g}')+'</div>'+economic+links+images,encoding='utf-8')
-    (COMPARISON/'START_HERE.md').write_text('''# Base results: Static ML and Portfolio ML only
+    (COMPARISON/'START_HERE.md').write_text('''# Base results: US high-cap Static ML* and regional Portfolio ML
 
 Open [index.html](index.html) for the readable result tables, economic interpretation and charts.
 
@@ -209,7 +209,7 @@ Open [index.html](index.html) for the readable result tables, economic interpret
 - [Independent verification](results/independent_verification.csv)
 - [Paired inference](results/paired_inference.csv)
 
-Base contains only original Static ML and default Portfolio ML. New iteration results are separated into ../iteration_1, ../iteration_2 and ../iteration_3; unfinished runs are labelled explicitly.
+Base contains US high-cap Static ML* and default Portfolio ML for all three markets. US mid-cap and EU high-cap have no Static ML strategy. New iteration results are separated into ../iteration_1, ../iteration_2 and ../iteration_3; unfinished runs are labelled explicitly.
 
 Run `python Kati_tryout/scripts/base/compare_results.py` to refresh the saved-output comparison. This comparison does not fit any models. Use `python Kati_tryout/scripts/run_all.py --group base --scope full` for the dependency-ordered workflow.
 ''',encoding='utf-8')

@@ -48,7 +48,7 @@ The runner uses dependency order and persistent logs. A rerun reuses compatible 
 
 | Group | What changes | What stays as the comparison |
 |---|---|---|
-| Base | Frozen suggested 50 replace the original Keats 50 for both ML methods in all three markets | Market plus all retained Static ML and Portfolio ML base results |
+| Base | US high-cap Static ML* with annual k/u/g tuning; Portfolio ML in all three markets, using the current JKP-only 50 | US high-cap Static ML*, three regional Portfolio ML models and Market references |
 | Iteration 1 | US high-cap Portfolio ML becomes benchmark-relative; 1%, 2% and 4% pretest tracking-error budgets | Base Portfolio ML, base Static ML and original Market |
 | Iteration 2 | Carries the active formulation into a 250-stock US high-cap universe; capacity and cost sensitivity | Iteration 1 and base references; separate 250-stock Market disclosed |
 | Iteration 3 | Tests no decay against 3-, 5- and 10-year half-lives for recent observations | Iterations 1–2 and base references |

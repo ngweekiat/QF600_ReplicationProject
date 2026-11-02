@@ -49,15 +49,32 @@ def verify():
         check('jkp_only_policy_enforced',selection.get('jkp_only') and selection['published_group_count']==50 and selection['proxy_group_count']==0)
         baseline=json.loads((ROOT/'data/characteristics/implementation_baseline.json').read_text())
         core=list((ROOT/'scripts/jkmp/models').glob('*.py'))+list((ROOT/'scripts/jkmp/portfolio').glob('*.py'))
-        check('existing_ml_and_weight_learning_source_preserved',all(digest(p)==baseline['source_hashes'][p.relative_to(ROOT).as_posix()] for p in core))
+        old_core=[p for p in core if p.relative_to(ROOT).as_posix() in baseline['source_hashes']]
+        # The return-model validation population is an authorised adaptation.
+        # All other original coefficient/portfolio mathematics stays pinned.
+        preserved_core=[p for p in old_core if p.relative_to(ROOT).as_posix()!='scripts/jkmp/models/return_model.py']
+        check('other_ml_and_weight_learning_source_preserved',all(digest(p)==baseline['source_hashes'][p.relative_to(ROOT).as_posix()] for p in preserved_core))
+        check('only_authorised_static_star_library_added',set(p.name for p in core if p not in old_core)=={'static_ml_star.py'})
         from jkmp.config import _read_yaml
         same=True
         for config in (ROOT/'configs').rglob('*.yaml'):
             previous=baseline['non_feature_configs'][config.relative_to(ROOT).as_posix()].copy()
             current=_read_yaml(config,seen=())
             previous.pop('features',None);current.pop('features',None)
+            expected_scope='all' if config.name=='kati_base.yaml' else 'universe'
+            check(f'{config.relative_to(ROOT)}:authorised_rff_validation_scope',
+                  current['return_model'].get('validation_scope')==expected_scope)
+            current['return_model'].pop('validation_scope',None)
+            expected_static=dict(k_grid=[1.0,1/3,0.2,0.1,0.05],u_grid=[0.0,0.1,0.25,0.5,1.0],g_grid=[0.0,1.0,2.0,3.0])
+            if config.parent.name=='us_large' and current.get('static_ml')==expected_static:
+                # Authorised base-only grid expansion; iteration loading pins
+                # its unused Static ML settings to the original shared defaults.
+                current['static_ml']=previous['static_ml']
+            # The base model mandate and plot labels changed; economic/model settings did not.
+            for section,key in [('reporting','main_types'),('regimes','plot_types')]:
+                previous.get(section,{}).pop(key,None);current.get(section,{}).pop(key,None)
             same=same and previous==json.loads(json.dumps(current,default=str))
-        check('non_feature_model_settings_preserved',same)
+        check('non_feature_economic_model_settings_preserved',same)
         check('old_characteristic_archives_removed',not any((ROOT/'data/archives').glob('*')) and not any((ROOT/'outputs/archive').glob('*')))
     check("snapshot_all_three_markets_and_training_panels", len(manifest["regional_audits"]) == 2 and
           all(x["exact_broad_keys_preserved"] and x["absent_source_rows"] == 0 for x in manifest["regional_audits"]))
@@ -72,6 +89,8 @@ def verify():
     configs = [(u, "base") for u in UNIVERSES] + [("us_large", f"iteration_{i}") for i in (1, 2, 3)]
     for market, group in configs:
         cfg = load_config(config_path(market, group))
+        check(f"{market}/{group}:rff_tuning_scope", cfg.return_model.validation_scope == ("universe" if group=="base" else "all"))
+        check(f"{market}/{group}:ridge_penalties", len(cfg.ridge_grid.values)==101 and cfg.ridge_grid.values[0]==0.0)
         check(f"{market}/{group}:frozen_50_only", len(cfg.features.names) == 50 and set(cfg.features.names) == set(names))
         check(f"{market}/{group}:local_paths", all(p.resolve().is_relative_to(ROOT) for p in
               (cfg.paths.raw, cfg.paths.processed, cfg.paths.outputs)))
@@ -120,6 +139,9 @@ def verify():
         if job.stage in {"03", "04", "05", "06", "07", "10", "11", "12", "13", "14", "monitor"}:
             check(f"plan:{job.name}:script_available", script_path(job.stage, normalise_group(job.variant)).is_file())
     check("iterations_only_us_high_cap", all(job.universe == "us_large" for job in jobs if job.variant != "base"))
+    check("static_star_only_us_high_cap_base",[j.universe for j in jobs if j.stage=='05']==['us_large'])
+    cfg=load_config(config_path('us_large'))
+    check('expanded_static_star_grid_has_100_candidates',len(cfg.static_ml.k_grid)*len(cfg.static_ml.u_grid)*len(cfg.static_ml.g_grid)==100)
     check("frontier_toggle_independent", any(j.stage == "figure1" for j in jobs) and
           not any(j.stage == "figure1" for j in plan(UNIVERSES, "full", "all", skip_figure1=True)))
 

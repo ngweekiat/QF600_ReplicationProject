@@ -10,6 +10,7 @@ configure(__file__)
 
 import argparse
 import logging
+import json
 
 import numpy as np
 import pandas as pd
@@ -61,11 +62,14 @@ def main() -> None:
         res[name].to_parquet(out / f"{name}.parquet", index=False)
     res["chosen"].to_csv(out / "chosen.csv", index=False)
 
-    pfs = [outputs / "static_ml" / "pf.parquet",
-           outputs / "portfolio_ml" / "rff" / "pf.parquet"]
+    from jkmp.strategies import base_result_paths
+    pfs = base_result_paths(outputs)
     t2 = table2(pd.concat([pd.read_parquet(f) for f in pfs if f.exists()], ignore_index=True), cfg.investor.gamma,
             cfg.dates)
     t2.to_csv(outputs / "table2_test.csv")
+    from jkmp.strategies import portfolio_tuning_marker
+    portfolio_tuning_marker(cfg).write_text(json.dumps(dict(
+        method="Portfolio-ML", market=outputs.name, penalties=cfg.ridge_grid.values)),encoding="utf-8")
 
     pd.set_option("display.width", 200)
     chosen = res["chosen"]

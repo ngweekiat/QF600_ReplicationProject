@@ -61,9 +61,11 @@ def run_stage(stage,universe,variant="base",extra=(),target=.02):
         return main(list(extra))
     if stage=="organise":
         from organise_results import main
-        return main()
+        return main(list(extra))
     from jkmp.config import load_config
     cfg_path=config_path(universe,variant);cfg=load_config(cfg_path)
+    if stage=="05" and group=="base" and universe!="us_large":
+        raise ValueError("Static-ML* is enabled only for US high-cap base")
     required=[cfg.paths.processed/"panel.parquet"]
     if stage!="03":required.append(cfg.paths.processed/"covariance/cov_factor.parquet")
     missing=[str(p) for p in required if not p.exists()]
@@ -95,7 +97,7 @@ def main():
     parser.add_argument("--variant",choices=VARIANTS,default=None,help="Legacy alias for a group")
     parser.add_argument("--te-target",type=float,default=.02)
     args,extra=parser.parse_known_args();group=normalise_group(args.variant or args.group)
-    if args.stage not in SCRIPTS and args.stage not in ("compare","overall","figure1") and extra:parser.error(f"Unexpected arguments: {extra}")
+    if args.stage not in SCRIPTS and args.stage not in ("compare","overall","figure1","organise") and extra:parser.error(f"Unexpected arguments: {extra}")
     universes=UNIVERSES if args.universe=="all" else [args.universe]
     if group!="base" and args.universe=="all":universes=["us_large"]
     if args.stage in ("audit","validate","00","compare","organise","overall","dashboard","verify","select-characteristics"):universes=["us_large"]

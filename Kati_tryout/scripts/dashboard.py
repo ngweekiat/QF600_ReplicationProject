@@ -23,7 +23,8 @@ def collect_series(root=ROOT):
     records = []
     for market in MARKETS:
         base = root / "outputs/base" / market
-        for folder, label in (("static_ml", "Static ML"), ("portfolio_ml/rff", "Portfolio ML base")):
+        folders=([("static_ml_star", "Static ML*")] if market=="us_large" else [])+[("portfolio_ml/rff", "Portfolio ML base")]
+        for folder, label in folders:
             records.append((market, "base", label, base / folder / "pf.parquet"))
         records.append((market, "base", "Market (base basket)", root / "outputs/base/overall analysis/market_references" / market / "pf.parquet"))
     for number in (1, 2, 3):
@@ -46,7 +47,7 @@ def collect_series(root=ROOT):
         if "type" in frame and label.startswith("Market"):
             frame = frame[frame.type.eq("Market")]
         elif "type" in frame:
-            expected = "Static-ML" if label == "Static ML" else ("Portfolio-ML" if group == "base" else "Portfolio-ML (active)")
+            expected = "Static-ML*" if label == "Static ML*" else ("Portfolio-ML" if group == "base" else "Portfolio-ML (active)")
             if group == "base" and set(frame.type) != {expected}:
                 raise ValueError(f"Unexpected strategy identity in {path}")
         if frame.empty:

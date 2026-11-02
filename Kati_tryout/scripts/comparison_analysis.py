@@ -26,6 +26,7 @@ BASE_OUT = ROOT / "outputs/base/overall analysis"
 NAMES = {"us_large": "US high-cap", "us_mid": "US mid-cap", "eu_large": "EU high-cap"}
 BASE_PF = "US high-cap Portfolio ML base"
 STATIC = "US high-cap Static ML"
+STATIC_STAR = "US high-cap Static ML*"
 MARKET = "US high-cap Market"
 ITERATIONS = {i: f"US high-cap Portfolio ML iteration {i}" for i in (1, 2, 3)}
 STYLE = """<style>body{max-width:1180px;margin:40px auto;padding:0 24px;font:16px/1.55 system-ui;color:#23313c}h1{font-size:30px}h2{margin-top:32px}table{border-collapse:collapse;font-size:13px;width:100%}th,td{padding:9px;border:1px solid #d5dee5;text-align:right}th:first-child,td:first-child{text-align:left}th{background:#e9eff4}.scroll{overflow:auto}img{max-width:100%;margin:18px 0}a{color:#125981}.note{background:#eef3f7;padding:15px;border-radius:6px}</style>"""
@@ -66,8 +67,9 @@ def base_sources():
     for universe in UNIVERSES:
         root = ROOT / "outputs/base" / universe
         for method, rel, kind in (("Portfolio ML", "portfolio_ml/rff/pf.parquet", "Portfolio-ML"),
-                                  ("Static ML", "static_ml/pf.parquet", "Static-ML"),
+                                  ("Static ML*", "static_ml_star/pf.parquet", "Static-ML*"),
                                   ("Market", None, "Market")):
+            if kind=="Static-ML*" and universe!="us_large":continue
             label = f"{NAMES[universe]} {method}" + (" base" if method == "Portfolio ML" else "")
             records.append(dict(strategy=label, universe=universe, group="base",
                 path=market_dir(universe) / "pf.parquet" if rel is None else root / rel,
@@ -87,7 +89,15 @@ def iteration_source(number, target=.02):
 def iteration_comparison_sources(number):
     """Current iteration plus all earlier versions; never include a later one."""
     if number not in (1,2,3):raise ValueError("Iteration must be 1, 2 or 3")
-    return [r for r in base_sources() if r["strategy"] in (BASE_PF,STATIC,MARKET)]+[iteration_source(i) for i in range(1,number+1)]
+    return iteration_baseline_sources()+[iteration_source(i) for i in range(1,number+1)]
+
+
+def iteration_baseline_sources():
+    """Preserve existing iterations' fixed Static ML reference and fitted results."""
+    records=[r for r in base_sources() if r["strategy"] in (BASE_PF,MARKET)]
+    records.insert(1,dict(strategy=STATIC,universe="us_large",group="base",
+        path=ROOT/"outputs/base/us_large/static_ml/pf.parquet",expected_type="Static-ML",te_target=np.nan))
+    return records
 
 
 def load_sources(records):
@@ -273,7 +283,7 @@ def write_report(monthly, inventory, out, title, benchmark, reps=2000, context="
 
 
 def run_reports(only="all", reps=2000):
-    records = base_sources()
+    records = base_sources() if only in ("base","master","all") else iteration_baseline_sources()
     needed = UNIVERSES if only in ("base", "master", "all") else ("us_large",)
     records = [r for r in records if r["universe"] in needed]
     for universe in needed:
@@ -286,7 +296,7 @@ def run_reports(only="all", reps=2000):
         keep = data.strategy.isin(wanted)
         write_report(data.loc[keep], inventory.loc[inventory.strategy.isin(wanted)], BASE_OUT,
             "Base overall comparison", benchmark, reps,
-            "All six retained base ML results, including Static ML for each market, plus US high-cap Market. Cross-region performance reflects different universes and risk exposure; same-region Market comparisons are supplied separately.")
+            "Four base ML results: US high-cap Static ML* and Portfolio ML in US high-cap, US mid-cap and EU high-cap, plus US high-cap Market. Static ML is excluded for US mid-cap and EU high-cap. Same-region Market comparisons are supplied separately.")
         all_stats = pd.DataFrame([dict(strategy=s, **statistics(d)) for s,d in data.groupby("strategy", sort=False)])
         all_stats.to_csv(BASE_OUT / "all_base_models_and_regional_markets.csv", index=False)
         regional = pd.concat([relative_metrics(data.loc[data.universe.eq(u)], data.loc[data.universe.eq(u)&data.type.eq("Market")]).assign(universe=u) for u in UNIVERSES])
@@ -326,25 +336,27 @@ def run_reports(only="all", reps=2000):
                 max_monthly_cost_difference=float((costs[a]-costs[b]).abs().max()),
                 identical_saved_returns_and_costs=bool(np.array_equal(wide[a],wide[b]) and np.array_equal(costs[a],costs[b]))))
         pd.DataFrame(increments).to_csv(final / "incremental_changes.csv", index=False)
-        all_refs = pd.concat([selected, data.loc[data.strategy.isin([STATIC, MARKET])]], ignore_index=True)
+        legacy,_=load_sources([r for r in iteration_baseline_sources() if r["strategy"] in (STATIC,MARKET)])
+        all_refs = pd.concat([selected, legacy], ignore_index=True)
         pd.DataFrame([dict(strategy=s, **statistics(d)) for s,d in all_refs.groupby("strategy", sort=False)]).to_csv(final / "with_static_and_market_references.csv", index=False)
     if only in ("master","all"):
         chosen=[r for r in records if r["expected_type"]!="Market" or r["strategy"]==MARKET]
         combined, inv=load_sources(chosen+[iteration_source(i) for i in (1,2,3)])
         write_report(combined,inv,BASE_OUT/"all_models_and_iterations",
             "All retained base ML models and US high-cap Portfolio ML iterations",benchmark,reps,
-            "Master comparison: all three markets' base Static ML and Portfolio ML, all three US high-cap Portfolio ML iterations at the carried-forward 2% TE target, and US high-cap Market. Other-market iterations and retired ML families are excluded. Extreme unconstrained European Static ML costs are disclosed as model diagnostics; symmetric log chart scales preserve the visibility of other series.")
-    add_navigation()
+            "Master comparison: US high-cap Static ML*, regional base Portfolio ML, the three existing US high-cap Portfolio ML iterations at 2% TE, and US high-cap Market. Iteration fits are unchanged.")
+    add_navigation(include_iterations=only in ("all","iteration_1","iteration_2","iteration_3"))
     return 0
 
 
-def add_navigation():
+def add_navigation(include_iterations=True):
     entries = [("Base overall comparison", "outputs/base/overall analysis/index.html"),
                ("Figure 1 implementable frontiers", "outputs/base/overall analysis/figure1/index.html"),
                ("All base ML models and iterations", "outputs/base/overall analysis/all_models_and_iterations/index.html"),
                ("Final US high-cap Portfolio ML progression", "outputs/base/overall analysis/us_high_cap_progression/index.html")]
     entries += [(f"US high-cap iteration {i} comparison", f"outputs/iteration_{i}/us_large/overall analysis/index.html") for i in (1,2,3)]
     for title, rel in entries:
+        if not include_iterations and rel.startswith("outputs/iteration_"):continue
         page = ROOT / rel
         if not page.exists(): continue
         import os
@@ -354,7 +366,7 @@ def add_navigation():
         extra="".join(f'<li><a href="{p.name}">{html.escape(p.stem.replace("_"," "))}</a></li>' for p in sorted(page.parent.glob("*.csv")) if f'href="{p.name}"' not in text)
         if extra:text+="<h2>Additional comparisons</h2><ul>"+extra+"</ul>"
         page.write_text(text+"<!-- comparison-navigation --><h2>Related comparisons</h2><p>"+links+"</p>", encoding="utf-8")
-    for page in [ROOT/"outputs/index.html", ROOT/"outputs/base/index.html"] + [ROOT/f"outputs/iteration_{i}/index.html" for i in (1,2,3)]:
+    for page in [ROOT/"outputs/index.html", ROOT/"outputs/base/index.html"] + ([ROOT/f"outputs/iteration_{i}/index.html" for i in (1,2,3)] if include_iterations else []):
         if not page.exists(): continue
         import os
         href = os.path.relpath(BASE_OUT/"index.html", page.parent).replace("\\", "/")
