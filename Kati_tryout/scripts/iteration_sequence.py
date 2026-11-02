@@ -28,7 +28,7 @@ from jkmp.portfolio.portfolio_ml import build_yearly_moments, search_yearly, run
 from jkmp.portfolio.active import calibrate
 from jkmp.evaluation.metrics import active_weights, ex_ante_exposures
 from analysis.ml_comparison.inference import _bootstrap_differences
-from analysis.ml_comparison.metrics import statistics
+from analysis.ml_comparison.metrics import additive_path, statistics
 
 log=logging.getLogger(__name__)
 PROTOCOL=ROOT/'configs/us_high_cap_iterations.json'
@@ -263,17 +263,18 @@ def plot_comparison(frames,out,title):
     out.mkdir(parents=True,exist_ok=True)
     fig,axes=plt.subplots(1,3,figsize=(15,4.1))
     market=frames['Market'].sort_values('eom_ret')
-    mb=(1+market.r-market.tc).cumprod().to_numpy()
+    mb,_=additive_path(market.r-market.tc)
     for label,pf in frames.items():
-        d=pf.sort_values('eom_ret');net=d.r-d.tc;path=(1+net).cumprod().to_numpy()
-        peak=np.maximum.accumulate(np.r_[1.,path])[1:]
-        axes[0].plot(d.eom_ret,100*(path-1),label=label)
-        axes[1].plot(d.eom_ret,100*(path/peak-1),label=label)
-        if label!='Market':axes[2].plot(d.eom_ret,100*(path/mb-1),label=label)
-    for ax in axes:ax.grid(alpha=.2);ax.tick_params(axis='x',rotation=25);ax.set_ylabel('%')
-    axes[0].set_title('Compounded net excess-return index')
-    axes[1].set_title('Drawdown from previous peak')
-    axes[2].set_title('Cumulative relative excess index vs Market');axes[2].axhline(0,color='grey',lw=.8)
+        d=pf.sort_values('eom_ret');net=d.r-d.tc;path,dd=additive_path(net)
+        if not d.eom_ret.reset_index(drop=True).equals(market.eom_ret.reset_index(drop=True)):
+            raise ValueError('Additive market comparisons require identical monthly calendars')
+        axes[0].plot(d.eom_ret,100*path,label=label)
+        axes[1].plot(d.eom_ret,100*dd,label=label)
+        if label!='Market':axes[2].plot(d.eom_ret,100*(path-mb),label=label)
+    for ax in axes:ax.grid(alpha=.2);ax.tick_params(axis='x',rotation=25);ax.set_ylabel('Percentage points')
+    axes[0].set_title('Cumulative net excess return (additive)')
+    axes[1].set_title('Additive drawdown from previous peak')
+    axes[2].set_title('Cumulative net return minus Market');axes[2].axhline(0,color='grey',lw=.8)
     axes[0].legend(fontsize=7);fig.suptitle(title);fig.tight_layout()
     for suffix in ('png','pdf'):fig.savefig(out/f'net_returns_and_costs.{suffix}',dpi=160)
     plt.close(fig)
@@ -312,7 +313,7 @@ def write_iteration_report(number,decision,candidate,reference,base,static,marke
     (folder/'index.html').write_text('<!doctype html><meta charset="utf-8">'+STYLE+body,encoding='utf-8')
 
 
-METHODS='''All comparisons use the existing 72 test return months, January 2020--December 2025. Kati OOS labels overlap this test history; no separate unseen confirmation is claimed. Annual expanding coefficient refits and monthly portfolio updates are preserved. P(better) is the fraction of 10,000 paired circular-block bootstrap samples (six-month blocks, seed 20261102) with a positive net-Sharpe difference, with half weight to numerical ties. It is not a frequentist p-value or a Bayesian probability of future outperformance. Net Sharpe uses gross-return volatility, following the paper convention. Acceptance is P(better) >= 80% against the last accepted version, not against Market. Identical strategies are not accepted as an improvement. Iteration 1 is retained as an existing design, without a statistical claim. Drawdown is descriptive and adds no rejection gate. Decisions use already inspected test outcomes; subsequent reported performance on those same months is selected-sample evidence, not independent validation. The experiment log retains rejected trials. Nested hyperparameter searches and earlier research choices are not fully corrected by these five comparisons. Compounded excess-return paths and drawdowns are synthetic excess indices, not total investor wealth. TE 1% is an ex-ante pretest calibration target, not a hard realised cap. Base markets, stock screens, selected 50, dates, costs and risk equations are retained except for each explicitly tested override. Exit 120 changes buffering within the same US large-cap candidate population and may change the stock count; costs x2 are applied both when fitting and when trading. The original wider covariance cache may supply extra buffered stocks, only after equality checks against common base covariance entries. No 250-stock breadth experiment is part of this five-step sequence.'''
+METHODS='''All comparisons use the existing 72 test return months, January 2020--December 2025. Kati OOS labels overlap this test history; no separate unseen confirmation is claimed. Annual expanding coefficient refits and monthly portfolio updates are preserved. P(better) is the fraction of 10,000 paired circular-block bootstrap samples (six-month blocks, seed 20261102) with a positive net-Sharpe difference, with half weight to numerical ties. It is not a frequentist p-value or a Bayesian probability of future outperformance. Net Sharpe uses gross-return volatility, following the paper convention. Acceptance is P(better) >= 80% against the last accepted version, not against Market. Identical strategies are not accepted as an improvement. Iteration 1 is retained as an existing design, without a statistical claim. Drawdown is descriptive and adds no rejection gate. Decisions use already inspected test outcomes; subsequent reported performance on those same months is selected-sample evidence, not independent validation. The experiment log retains rejected trials. Nested hyperparameter searches and earlier research choices are not fully corrected by these five comparisons. Cumulative returns add monthly net excess returns, matching the paper replication code (cumsum(r-tc)). Additive drawdown is the cumulative sum minus its running maximum including initial zero; multiply by 100 for percentage points. Relative performance is the cumulative difference against Market. Additive drawdown is a reporting extension of the paper chart convention, not a verified drawdown definition in the paper or a total-wealth loss. TE 1% is an ex-ante pretest calibration target, not a hard realised cap. Base markets, stock screens, selected 50, dates, costs and risk equations are retained except for each explicitly tested override. Exit 120 changes buffering within the same US large-cap candidate population and may change the stock count; costs x2 are applied both when fitting and when trading. The original wider covariance cache may supply extra buffered stocks, only after equality checks against common base covariance entries. No 250-stock breadth experiment is part of this five-step sequence.'''
 
 
 def report_saved(upto=5):
@@ -326,13 +327,19 @@ def report_saved(upto=5):
     if not decisions:return 0
     OUT.mkdir(parents=True,exist_ok=True)
     rows=[]
+    static=pd.read_parquet(ROOT/'outputs/base/us_large/static_ml_star/pf.parquet')
     for d in decisions:
         pf=pd.read_parquet(ROOT/f'outputs/iteration_{d["number"]}/us_large/pf.parquet')
+        previous_number=next((i for i in reversed(d['inherited_iterations']) if i!=1),1)
+        previous_folder=BASE if previous_number==1 else ROOT/f'outputs/iteration_{previous_number}/us_large'
+        reference=pd.read_parquet(previous_folder/'pf.parquet')
+        write_iteration_report(d['number'],d,pf,reference,base,static,market)
         s=statistics(pf)
         rows.append(dict(iteration=d['number'],change=d['name'],Sharpe=s['SR_net'],P_better=d['p_better'],
             worst_drawdown=s['max_drawdown_excess'],verdict=d['verdict'],included=d['accepted'],
             reference=d['reference'],inherited_iterations=','.join(map(str,d['inherited_iterations'])),
-            final_included_iterations=','.join(map(str,d['included_after'])),annual_net_return=s['R_TC']))
+            final_included_iterations=','.join(map(str,d['included_after'])),annual_net_return=s['R_TC'],
+            path_convention='additive',drawdown_unit='decimal return difference (x100 = percentage points)'))
     table=pd.DataFrame(rows);table.to_csv(OUT/'statistical_tests_all_iterations.csv',index=False)
     import matplotlib
     matplotlib.use('Agg')
@@ -340,10 +347,10 @@ def report_saved(upto=5):
     chart_table=table[['iteration','change','Sharpe','P_better','worst_drawdown','verdict']].copy()
     chart_table['Sharpe']=chart_table.Sharpe.map(lambda x:f'{x:.3f}')
     chart_table['P_better']=chart_table.P_better.map(lambda x:'N/A' if pd.isna(x) else f'{x:.1%}')
-    chart_table['worst_drawdown']=chart_table.worst_drawdown.map(lambda x:f'{x:.1%}')
+    chart_table['worst_drawdown']=chart_table.worst_drawdown.map(lambda x:f'{100*x:.1f}')
     chart_table['verdict']=chart_table.verdict.map(lambda x:'Already in Base; retained as design' if 'Annual refitting' in x else 'Kept' if x=='Kept' else 'Not included')
     fig,ax=plt.subplots(figsize=(15,3.8));ax.axis('off')
-    chart=ax.table(cellText=chart_table.values,colLabels=['Step','Change','Net Sharpe','P(better)','Worst drawdown','Verdict'],
+    chart=ax.table(cellText=chart_table.values,colLabels=['Step','Change','Net Sharpe','P(better)','Additive DD (pp)','Verdict'],
                    colWidths=[.04,.24,.09,.09,.12,.35],loc='center',cellLoc='left')
     chart.auto_set_font_size(False);chart.set_fontsize(10);chart.scale(1,2)
     for (row,col),cell in chart.get_celld().items():
@@ -373,7 +380,7 @@ def report_saved(upto=5):
         sequence_complete=len(decisions)==5,final_is_provisional=len(decisions)<5))
     display=table[['iteration','change','Sharpe','P_better','worst_drawdown','verdict']].copy()
     display['P_better']=display.P_better.map(lambda x:'N/A' if pd.isna(x) else f'{x:.1%}')
-    display['worst_drawdown']=display.worst_drawdown.map(lambda x:f'{x:.1%}')
+    display['worst_drawdown']=display.worst_drawdown.map(lambda x:f'{100*x:.1f} pp')
     links=''.join(f'<li><a href="../iteration_{d["number"]}/us_large/index.html">Iteration {d["number"]}: {html.escape(d["name"])}</a> — {html.escape(d["verdict"])}</li>' for d in decisions)
     body='<h1>Statistical tests across all five US high-cap iterations</h1>'+display.to_html(index=False,float_format=lambda x:f'{x:.3f}')
     body+='<ul>'+links+'</ul><h2>Final accepted strategy vs Market</h2>'+final_stats.to_html(index=False,float_format=lambda x:f'{x:.5g}')
@@ -388,6 +395,10 @@ def report_saved(upto=5):
     for d in decisions:
         progression.append(dict(strategy=f'Iteration {d["number"]}: {d["name"]}',**statistics(pd.read_parquet(ROOT/f'outputs/iteration_{d["number"]}/us_large/pf.parquet'))))
     pd.DataFrame(progression).to_csv(alias/'performance_summary.csv',index=False)
+    from iteration_results_panels import build,build_summary
+    for number in (2,4):
+        if any(d['number']==number for d in decisions):build(number)
+    build_summary()
     print(display.to_string(index=False),flush=True)
     return 0
 

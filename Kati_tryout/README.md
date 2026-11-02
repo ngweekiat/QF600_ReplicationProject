@@ -1,5 +1,7 @@
 # Kati_tryout
 
+Performance reports use **additive cumulative returns**, matching the paper's replication charts. Additive drawdown and cumulative differences versus Market are in **percentage points**, rather than percent losses of wealth. See [Additive reporting](docs/ADDITIVE_REPORTING.md) for formulas and saved-output refresh commands.
+
 The active US high-cap iteration sequence now has **five separate experiment folders**: annual refitting already in Base; gamma 5; exit 120/costs x2; Market plus 1% TE tilt; recent-history weighting. Acceptance is test-period **P(better net Sharpe) >= 80%** against the last accepted version. Rejected experiments remain visible but are not inherited. Open `outputs/iteration_summary/index.html` and [the protocol](docs/FIVE_ITERATION_PROTOCOL.md). The three-market Base dates and calculations remain unchanged. Former iteration outputs/scripts are preserved under their respective `legacy_iterations/` folders.
 
 Kati_tryout uses the **US high-cap-only association-selected 50**, measured over **2005–2014**. Open [the correlation/covariance report](outputs/us_high_cap_selection/index.html) and [the current selection guide](docs/US_HIGH_CAP_SELECTION.md). This selection fits no ML model. Open [Kati_tryout.ipynb](Kati_tryout.ipynb) for all Python source, explanations and execution controls.

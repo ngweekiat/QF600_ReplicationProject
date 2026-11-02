@@ -189,7 +189,7 @@ def charts(monthly, stats, out):
         axes[0].plot(d.eom_ret, d.rolling_net_sharpe_paper, label=label, color=colors[label])
         axes[1].plot(d.eom_ret, 100*d.drawdown_excess, color=colors[label])
     axes[0].set_title("Rolling 24-month paper net Sharpe"); axes[0].legend(fontsize=8)
-    axes[1].set(title="Synthetic net excess-index drawdown", ylabel="Percent")
+    axes[1].set(title="Additive net excess-return drawdown", ylabel="Percentage points")
     for ax in axes: ax.grid(alpha=.2)
     fig.tight_layout(); fig.savefig(folder / "rolling_and_drawdown.png", dpi=160); plt.close(fig)
 
@@ -217,8 +217,8 @@ def economic_findings(stats, monthly, benchmark, inference):
         b=monthly.loc[monthly.strategy.eq(ITERATIONS[3])].sort_values("eom_ret")
         if np.array_equal(a[["r","tc"]].to_numpy(),b[["r","tc"]].to_numpy()):
             findings.append("Iterations 2 and 3 have exactly identical saved monthly returns and costs over 2020-2025. The half-life search selected no decay in every test year; iteration 3 produces no incremental performance in this test period.")
-    if not stats.geometric_excess_path_valid.all():
-        findings.append("At least one strategy has a monthly net excess return at or below -100%; its geometric growth and drawdown are unavailable. Arithmetic returns remain cost-model diagnostics.")
+    if (monthly.r-monthly.tc).le(-1).any():
+        findings.append("At least one strategy has a monthly net excess return at or below -100%. Additive paths remain arithmetic model diagnostics, not feasible investor wealth.")
     return findings
 
 
@@ -261,7 +261,7 @@ def write_report(monthly, inventory, out, title, benchmark, reps=2000, context="
     if not all(c["status"] == "PASS" for c in checks): raise AssertionError("Comparison formula check failed")
     charts(monthly, stats, out)
     notes = economic_findings(stats, monthly, benchmark, inference)
-    methods = """All main sources must contain exactly the same 72 return months from January 2020 through December 2025. No missing return is filled and no month is silently dropped. Returns are USD excess returns; subtract modelled trading costs before net comparisons. Reported annual returns are arithmetic monthly means times 12. Utility uses common evaluation gamma 10 and gross-return sample variance. Paper net Sharpe divides mean net returns by gross-return volatility; the CSV also supplies net-volatility Sharpe. The benchmark is the existing value-weighted stock basket, not a downloaded commercial index. Its own modelled trading costs are included. Synthetic excess-index CAGR and drawdown are not total investor wealth. Models update annually on expanding past history; this is not a separate unseen holdout. Paired HAC tests, Holm adjustment within each report and utility/Sharpe family, and paired circular block bootstraps (2000 default replications; 3, 6 and 12 months) describe uncertainty conditional on these saved portfolios. Cross-report testing and earlier research choices are not corrected. Cost scenarios scale saved costs at fixed weights, without reoptimisation. Original missing-return assumptions and initialization conventions are retained. Cross-region rankings reflect different stock universes, opportunity sets and risk exposures; they do not isolate forecasting skill or currency-neutral alpha."""
+    methods = """All main sources must contain exactly the same 72 return months from January 2020 through December 2025. No missing return is filled and no month is silently dropped. Returns are USD excess returns; subtract modelled trading costs before net comparisons. Reported annual returns are arithmetic monthly means times 12. Utility uses common evaluation gamma 10 and gross-return sample variance. Paper net Sharpe divides mean net returns by gross-return volatility; the CSV also supplies net-volatility Sharpe. The benchmark is the existing value-weighted stock basket, not a downloaded commercial index. Its own modelled trading costs are included. Cumulative returns add monthly net excess returns, matching the paper replication code. Drawdown is the drop from the additive path's running peak including initial zero; multiply by 100 for percentage points, not percent loss of capital. This drawdown is a reporting extension of the additive chart convention; CAGR and geometric Calmar are omitted. Models update annually on expanding past history; this is not a separate unseen holdout. Paired HAC tests, Holm adjustment within each report and utility/Sharpe family, and paired circular block bootstraps (2000 default replications; 3, 6 and 12 months) describe uncertainty conditional on these saved portfolios. Cross-report testing and earlier research choices are not corrected. Cost scenarios scale saved costs at fixed weights, without reoptimisation. Original missing-return assumptions and initialization conventions are retained. Cross-region rankings reflect different stock universes, opportunity sets and risk exposures; they do not isolate forecasting skill or currency-neutral alpha."""
     md = f"# {title}\n\n{context}\n\n## Economic interpretation\n\n" + "\n\n".join("- "+n for n in notes)
     md += "\n\n## Methods assumptions and exclusions\n\n"+methods+"\n\nSee index.html for readable tables and charts. CSV values are decimal fractions unless the metric dictionary says otherwise.\n"
     (out / "README.md").write_text(md, encoding="utf-8")

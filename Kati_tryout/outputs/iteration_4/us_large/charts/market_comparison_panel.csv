@@ -1,0 +1,4 @@
+Measure,Iteration 4,Market,Relative to market,Value
+Net excess return / year,15.14%,15.15%,Active return / year,-0.019%
+Net Sharpe,0.870,0.865,Information ratio,-0.035
+Worst additive DD (pp),-27.42,-28.05,P(better Sharpe vs market),62.1%

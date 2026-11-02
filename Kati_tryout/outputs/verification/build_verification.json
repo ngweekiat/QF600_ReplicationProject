@@ -1,7 +1,7 @@
 {
   "status": "PASS",
-  "checks": 261,
-  "passed": 261,
+  "checks": 263,
+  "passed": 263,
   "models_refitted": false,
   "model_backtest_complete": false,
   "data_stock_months": 2886029,
@@ -822,6 +822,11 @@
       "detail": ""
     },
     {
+      "check": "notebook_cell:scripts/iteration_results_panels.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
       "check": "notebook_cell:scripts/iteration_sequence.py",
       "status": "PASS",
       "detail": ""
@@ -1218,6 +1223,11 @@
     },
     {
       "check": "notebook_cell:tests/test_active_math.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:tests/test_additive_reporting.py",
       "status": "PASS",
       "detail": ""
     },

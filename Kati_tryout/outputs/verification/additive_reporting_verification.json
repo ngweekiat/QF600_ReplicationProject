@@ -1,0 +1,231 @@
+{
+  "status": "PASS",
+  "source_files_unchanged": 47,
+  "changed_source_files": [],
+  "models_refitted": false,
+  "sharpe_probabilities_annual_returns_acceptance_unchanged": true,
+  "path_convention": "additive",
+  "drawdown_unit": "percentage points after multiplication by 100",
+  "saved_report_checks": [
+    {
+      "report": "Kati_tryout\\outputs\\base\\overall analysis\\performance_summary.csv",
+      "strategy": "US high-cap Portfolio ML base",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\base\\overall analysis\\performance_summary.csv",
+      "strategy": "US high-cap Static ML*",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\base\\overall analysis\\performance_summary.csv",
+      "strategy": "US high-cap Market",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\base\\overall analysis\\performance_summary.csv",
+      "strategy": "US mid-cap Portfolio ML base",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\base\\overall analysis\\performance_summary.csv",
+      "strategy": "EU high-cap Portfolio ML base",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\base\\results\\performance_summary.csv",
+      "strategy": "Portfolio-ML",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\base\\results\\performance_summary.csv",
+      "strategy": "Portfolio-ML",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\base\\results\\performance_summary.csv",
+      "strategy": "Static-ML*",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\base\\results\\performance_summary.csv",
+      "strategy": "Portfolio-ML",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\base\\overall analysis\\all_models_and_iterations\\performance_summary.csv",
+      "strategy": "US high-cap Portfolio ML base",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\base\\overall analysis\\all_models_and_iterations\\performance_summary.csv",
+      "strategy": "US high-cap Static ML*",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\base\\overall analysis\\all_models_and_iterations\\performance_summary.csv",
+      "strategy": "US high-cap Market",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\base\\overall analysis\\all_models_and_iterations\\performance_summary.csv",
+      "strategy": "US mid-cap Portfolio ML base",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\base\\overall analysis\\all_models_and_iterations\\performance_summary.csv",
+      "strategy": "EU high-cap Portfolio ML base",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\base\\overall analysis\\all_models_and_iterations\\performance_summary.csv",
+      "strategy": "US high-cap Portfolio ML iteration 1",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\base\\overall analysis\\all_models_and_iterations\\performance_summary.csv",
+      "strategy": "US high-cap Portfolio ML iteration 2",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\base\\overall analysis\\all_models_and_iterations\\performance_summary.csv",
+      "strategy": "US high-cap Portfolio ML iteration 3",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\base\\overall analysis\\all_models_and_iterations\\performance_summary.csv",
+      "strategy": "US high-cap Portfolio ML iteration 4",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\base\\overall analysis\\all_models_and_iterations\\performance_summary.csv",
+      "strategy": "US high-cap Portfolio ML iteration 5",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_1\\us_large\\performance_summary.csv",
+      "strategy": "Candidate",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_1\\us_large\\performance_summary.csv",
+      "strategy": "Previous accepted",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_1\\us_large\\performance_summary.csv",
+      "strategy": "Base Portfolio ML",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_1\\us_large\\performance_summary.csv",
+      "strategy": "Static ML*",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_1\\us_large\\performance_summary.csv",
+      "strategy": "Market",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_2\\us_large\\performance_summary.csv",
+      "strategy": "Candidate",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_2\\us_large\\performance_summary.csv",
+      "strategy": "Previous accepted",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_2\\us_large\\performance_summary.csv",
+      "strategy": "Base Portfolio ML",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_2\\us_large\\performance_summary.csv",
+      "strategy": "Static ML*",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_2\\us_large\\performance_summary.csv",
+      "strategy": "Market",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_3\\us_large\\performance_summary.csv",
+      "strategy": "Candidate",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_3\\us_large\\performance_summary.csv",
+      "strategy": "Previous accepted",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_3\\us_large\\performance_summary.csv",
+      "strategy": "Base Portfolio ML",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_3\\us_large\\performance_summary.csv",
+      "strategy": "Static ML*",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_3\\us_large\\performance_summary.csv",
+      "strategy": "Market",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_4\\us_large\\performance_summary.csv",
+      "strategy": "Candidate",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_4\\us_large\\performance_summary.csv",
+      "strategy": "Previous accepted",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_4\\us_large\\performance_summary.csv",
+      "strategy": "Base Portfolio ML",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_4\\us_large\\performance_summary.csv",
+      "strategy": "Static ML*",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_4\\us_large\\performance_summary.csv",
+      "strategy": "Market",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_5\\us_large\\performance_summary.csv",
+      "strategy": "Candidate",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_5\\us_large\\performance_summary.csv",
+      "strategy": "Previous accepted",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_5\\us_large\\performance_summary.csv",
+      "strategy": "Base Portfolio ML",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_5\\us_large\\performance_summary.csv",
+      "strategy": "Static ML*",
+      "status": "PASS"
+    },
+    {
+      "report": "Kati_tryout\\outputs\\iteration_5\\us_large\\performance_summary.csv",
+      "strategy": "Market",
+      "status": "PASS"
+    }
+  ]
+}

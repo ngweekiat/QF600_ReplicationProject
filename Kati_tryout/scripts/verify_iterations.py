@@ -37,6 +37,14 @@ def main():
         recomputed.index+=pd.offsets.MonthEnd(1)
         observed=pf.set_index('eom_ret')
         check(f'{n}:independent_stock_return_cost_turnover_sums',np.allclose(recomputed.loc[observed.index],observed[recomputed.columns],rtol=1e-10,atol=1e-12))
+        # Literal additive path, separate from the shared reporting helper.
+        total=peak=0.;worst=0.
+        for value in (pf.r-pf.tc):
+            total+=value;peak=max(peak,total);worst=min(worst,total-peak)
+        reported=pd.read_csv(folder/'performance_summary.csv').set_index('strategy').loc['Candidate']
+        check(f'{n}:additive_cumulative_and_drawdown',reported.path_convention=='additive'
+              and np.isclose(reported.cumulative_net_excess,total,rtol=1e-12,atol=1e-12)
+              and np.isclose(reported.max_drawdown_excess,worst,rtol=1e-12,atol=1e-12))
         if n==1:
             check('1:bitwise_base_returns',np.array_equal(pf[['r','tc']].to_numpy(),previous[['r','tc']].to_numpy()))
             check('1:p_is_not_applicable',decision['p_better'] is None)

@@ -3,6 +3,7 @@ check,status
 1:inherits_only_accepted,PASS
 1:all_held_targets_observed_or_original_explicit_zero,PASS
 1:independent_stock_return_cost_turnover_sums,PASS
+1:additive_cumulative_and_drawdown,PASS
 1:bitwise_base_returns,PASS
 1:p_is_not_applicable,PASS
 1:included_after_matches_decision,PASS
@@ -10,6 +11,7 @@ check,status
 2:inherits_only_accepted,PASS
 2:all_held_targets_observed_or_original_explicit_zero,PASS
 2:independent_stock_return_cost_turnover_sums,PASS
+2:additive_cumulative_and_drawdown,PASS
 2:literal_paired_bootstrap_probability,PASS
 2:acceptance_rule,PASS
 2:included_after_matches_decision,PASS
@@ -18,6 +20,7 @@ check,status
 3:inherits_only_accepted,PASS
 3:all_held_targets_observed_or_original_explicit_zero,PASS
 3:independent_stock_return_cost_turnover_sums,PASS
+3:additive_cumulative_and_drawdown,PASS
 3:literal_paired_bootstrap_probability,PASS
 3:acceptance_rule,PASS
 3:included_after_matches_decision,PASS
@@ -26,6 +29,7 @@ check,status
 4:inherits_only_accepted,PASS
 4:all_held_targets_observed_or_original_explicit_zero,PASS
 4:independent_stock_return_cost_turnover_sums,PASS
+4:additive_cumulative_and_drawdown,PASS
 4:literal_paired_bootstrap_probability,PASS
 4:acceptance_rule,PASS
 4:included_after_matches_decision,PASS
@@ -35,6 +39,7 @@ check,status
 5:inherits_only_accepted,PASS
 5:all_held_targets_observed_or_original_explicit_zero,PASS
 5:independent_stock_return_cost_turnover_sums,PASS
+5:additive_cumulative_and_drawdown,PASS
 5:literal_paired_bootstrap_probability,PASS
 5:acceptance_rule,PASS
 5:included_after_matches_decision,PASS

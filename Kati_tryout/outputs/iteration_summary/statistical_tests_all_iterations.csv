@@ -1,6 +1,6 @@
-iteration,change,Sharpe,P_better,worst_drawdown,verdict,included,reference,inherited_iterations,final_included_iterations,annual_net_return
-1,Refit yearly,0.018436839613097004,,-0.12606611072018115,Annual refitting already included in Base; retained as design,True,Base (annual refitting),1,1,0.001171106464762879
-2,Gamma 5,0.14615483657909026,0.8466,-0.20038230311604743,Kept,True,Base (annual refitting),1,"1,2",0.015792434690112246
-3,"Exit 120, costs x2",0.09953087371254192,0.2804,-0.18399029124846777,Not included: P(better) below 80%,False,Iteration 2,"1,2","1,2",0.00977923949118251
-4,Market + 1% TE-target tilt,0.8702637001661809,0.9946,-0.2562401642896568,Kept,True,Iteration 2,"1,2","1,2,4",0.15135363601706103
-5,Recent-history weighting,0.8653290210380173,0.0552,-0.2585810912490081,Not included: P(better) below 80%,False,Iteration 4,"1,2,4","1,2,4",0.15074451462626143
+iteration,change,Sharpe,P_better,worst_drawdown,verdict,included,reference,inherited_iterations,final_included_iterations,annual_net_return,path_convention,drawdown_unit
+1,Refit yearly,0.018436839613097004,,-0.13109832403433822,Annual refitting already included in Base; retained as design,True,Base (annual refitting),1,1,0.001171106464762879,additive,decimal return difference (x100 = percentage points)
+2,Gamma 5,0.14615483657909026,0.8466,-0.21244279239928263,Kept,True,Base (annual refitting),1,"1,2",0.015792434690112246,additive,decimal return difference (x100 = percentage points)
+3,"Exit 120, costs x2",0.09953087371254192,0.2804,-0.1922393623670894,Not included: P(better) below 80%,False,Iteration 2,"1,2","1,2",0.00977923949118251,additive,decimal return difference (x100 = percentage points)
+4,Market + 1% TE-target tilt,0.8702637001661809,0.9946,-0.27422434389697625,Kept,True,Iteration 2,"1,2","1,2,4",0.15135363601706103,additive,decimal return difference (x100 = percentage points)
+5,Recent-history weighting,0.8653290210380173,0.0552,-0.2771451465691065,Not included: P(better) below 80%,False,Iteration 4,"1,2,4","1,2,4",0.15074451462626143,additive,decimal return difference (x100 = percentage points)

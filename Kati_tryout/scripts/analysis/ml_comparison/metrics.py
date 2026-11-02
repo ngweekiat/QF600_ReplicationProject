@@ -5,6 +5,20 @@ import numpy as np
 import pandas as pd
 
 
+def additive_path(net):
+    """Paper cumulative return and signed drop from its peak, including initial 0.
+
+    Drawdown extends the paper's additive chart convention; multiply by 100 for
+    percentage points. It is not a percentage loss of investor wealth.
+    """
+    values = np.asarray(net, dtype=float)
+    if values.ndim != 1 or not len(values) or not np.isfinite(values).all():
+        raise ValueError('Additive paths require a nonempty finite return vector.')
+    cumulative = np.cumsum(values)
+    peak = np.maximum.accumulate(np.r_[0., cumulative])[1:]
+    return cumulative, cumulative - peak
+
+
 def statistics(group: pd.DataFrame, gamma=10.0) -> dict:
     """Use project Table 2 formulas; independently checked in the validation suite."""
     from jkmp.evaluation.metrics import summary_stats
@@ -17,23 +31,17 @@ def statistics(group: pd.DataFrame, gamma=10.0) -> dict:
         raise ValueError('Nonfinite saved performance; no missing returns are filled.')
     out = summary_stats(g, gamma).to_dict()
     net = (g.r - g.tc).to_numpy(float)
-    wealth = np.cumprod(1 + net)
-    # Include initial wealth=1: a loss in the first return month is a drawdown.
-    peak = np.maximum.accumulate(np.r_[1.0, wealth])[1:]
-    dd = wealth / peak - 1
-    cagr_valid = bool((1 + net > 0).all())
-    cagr = wealth[-1] ** (12 / len(net)) - 1 if cagr_valid else np.nan
+    cumulative, dd = additive_path(net)
     downside = np.sqrt(np.mean(np.minimum(net, 0.0) ** 2))
     sd_net = np.std(net, ddof=1)
     out.update(sample_start=str(g.eom_ret.min().date()), sample_end=str(g.eom_ret.max().date()),
-        evaluation_gamma=gamma, max_drawdown_excess=float(dd.min()) if cagr_valid else np.nan,
+        evaluation_gamma=gamma, max_drawdown_excess=float(dd.min()),
+        path_convention='additive', drawdown_unit='decimal return difference (x100 = percentage points)',
         sortino_zero_excess=float(np.mean(net) / downside * np.sqrt(12)) if downside > 0 else np.nan,
-        cagr_excess=cagr, cumulative_net_excess=float(wealth[-1] - 1) if cagr_valid else np.nan,
+        cumulative_net_excess=float(cumulative[-1]),
         cumulative_net_excess_arithmetic=float(net.sum()),
-        calmar_excess=float(cagr / abs(dd.min())) if cagr_valid and dd.min() < 0 else np.nan,
         net_return_volatility=sd_net * np.sqrt(12),
-        net_sharpe_net_sd=float(np.mean(net) / sd_net * np.sqrt(12)) if sd_net > 0 else np.nan,
-        geometric_excess_path_valid=cagr_valid)
+        net_sharpe_net_sd=float(np.mean(net) / sd_net * np.sqrt(12)) if sd_net > 0 else np.nan)
     return out
 
 
@@ -54,21 +62,13 @@ def paths_and_rolling(monthly,gamma=10.0,window=24):
     for (dataset,strategy),g in monthly.groupby(['dataset','strategy'],sort=False):
         g=g.sort_values('eom_ret')
         net=g.r-g.tc
-        wealth=(1+net).cumprod()
-        peak=np.maximum.accumulate(np.r_[1.,wealth])[1:]
-        # A synthetic excess-index growth factor <=0 invalidates all subsequent
-        # geometric wealth/drawdown observations. Arithmetic paper paths remain
-        # meaningful even for unconstrained portfolios with enormous modelled TC.
-        geometric_valid=(net.gt(-1)).cummin()
-        drawdown=(wealth/peak-1).where(geometric_valid)
-        wealth=wealth.where(geometric_valid)
+        cumulative, drawdown = additive_path(net)
         mean=g.r.rolling(window,min_periods=window).mean()
         sd=g.r.rolling(window,min_periods=window).std(ddof=1)
         costs=g.tc.rolling(window,min_periods=window).mean()
         p=pd.DataFrame(dict(dataset=dataset,strategy=strategy,eom_ret=g.eom_ret,
-            net_excess=net,wealth_index_excess=wealth,drawdown_excess=drawdown,
-            geometric_excess_path_valid=geometric_valid,
-            cumulative_net_excess_arithmetic=net.cumsum(),
+            net_excess=net,drawdown_excess=drawdown,path_convention='additive',
+            cumulative_net_excess=cumulative,cumulative_net_excess_arithmetic=cumulative,
             cumulative_utility_paper=(net-.5*gamma*(g.r-g.r.mean())**2).cumsum(),
             rolling_net_sharpe_paper=(mean-costs)/sd*np.sqrt(12),
             rolling_utility=(mean-costs-.5*gamma*sd**2)*12,
@@ -96,11 +96,10 @@ def metric_dictionary():
         ('Turnover','mean(sum_i(abs(w_i-w_start_i)))','fraction/month','Two-sided absolute traded weight; NOT divided by two.'),
         ('Lev','mean(sum_i(abs(w_i)))','gross weight','Average monthly gross leverage.'),
         ('Shorting','mean(sum_i(max(-w_i,0)))','gross weight','Average short exposure.'),
-        ('max_drawdown_excess','min(W_t/max(1,W_1,...,W_t)-1); W=cumprod(1+r-tc)','fraction','Synthetic compounded EXCESS-return drawdown; not investor total-wealth drawdown.'),
+        ('max_drawdown_excess','min(C_t-max(0,C_1,...,C_t)); C=cumsum(r-tc)','decimal return difference','Additive net excess-return drawdown; x100 gives percentage points, not percentage loss of wealth. Reporting extension of the paper additive chart.'),
         ('sortino_zero_excess','sqrt(12)*mean(r-tc)/sqrt(mean(min(r-tc,0)^2))','ratio','Zero excess-return hurdle, includes all months in downside denominator.'),
-        ('calmar_excess','cagr_excess/abs(max_drawdown_excess)','ratio','Excess-index geometric return over absolute drawdown.'),
-        ('cagr_excess','prod(1+r-tc)^(12/T)-1','decimal/year','Synthetic excess-index CAGR; not arithmetic return minus annual RF.'),
-        ('cumulative_net_excess','prod(1+r-tc)-1','fraction','Synthetic cumulative excess-return index; no assumption of fully funded investor wealth.'),
+        ('path_convention','additive','label','Paper reporting convention; no compounded growth or CAGR in active performance reports.'),
+        ('cumulative_net_excess','sum(r-tc)','decimal return sum','Additive cumulative net excess return; x100 gives percentage points, not investor wealth.'),
         ('cumulative_net_excess_arithmetic','sum(r-tc)','fraction','Paper cumulative net-excess path; arithmetic sum, not investor wealth.'),
         ('cumulative_utility_paper','cumsum(r-tc-gamma*(r-mean(r))^2/2)','fraction','Paper cumulative utility flow using full evaluated sample gross mean; descriptive ex-post path.'),
         ('net_sharpe_net_sd','sqrt(12)*mean(r-tc)/sd(r-tc, ddof=1)','ratio','Conventional net-return SD denominator; provided separately from paper metric.'),
