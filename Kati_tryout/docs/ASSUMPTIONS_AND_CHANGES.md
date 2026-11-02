@@ -8,9 +8,9 @@ The current methodology is documented in [US_HIGH_CAP_SELECTION.md](US_HIGH_CAP_
 | Selection method | Observed correlation/covariance diagnostics with fixed association score, group quotas and redundancy penalties |
 | ML training during selection | None; no single-feature regression R², return forecast or portfolio utility enters the score |
 | Later/other-market outcomes | No 2015–2025 or US mid-cap/EU outcomes used for selection |
-| Candidate/selected count | 404 candidates, 397 eligible, 200 cap, 50 selected |
+| Candidate/selected count | 153 verified published JKP candidates, 152 eligible, 50 selected |
 | A/T/S | 13 published anchors, 13 minimum-theme selections, 24 score/redundancy selections |
-| Groups | 13 groups; 32 published labels and 18 provisional US-correlation assignments |
+| Groups | 13 published JKP groups; all 50 labels and directions published |
 | Missing raw observations | Pairwise complete statistics; raw NaNs preserved; assumed-zero targets excluded |
 | Matrices | Raw/ranked feature correlation and sample covariance; pair counts; separate return-augmented and per-stock diagnostics |
 | Kati input update | New 50 installed in all three base-market and US-iteration configurations; raw source and ranked panels rebuilt |
@@ -20,7 +20,7 @@ The current methodology is documented in [US_HIGH_CAP_SELECTION.md](US_HIGH_CAP_
 
 Correlation or covariance is an in-period association, not causal evidence or guaranteed predictive performance. The selected set is preferred under the declared score and group rules, not proven globally optimal. Raw covariance magnitudes depend on units. Pairwise-complete covariance matrices may not be positive semidefinite and are not fitted portfolio risk matrices.
 
-Published theme directions are retained for published members; provisional groups use their empirical 2005–2014 US high-cap sign. These signs orient covariance theme exposures; future ML coefficients remain learned by the preserved ML implementation. Characteristic ranks themselves are not sign-flipped.
+Published JKP directions orient every covariance theme exposure. There are no provisional groups. Empirical association signs are used only for ranking association strength. Future ML coefficients remain learned by the preserved implementation. Characteristic ranks themselves are not sign-flipped.
 
 The selected 50 now include `dolvol_126d`. Its ranked value is a signal; trading costs continue to use the original unranked USD liquidity value separately. There are exactly 50 predictors.
 

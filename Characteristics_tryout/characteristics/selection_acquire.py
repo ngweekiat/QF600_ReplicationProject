@@ -16,9 +16,11 @@ from .us_high_cap_selection import sha
 def acquire_new_columns():
     selected=json.loads((OUTPUT/'us_high_cap_selection/recommended_50.json').read_text())
     cached=json.loads((DATA/'download_200.json').read_text())
+    old_manifest=DATA/'us_high_cap_selection/supplemental/manifest.json'
+    if old_manifest.exists():cached+=json.loads(old_manifest.read_text())['new_columns']
     missing=[x for x in selected if x not in cached]
     if not all(re.fullmatch('[a-z][a-z0-9_]*',x) for x in missing):raise ValueError('Invalid predictor identifier')
-    folder=DATA/'us_high_cap_selection/supplemental'
+    folder=DATA/'us_high_cap_selection/jkp_verified_supplemental'
     folder.mkdir(parents=True,exist_ok=True)
     if not missing:return 0
     sys.path.insert(0,str(KEATS))

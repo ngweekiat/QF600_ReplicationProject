@@ -6,7 +6,7 @@
     "us_mid",
     "eu_large"
   ],
-  "features": "US high-cap-only association-selected 50",
+  "features": "Published JKP-only US high-cap association-selected 50",
   "downloads_allowed": false,
   "missing_forward_return_policy": "zero_excess",
   "missing_lag_history_policy": "exclude_affected_stock_months",
@@ -25,5 +25,6 @@
   "selection_return_start": "2005-01-31",
   "selection_return_end": "2014-12-31",
   "selection_models_fitted": false,
-  "old_feature_archives_removed": true
+  "old_feature_archives_removed": true,
+  "jkp_only": true
 }

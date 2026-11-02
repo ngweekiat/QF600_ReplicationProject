@@ -1,6 +1,6 @@
 {
   "source": "WRDS contrib.global_factor",
-  "candidate_count": 404,
+  "candidate_count": 153,
   "cap": 200,
   "recommendation_count": 50,
   "screen_return_start": "2005-01-31",
@@ -29,5 +29,7 @@
   "validation_outcomes_used_for_current_selection": false,
   "models_fitted_for_selection": false,
   "historical_download_note": "download_200.json describes the earlier full-period data acquisition cache, not the current US-only 200-candidate cap",
-  "held_out_from_selection_start": "2015-01-31"
+  "held_out_from_selection_start": "2015-01-31",
+  "jkp_only": true,
+  "published_groups_only": true
 }

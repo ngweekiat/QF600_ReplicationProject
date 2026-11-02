@@ -1,8 +1,7 @@
 """US high-cap-only association selection; no forecast or portfolio model fit.
 
-The measurement window uses the complete 404-candidate pilot, 2005–2014 return
-months. No later outcomes are admitted to the current selection.
-Historical three-market diagnostics and ML coefficients are never overwritten.
+Candidates must appear in both published JKP Cluster Labels and Factor Details
+and in the WRDS source schema. The measurement window is US high-cap 2005–2014.
 """
 from __future__ import annotations
 
@@ -29,6 +28,28 @@ def sha(path):
     with Path(path).open('rb') as stream:
         for block in iter(lambda: stream.read(4*1024*1024), b''): h.update(block)
     return h.hexdigest()
+
+
+def verified_jkp_registry(registry, data=DATA):
+    """Whitelist published JKP names; never infer membership from column position."""
+    reference = Path(data)/'reference'
+    if not reference.exists(): reference = Path(data).parents[1]/'reference'
+    cluster_path=reference/'cluster_labels.parquet'
+    details_path=reference/'factor_details.parquet'
+    clusters=pd.read_parquet(cluster_path).rename(columns={'cluster':'published_theme'})
+    details=pd.read_parquet(details_path).dropna(subset=['abr_jkp'])
+    if clusters.characteristic.duplicated().any() or details.abr_jkp.duplicated().any():
+        raise ValueError('Published JKP metadata has duplicate identifiers')
+    allowed=set(clusters.characteristic)&set(details.abr_jkp)
+    verified=registry.loc[registry.characteristic.isin(allowed)].copy()
+    # Independently replace cached labels/signs with published reference values.
+    verified=verified.drop(columns=['published_theme','direction','name_new'],errors='ignore')
+    verified=verified.merge(clusters,on='characteristic',validate='one_to_one')
+    verified=verified.merge(details[['abr_jkp','direction','name_new']],left_on='characteristic',right_on='abr_jkp',validate='one_to_one').drop(columns='abr_jkp')
+    verified['published_jkp_153']=True
+    verified['jkp_membership_verified']=True
+    if not verified.direction.isin([-1,1]).all():raise ValueError('Missing published JKP direction')
+    return verified.reindex(sorted(verified.columns),axis=1),[cluster_path,details_path]
 
 
 def load_sample(mode='training', data=DATA):
@@ -159,9 +180,9 @@ def charts(selected, scores, out):
     fig = plt.figure(figsize=(16, 12))
     grid = fig.add_gridspec(3, 2, height_ratios=[1.1, 1, 2.5])
     ax = fig.add_subplot(grid[0, :]); ax.axis('off')
-    steps = [('404 source candidates', 'US high-cap only\n2005–2014'),
+    steps = [(f'{len(scores)} verified JKP candidates', 'Published metadata + WRDS\nUS high-cap; 2005–2014'),
              (f'{eligible} eligible candidates', 'Coverage ≥60%\n≥60 valid IC months'),
-             ('200 shortlisted', 'Group coverage + score\nRedundancy penalty 0.10'),
+             (f'{int(scores.selected_200.sum())} shortlisted', 'Group coverage + score\nRedundancy penalty 0.10'),
              ('50 selected', '13 groups; 2–6 per group\nRedundancy penalty 0.20')]
     for i, (title, detail) in enumerate(steps):
         x = .125 + i*.25
@@ -195,7 +216,9 @@ def charts(selected, scores, out):
         for i,v in enumerate(rows.final_score):ax.text(v+.01,i,f'{v:.3f}',va='center',fontsize=7)
     fig.text(.02,.012,'No ML fit. A/T/S explains inclusion, not model weights. Group quotas and correlation penalties mean the final 50 are not simply the 50 highest individual correlations.',fontsize=10)
     fig.tight_layout(rect=(0,.04,1,.98),h_pad=2.5,w_pad=3)
-    for ext in ('png','svg','pdf'):fig.savefig(folder/f'selection_decision_path.{ext}',dpi=180)
+    for ext in ('png','svg','pdf'):
+        name='selection_decision_path_jkp_only.pdf' if ext=='pdf' else f'selection_decision_path.{ext}'
+        fig.savefig(folder/name,dpi=180)
     plt.close(fig)
     ordered = selected.sort_values(['theme','final_score'],ascending=[True,False])
     names = ordered.characteristic.tolist()
@@ -213,7 +236,8 @@ def charts(selected, scores, out):
     groups = selected.groupby('theme').agg(total=('characteristic','size'),published=('published_jkp_153','sum')).sort_index()
     y = np.arange(len(groups))
     axes[0].barh(y,groups.published,color='#247b9b',label='Published labels')
-    axes[0].barh(y,groups.total-groups.published,left=groups.published,color='#df9d36',label='Provisional US 2005–2014 correlation labels')
+    if (groups.total-groups.published).sum():
+        axes[0].barh(y,groups.total-groups.published,left=groups.published,color='#df9d36',label='Provisional US 2005–2014 correlation labels')
     axes[0].set_yticks(y,groups.index);axes[0].invert_yaxis();axes[0].set_xlim(0,7)
     for i,n in enumerate(groups.total):axes[0].text(n+.08,i,str(n),va='center',weight='bold')
     axes[0].set_title('13 groups; 2–6 inputs per group',loc='left',weight='bold');axes[0].set_xlabel('Selected characteristics');axes[0].legend(loc='lower left',bbox_to_anchor=(0,-.2),fontsize=8)
@@ -223,7 +247,7 @@ def charts(selected, scores, out):
     for i,n in enumerate(reasons):axes[1].text(n+.3,i,str(n),va='center',weight='bold')
     axes[1].set_xlim(0,max(reasons)+5);axes[1].set_xlabel('Selected characteristics');axes[1].set_title('Why each characteristic was included',loc='left',weight='bold')
     fig.suptitle('Why these 50? US high-cap selection only',fontsize=19,weight='bold',x=.02,ha='left')
-    fig.text(.02,.015,'Fixed score: 55% oriented monthly rank IC + 20% coverage + 15% yearly direction stability + 10% persistence.\nA/T/S are inclusion reasons; they are not portfolio weights or ML coefficients. Provisional labels require economic review.',fontsize=10)
+    fig.text(.02,.015,'Fixed score: 55% oriented monthly rank IC + 20% coverage + 15% yearly direction stability + 10% persistence.\nAll selected names, groups and directions are verified against published JKP metadata. A/T/S are inclusion reasons, not ML coefficients.',fontsize=10)
     fig.tight_layout(rect=(0,.1,1,.94));fig.savefig(folder/'selection_groups_and_reasons.png',dpi=180);fig.savefig(folder/'selection_groups_and_reasons.svg');plt.close(fig)
     fig,ax = plt.subplots(figsize=(14,15))
     colors = plt.get_cmap('tab20')(np.linspace(0,1,13));palette = dict(zip(sorted(ordered.theme.unique()),colors))
@@ -242,10 +266,10 @@ def report(selected, scores, monthly, frame, manifest, out):
     page = '''<!doctype html><html lang="en"><meta charset="utf-8"><title>US high-cap characteristic selection</title>
 <style>body{max-width:1250px;margin:35px auto;padding:0 22px;font:15px/1.55 system-ui;color:#19384b}h1{font-size:32px}h2{margin-top:32px}.note{padding:16px;background:#eef4f7;border-radius:9px}.scroll{overflow:auto}table{border-collapse:collapse;font-size:13px;width:100%}th,td{padding:8px;border-bottom:1px solid #dbe4eb;text-align:right}th:first-child,td:first-child{text-align:left}th{background:#eef4f7}img{max-width:100%}select,input{font:inherit;padding:7px;margin:6px}a{color:#126083}summary{cursor:pointer;font-weight:bold}</style>
 <h1>US high-cap-only: 50 characteristics</h1><p>Selection uses US high-cap membership only. US mid-cap and European stocks do not contribute to scores, groups, matrices or selection.</p>
-<div class="note">SAMPLE<br>404/200 refers to the candidate pool, not the number of selected inputs. These are the 50 preferred by the declared association/diversity rule; they are not a proven optimal portfolio. No regression, forecast or ML portfolio was fitted. Existing ML code and saved coefficients remain separate.</div>
-<h2>How were these 50 selected?</h2><img src="charts/selection_decision_path.png" alt="404 to 200 to 50 decision path, scores and inclusion reasons"><p><a href="charts/selection_decision_path.pdf">Download selection chart as PDF</a></p>
+<div class="note">SAMPLE<br>Only names appearing in both published JKP Cluster Labels and Factor Details are eligible. All selected inputs use published group labels and directions. These 50 follow the declared association/diversity rule; no regression, forecast or ML portfolio was fitted.</div>
+<h2>How were these 50 selected?</h2><img src="charts/selection_decision_path.png" alt="Verified JKP candidates, eligibility, final 50 scores and inclusion reasons"><p><a href="charts/selection_decision_path_jkp_only.pdf">Download JKP-only selection chart as PDF</a></p>
 <h2>Why these 50 and their groups?</h2><img src="charts/selection_groups_and_reasons.png" alt="Group coverage and selection reasons">
-<p>A = published group anchor; T = minimum theme representation; S = score after redundancy penalty. Groups inferred using US training correlations are explicitly provisional.</p>
+<p>A = published group anchor; T = minimum theme representation; S = score after redundancy penalty. Every group assignment is taken from published JKP metadata.</p>
 <label>Group<select id="theme"><option value="">All groups</option></select></label><label>Reason<select id="reason"><option value="">All reasons</option><option>A</option><option>T</option><option>S</option></select></label><label>Find<input id="query" placeholder="Characteristic or description"></label><p id="count"></p><div class="scroll"><table id="features"></table></div>
 <h2>Correlation and covariance matrices</h2><p>The chart below switches between ranked-feature correlation and covariance. Raw-value and return-augmented matrices are downloadable too. Raw covariance magnitudes depend on units and should not be interpreted as comparable predictive importance.</p><select id="matrix"><option value="correlation">Rank correlation</option><option value="covariance">Rank covariance</option></select><p><a id="matrixcsv" href="matrices/selected50/rank_correlation.csv">Download shown 50×50 matrix</a></p><img id="matriximage" src="charts/selected50_rank_correlation.png" alt="Selected feature matrix">
 <details><summary>Each characteristic’s association with next-month return</summary><img src="charts/selected50_return_association.png" alt="Return correlations"></details>
@@ -254,15 +278,15 @@ def report(selected, scores, monthly, frame, manifest, out):
 <script>const DATA=PAYLOAD;const $=x=>document.getElementById(x);const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const num=x=>Number(x).toFixed(4);$('theme').innerHTML+=[...new Set(DATA.map(x=>x.theme))].sort().map(x=>'<option>'+esc(x)+'</option>').join('');function draw(){let rows=DATA.filter(x=>(!$('theme').value||x.theme===$('theme').value)&&(!$('reason').value||x.reason_code===$('reason').value)&&(`${x.characteristic} ${x.description}`.toLowerCase().includes($('query').value.toLowerCase())));$('count').textContent=rows.length+' of 50 characteristics';$('features').innerHTML='<tr><th>Characteristic</th><th>Description</th><th>Group</th><th>Group label</th><th>Reason</th><th>Mean monthly rank IC</th><th>Coverage</th><th>Score</th></tr>'+rows.map(x=>`<tr><td>${esc(x.characteristic)}</td><td>${esc(x.description)}</td><td>${esc(x.theme)}</td><td>${x.published_jkp_153?'Published':'Provisional proxy'}</td><td>${x.reason_code}</td><td>${num(x.score_period_mean_rank_ic)}</td><td>${(100*x.score_coverage).toFixed(1)}%</td><td>${num(x.final_score)}</td></tr>`).join('');}['theme','reason','query'].forEach(id=>$(id).oninput=draw);$('matrix').onchange=()=>{const kind=$('matrix').value;$('matriximage').src='charts/selected50_rank_'+kind+'.png';$('matrixcsv').href='matrices/selected50/rank_'+kind+'.csv';};draw();</script></html>'''
     methods = ('Monthly cross-sectional Pearson/Spearman correlations compare contemporaneous characteristics with next-month observed excess returns. '
         'Selection score = 55% oriented rank-IC percentile + 20% coverage percentile + 15% yearly sign-stability percentile + 10% persistence percentile. '
-        'Direction and provisional group assignments are estimated on 2005–2014 US high-cap data. Eligibility requires at least 60% observed feature coverage and 60 valid training IC months; validation mode also requires 60% coverage and 30 valid validation months. '
+        'Candidate membership requires a WRDS source column and exact matches in published JKP Cluster Labels and Factor Details. Published groups and directions are used. Empirical association orientation is measured on 2005–2014 US high-cap data. Eligibility requires at least 60% observed feature coverage and 60 valid monthly ICs. '
         'The greedy rule adds 0.02 for published membership and subtracts 0.20 times maximum absolute training rank-correlation with already selected inputs. Each group has 2–6 members and a published anchor. '
         'Matrices use pairwise-complete observations, at least 120 pairs, and sample covariance (n−1); pair counts are supplied. Raw NaNs and unavailable returns stay missing. '
         'Rank matrices pool within-month percentile ranks; their return column is a pooled diagnostic and differs from the equal-month average IC used for selection. '
         'Per-stock correlations are time-series associations, requiring 24 observed pairs, and are reported separately. No cumulative return target is used. '
         'Pairwise covariance matrices may not be positive semidefinite and are descriptive diagnostics, not fitted portfolio risk matrices. '
         'The dataset retains its supplied source vintage and original membership assumptions; these checks do not establish point-in-time or survivorship-free data. '
-        'No outcomes from 2020 onward, other-market return outcomes, regression R², fitted forecasts or portfolio utility enter the new selection.')
-    links = ['recommended_50.csv','recommended_50.json','all_candidate_scores.csv','candidate_200.csv','group_summary.csv',
+        'No outcomes from 2015 onward, other-market return outcomes, regression R², fitted forecasts or portfolio utility enter the new selection. Raw covariance is a diagnostic; return rank correlation and correlation redundancy drive selection.')
+    links = ['recommended_50_jkp_only.csv','recommended_50.json','all_candidate_scores.csv','excluded_nonpublished_candidates.csv','candidate_200.csv','group_summary.csv',
              'feature_return_summary.csv','per_stock_feature_return_associations.parquet','per_stock_selected50_pearson.csv',
              'per_stock_selected50_spearman.csv','per_stock_selected50_covariance.csv','selection_manifest.json',
              'verification.json','METHODS_ASSUMPTIONS_AND_EXCLUSIONS.md']
@@ -278,6 +302,15 @@ def select_us_high_cap(mode='training', out=None):
     out = Path(out) if out else OUTPUT/'us_high_cap_selection'
     out.mkdir(parents=True,exist_ok=True)
     frame,names,registry,sources = load_sample(mode)
+    registry,reference_sources=verified_jkp_registry(registry)
+    excluded=sorted(set(names)-set(registry.characteristic))
+    exclusion_path=out/'excluded_nonpublished_candidates.csv'
+    if not excluded and exclusion_path.exists():
+        excluded=sorted(set(pd.read_csv(exclusion_path).characteristic)-set(registry.characteristic))
+    names=registry.characteristic.tolist()
+    sources+=reference_sources
+    frame=frame.drop(columns=excluded,errors='ignore')
+    pd.DataFrame({'characteristic':excluded,'decision':'Excluded: not in both published JKP references'}).to_csv(out/'excluded_nonpublished_candidates.csv',index=False)
     if mode == 'training':
         snapshot = DATA/'us_high_cap_selection' if not (DATA/'us_high_cap_sample.parquet').exists() else DATA
         snapshot.mkdir(parents=True,exist_ok=True)
@@ -297,7 +330,9 @@ def select_us_high_cap(mode='training', out=None):
     subset = scores.loc[scores.characteristic.isin(cap.characteristic)]
     chosen = diverse_pick(subset,corr,50,min_theme=2,max_theme=6,score_col='final_score',redundancy_penalty=.20,published_anchor=True)
     chosen['reason_code'] = chosen.selection_reason.map(REASONS)
-    chosen.to_csv(out/'recommended_50.csv',index=False)
+    chosen.to_csv(out/'recommended_50_jkp_only.csv',index=False)
+    try:chosen.to_csv(out/'recommended_50.csv',index=False)
+    except PermissionError:pass  # A user-open legacy CSV is never used as an active input.
     (out/'recommended_50.json').write_text(json.dumps(chosen.characteristic.tolist(),indent=2)+'\n',encoding='utf-8')
     scores['selected_200'] = scores.characteristic.isin(cap.characteristic)
     scores['selected_50'] = scores.characteristic.isin(chosen.characteristic)
@@ -320,6 +355,8 @@ def select_us_high_cap(mode='training', out=None):
         selection_weights=dict(oriented_rank_ic=.55,coverage=.20,yearly_direction_stability=.15,rank_persistence=.10),
         reason_counts=chosen.reason_code.value_counts().to_dict(),published_group_count=int(chosen.published_jkp_153.sum()),
         proxy_group_count=int((~chosen.published_jkp_153).sum()),
+        candidate_policy='Exact WRDS source names intersect published JKP Cluster Labels and Factor Details',
+        jkp_only=True,published_groups_only=True,excluded_unverified_count=len(excluded),
         source_files=[dict(path=str(p.resolve()),sha256=sha(p)) for p in sources],
         caveat='Best under the declared association/diversity rule; no global optimality or joint-ML performance claim.')
     (out/'selection_manifest.json').write_text(json.dumps(manifests,indent=2)+'\n',encoding='utf-8')
@@ -328,6 +365,7 @@ def select_us_high_cap(mode='training', out=None):
         all_eligible=bool(chosen.eligible.all()),thirteen_groups_with_2_to_6=bool(len(group)==13 and group.features.between(2,6).all()),
         published_anchor_each_group=bool(group.published_representatives.ge(1).all()),
         no_models_fitted=True,reproduced_order=diverse_pick(subset,corr,50,min_theme=2,max_theme=6,score_col='final_score',redundancy_penalty=.20,published_anchor=True).characteristic.tolist()==chosen.characteristic.tolist())
+    checks['all_selected_verified_jkp']=bool(chosen.jkp_membership_verified.all() and chosen.published_jkp_153.all())
     for path in (out/'matrices').rglob('*.csv'):
         a=pd.read_csv(path,index_col=0).to_numpy(float)
         checks['symmetric_'+str(path.relative_to(out))]=bool(np.allclose(a,a.T,equal_nan=True,rtol=1e-10,atol=1e-12))

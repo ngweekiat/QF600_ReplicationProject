@@ -5,12 +5,12 @@ The current 50 are selected by correlation/covariance association analysis using
 | Item | Current rule |
 |---|---|
 | Population | 9,682 US high-cap stock-months; 128 distinct stocks over the period |
-| Candidate pool | All 404 source characteristics in the historical pilot |
+| Candidate pool | 153 WRDS source names present in both published JKP Cluster Labels and Factor Details |
 | Eligibility | At least 60% observed characteristic coverage and 60 valid monthly IC observations |
-| Eligible candidates | 397 |
-| Intermediate cap | 200 selected using US evidence and group/redundancy rules |
+| Eligible candidates | 152 |
+| Intermediate pool | All 152 eligible candidates; no 200-name truncation is needed |
 | Final set | 50; 13 economic groups, each containing 2–6 inputs |
-| Published/provisional labels | 32 published JKP labels; 18 provisional US-correlation assignments |
+| Published/provisional labels | 50 published JKP labels; zero provisional assignments |
 | A selections | 13 published group anchors |
 | T selections | 13 selections to meet minimum theme representation |
 | S selections | 24 selections using association score after redundancy penalty |
@@ -28,7 +28,7 @@ The transparent score combines percentile ranks:
 - 15%: consistency of the association's sign across years;
 - 10%: persistence of the characteristic's cross-sectional rank.
 
-The greedy choice adds 0.02 for published group membership and subtracts 0.20 times the largest absolute correlation with a previously selected characteristic. Group quotas retain a published anchor and at least two members per group, with at most six. A lower standalone score can therefore be retained for representation or reduced redundancy. The 200-candidate preliminary cap uses a 0.10 redundancy penalty. A/T/S explains inclusion; it is not a portfolio weight.
+The greedy choice adds 0.02 for published group membership and subtracts 0.20 times the largest absolute correlation with a previously selected characteristic. All candidates now have the same published-member bonus. Group quotas retain a published anchor and at least two members per group, with at most six. A lower standalone score can be retained for representation or reduced redundancy. The historical 200-candidate stage now contains all 152 eligible names, so its 0.10 penalty only orders them. A/T/S explains inclusion; it is not a portfolio weight.
 
 These rules define “best” for this analysis. They do not prove that the set is globally optimal or that it will outperform in a later backtest. In-period association is not unseen predictive evidence.
 
@@ -38,8 +38,9 @@ Open `outputs/us_high_cap_selection/index.html`.
 
 | File/folder | Meaning |
 |---|---|
-| `recommended_50.csv` | The 50, descriptions, groups, A/T/S and score components |
-| `all_candidate_scores.csv` | All 404 ranks, eligibility and exclusion decisions |
+| `recommended_50_jkp_only.csv` | The current verified 50, descriptions, groups, A/T/S and score components |
+| `all_candidate_scores.csv` | All 153 verified JKP ranks, eligibility and selection decisions |
+| `excluded_nonpublished_candidates.csv` | 251 broader source columns rejected before ranking because published-reference membership was not verified |
 | `matrices/selected50/raw_correlation.csv` | 50×50 Pearson correlation of raw characteristic values |
 | `matrices/selected50/raw_covariance.csv` | 50×50 sample covariance in the source units |
 | `matrices/selected50/rank_correlation.csv` | 50×50 correlation after ranking within each US high-cap month |
@@ -61,7 +62,9 @@ The selected 50 are installed in all Kati configurations and full-history input 
 
 Existing Static ML, Portfolio ML, Fourier features and coefficient/weight-learning code are retained. The user requested deletion of the old characteristic archives, including their coefficients, weights, caches, inputs and reports. Those archives have been removed. Active inputs and configurations use the new US high-cap-selected 50 across all three base markets and US high-cap iterations. New model performance requires a fresh fit.
 
-The chart `outputs/us_high_cap_selection/charts/selection_decision_path.pdf` shows 404 candidates, 397 eligible, 200 shortlisted and the final 50. It gives the fixed scoring formula and every selected characteristic's score, group and A/T/S inclusion reason. Covariance matrices are descriptive exports; the selection rule uses return association and correlation redundancy, rather than ranking raw covariance magnitudes.
+The chart `outputs/us_high_cap_selection/charts/selection_decision_path_jkp_only.pdf` shows 153 verified JKP candidates, 152 eligible and the final 50. It gives the scoring formula and every selected characteristic's score, group and A/T/S reason. Covariance matrices are descriptive exports; return association and correlation redundancy drive selection. Older CSV/PDF files held open by another application could not be overwritten; these explicit JKP-only filenames and the current HTML report are authoritative.
+
+This stricter whitelist follows the supplied published JKP reference metadata. It does not claim to reproduce the paper's exact feature count or optimum: retaining only 50, the US high-cap measurement sample and the score/quota rule are project choices. Selection is reproducible offline using the cached WRDS observations and hashed JKP reference files.
 
 No new ML model is fitted by this task. Preparing ranks/theme columns only transforms inputs. A future explicit model run must fit new coefficients for the changed feature set.
 

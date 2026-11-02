@@ -1,7 +1,7 @@
 {
   "status": "PASS",
-  "checks": 251,
-  "passed": 251,
+  "checks": 253,
+  "passed": 253,
   "models_refitted": false,
   "model_backtest_complete": false,
   "data_stock_months": 2886029,
@@ -33,6 +33,16 @@
     },
     {
       "check": "active_names_match_us_association_report",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "all_50_in_both_published_jkp_references",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "jkp_only_policy_enforced",
       "status": "PASS",
       "detail": ""
     },

@@ -1,0 +1,1177 @@
+{
+  "status": "complete",
+  "models_fitted": false,
+  "new_columns": [
+    "div12m_me",
+    "sale_gr1",
+    "dsale_drec"
+  ],
+  "files": [
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_1994.parquet",
+      "rows": 4824,
+      "source_rows": 4824,
+      "sha256": "ac70e20e206d5c4f0a9ac5fb305d37b81322d4b589608811a4af9a151e06ff4f",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_1995.parquet",
+      "rows": 64375,
+      "source_rows": 64375,
+      "sha256": "950346d161aa0289c0aa847b6f1f92b276233524b627c0b39e850ba888f224e7",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_1996.parquet",
+      "rows": 68345,
+      "source_rows": 68345,
+      "sha256": "bb433abf2c8cce2bed0083b874222ebfa6602bbc8e7d7e792fa71f1cbc8bad14",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_1997.parquet",
+      "rows": 72012,
+      "source_rows": 72012,
+      "sha256": "a910c0f4016addf80ab5bfe27b9ba1f1b41ea5aa3b6bf5d6002044f6d2e181a5",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_1998.parquet",
+      "rows": 73007,
+      "source_rows": 73007,
+      "sha256": "3072bed9ebb0420aa6e7d300792a99388faec7b240dcab1cf21ddff94299b9cc",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_1999.parquet",
+      "rows": 69490,
+      "source_rows": 69490,
+      "sha256": "2f6c2b0179357f32b41fb2a0bd92fe1b345c2ec9c32f0b128abb47bff94d4346",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2000.parquet",
+      "rows": 65697,
+      "source_rows": 65697,
+      "sha256": "425d4e09b7604b97ae98338f2266722b155a71b6d71008d60a638c69836f4dc9",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2001.parquet",
+      "rows": 63796,
+      "source_rows": 63796,
+      "sha256": "c7dd6cb3a994fc1940bd242b91d9786c335c433a8a93b22a179f4b13862b7492",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2002.parquet",
+      "rows": 60593,
+      "source_rows": 60593,
+      "sha256": "1c321f57429c017ecee2b41b629cd41d1332882c28c6ab381cb8f96d0a1dbce8",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2003.parquet",
+      "rows": 56149,
+      "source_rows": 56149,
+      "sha256": "dbfec239f284ff9a3a4b775b8d8be4284a320c516120eac697c4a5044bc5e47c",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2004.parquet",
+      "rows": 53051,
+      "source_rows": 53051,
+      "sha256": "ddee9a0684fd5f65b065c9fed30cf1674ea52dd2d347c91ec3b499e30963e849",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2005.parquet",
+      "rows": 51559,
+      "source_rows": 51559,
+      "sha256": "204b0b96cee0eea63467a3a69c35e06bde83dadf048ac70d42da0069bbcdafa6",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2006.parquet",
+      "rows": 50687,
+      "source_rows": 50687,
+      "sha256": "4d2235eafed95e26bd0b4a9358b7fb08cd2b932d27a78877ec582318d4f364e1",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2007.parquet",
+      "rows": 49505,
+      "source_rows": 49505,
+      "sha256": "0d42f0d1dd53bf004f7051574769d63caadb53bf0f2cdd7431d2f4e990e80fdc",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2008.parquet",
+      "rows": 48896,
+      "source_rows": 48896,
+      "sha256": "77aa39aa5322fc0fbe0c97946cf30340a049a8d36e7c072b3fe2b5dfc4c11997",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2009.parquet",
+      "rows": 48240,
+      "source_rows": 48240,
+      "sha256": "015cb27c860ed4c6118fd5e4b24d634b28dcfa3aefb8080f46b929bed3aaf560",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2010.parquet",
+      "rows": 46271,
+      "source_rows": 46271,
+      "sha256": "8bffb30087fc0470422d49f1f7685072fb6ee2ccdf11aeceb4cbefe52a963fc6",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2011.parquet",
+      "rows": 44733,
+      "source_rows": 44733,
+      "sha256": "6335e77edcbc1422cca52d46c75683e06298e36742f54992c4a4071d660f5202",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2012.parquet",
+      "rows": 43882,
+      "source_rows": 43882,
+      "sha256": "919b253b3e836eb8022e96d93a951db320ffdbc2d6f47c486ece3fff8b4d2840",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2013.parquet",
+      "rows": 42895,
+      "source_rows": 42895,
+      "sha256": "3897f36421468dc57a161467f77f00f54e0761a4c508df06cb8e4b930a37bd74",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2014.parquet",
+      "rows": 42587,
+      "source_rows": 42587,
+      "sha256": "3ad137b2fc1efebec52c601780ae5670d385b9bd006bc7894ffcb330fa9e1be5",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2015.parquet",
+      "rows": 43652,
+      "source_rows": 43652,
+      "sha256": "b618d453f9a40deb13c4f2a9a6d5bc8ab45760adac220f090058f53127dc27a2",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2016.parquet",
+      "rows": 43950,
+      "source_rows": 43950,
+      "sha256": "e8e8e3d8a31571fab38892529cf31b29ea3c0be1070dd0cbddddc535fd8b4e10",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2017.parquet",
+      "rows": 43180,
+      "source_rows": 43180,
+      "sha256": "6215d7b907480fdd9316ce087f1b5313943a9bf4f06fc23407d55025b701d0b7",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2018.parquet",
+      "rows": 42604,
+      "source_rows": 42604,
+      "sha256": "3d4c3133b613576550e3d6762a0320ad5de62ed81461b6cc257b6e128e097b6d",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2019.parquet",
+      "rows": 42955,
+      "source_rows": 42955,
+      "sha256": "16dce5884ffa7a1a645f91b0a380f2f1e5b9fc169b9d293ed00b9236922457b3",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2020.parquet",
+      "rows": 43476,
+      "source_rows": 43476,
+      "sha256": "fb553f9af4d6075e658f95cc1c427e7e9fe2b8d8217a098f03bed1e0bd46be10",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2021.parquet",
+      "rows": 43693,
+      "source_rows": 43693,
+      "sha256": "9d3694449801dbcf9d2a9345422bd990cc1cac5e18d87ca619329ab31e29735e",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2022.parquet",
+      "rows": 46914,
+      "source_rows": 46914,
+      "sha256": "f70a1300773ec9ed4fe166dd40ea98e2e75501c65557dfab88271e1fa13c129d",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2023.parquet",
+      "rows": 50375,
+      "source_rows": 50375,
+      "sha256": "71eeb5d3f1506347f5c95f5d978cfd46129ad4d82343a2125828a320d537dfed",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2024.parquet",
+      "rows": 49647,
+      "source_rows": 49647,
+      "sha256": "b3f90030085f456e8a2020aeb7f60d9914982ea74b90f3c9d4c566d0610c0b79",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\US_2025.parquet",
+      "rows": 44678,
+      "source_rows": 44678,
+      "sha256": "78ad33e3dcd410a2a4863f044d981971d41eb52448455d108e4eec30a01dc7b6",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2004.parquet",
+      "rows": 10,
+      "source_rows": 10,
+      "sha256": "dfb674459ac7aa81c27786d9cc064db5018710a7726a3abab2f67ca50d7a7389",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2005.parquet",
+      "rows": 74,
+      "source_rows": 74,
+      "sha256": "b9d8524723ae9ab104d98ea44a321411256f5f68bb8643a2c26f55fccdb7b23c",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2006.parquet",
+      "rows": 54,
+      "source_rows": 54,
+      "sha256": "fcfb45442fbe6c442e842e7d42c58ca9a97c12804c000414abd27adaf79d6624",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2007.parquet",
+      "rows": 67,
+      "source_rows": 67,
+      "sha256": "ec353a7e0553c64c88006d961d93ce0265086b6a8752a1c1d2111cb3aad00a45",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2008.parquet",
+      "rows": 50,
+      "source_rows": 50,
+      "sha256": "3b06dea719818bf86e6639a485ca889bebbf015b2361be757481c674ca070bb9",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2009.parquet",
+      "rows": 50,
+      "source_rows": 50,
+      "sha256": "50be2b7111d7f4768945d32c7e2da8753d6bb6f6b50e0064e9495bafc99f2ff9",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2010.parquet",
+      "rows": 37,
+      "source_rows": 35,
+      "sha256": "52a4b6ff7a1297a50525814513123d1e4cf7d8b6d6cdea94f77f615bdcd29794",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2011.parquet",
+      "rows": 68,
+      "source_rows": 68,
+      "sha256": "caaf4b3368e6e804c9db7787f6352a31994f2d117f028eb545b2dff341652f29",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2012.parquet",
+      "rows": 45,
+      "source_rows": 45,
+      "sha256": "ece43add980372528c3001c1d16ef99d567a86477799a4fb1b548cf8174bbfd4",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2013.parquet",
+      "rows": 60,
+      "source_rows": 60,
+      "sha256": "a5c29fba3b25d246662391f33028ec8f60bcf10cac4d210317126ef14e163262",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2014.parquet",
+      "rows": 40,
+      "source_rows": 40,
+      "sha256": "53603538e79f8946f883b60e9ed960357c647a5d99ec75fc3e89d46034238e60",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2015.parquet",
+      "rows": 76,
+      "source_rows": 76,
+      "sha256": "052e214141cc3f37e8cf27d67bce29d816b7262f26984dc31e132c0d4d96799f",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2016.parquet",
+      "rows": 29,
+      "source_rows": 29,
+      "sha256": "2101d37b9aa6a2f67fe9ca55345c12fcfd29c8c82339b48aede10289b0c21835",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2017.parquet",
+      "rows": 20,
+      "source_rows": 20,
+      "sha256": "20aea4b2df8237135ee1f14518a0445e22560a32d9f4b7a7b0d3c48a009ec499",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2018.parquet",
+      "rows": 23,
+      "source_rows": 23,
+      "sha256": "ec2e528714cfa44f7e5ee9bc1a3e120b5dc392d7aefb9006bbebd06682a29ccd",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2019.parquet",
+      "rows": 49,
+      "source_rows": 49,
+      "sha256": "d13937645c93af6b0038164f90b3e54e355ba68a94031e12de38409cf3fdb21b",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2020.parquet",
+      "rows": 75,
+      "source_rows": 75,
+      "sha256": "70d61304f777628ba73c5eacfb945a017ba8832f0c9064833b7e90b24f1c4162",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2021.parquet",
+      "rows": 46,
+      "source_rows": 46,
+      "sha256": "d766fafab087153e2184a8fe7713e4716a8e6285f490399d294954db2b40f6ea",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2022.parquet",
+      "rows": 12,
+      "source_rows": 12,
+      "sha256": "91521abe08baf7b49f2c8ebe84632cc357cef5e29069aa8c486693d9e20c6c75",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2023.parquet",
+      "rows": 20,
+      "source_rows": 20,
+      "sha256": "fc89f2c128897b24c7dca0a2d154b11abeb5e217a0da0d54a3e131ef180d8dfd",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_US_2024.parquet",
+      "rows": 27,
+      "source_rows": 27,
+      "sha256": "b1c3709035bddb976a0a9c91e18c0ab776f944dd97631168dd801d6019b2883c",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_1994.parquet",
+      "rows": 712,
+      "source_rows": 712,
+      "sha256": "b0f7bd4dd7c20833250d2a305fd421241487bb3c4288f52c20c23983d678831b",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_1995.parquet",
+      "rows": 9874,
+      "source_rows": 9874,
+      "sha256": "90ca21cf6febcc476eaea73b884e7125147de9d32804ad7b56ba8f856efb17dd",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_1996.parquet",
+      "rows": 13918,
+      "source_rows": 13918,
+      "sha256": "b98ccf0913652ee7f2389ca224ad6e4430c5751effca230080e90a56b9c81cbe",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_1997.parquet",
+      "rows": 18090,
+      "source_rows": 18090,
+      "sha256": "2f0074c12a08187190f7e2e9876b54e95c1be915cd4119f5b1f7ba86a86dabfd",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_1998.parquet",
+      "rows": 23296,
+      "source_rows": 23296,
+      "sha256": "3ff3ca0072f0df293ca13716bb6e2f5482f3d5020ca145a12f6ff13395118018",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_1999.parquet",
+      "rows": 26153,
+      "source_rows": 26153,
+      "sha256": "a08c6e53f9266c46b4ed00308c4ce79ddd379733d04bdcc2af43510d052b711c",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2000.parquet",
+      "rows": 30040,
+      "source_rows": 30040,
+      "sha256": "f3f5ba06fbb5b7a167ea122214eec0fdfc93024f7f76ff593b113b07cb79cc5e",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2001.parquet",
+      "rows": 36909,
+      "source_rows": 36909,
+      "sha256": "b6afb5dacaa63173927a44bf7aa491969d896ed38f784c794052480270eaf302",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2002.parquet",
+      "rows": 41603,
+      "source_rows": 41603,
+      "sha256": "2ad45c4829010a8bf0d1b5326970cc0a45e945d3e5b3cde9c8e7e3106c3a1c5b",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2003.parquet",
+      "rows": 40594,
+      "source_rows": 40594,
+      "sha256": "c8b9520b50d65acf4cf329dc749c79f7ed79e1b77048b95e7fc22844b662eed7",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2004.parquet",
+      "rows": 40040,
+      "source_rows": 40040,
+      "sha256": "9a68387eb7bdf8905090f481a3ffa901e125441454f7dc3f8a2cc7d6e949d8d3",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2005.parquet",
+      "rows": 40274,
+      "source_rows": 40274,
+      "sha256": "6e27f0a9aa0b3748bb108ba9d4d336d1b880daf331f22dbc6466cdfa52e5d172",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2006.parquet",
+      "rows": 43402,
+      "source_rows": 43402,
+      "sha256": "1bc6d7396bdadbafe7b862ba78aede9f878a1f372851fa73d4530bf355b2ecec",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2007.parquet",
+      "rows": 47983,
+      "source_rows": 47983,
+      "sha256": "1a4b08bcc394c995dfc017c683fd645b1b07862033748afd0ed194e54aaf8090",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2008.parquet",
+      "rows": 50315,
+      "source_rows": 50315,
+      "sha256": "187ec6a160fff579ff4a1216af76e4bbe9a153c70af4a6e74f119e5c7c6d7287",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2009.parquet",
+      "rows": 47853,
+      "source_rows": 47853,
+      "sha256": "373aa25b32e1c98a4d74231085bd18fbdabe39d0cb7cb37428a465b9602dd852",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2010.parquet",
+      "rows": 46529,
+      "source_rows": 46529,
+      "sha256": "9aa9280409eaec624cfd1693b297bb078424539b2d5a0ca60f4d761b4fcfb67d",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2011.parquet",
+      "rows": 46656,
+      "source_rows": 46656,
+      "sha256": "2b3a398c37904bd16eda7c86fcf32608f8f29b04ea1340c923674ed24952f571",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2012.parquet",
+      "rows": 45900,
+      "source_rows": 45900,
+      "sha256": "baa6f21f31a5571e98a292c38d0b5a465cb64298b93cf443bb74b20a4b46d540",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2013.parquet",
+      "rows": 45195,
+      "source_rows": 45195,
+      "sha256": "1fa3d68f3697e9ea462b97b214bff607c0d74c77005a333d8b269b147e5e1ff9",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2014.parquet",
+      "rows": 45717,
+      "source_rows": 45717,
+      "sha256": "ec5d413b96088f7e5d439d12a81a404d834b9f9a83f92000ccd7bb0e14c17918",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2015.parquet",
+      "rows": 46276,
+      "source_rows": 46276,
+      "sha256": "eee10b0d349a2afe548409ce9b1eaaaa3a8ed45d0a2f6afd3ade450239e5b3ef",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2016.parquet",
+      "rows": 47318,
+      "source_rows": 47318,
+      "sha256": "02596898b7a298e26d87e0467e47d4a65397160d89bc0da52b9854b42a697658",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2017.parquet",
+      "rows": 47262,
+      "source_rows": 47262,
+      "sha256": "4c40cc56ffa9ca65eb5d8d459b86b1efa8626f4ced3c2f3a0d5226e12d631252",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2018.parquet",
+      "rows": 45015,
+      "source_rows": 45015,
+      "sha256": "3e0255d70bc09d960ae09a4d829245d38872cab4bf74dab4aab61c8872a5da57",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2019.parquet",
+      "rows": 48517,
+      "source_rows": 48517,
+      "sha256": "7d7fdef8de981aa73641a6f95ea6c2e8b5f6e58b6afe4c76033c7a5f308fb882",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2020.parquet",
+      "rows": 48883,
+      "source_rows": 48883,
+      "sha256": "8fc276718e0fcbbbf8211828ad2395cc47c15c3d45e501da64bda52f0389f6ec",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2021.parquet",
+      "rows": 49575,
+      "source_rows": 49575,
+      "sha256": "0145826748c098f5d38386e15d59e859e2c511a7dfd6216a2d0c5c0b74dd564c",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2022.parquet",
+      "rows": 51092,
+      "source_rows": 51092,
+      "sha256": "cce3775aecab4c3864c30d304c9489d35022f3d9f0e07992bcc9f22e77897c8d",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2023.parquet",
+      "rows": 52345,
+      "source_rows": 52345,
+      "sha256": "94c154cd3e8a4ab532b167ddaff659216e77da57852593077616288f530e27ed",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2024.parquet",
+      "rows": 51839,
+      "source_rows": 51839,
+      "sha256": "6a213fe96e82a555283376cc860e8a7a5128d7ed37979b29d23ccaad891bdf5c",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\EU_2025.parquet",
+      "rows": 41136,
+      "source_rows": 41136,
+      "sha256": "70029dbba9900809d6a433ffec92e0ba9fd8c4195d17ec4b1fd3757dd5392df3",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2004.parquet",
+      "rows": 2,
+      "source_rows": 2,
+      "sha256": "87d7adf515eb3ca488830a23a8af057873a6cf17bf9c04eb17a90ad3a4984fa2",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2005.parquet",
+      "rows": 15,
+      "source_rows": 15,
+      "sha256": "c69ebb79a2c728bdb6d499ace5e182ee1706a13e49f2119b7b8e16452705bfe8",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2006.parquet",
+      "rows": 33,
+      "source_rows": 33,
+      "sha256": "ec8873e37350b13eb94b311cf436a0056da94bacb84b9dc3db8121582774bdc7",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2007.parquet",
+      "rows": 24,
+      "source_rows": 24,
+      "sha256": "02da4054bb4e59850dba7719f63829a86871b62068fa5aab9d595ddb44a57e21",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2008.parquet",
+      "rows": 17,
+      "source_rows": 17,
+      "sha256": "6b8602f3d3165764b27554e2e4765dfa7a181bb84dc95858d94efa0dbf8f7446",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2009.parquet",
+      "rows": 19,
+      "source_rows": 19,
+      "sha256": "193ef5b1b8e8e1c04f475d4fe69b638087c7dcc43444bdf4c06137f5daab510a",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2010.parquet",
+      "rows": 16,
+      "source_rows": 15,
+      "sha256": "cf0680474d2b1b58030f5487ddb2b6f6d9a806c6fb98d81c09f435d327595610",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2011.parquet",
+      "rows": 39,
+      "source_rows": 39,
+      "sha256": "6b1887271dc9ed8eaac5d8b4e73daba3585ac0ec51c122265ed264cef83d9fe6",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2012.parquet",
+      "rows": 12,
+      "source_rows": 12,
+      "sha256": "a24c2e83bc3b82754771cf8b81b27711cdd38c97f25925bfcc1128c2bdb11caf",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2013.parquet",
+      "rows": 14,
+      "source_rows": 14,
+      "sha256": "e831a095efa55a6983914d4f924e8aeed9020370dc4c2ea1aed28da00fb4fee1",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2014.parquet",
+      "rows": 16,
+      "source_rows": 16,
+      "sha256": "c6d4bfa7591c6455a4e961328dc1b3e045f98de56a7b537fe34968a46de8ea41",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2015.parquet",
+      "rows": 22,
+      "source_rows": 22,
+      "sha256": "c647edf05f40b8054f470b1be1b76be0c0434eea5fea28cc6dc0a1130091d249",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2016.parquet",
+      "rows": 19,
+      "source_rows": 19,
+      "sha256": "81ece8832473b99adc487c2f8d8d13c625a4350303ee9d43655d6ab27df88c35",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2017.parquet",
+      "rows": 35,
+      "source_rows": 35,
+      "sha256": "62ebd2cdc39b0447d22ef04e01fe342a17a4505035594c2b47b98fc1ed2d2c4c",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2018.parquet",
+      "rows": 10,
+      "source_rows": 10,
+      "sha256": "c62f4b499823acdb9d2a1d29d2d2a8e4ef0d485ead579e1ebab96259a9b2c26c",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2019.parquet",
+      "rows": 25,
+      "source_rows": 25,
+      "sha256": "055e8bd9d516319ffc13a32259f99244ed5e2c90f841d4e824c2aac9929ca1aa",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2020.parquet",
+      "rows": 27,
+      "source_rows": 27,
+      "sha256": "9450a7e48df14dab0cc44ac8ea4c1250460e040d7c876e23802e6d08a7e40e3a",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2021.parquet",
+      "rows": 25,
+      "source_rows": 25,
+      "sha256": "2fa4c422240071097e69f2b21a5c74fd6f89ba5ceabee9a4b7511d53e14a56c4",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2022.parquet",
+      "rows": 38,
+      "source_rows": 38,
+      "sha256": "705120229ca3c71afbf6f4952ea1bea469361120f28949b1d0feb63f1cdc0711",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2023.parquet",
+      "rows": 19,
+      "source_rows": 19,
+      "sha256": "12ee7b05fb4cfb611082c207d3ec54023ef4af30ea116298948512ff495e365c",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\jkp_verified_supplemental\\lag_EU_2024.parquet",
+      "rows": 15,
+      "source_rows": 15,
+      "sha256": "2f3d88219cc872d42f0e099c605772ab73ffbeb0248b53e4af05d35de29f88bc",
+      "columns": [
+        "div12m_me",
+        "sale_gr1",
+        "dsale_drec"
+      ]
+    }
+  ]
+}

@@ -2,6 +2,8 @@
 
 Stored in Git LFS. Retrieve with `git lfs pull --include="Characteristics_tryout/data/**"` from the repository root.
 
+Current selection: `recommended_50.json` and `us_high_cap_selection/recommended_50.csv`. Only 153 names verified against both published JKP references compete; 152 qualify and 50 are chosen. All 50 labels/directions are published. The `us_high_cap_selection/us_high_cap_sample.parquet` snapshot is US high-cap 2005–2014 only. Source caches below retain broader columns for acquisition provenance; they do not define the active predictor list. The `jkp_verified_supplemental/` partitions supply three additional selected signals directly from WRDS Global Factor Data.
+
 - `panels/`: 64 US/EU yearly raw panels, formation years 1994-2025, with 200 characteristics. US high-cap and mid-cap share the US panel; membership is in metadata.
 - `metadata_US.parquet`, `metadata_EU.parquet`: stock-month memberships and original return targets.
 - `pilot/`: broader candidate screening inputs, including supplemental US price observations.

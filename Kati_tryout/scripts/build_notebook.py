@@ -123,9 +123,9 @@ print("Python:", sys.executable)
 | Iteration 3 | US high-cap Portfolio ML; recent-history weighting | Iterations 1–2 and unchanged base references |
 | Final | US high-cap Portfolio ML base and iterations 1–3 | Four-version progression, with Market/Static references in the wider reports |
 
-The current 50 are selected using **US high-cap observations from 2005–2014 only**. Selection is a correlation/covariance association analysis with no regression or ML training. No 2015–2025 return outcome or other-market observation enters this shortlist. The existing annual model-refit and monthly portfolio-weighting implementation is preserved for a later explicit model run. Old characteristic archives and their fitted results have been removed. See outputs/us_high_cap_selection/charts/selection_decision_path.pdf for the complete selection chart.
+The current 50 are selected using **US high-cap observations from 2005–2014 only**, within the verified published JKP whitelist. Selection uses association statistics without ML training. No later outcome or other-market observation enters the shortlist. The existing model-refit and portfolio-weighting implementation is preserved for a later explicit run. See outputs/us_high_cap_selection/charts/selection_decision_path_jkp_only.pdf and recommended_50_jkp_only.csv for current results.
 
-The 50 cover 13 groups: 32 published labels and 18 provisional US high-cap correlation-based labels. The 13 A, 13 T and 24 S reasons retain published anchors, theme representation and the association/redundancy rule. Covariance theme signs use published directions for published members and the 2005–2014 US high-cap association sign for provisional members. The selected 50 include dolvol_126d as a ranked signal; costs separately use its original unranked dollar-volume value. There are exactly 50 ML inputs.
+The 50 cover 13 published JKP groups, with no provisional labels. Candidates must appear in both published JKP Cluster Labels and Factor Details and in WRDS Global Factor Data: 153 candidates, 152 eligible, 50 selected. The 13 A, 13 T and 24 S reasons retain anchors, group representation and the association/redundancy rule. Covariance themes use published directions. The selected 50 include dolvol_126d as a ranked signal; costs separately use its original unranked dollar-volume value. There are exactly 50 ML inputs.
 """), markdown("""
 ## Embedded source edition
 
@@ -148,7 +148,7 @@ The following sections contain the actual source, including all calculation libr
         markdown("""
 ## US high-cap correlation and covariance selection — no ML training
 
-**Purpose:** reproduce the current 50 from 404 candidates using only US high-cap observations in 2005–2014. **Input:** the self-contained US high-cap observation snapshot. **Output:** rankings, A/T/S reasons, 50×50 feature matrices, return-augmented matrices, per-stock associations and interactive charts. This optional cell performs no ML fit and does not install a newly changed list automatically over fitted models.
+**Purpose:** reproduce the current 50 from 153 verified published JKP candidates using only US high-cap observations in 2005–2014. **Input:** the self-contained US high-cap snapshot and published reference metadata. **Output:** rankings, A/T/S reasons, 50×50 feature matrices, return-augmented matrices, per-stock associations and interactive charts. This optional cell performs no ML fit and does not install a changed list over fitted models.
 """), code('''RECOMPUTE_ASSOCIATIONS = False
 if RECOMPUTE_ASSOCIATIONS:
     subprocess.run([sys.executable, "-X", "utf8", str(KATI_ROOT / "scripts/select_characteristics.py")],

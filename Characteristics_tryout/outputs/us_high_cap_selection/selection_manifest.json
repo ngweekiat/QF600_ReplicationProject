@@ -1,9 +1,9 @@
 {
   "scope": "us_large only",
   "mode": "training",
-  "candidates": 404,
-  "eligible": 397,
-  "cap": 200,
+  "candidates": 153,
+  "eligible": 152,
+  "cap": 152,
   "selected": 50,
   "sample_description": "9,682 US high-cap held-stock months; 128 distinct stocks; measurement return months 2005\u20132014. No ML training.",
   "selection_return_start": "2005-01-31",
@@ -24,8 +24,12 @@
     "A": 13,
     "T": 13
   },
-  "published_group_count": 32,
-  "proxy_group_count": 18,
+  "published_group_count": 50,
+  "proxy_group_count": 0,
+  "candidate_policy": "Exact WRDS source names intersect published JKP Cluster Labels and Factor Details",
+  "jkp_only": true,
+  "published_groups_only": true,
+  "excluded_unverified_count": 251,
   "source_files": [
     {
       "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\metadata_US.parquet",
@@ -114,6 +118,14 @@
     {
       "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\prc_US.parquet",
       "sha256": "7e19eff58b3f9a46bab8513ea598ccb34cf7eb70150b8c1a294048109b7fd754"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\reference\\cluster_labels.parquet",
+      "sha256": "10d12ac05601c6bebd0bf4e0f65e2a13968bdb658c435a3a6c1038c626cfe19f"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\reference\\factor_details.parquet",
+      "sha256": "5624304c5aebe9adc1b0fa423badcde9f5b3128b79548ea7ae405fc258bd09a0"
     }
   ],
   "caveat": "Best under the declared association/diversity rule; no global optimality or joint-ML performance claim."

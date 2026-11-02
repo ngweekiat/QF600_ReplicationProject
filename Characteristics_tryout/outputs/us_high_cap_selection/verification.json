@@ -9,6 +9,7 @@
     "published_anchor_each_group": true,
     "no_models_fitted": true,
     "reproduced_order": true,
+    "all_selected_verified_jkp": true,
     "symmetric_matrices\\all_candidates_training\\rank_correlation.csv": true,
     "symmetric_matrices\\all_candidates_training\\rank_covariance.csv": true,
     "symmetric_matrices\\all_candidates_training\\rank_pair_counts.csv": true,

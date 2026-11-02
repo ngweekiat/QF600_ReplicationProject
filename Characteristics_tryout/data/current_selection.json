@@ -1,6 +1,8 @@
 {
   "scope": "us_large",
   "period": "2005\u20132014",
+  "jkp_only": true,
+  "published_groups_only": true,
   "method": "correlation/covariance association analysis; A/T/S diversity rules",
   "selected_50": "us_high_cap_selection/recommended_50.json",
   "candidate_200": "us_high_cap_selection/candidate_200.csv",

@@ -43,6 +43,10 @@ def verify():
         check('no_ml_regression_or_test_outcomes_in_selection',not selection['models_fitted'] and
               not selection['regression_r2_used'] and not selection['test_outcomes_used'])
         check('active_names_match_us_association_report',json.loads((ROOT/'outputs/us_high_cap_selection/recommended_50.json').read_text())==names)
+        clusters=pd.read_parquet(ROOT/'data/reference/cluster_labels.parquet')
+        details=pd.read_parquet(ROOT/'data/reference/factor_details.parquet')
+        check('all_50_in_both_published_jkp_references',set(names).issubset(set(clusters.characteristic)&set(details.abr_jkp.dropna())))
+        check('jkp_only_policy_enforced',selection.get('jkp_only') and selection['published_group_count']==50 and selection['proxy_group_count']==0)
         baseline=json.loads((ROOT/'data/characteristics/implementation_baseline.json').read_text())
         core=list((ROOT/'scripts/jkmp/models').glob('*.py'))+list((ROOT/'scripts/jkmp/portfolio').glob('*.py'))
         check('existing_ml_and_weight_learning_source_preserved',all(digest(p)==baseline['source_hashes'][p.relative_to(ROOT).as_posix()] for p in core))

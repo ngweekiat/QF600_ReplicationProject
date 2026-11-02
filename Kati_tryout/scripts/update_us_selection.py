@@ -38,7 +38,7 @@ def checked_move(source,destination):
     if not source.exists():return
     if destination.exists():raise ValueError(f'Archive destination already exists: {destination}')
     destination.parent.mkdir(parents=True,exist_ok=True)
-    shutil.move(str(source),str(destination))
+    shutil.move('\\\\?\\'+str(source),'\\\\?\\'+str(destination))
 
 
 def refresh_shared_manifest():
@@ -84,10 +84,27 @@ def update():
     decision=json.loads((result/'selection_manifest.json').read_text())
     if decision['other_markets_used'] or decision['models_fitted'] or decision['selection_return_end']!='2014-12-31':raise ValueError('Selection must be association-only, US high-cap, 2005–2014')
     current=ROOT/'data/characteristics/recommended_50.json'
+    if (ROOT/'data/.us_high_cap_selection_build').exists() and not (ROOT/'data/SNAPSHOT_MANIFEST.json').exists():
+        return resume_staged_install()
     if current.exists() and json.loads(current.read_text())==names:
         print('Current US high-cap 50 inputs already installed.');return 0
     missing=[x for x in names if x not in json.loads((CHAR/'data/download_200.json').read_text())]
     supplemental=CHAR/'data/us_high_cap_selection/supplemental'
+    verified_supplemental=CHAR/'data/us_high_cap_selection/jkp_verified_supplemental'
+    def extra_features(region,lag=False):
+        remaining=set(missing); merged=None
+        import pyarrow.parquet as pq
+        for folder in (supplemental,verified_supplemental):
+            paths=[folder/f'lag_{region}.parquet'] if lag else sorted(folder.glob(f'{region}_*.parquet'))
+            paths=[p for p in paths if p.exists()]
+            if not paths:continue
+            cols=[x for x in missing if x in remaining and x in pq.read_schema(paths[0]).names]
+            if not cols:continue
+            values=pd.concat([pd.read_parquet(p,columns=['id','eom',*cols]) for p in paths],ignore_index=True)
+            merged=values if merged is None else merged.merge(values,on=['id','eom'],how='outer',validate='one_to_one')
+            remaining-=set(cols)
+        if remaining:raise FileNotFoundError(f'Missing selected JKP columns: {sorted(remaining)}')
+        return merged
     if missing and not (supplemental/'manifest.json').exists():raise FileNotFoundError('Acquire the missing new-characteristic columns before updating Kati')
     stage=ROOT/'data/.us_high_cap_selection_build'
     if stage.exists():raise ValueError('A prior staging folder exists; inspect it before another migration')
@@ -98,6 +115,8 @@ def update():
     def save(frame,path,role):
         path.parent.mkdir(parents=True,exist_ok=True);frame.to_parquet(path,index=False,compression='zstd');register(path,role)
     chars=stage/'characteristics';chars.mkdir()
+    baseline=ROOT/'data/characteristics/implementation_baseline.json'
+    if baseline.exists():shutil.copy2(baseline,chars/baseline.name)
     shutil.copy2(result/'recommended_50.json',chars/'recommended_50.json');register(chars/'recommended_50.json','US high-cap-only 2005–2014 association shortlist')
     shutil.copy2(result/'recommended_50.csv',chars/'selected_feature_metadata.csv');register(chars/'selected_feature_metadata.csv','Selection reasons, group status and association diagnostics')
     directions=selected[['characteristic','theme','theme_assignment_method','published_jkp_153','direction','training_direction']].copy()
@@ -114,7 +133,7 @@ def update():
         cached=[x for x in names if x not in missing]
         raw=pd.concat([pd.read_parquet(p,columns=['id','eom',*cached]) for p in sorted((CHAR/'data/panels').glob(f'{region}_*.parquet'))],ignore_index=True)
         if missing:
-            extra=pd.concat([pd.read_parquet(p,columns=['id','eom',*missing]) for p in sorted(supplemental.glob(f'{region}_*.parquet'))],ignore_index=True)
+            extra=extra_features(region)
             raw=raw.merge(extra,on=['id','eom'],how='left',validate='one_to_one',indicator=True)
             if not raw._merge.eq('both').all():raise ValueError('Missing supplemental keys')
             raw=raw.drop(columns='_merge')
@@ -139,7 +158,7 @@ def update():
         old_lag=pd.read_parquet(ROOT/f'data/inputs/lag_history_{region}.parquet',columns=['id','eom','g','growth_imputed_neutral'])
         lag=pd.read_parquet(CHAR/f'data/lag_history/{region}.parquet',columns=['id','eom',*cached])
         if missing:
-            extra=pd.read_parquet(supplemental/f'lag_{region}.parquet',columns=['id','eom',*missing])
+            extra=extra_features(region,lag=True)
             lag=lag.merge(extra,on=['id','eom'],how='left',validate='one_to_one')
         lag=old_lag.merge(lag,on=['id','eom'],how='left',validate='one_to_one',indicator=True)
         if not lag._merge.eq('both').all():raise ValueError('Actual lag keys absent from characteristic source')
@@ -173,6 +192,7 @@ def update():
     fitted_hashes=[dict(path=str(p.relative_to(ROOT)),sha256=digest(p)) for p in fitted]
     output_hashes=[dict(path=str(p.relative_to(ROOT/'outputs')),sha256=digest(p)) for p in (ROOT/'outputs').rglob('*')
         if p.is_file() and 'archive' not in p.relative_to(ROOT/'outputs').parts and p.name in ('pf.parquet','weights.parquet','aim_coefs.parquet','chosen.csv')]
+    if fitted_hashes or output_hashes:raise ValueError('Existing fits require explicit review before replacing inputs')
     moved=[]
     for name in ('characteristics','source','processed','raw','figure1'):
         p=ROOT/'data'/name
@@ -220,7 +240,91 @@ def update():
         preserved_fit_hashes=fitted_hashes,preserved_portfolio_output_hashes=output_hashes,models_fitted=False,old_fits_preserved=True,old_feature_data_archived=moved)
     json_file(ROOT/'outputs/validation/us_high_cap_selection_migration.json',migration)
     (archive_outputs/'README.md').write_text('# Previous characteristic-set results\n\nThese fits use the earlier three-market-selected 50. They were archived intact when switching to the US high-cap-only association shortlist. They are not results for the new 50.\n\nInputs, original configurations and code/notebook are under `'+str(archive_data.relative_to(ROOT))+'`.\n',encoding='utf-8')
-    print('Installed new50; previous data/fits archived at',archive_data,'and',archive_outputs,flush=True)
+    # The user explicitly requested no obsolete characteristic archives.
+    for target in (archive_data,archive_outputs):
+        resolved=target.resolve()
+        if not resolved.is_relative_to(ROOT.resolve()):raise ValueError('Unsafe cleanup target')
+        shutil.rmtree('\\\\?\\'+str(resolved))
+    manifest_path=ROOT/'data/SNAPSHOT_MANIFEST.json'
+    manifest=json.loads(manifest_path.read_text());manifest.pop('previous_feature_archive',None)
+    manifest.update(jkp_only=True,old_feature_archives_removed=True)
+    json_file(manifest_path,manifest)
+    settings.pop('old_feature_archive',None);settings.update(jkp_only=True,features='Published JKP-only US high-cap association-selected 50')
+    json_file(ROOT/'settings.json',settings)
+    json_file(ROOT/'outputs/validation/us_high_cap_selection_migration.json',dict(status='PASS',jkp_only=True,models_fitted=False,old_feature_archives_removed=True,new_selection=decision))
+    for target in (stage/'inputs',stage):
+        if target.exists():target.rmdir()
+    print('Installed verified JKP-only 50; superseded local input snapshot removed.',flush=True)
+    return 0
+
+
+def resume_staged_install():
+    """Finish a fully built snapshot after an interrupted Windows directory move."""
+    stage=ROOT/'data/.us_high_cap_selection_build'
+    previous=sorted((ROOT/'data/archives').glob('*_previous_50'))
+    prior=previous[-1] if previous else None
+    result=CHAR/'outputs/us_high_cap_selection'
+    selected=pd.read_csv(result/'recommended_50.csv');names=selected.characteristic.tolist()
+    current_chars=stage/'characteristics' if (stage/'characteristics').exists() else ROOT/'data/characteristics'
+    current_source=stage/'source' if (stage/'source').exists() else ROOT/'data/source'
+    if json.loads((current_chars/'recommended_50.json').read_text())!=names:
+        raise ValueError('Staged selection differs from current verified selection')
+    audits=[]
+    for region in ('US','EU'):
+        new=pd.read_parquet(current_source/f'screened_{region}.parquet',columns=['id','eom','dolvol_126d'])
+        if prior:
+            old=pd.read_parquet(prior/f'source/screened_{region}.parquet',columns=['id','eom','dolvol_126d'])
+            pd.testing.assert_frame_equal(old,new,check_dtype=False)
+        else:
+            expected=pd.read_parquet(CHAR/f'data/metadata_{region}.parquet',columns=['id','eom'])
+            actual=pd.MultiIndex.from_frame(new[['id','eom']]);keys=pd.MultiIndex.from_frame(expected)
+            if len(actual)!=len(keys) or not actual.difference(keys).empty:raise ValueError('Source keys differ from acquisition metadata')
+        audits.append(dict(region=region,stock_months=len(new),exact_broad_keys_preserved=True,absent_source_rows=0,
+                           formation_start=str(new.eom.min().date()),formation_end=str(new.eom.max().date())))
+    for name in ('characteristics','source'):
+        if (stage/name).exists():checked_move(stage/name,ROOT/'data'/name)
+    for path in (stage/'inputs').glob('*.parquet'):
+        destination=ROOT/'data/inputs'/path.name
+        path.replace(destination)
+    directions=pd.read_csv(ROOT/'data/characteristics/theme_directions.csv')
+    themes={t:g.characteristic.tolist() for t,g in directions.groupby('model_theme',sort=False)}
+    for path in (ROOT/'configs').rglob('*.yaml'):
+        config=yaml.safe_load(path.read_text());config.setdefault('features',{})['themes']=themes
+        path.write_text(yaml.safe_dump(config,sort_keys=False),encoding='utf-8')
+    settings=json.loads((ROOT/'settings.json').read_text())
+    settings.pop('old_feature_archive',None)
+    settings.update(features='Published JKP-only US high-cap association-selected 50',jkp_only=True,
+                    selection_scope='us_large',selection_return_start='2005-01-31',selection_return_end='2014-12-31',selection_models_fitted=False,old_feature_archives_removed=True)
+    json_file(ROOT/'settings.json',settings)
+    (ROOT/'data/characteristics/us_high_cap_inputs').mkdir(exist_ok=True)
+    portable_analysis()
+    # Remove only the superseded outputs named by this migration.
+    for target in (() if prior is None else (prior,ROOT/'outputs/archive'/prior.name)):
+        resolved=target.resolve()
+        if not resolved.is_relative_to(ROOT.resolve()):raise ValueError('Cleanup outside Kati')
+        if resolved.exists():shutil.rmtree('\\\\?\\'+str(resolved))
+    for path in result.rglob('*'):
+        if not path.is_file() or path.name=='selection_decision_path.pdf':continue
+        destination=ROOT/'outputs/us_high_cap_selection'/path.relative_to(result)
+        destination.parent.mkdir(parents=True,exist_ok=True)
+        try:shutil.copy2(path,destination)
+        except PermissionError:
+            alternate=destination.with_name(destination.stem+'_jkp_only'+destination.suffix)
+            shutil.copy2(path,alternate)
+            print('Open legacy report retained; current result saved as:',alternate.name,flush=True)
+    files=[]
+    for folder in ('characteristics','source','inputs','reference'):
+        for path in (ROOT/'data'/folder).rglob('*'):
+            if path.is_file():files.append(dict(path=path.relative_to(ROOT).as_posix(),sha256=digest(path),bytes=path.stat().st_size,role='Current verified JKP-only input snapshot'))
+    json_file(ROOT/'data/SNAPSHOT_MANIFEST.json',dict(status='PASS',pipeline='Kati_tryout',features=names,feature_count=50,
+        selection_scope='us_large',selection_return_start='2005-01-31',selection_return_end='2014-12-31',models_refitted=False,
+        runtime_requires_sibling_projects=False,files=files,regional_audits=audits,jkp_only=True,old_feature_archives_removed=True,
+        theme_direction_policy=dict(published_direction_count=50,training_direction_proxy_count=0)))
+    json_file(ROOT/'outputs/validation/us_high_cap_selection_migration.json',dict(status='PASS',jkp_only=True,models_fitted=False,
+        exact_broad_keys_and_cost_liquidity_preserved=True,old_feature_archives_removed=True))
+    for folder in (stage/'inputs',stage):
+        if folder.exists():folder.rmdir()
+    print('Installed JKP-only snapshot; exact keys and raw cost liquidity independently verified.',flush=True)
     return 0
 
 

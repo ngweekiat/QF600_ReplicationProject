@@ -5,6 +5,20 @@ import pytest
 
 from characteristics.us_high_cap_selection import load_sample, association_scores
 from characteristics.statistics import pairwise_matrices
+from characteristics.us_high_cap_selection import verified_jkp_registry
+
+
+def test_jkp_membership_requires_both_published_references(tmp_path):
+    reference=tmp_path/'reference';reference.mkdir()
+    pd.DataFrame({'characteristic':['verified','cluster_only'],'cluster':['Value','Quality']}).to_parquet(reference/'cluster_labels.parquet',index=False)
+    pd.DataFrame({'abr_jkp':['verified','details_only'],'direction':[1,-1],'name_new':['Verified','Other']}).to_parquet(reference/'factor_details.parquet',index=False)
+    registry=pd.DataFrame({'characteristic':['verified','cluster_only','details_only','intruder'],
+                           'published_theme':['Wrong']*4,'direction':[-1]*4,'name_new':['Wrong']*4})
+    selected,_=verified_jkp_registry(registry,data=tmp_path)
+    assert selected.characteristic.tolist()==['verified']
+    assert selected.published_theme.tolist()==['Value']
+    assert selected.direction.tolist()==[1]
+    assert selected.jkp_membership_verified.all()
 
 
 def test_pairwise_matrices_match_pandas_with_missing_observations():

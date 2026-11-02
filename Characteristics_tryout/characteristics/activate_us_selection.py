@@ -12,22 +12,21 @@ def activate():
     source=OUTPUT/'us_high_cap_selection'
     names=json.loads((source/'recommended_50.json').read_text())
     previous=DATA/'recommended_50.json'
-    if previous.exists() and json.loads(previous.read_text())!=names:
-        archive=DATA/'selection_archive'/dt.datetime.now().strftime('%Y%m%d_%H%M%S_previous_cross_market')
-        archive.mkdir(parents=True)
-        for name in ('recommended_50.json','design.json'):
-            if (DATA/name).exists():shutil.copy2(DATA/name,archive/name)
+    manifest=json.loads((source/'selection_manifest.json').read_text())
+    if not manifest.get('jkp_only') or manifest.get('proxy_group_count')!=0:
+        raise ValueError('Activation requires published JKP-only selection with no provisional groups')
     shutil.copy2(source/'recommended_50.json',previous)
     target=DATA/'us_high_cap_selection'
     target.mkdir(exist_ok=True)
     for name in ('recommended_50.json','recommended_50.csv','candidate_200.csv','selection_manifest.json'):
         shutil.copy2(source/name,target/name)
-    (DATA/'current_selection.json').write_text(json.dumps(dict(scope='us_large',period='2005–2014',
+    (DATA/'current_selection.json').write_text(json.dumps(dict(scope='us_large',period='2005–2014',jkp_only=True,published_groups_only=True,
         method='correlation/covariance association analysis; A/T/S diversity rules',
         selected_50='us_high_cap_selection/recommended_50.json',candidate_200='us_high_cap_selection/candidate_200.csv',
         report=str(source),models_fitted=False,historical_download_200_file='download_200.json'),indent=2)+'\n',encoding='utf-8')
     design=json.loads((DATA/'design.json').read_text())
     design.update(scope='US high-cap held-stock observations only for characteristic selection',
+        candidate_count=manifest['candidates'],jkp_only=True,published_groups_only=True,
         final_selection='2005–2014 US high-cap association ranking; 13 A, 13 T and 24 S; no ML/regression fits',
         current_selection='us_high_cap_selection/recommended_50.json',
         selection_return_start='2005-01-31',selection_return_end='2014-12-31',
