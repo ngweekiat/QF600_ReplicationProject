@@ -58,6 +58,7 @@ def verify():
         from jkmp.config import _read_yaml
         same=True
         for config in (ROOT/'configs').rglob('*.yaml'):
+            if config.stem.startswith('iteration_'):continue
             previous=baseline['non_feature_configs'][config.relative_to(ROOT).as_posix()].copy()
             current=_read_yaml(config,seen=())
             previous.pop('features',None);current.pop('features',None)
@@ -86,10 +87,10 @@ def verify():
           spec.loc[spec.published_jkp_153, "direction"]) and
           np.array_equal(spec.loc[~spec.published_jkp_153, "model_theme_direction"], spec.loc[~spec.published_jkp_153, "training_direction"]))
 
-    configs = [(u, "base") for u in UNIVERSES] + [("us_large", f"iteration_{i}") for i in (1, 2, 3)]
+    configs = [(u, "base") for u in UNIVERSES] + [("us_large", f"iteration_{i}") for i in range(1,6)]
     for market, group in configs:
         cfg = load_config(config_path(market, group))
-        check(f"{market}/{group}:rff_tuning_scope", cfg.return_model.validation_scope == ("universe" if group=="base" else "all"))
+        check(f"{market}/{group}:rff_tuning_scope", cfg.return_model.validation_scope == 'universe')
         check(f"{market}/{group}:ridge_penalties", len(cfg.ridge_grid.values)==101 and cfg.ridge_grid.values[0]==0.0)
         check(f"{market}/{group}:frozen_50_only", len(cfg.features.names) == 50 and set(cfg.features.names) == set(names))
         check(f"{market}/{group}:local_paths", all(p.resolve().is_relative_to(ROOT) for p in
@@ -136,9 +137,10 @@ def verify():
     for job in jobs:
         check(f"plan:{job.name}:dependencies_precede_job", set(job.dependencies).issubset(available))
         available.add(job.name)
-        if job.stage in {"03", "04", "05", "06", "07", "10", "11", "12", "13", "14", "monitor"}:
+        if job.stage in {"03", "04", "05", "06", "07", "10", "11", "12", "13", "14", "monitor","experiment"}:
             check(f"plan:{job.name}:script_available", script_path(job.stage, normalise_group(job.variant)).is_file())
     check("iterations_only_us_high_cap", all(job.universe == "us_large" for job in jobs if job.variant != "base"))
+    check('five_sequential_experiments',len([j for j in jobs if j.stage=='experiment'])==5)
     check("static_star_only_us_high_cap_base",[j.universe for j in jobs if j.stage=='05']==['us_large'])
     cfg=load_config(config_path('us_large'))
     check('expanded_static_star_grid_has_100_candidates',len(cfg.static_ml.k_grid)*len(cfg.static_ml.u_grid)*len(cfg.static_ml.g_grid)==100)

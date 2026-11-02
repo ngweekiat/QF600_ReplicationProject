@@ -7,13 +7,15 @@ import numpy as np
 import pandas as pd
 
 ROOT=Path(__file__).resolve().parents[1]
-GROUPS=('base','iteration_1','iteration_2','iteration_3')
+GROUPS=('base',*(f'iteration_{i}' for i in range(1,6)))
 MARKETS=('us_large','us_mid','eu_large')
 DESCRIPTIONS={
     'base':'US high-cap Static ML* and default Portfolio ML in all three markets; overall analysis adds Market references.',
-    'iteration_1':'Benchmark-relative Portfolio ML, with 1%, 2% and 4% tracking-error targets.',
-    'iteration_2':'Wider 250-stock universe, capacity and cost sensitivity; references iteration 1.',
-    'iteration_3':'Time-decayed estimation with 3/5/10-year half-lives and no decay; references iteration 2.'}
+    'iteration_1':'Annual refitting, already in Base; retained as design, P(better) N/A.',
+    'iteration_2':'Gamma 5 against the previous accepted version.',
+    'iteration_3':'Exit rank 120 and costs x2, inheriting accepted changes.',
+    'iteration_4':'Market plus pretest-calibrated 1% TE-target ML tilt.',
+    'iteration_5':'Recent-history weighting with 3/5/10-year half-lives and equal weighting.'}
 
 
 def markets_for_group(group):
@@ -42,10 +44,11 @@ def discover(group,market):
     if group=='base':
         files=([(root/'static_ml_star/pf.parquet','experiment',None)] if market=='us_large' else [])+[(root/'portfolio_ml/rff/pf.parquet','experiment',None)]
     else:
-        files=[(p,'experiment',active_label(p,root)) for p in sorted((root/'active').glob('gte*/pf.parquet'))]
-        for rel in ('benchmarks/pf_test.parquet','static_ml/pf.parquet','portfolio_ml/rff/pf.parquet','portfolio_ml/raw/pf.parquet'):
-            path=root/rel
-            if path.exists():files.append((path,'reference_or_preparatory',None))
+        files=[(root/'pf.parquet','experiment',f'Portfolio ML iteration {group.split("_")[1]}')]
+        base=ROOT/'outputs/base/us_large'
+        files += [(base/'portfolio_ml/rff/pf.parquet','reference','Base Portfolio ML'),
+                  (base/'static_ml_star/pf.parquet','reference','Static ML*'),
+                  (ROOT/'outputs/base/overall analysis/market_references/us_large/pf.parquet','reference','Market')]
     frames=[];inventory=[]
     for path,role,label in files:
         if not path.exists():continue
@@ -125,6 +128,10 @@ def main(argv=None):
             record=dict(group=group,market=market,status=status,experiment_series=int(experiment.strategy.nunique()),
                 reference_series=int(reference.strategy.nunique()),new_experiments_run=False,
                 scheduled_in_current_scope=group=='base' or market=='us_large')
+            if group!='base' and (root/'decision.json').exists():
+                decision=json.loads((root/'decision.json').read_text())
+                record.update(verdict=decision['verdict'],p_better=decision['p_better'],
+                    included=decision['accepted'],inherited_iterations=decision['inherited_iterations'])
             availability.append(record)
             (root/'status.json').write_text(json.dumps(record,indent=2),encoding='utf-8')
             table=stats(data,root)
@@ -136,6 +143,12 @@ def main(argv=None):
             intro=f'<h1>{group}: {market}</h1><p>{html.escape(DESCRIPTIONS[group])}</p><p><strong>Status: {html.escape(status)}</strong></p>'
             text='Only freshly fitted Kati outputs are indexed here. This reporting step does not fit models. Test returns are 2020-2025; characteristic selection used US high-cap 2005-2014 only. Iterations apply only to US high-cap Portfolio ML. Reference/preparatory statistics are not a completed iteration result.'
             body=intro+'<p>'+text+'</p>'
+            if group!='base' and (root/'decision.json').exists():
+                decision=json.loads((root/'decision.json').read_text())
+                probability=decision['p_better']
+                ptext='N/A (already in Base)' if probability is None else f'{probability:.1%}'
+                body+=f'<p><b>{html.escape(decision["verdict"])}</b>; P(better) = {ptext}. Inherited iterations: {decision["inherited_iterations"]}. Included after this decision: {decision["included_after"]}.</p><p><a href="SUMMARY.md">Inheritance and decision summary</a> | <a href="../../iteration_summary/index.html">All five experiments and final comparison</a></p>'
+                body+='<img src="charts/net_returns_and_costs.png" alt="Candidate, previous accepted version, Base, Static ML star and Market: returns, drawdowns and relative performance"><p><a href="performance_summary.csv">Detailed performance CSV</a> | <a href="monthly_returns.csv">Monthly series</a> | <a href="decision.json">Decision and exact inherited settings</a></p>'
             if not table.empty:body+='<h2>Available saved performance</h2><p>Returns and costs are annual decimal fractions; leverage and turnover are ratios.</p><div class="scroll">'+table.to_html(index=False,float_format=lambda x:f'{x:.5g}')+'</div>'
             if (root/'active/summary.csv').exists():body+='<p><a href="active/summary.csv">Original iteration summary (unchanged)</a></p>'
             for role in ('experiment','reference'):
@@ -143,6 +156,10 @@ def main(argv=None):
                 if (root/image).exists():body+=f'<img src="{image}" alt="{role} results">'
             (root/'index.html').write_text('<!doctype html><meta charset="utf-8">'+style+body,encoding='utf-8')
             (root/'README.md').write_text(f'# {group}: {market}\n\n{DESCRIPTIONS[group]}\n\n**Status: {status}.**\n\n{text}\n\nOpen index.html. CSV, Parquet and chart files remain in their respective run folders. Newly generated descriptive summaries/charts are under reports/.\n',encoding='utf-8')
+            if group!='base' and (root/'SUMMARY.md').exists():
+                summary=(root/'SUMMARY.md').read_text(encoding='utf-8')
+                (root/'README.md').write_text(summary,encoding='utf-8')
+                (group_root/'SUMMARY.md').write_text(summary+'\n\nDetailed results: us_large/index.html\n',encoding='utf-8')
         rows=pd.DataFrame(availability).query('group == @group')
         rows.to_csv(group_root/'availability.csv',index=False)
         links=''.join(f'<li><a href="{m}/index.html">{m}</a></li>' for m in markets_for_group(group))

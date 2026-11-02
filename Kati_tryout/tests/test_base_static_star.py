@@ -79,19 +79,19 @@ def test_base_scope_and_iterations_are_separate():
     assert [j.universe for j in jobs if j.stage=="05"]==["us_large"]
     assert base_strategies("us_large")==("Static-ML*","Portfolio-ML")
     assert base_strategies("us_mid")==base_strategies("eu_large")==("Portfolio-ML",)
-    assert len([j for j in jobs if j.stage=="12" and j.extra==("run",)])==7
+    assert len([j for j in jobs if j.stage=="experiment"])==5
     from comparison_analysis import base_sources,iteration_baseline_sources
     sources=base_sources()
     assert len([s for s in sources if s["expected_type"]=="Static-ML*"])==1
     assert not any(s["expected_type"]=="Static-ML" for s in sources)
-    assert any(s["expected_type"]=="Static-ML" for s in iteration_baseline_sources())
+    assert any(s["expected_type"]=="Static-ML*" for s in iteration_baseline_sources())
     from jkmp.config import load_config
     from workflow import config_path
-    for i in (1,2,3):
+    for i in range(1,6):
         cfg=load_config(config_path("us_large",f"iteration_{i}"))
-        assert cfg.reporting.main_types==("Static-ML","Portfolio-ML")
-        assert cfg.static_ml.k_grid==(1.,1/3,.2)
-        assert cfg.static_ml.g_grid==(0.,1.,2.)
+        assert cfg.reporting.main_types==("Static-ML*","Portfolio-ML")
+        assert cfg.static_ml.k_grid==(1.,1/3,.2,.1,.05)
+        assert cfg.static_ml.g_grid==(0.,1.,2.,3.)
 
 
 def test_portfolio_cache_reuse_rejects_changed_data_or_model_settings():

@@ -55,6 +55,17 @@ def portfolio_compatible(previous,current):
     return bool(previous) and inputs(previous)==inputs(current)
 
 
+def moments_compatible(previous,current):
+    """Ridge and return forecasts do not enter Portfolio ML sufficient statistics."""
+    def inputs(record):
+        config=dict(record.get('config',{}))
+        for key in ('reporting','regimes','static_ml','ridge_grid','return_model'):config.pop(key,None)
+        sources={p:h for p,h in record.get('sources',{}).items()
+                 if not p.replace(chr(92),'/').endswith(('/predictions.parquet','/static_ml.py','/static_ml_star.py'))}
+        return config,sources
+    return bool(previous) and inputs(previous)==inputs(current)
+
+
 def digest(path):
     h = hashlib.sha256()
     with Path(path).open("rb") as stream:
@@ -94,8 +105,13 @@ def provenance(universe,variant="base"):
 
 def load_inputs(cfg):
     p=cfg.paths.processed
-    panel=pd.read_parquet(p/"panel.parquet")
-    preds=pd.read_parquet(p/"predictions.parquet")[["id","eom","pred_ld1"]]
+    # grid_inputs uses only stocks ever held. Push that identical filter into
+    # the parquet reader rather than merging a million-row regional panel.
+    members=pd.read_parquet(p/'panel.parquet',columns=['id'],filters=[('in_universe','=',True)])
+    ids=sorted(members.id.unique().tolist())
+    columns=list(dict.fromkeys(['id','eom','me','in_universe','lambda','g','tr_ld1','ret_ld1',*cfg.features.names]))
+    panel=pd.read_parquet(p/'panel.parquet',columns=columns,filters=[('id','in',ids)])
+    preds=pd.read_parquet(p/'predictions.parquet',columns=['id','eom','pred_ld1'],filters=[('id','in',ids)])
     panel=panel.merge(preds,on=["id","eom"],how="left",validate="one_to_one")
     wealth=pd.read_parquet(p/"wealth.parquet")
     cov=load_covariance(p/"covariance")
@@ -129,7 +145,7 @@ def point_signature(source_signature,gamma,level):
     return hashlib.sha256(f"{source_signature}|{gamma:.17g}|{level:.17g}".encode()).hexdigest()
 
 
-def fit_point(universe,gamma,level,source_signature,force=False,previous_signature=None):
+def fit_point(universe,gamma,level,source_signature,force=False,previous_signature=None,previous_moments_signature=None):
     """New fit at each (gamma,wealth); source headline portfolios are read-only."""
     cfg=load_config(config_path(universe))
     folder=OUT/universe/"points"/point_key(gamma,level)
@@ -169,7 +185,8 @@ def fit_point(universe,gamma,level,source_signature,force=False,previous_signatu
             if portfolio_reuse:
                 validate_pf(pd.read_parquet(folder/"pf_portfolio.parquet"),cfg,"Portfolio-ML")
             else:
-                fit_portfolio_point(inp,cfg,wealth,gamma,signature,force,folder)
+                old_moments=point_signature(previous_moments_signature,gamma,level) if previous_moments_signature else None
+                fit_portfolio_point(inp,cfg,wealth,gamma,signature,force,folder,old_moments)
             origin="Static ML* retuned where enabled; Portfolio ML reused only after matching source hashes and model config" if portfolio_reuse else "fresh coefficients and past-utility hyperparameter selection at this gamma and wealth"
         for method,filename in frontier_methods(universe):
             validate_pf(pd.read_parquet(folder/filename),cfg,method)
@@ -184,23 +201,40 @@ def fit_point(universe,gamma,level,source_signature,force=False,previous_signatu
         raise
 
 
-def fit_portfolio_point(inp,cfg,wealth,gamma,signature,force,folder):
+def fit_portfolio_point(inp,cfg,wealth,gamma,signature,force,folder,previous_signature=None):
     universe=cfg.paths.outputs.name
     pm=cfg.portfolio_ml;results={}
     _,tags,label=signal_set(pm.use_rff,pm.rff_variance_grid)
     # Compact root avoids Windows MAX_PATH in this deeply nested repo.
     # The full signature is retained in each cache and checked below.
     cache=ROOT/"data/figure1"/universe/signature[:16]
+    def read_cache(path):
+        import zipfile
+        if force or not path.exists():return None
+        try:return load_yearly_moments(path)
+        except (zipfile.BadZipFile,EOFError,ValueError,OSError) as error:
+            log.warning('Incomplete/corrupt derived cache %s; rebuilding from observed inputs (%s)',path,error)
+            return None
     for tag,g in zip(tags,pm.rff_variance_grid):
         path=cache/f"{tag}.npz"
-        ym=load_yearly_moments(path) if not force and path.exists() else None
+        ym=read_cache(path)
+        if ym is None and not force and previous_signature:
+            old=ROOT/'data/figure1'/universe/previous_signature[:16]/f'{tag}.npz'
+            if old.exists():
+                cached=read_cache(old)
+                if cached is not None and cached.meta.get('figure1_signature')==previous_signature:
+                    ym=cached
+                    # In-memory provenance only; keep the original cache intact.
+                    ym.meta['figure1_signature']=signature
         if ym is None or ym.meta.get("figure1_signature")!=signature:
             ym=build_yearly_moments(inp.panel,wealth,inp.cov,inp.rf,inp.pfml_dates,cfg.features.names,
                 signal_dates=inp.eval_dates,gamma=gamma,mu=cfg.investor.mu,lb=cfg.universe.lookback_months,
                 iterations=cfg.investor.m_iterations,scale_by_vol=pm.scale_by_vol,
                 add_constant=pm.add_constant,**_signal_kwargs(cfg,g))
             ym.meta["figure1_signature"]=signature
-            path.parent.mkdir(parents=True,exist_ok=True);save_yearly_moments(ym,path)
+            path.parent.mkdir(parents=True,exist_ok=True)
+            temporary=path.with_name(path.stem+'.writing.npz')
+            save_yearly_moments(ym,temporary);temporary.replace(path)
         results[tag]=search_yearly(ym,tag,pm.p_grid,cfg.ridge_grid.values,inp.hp_years,pm.half_life_years)
     result=run_portfolio_ml(results,inp.panel,wealth,inp.cov,inp.rf,inp.eval_dates,inp.eval_dates,
         gamma=gamma,mu=cfg.investor.mu,iterations=cfg.investor.m_iterations,
@@ -332,7 +366,13 @@ def verify_grid_accounting(universe,summary):
 def save_figure(fig,path):
     import matplotlib.pyplot as plt
     path.parent.mkdir(parents=True,exist_ok=True)
-    for suffix in ("png","pdf"):fig.savefig(path.with_suffix("."+suffix),dpi=180,bbox_inches="tight")
+    for suffix in ("png","pdf"):
+        target=path.with_suffix('.'+suffix)
+        try:fig.savefig(target,dpi=180,bbox_inches='tight')
+        except PermissionError:
+            target=path.with_name(path.name+'_current').with_suffix('.'+suffix)
+            fig.savefig(target,dpi=180,bbox_inches='tight')
+            log.warning('Existing chart is open/locked; current export saved to %s',target)
     plt.close(fig)
 
 
@@ -439,6 +479,14 @@ def main(argv=None):
         record=provenance(universe);folder=OUT/universe;folder.mkdir(parents=True,exist_ok=True)
         old_path=folder/"source_provenance.json"
         previous=json.loads(old_path.read_text()) if old_path.exists() else {}
+        moment_signature=previous.get('signature') if moments_compatible(previous,record) else None
+        if moment_signature==record['signature']:moment_signature=None
+        moment_record=folder/'moment_reuse_provenance.json'
+        if moment_record.exists() and moment_signature is None:
+            saved=json.loads(moment_record.read_text())
+            if moments_compatible(saved,record):moment_signature=saved['signature']
+        elif moment_signature and moment_signature!=record['signature']:
+            write_json(moment_record,previous)
         reuse_signature=previous.get("signature") if portfolio_compatible(previous,record) else None
         # Keep the previous manifest until point migration finishes so interrupted runs resume.
         migration=folder/"portfolio_reuse_provenance.json"
@@ -451,7 +499,7 @@ def main(argv=None):
         print(f"FIGURE 1 {universe}: {len(points)} points, {args.jobs} workers",flush=True)
         if not args.plots_only:
             with parallel_config(backend="loky",inner_max_num_threads=1):
-                Parallel(n_jobs=args.jobs,verbose=10)(delayed(fit_point)(universe,g,w,record["signature"],args.force,reuse_signature) for g,w in points)
+                Parallel(n_jobs=args.jobs,verbose=10)(delayed(fit_point)(universe,g,w,record["signature"],args.force,reuse_signature,moment_signature) for g,w in points)
         summary,reference=summarize_market(universe,gammas,levels,record["signature"])
         verify_grid_accounting(universe,summary)
         plot_market(universe,summary,reference);write_market_page(universe,summary)
@@ -460,7 +508,9 @@ def main(argv=None):
         if after["signature"]!=record["signature"]:raise AssertionError("Source inputs changed during frontier run")
         write_json(folder/"completion.json",dict(status="complete",grid_points=len(points),methods=[m for m,_ in frontier_methods(universe)],
             monthly_rows=len(pd.date_range(cfg.dates.test_start,cfg.dates.test_end,freq="ME"))*len(points)*len(frontier_methods(universe)),signature=record["signature"],source_inputs_unchanged=True))
-    if args.include_iterations and "us_large" in universes:iteration_extensions(args.plots_only)
+    if args.include_iterations and "us_large" in universes:
+        from iteration_sequence import report_saved
+        report_saved()
     plot_combined()
     index_page()
     return 0
@@ -473,19 +523,18 @@ def index_page():
         if p.exists():rows.append(f'<li><a href="{universe}/index.html">{NAMES[universe]} Figure 1</a></li>')
     text='<h1>Figure 1 Implementable frontiers</h1><p>Independently fitted retained models across risk aversion and investor size.</p><ul>'+''.join(rows)+'</ul>'
     if (OUT/"charts/figure1_combined.png").exists():
-        text+='<h2>Combined base Figure 1: all retained frontiers</h2><img src="charts/figure1_combined.png" alt="Combined method and investor-size frontiers for all three markets"><p><a href="charts/figure1_combined.pdf">Combined PDF</a> | <a href="combined_frontier_summary.csv">All underlying points</a></p>'
+        pdf='figure1_combined_current.pdf' if (OUT/'charts/figure1_combined_current.pdf').exists() and (OUT/'charts/figure1_combined_current.pdf').stat().st_mtime_ns>(OUT/'charts/figure1_combined.pdf').stat().st_mtime_ns else 'figure1_combined.pdf'
+        text+=f'<h2>Combined base Figure 1: all retained frontiers</h2><img src="charts/figure1_combined.png" alt="Combined method and investor-size frontiers for all three markets"><p><a href="charts/{pdf}">Combined PDF</a> | <a href="combined_frontier_summary.csv">All underlying points</a></p>'
     recommendations=("# Recommended next figures for your iterations\n\n"
         "| Priority | Paper figure | Why it helps | Required work |\n|---|---|---|---|\n"
-        "| 1 | Figure 3 positions by liquidity | Tests whether iteration 2's 250-stock universe improves opportunity at the expense of less liquid holdings; compare base and iterations 1-3, with Market | Aggregate saved long/short weights into contemporaneous liquidity deciles; no model refit |\n"
-        "| 2 | Figure 4 stock-weight paths | Shows benchmark-relative tilts in iteration 1 and whether iteration 3 changes trading speed or holdings | Plot actual and active weights for consistently available liquid and less liquid stocks; no model refit |\n"
+        "| 1 | Positions by liquidity | Diagnose the exit-120/costs-x2 experiment against its previous accepted setup | Aggregate saved long/short weights into contemporaneous liquidity deciles; no model refit |\n"
+        "| 2 | Stock-weight paths | Show iteration 4's benchmark-relative tilts and iteration 5's weighting changes | Plot actual and active weights for consistently available stocks; no model refit |\n"
         "| 3 | Complete Figure 2 gross return net return and utility panels | Makes each iteration's gain or loss relative to its predecessor visible after costs and risk | Saved monthly results suffice; clarify arithmetic accumulation and utility convention |\n"
         "| Later | Figure 5 economic feature importance | Explains which economic themes matter under the fitted strategy, rather than ranking raw correlations | Permute themes, keep fitted coefficients fixed, rebuild portfolio decisions and measure utility loss; repeated counterfactual runs |\n\n"
-        "Figure 8 would require new size-group experiments; the current 80/250 comparison is not a five-quintile NYSE replication. Figure 7 requires borrowing/lending fee data that are not currently present. These figures have not been implemented by the Figure 1 task.\n")
+        "The current five-step sequence has no 250-stock breadth experiment. Borrowing/lending-fee figures require data not currently present. The experiment decision table, returns, drawdowns, relative index and costs/turnover plots are available in outputs/iteration_summary and each iteration folder.\n")
     (OUT/"RECOMMENDED_NEXT_FIGURES.md").write_text(recommendations,encoding="utf-8")
     text+='<p><a href="RECOMMENDED_NEXT_FIGURES.md">Recommended next figures for the iterations</a></p>'
-    for i in (1,2,3):
-        path=ROOT/f"outputs/iteration_{i}/us_large/overall analysis/figure1/index.html"
-        if path.exists():text+=f'<p><a href="{os.path.relpath(path,OUT).replace(chr(92),"/")}">US high-cap iteration {i} extension</a></p>'
+    text+='<p><a href="../../../iteration_summary/index.html">Five US high-cap experiments and final-strategy charts</a></p>'
     (OUT/"index.html").write_text('<!doctype html><meta charset="utf-8">'+STYLE+text,encoding="utf-8")
     from comparison_analysis import add_navigation
     add_navigation(include_iterations=False)
@@ -569,101 +618,6 @@ def plot_combined():
     return True
 
 
-def fit_iteration(number,target,plots_only=False):
-    """Reuse exact saved TE runs; only missing iteration-3 TE endpoints need fitting."""
-    from run import calibrated_gamma
-    from jkmp.portfolio.active import run_active
-    group=f"iteration_{number}"
-    owner="active_pfml" if number==1 else "universe_250"
-    cfg=load_config(config_path("us_large",group));gamma=calibrated_gamma("us_large",owner,target)
-    record=provenance("us_large",group)
-    signature=point_signature(record["signature"],gamma,cfg.investor.wealth)
-    native=cfg.paths.outputs/f"active/gte{gamma:g}"
-    folder=cfg.paths.outputs/f"overall analysis/figure1/points/te{100*target:g}"
-    marker=folder/"completion.json"
-    if marker.exists():
-        old=json.loads(marker.read_text())
-        if old.get("signature")==signature and (folder/"pf.parquet").exists() and digest(folder/"pf.parquet")==old.get("pf_sha256"):
-            return folder
-    if plots_only:raise FileNotFoundError(f"Missing verified iteration frontier point: {folder}")
-    folder.mkdir(parents=True,exist_ok=True)
-    if (native/"pf.parquet").exists():
-        for name in ("pf.parquet","weights.parquet","chosen.csv"):shutil.copy2(native/name,folder/name)
-        origin="existing exact calibrated TE run"
-    else:
-        result=run_active(load_inputs(cfg),cfg,gamma,
-            pd.date_range(cfg.dates.test_start,cfg.dates.test_end,freq="ME")-pd.offsets.MonthEnd(1),
-            list(range(cfg.return_model.pred_years[0],cfg.dates.test_end.year+1)))
-        for name in ("pf","weights"):result[name].to_parquet(folder/f"{name}.parquet",index=False)
-        result["chosen"].to_csv(folder/"chosen.csv",index=False)
-        origin="fresh active coefficients and past-utility hyperparameter selection"
-    validate_pf(pd.read_parquet(folder/"pf.parquet"),cfg,"Portfolio-ML (active)")
-    write_json(marker,dict(status="complete",signature=signature,te_target=target,gamma_te=gamma,
-        wealth=cfg.investor.wealth,origin=origin,pf_sha256=digest(folder/"pf.parquet")))
-    return folder
-
-
-def iteration_extensions(plots_only=False):
-    import matplotlib
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-    from comparison_analysis import BASE_PF,STATIC,MARKET,ITERATIONS,load_sources,base_sources
-    from comparison_analysis import iteration_baseline_sources
-    records=iteration_baseline_sources()
-    base,inventory=load_sources(records);market=base.loc[base.strategy.eq(MARKET)]
-    frames=[];stats=[];sources=[]
-    for number in (1,2,3):
-        for target in (.01,.02,.04):
-            folder=fit_iteration(number,target,plots_only)
-            meta=json.loads((folder/"completion.json").read_text())
-            d=pd.read_parquet(folder/"pf.parquet").assign(strategy=ITERATIONS[number],iteration=number,te_target=target)
-            rel=relative_metrics(d,market).iloc[0].to_dict()
-            stats.append(dict(iteration=number,te_target=target,gamma_te=meta["gamma_te"],
-                **summary_stats(d,10).to_dict(),**{k:v for k,v in rel.items() if k not in ("strategy","months")}))
-            frames.append(d);sources.append(dict(iteration=number,te_target=target,path=str(folder/"pf.parquet"),sha256=meta["pf_sha256"]))
-    all_stats=pd.DataFrame(stats)
-    for number in (1,2,3):
-        folder=ROOT/f"outputs/iteration_{number}/us_large/overall analysis/figure1"
-        s=all_stats.loc[all_stats.iteration.le(number)]
-        s.to_csv(folder/"frontier_summary.csv",index=False)
-        pd.concat([d for d in frames if d.iteration.iloc[0]<=number]).to_csv(folder/"monthly_returns.csv",index=False)
-        pd.DataFrame(sources).query("iteration<=@number").to_csv(folder/"source_inventory.csv",index=False)
-        fig,axes=plt.subplots(1,2,figsize=(13,5.2))
-        labelled=[set(),set()]
-        for i in range(1,number+1):
-            d=s.loc[s.iteration.eq(i)].sort_values("te_target")
-            axes[0].plot(100*d.Vol,100*d.R_TC,marker=("o","s","^")[i-1],ls=("-","--",":")[i-1],label=f"Portfolio ML iteration {i}")
-            axes[1].plot(100*d.tracking_error_gross,100*d.active_net_return,marker=("o","s","^")[i-1],ls=("-","--",":")[i-1],label=f"Portfolio ML iteration {i}")
-            for r in d.itertuples():
-                for j,(x,y) in enumerate(((100*r.Vol,100*r.R_TC),(100*r.tracking_error_gross,100*r.active_net_return))):
-                    key=(round(x,8),round(y,8),r.te_target)
-                    if key not in labelled[j]:axes[j].annotate(f"{r.te_target:.0%}",(x,y),xytext=(4,5),textcoords="offset points",fontsize=7)
-                    labelled[j].add(key)
-        for label,d in base.groupby("strategy",sort=False):
-            st=summary_stats(d,10);rel=relative_metrics(d,market).iloc[0]
-            axes[0].scatter([100*st.Vol],[100*st.R_TC],marker="D",s=30,label=label)
-            axes[1].scatter([100*rel.tracking_error_gross],[100*rel.active_net_return],marker="D",s=30,label=label)
-        axes[0].set(title="Total-risk comparison",xlabel="Realised gross volatility (% per year)",ylabel="Net excess return (% per year)")
-        axes[1].set(title="Active-risk comparison against original US Market",xlabel="Realised tracking error (% per year)",ylabel="Net active return (% per year)")
-        for ax in axes:ax.grid(alpha=.2);ax.axhline(0,color="#777",lw=.6);ax.legend(fontsize=7)
-        fig.suptitle(f"US high-cap iteration {number}   Figure 1 extension   TE labels are pretest targets")
-        fig.tight_layout();save_figure(fig,folder/"charts/figure1_iteration_frontier")
-        text=("Extension of the Figure 1 comparison to benchmark-relative iterations, not a replication of its absolute-risk gamma frontier. "
-            "Each line connects separately fitted 1%, 2% and 4% pretest TE targets at $10B anchored at end-2019. "
-            "All previous iterations are included. Base Portfolio ML, base Static ML and original US high-cap Market are fixed reference points. "
-            "Active return and realised TE use the original approximately 80-stock Market for all curves; the 250-stock opportunity set in iterations 2 and 3 is part of the experiment. "
-            "TE targets and realised test TE differ. Coefficients and settings use only preceding observations; the plot must not be used to select a winner using test returns. "
-            "This extension does not claim a full active-risk-by-wealth frontier. Its fund-size sensitivity remains in the iteration-2 capacity report.")
-        if number==3:
-            matched=[]
-            for target in (.01,.02,.04):
-                a=next(d for d in frames if d.iteration.iloc[0]==2 and d.te_target.iloc[0]==target)
-                b=next(d for d in frames if d.iteration.iloc[0]==3 and d.te_target.iloc[0]==target)
-                matched.append(np.allclose(a[['r','tc']],b[['r','tc']],rtol=1e-10,atol=1e-12))
-            if all(matched):text+=' Iterations 2 and 3 overlap at all three TE targets: their saved monthly returns and costs match within numerical tolerance.'
-        (folder/"METHODS_AND_EXCLUSIONS.md").write_text("# Iteration Figure 1 extension\n\n"+text,encoding="utf-8")
-        page=f'<h1>US high-cap iteration {number} Figure 1 extension</h1><p>{html.escape(text)}</p><img src="charts/figure1_iteration_frontier.png" alt="Total-risk and active-risk comparison"><p><a href="charts/figure1_iteration_frontier.pdf">Download PDF chart</a></p><p><a href="frontier_summary.csv">Frontier statistics</a> | <a href="monthly_returns.csv">Monthly results</a> | <a href="source_inventory.csv">Source inventory</a></p>'
-        (folder/"index.html").write_text('<!doctype html><meta charset="utf-8">'+STYLE+page,encoding="utf-8")
 
 
 if __name__=="__main__":raise SystemExit(main())

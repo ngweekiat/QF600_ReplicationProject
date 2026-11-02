@@ -28,7 +28,7 @@ BASE_PF = "US high-cap Portfolio ML base"
 STATIC = "US high-cap Static ML"
 STATIC_STAR = "US high-cap Static ML*"
 MARKET = "US high-cap Market"
-ITERATIONS = {i: f"US high-cap Portfolio ML iteration {i}" for i in (1, 2, 3)}
+ITERATIONS = {i: f"US high-cap Portfolio ML iteration {i}" for i in range(1,6)}
 STYLE = """<style>body{max-width:1180px;margin:40px auto;padding:0 24px;font:16px/1.55 system-ui;color:#23313c}h1{font-size:30px}h2{margin-top:32px}table{border-collapse:collapse;font-size:13px;width:100%}th,td{padding:9px;border:1px solid #d5dee5;text-align:right}th:first-child,td:first-child{text-align:left}th{background:#e9eff4}.scroll{overflow:auto}img{max-width:100%;margin:18px 0}a{color:#125981}.note{background:#eef3f7;padding:15px;border-radius:6px}</style>"""
 
 
@@ -77,27 +77,21 @@ def base_sources():
     return records
 
 
-def iteration_source(number, target=.02):
-    from run import calibrated_gamma
-    owner = "universe_250" if number in (2, 3) else "active_pfml"
-    gamma = calibrated_gamma("us_large", owner, target)
+def iteration_source(number, target=None):
     return dict(strategy=ITERATIONS[number], universe="us_large", group=f"iteration_{number}",
-        path=ROOT / f"outputs/iteration_{number}/us_large/active/gte{gamma:g}/pf.parquet",
-        expected_type="Portfolio-ML (active)", te_target=target, gamma_te=gamma)
+        path=ROOT / f"outputs/iteration_{number}/us_large/pf.parquet",
+        expected_type="Portfolio-ML", te_target=.01 if number in (4,5) else np.nan)
 
 
 def iteration_comparison_sources(number):
     """Current iteration plus all earlier versions; never include a later one."""
-    if number not in (1,2,3):raise ValueError("Iteration must be 1, 2 or 3")
+    if number not in range(1,6):raise ValueError("Iteration must be 1 through 5")
     return iteration_baseline_sources()+[iteration_source(i) for i in range(1,number+1)]
 
 
 def iteration_baseline_sources():
-    """Preserve existing iterations' fixed Static ML reference and fitted results."""
-    records=[r for r in base_sources() if r["strategy"] in (BASE_PF,MARKET)]
-    records.insert(1,dict(strategy=STATIC,universe="us_large",group="base",
-        path=ROOT/"outputs/base/us_large/static_ml/pf.parquet",expected_type="Static-ML",te_target=np.nan))
-    return records
+    """Current US high-cap base references, including Static ML*."""
+    return [r for r in base_sources() if r['universe']=='us_large']
 
 
 def load_sources(records):
@@ -283,6 +277,14 @@ def write_report(monthly, inventory, out, title, benchmark, reps=2000, context="
 
 
 def run_reports(only="all", reps=2000):
+    if only in ('final',*(f'iteration_{i}' for i in range(1,6))):
+        from iteration_sequence import report_saved
+        return report_saved()
+    if only=='all':
+        from iteration_sequence import report_saved
+        report_saved()
+        run_reports('base',reps)
+        return run_reports('master',reps)
     records = base_sources() if only in ("base","master","all") else iteration_baseline_sources()
     needed = UNIVERSES if only in ("base", "master", "all") else ("us_large",)
     records = [r for r in records if r["universe"] in needed]
@@ -302,49 +304,12 @@ def run_reports(only="all", reps=2000):
         regional = pd.concat([relative_metrics(data.loc[data.universe.eq(u)], data.loc[data.universe.eq(u)&data.type.eq("Market")]).assign(universe=u) for u in UNIVERSES])
         regional.to_csv(BASE_OUT / "same_region_market_comparison.csv", index=False)
         data.to_csv(BASE_OUT / "all_base_monthly_returns.csv", index=False)
-    for number in (1, 2, 3):
-        if only not in (f"iteration_{number}", "all"): continue
-        selected, inv = load_sources(iteration_comparison_sources(number))
-        folder = ROOT / f"outputs/iteration_{number}/us_large/overall analysis"
-        write_report(selected, inv, folder, f"US high-cap iteration {number} comparison", benchmark, reps,
-            f"Includes iteration {number} and every earlier US high-cap Portfolio ML iteration, alongside unchanged original base Portfolio ML, US high-cap Static ML and the original US high-cap Market basket. All iterations use the carried-forward 2% ex-ante tracking-error target. Iterations 2 and 3 have a broader 250-stock opportunity set; this difference is part of the experiment.")
-        if number in (1, 2):
-            diagnostics = []
-            for target in (.01, .02, .04):
-                record = iteration_source(number, target)
-                record["strategy"] += f" TE {target:.0%}"
-                d, _ = load_sources([record])
-                diagnostics.append(dict(te_target=target, gamma_te=record["gamma_te"], **statistics(d)))
-            pd.DataFrame(diagnostics).to_csv(folder / "all_te_budgets.csv", index=False)
-        if number in (2, 3):
-            native = ROOT / "outputs/iteration_2/us_large/benchmarks/pf_test.parquet"
-            d = pd.read_parquet(native).query("type == 'Market'").assign(strategy="US high-cap 250-stock Market")
-            relative_metrics(selected, d).to_csv(folder / "versus_250_stock_market.csv", index=False)
-    if only in ("final", "all"):
-        selected, inv = load_sources([r for r in records if r["strategy"] == BASE_PF]+[iteration_source(i) for i in (1,2,3)])
-        final = BASE_OUT / "us_high_cap_progression"
-        write_report(selected, inv, final, "US high-cap Portfolio ML base and three iterations", benchmark, reps,
-            "Exactly four Portfolio ML strategies. Iterations use the carried-forward 2% target. Each is evaluated on the same 72 test months against the same US high-cap Market. US high-cap Static ML remains an unchanged external reference in the per-iteration reports.")
-        wide = selected.pivot(index="eom_ret", columns="strategy", values="r")
-        costs = selected.pivot(index="eom_ret", columns="strategy", values="tc")
-        increments = []
-        labels = [BASE_PF]+list(ITERATIONS.values())
-        for a,b in zip(labels[1:], labels[:-1]):
-            net = wide[a]-costs[a]-wide[b]+costs[b]
-            increments.append(dict(strategy=a, previous=b, annual_net_return_change=12*net.mean(),
-                max_monthly_gross_return_difference=float((wide[a]-wide[b]).abs().max()),
-                max_monthly_cost_difference=float((costs[a]-costs[b]).abs().max()),
-                identical_saved_returns_and_costs=bool(np.array_equal(wide[a],wide[b]) and np.array_equal(costs[a],costs[b]))))
-        pd.DataFrame(increments).to_csv(final / "incremental_changes.csv", index=False)
-        legacy,_=load_sources([r for r in iteration_baseline_sources() if r["strategy"] in (STATIC,MARKET)])
-        all_refs = pd.concat([selected, legacy], ignore_index=True)
-        pd.DataFrame([dict(strategy=s, **statistics(d)) for s,d in all_refs.groupby("strategy", sort=False)]).to_csv(final / "with_static_and_market_references.csv", index=False)
     if only in ("master","all"):
         chosen=[r for r in records if r["expected_type"]!="Market" or r["strategy"]==MARKET]
-        combined, inv=load_sources(chosen+[iteration_source(i) for i in (1,2,3)])
+        combined, inv=load_sources(chosen+[iteration_source(i) for i in range(1,6)])
         write_report(combined,inv,BASE_OUT/"all_models_and_iterations",
             "All retained base ML models and US high-cap Portfolio ML iterations",benchmark,reps,
-            "Master comparison: US high-cap Static ML*, regional base Portfolio ML, the three existing US high-cap Portfolio ML iterations at 2% TE, and US high-cap Market. Iteration fits are unchanged.")
+            "Unchanged three-market Base and five US high-cap sequential experiments. Rejected candidates remain visible but are not inherited. See outputs/iteration_summary for P(better), accepted ancestry and the final strategy.")
     add_navigation(include_iterations=only in ("all","iteration_1","iteration_2","iteration_3"))
     return 0
 
@@ -354,7 +319,8 @@ def add_navigation(include_iterations=True):
                ("Figure 1 implementable frontiers", "outputs/base/overall analysis/figure1/index.html"),
                ("All base ML models and iterations", "outputs/base/overall analysis/all_models_and_iterations/index.html"),
                ("Final US high-cap Portfolio ML progression", "outputs/base/overall analysis/us_high_cap_progression/index.html")]
-    entries += [(f"US high-cap iteration {i} comparison", f"outputs/iteration_{i}/us_large/overall analysis/index.html") for i in (1,2,3)]
+    entries += [(f"US high-cap iteration {i}", f"outputs/iteration_{i}/us_large/index.html") for i in range(1,6)]
+    entries.append(('Five experiment decisions and final strategy','outputs/iteration_summary/index.html'))
     for title, rel in entries:
         if not include_iterations and rel.startswith("outputs/iteration_"):continue
         page = ROOT / rel
@@ -377,7 +343,7 @@ def add_navigation(include_iterations=True):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--only-group", choices=("all", "base", "iteration_1", "iteration_2", "iteration_3", "final", "master"), default="all")
+    parser.add_argument("--only-group", choices=("all", "base", *(f'iteration_{i}' for i in range(1,6)), "final", "master"), default="all")
     parser.add_argument("--bootstrap-reps", type=int, default=2000)
     args = parser.parse_args(argv)
     if args.bootstrap_reps < 1: parser.error("bootstrap-reps must be positive")

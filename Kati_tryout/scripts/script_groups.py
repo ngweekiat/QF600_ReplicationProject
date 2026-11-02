@@ -1,8 +1,8 @@
 """Authoritative mapping from run groups to script entry points."""
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-GROUPS=("base","iteration_1","iteration_2","iteration_3")
-VARIANTS={"base":"base","iteration_1":"active_pfml","iteration_2":"universe_250","iteration_3":"halflife"}
+GROUPS=("base",*(f"iteration_{i}" for i in range(1,6)))
+VARIANTS={group:group for group in GROUPS}
 ALIASES={**{x:x for x in GROUPS},**{v:k for k,v in VARIANTS.items()}}
 
 
@@ -15,9 +15,7 @@ def baseline_reference_dir(cfg):
     """Route reference portfolios without copying base results into iteration reports."""
     output=cfg.paths.outputs
     group=output.parent.name
-    if group=='iteration_1':return ROOT/'outputs/base'/output.name
-    if group=='iteration_3':return ROOT/'outputs/iteration_2'/output.name
-    return output
+    return ROOT/'outputs/base'/output.name
 
 
 def script_path(stage,group):
@@ -30,7 +28,7 @@ def script_path(stage,group):
     if stage in common:return ROOT/"scripts"/common[stage]
     if group=="base" and stage in base:return ROOT/"scripts"/base[stage]
     if stage=="06" and group=="iteration_2":return ROOT/"scripts/shared/06_pfml_inputs.py"
-    if stage=="12" and group!="base":return ROOT/"scripts"/group/"run.py"
+    if stage in ("12","experiment") and group!="base":return ROOT/"scripts"/group/"run.py"
     if stage=="13" and group=="iteration_2":return ROOT/"scripts/iteration_2/compare_breadth.py"
     if stage=="14" and group=="iteration_3":return ROOT/"scripts/iteration_3/compare_halflife.py"
     if stage=="monitor" and group=="iteration_2":return ROOT/"scripts/iteration_2/monitor.py"

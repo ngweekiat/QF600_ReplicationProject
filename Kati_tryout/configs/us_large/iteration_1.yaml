@@ -1,7 +1,7 @@
 base: base.yaml
 portfolio_ml:
-  add_constant: false
-  benchmark_relative: true
+  add_constant: true
+  benchmark_relative: false
 paths:
   outputs: outputs/iteration_1/us_large
   reference_r: data/reference

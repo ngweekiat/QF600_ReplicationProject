@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "base_portfolios_unchanged": true,
+  "iterations": 5,
+  "acceptance_threshold": 0.8,
+  "test_months": 72,
+  "source_signature": "8bde0318800ad26e89618f41b5440c6169af38b509c7ed5e11ed6b849e85f25b"
+}

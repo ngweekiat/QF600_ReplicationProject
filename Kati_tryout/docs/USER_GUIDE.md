@@ -1,5 +1,7 @@
 # Using Kati_tryout
 
+The active experiment map is [the five-step protocol](FIVE_ITERATION_PROTOCOL.md). Use `outputs/iteration_summary/index.html` for all decisions and the final strategy. Each `outputs/iteration_N/us_large/SUMMARY.md` explains included ancestry, P(better) and acceptance.
+
 Open `Kati_tryout.ipynb` in VS Code or Jupyter using the project environment (Python 3.11–3.13). The notebook contains all Python source rather than only links to scripts. Use its outline to jump to a model or iteration and expand a source cell when needed. Every code cell has a Markdown explanation immediately before it.
 
 The current feature selection is **US high-cap only, 2005–2014**, using correlation/covariance association statistics without ML training. Open `outputs/us_high_cap_selection/index.html` or run `scripts/select_characteristics.py` to reproduce rankings, matrices and the selection decision chart. Read [US_HIGH_CAP_SELECTION.md](US_HIGH_CAP_SELECTION.md) for the score and A/T/S rules. Leave `RUN_MODELS = False` for the association-only workflow. Old characteristic archives and their fitted ML weights/results were removed at the user's request.
@@ -49,10 +51,12 @@ The runner uses dependency order and persistent logs. A rerun reuses compatible 
 | Group | What changes | What stays as the comparison |
 |---|---|---|
 | Base | US high-cap Static ML* with annual k/u/g tuning; Portfolio ML in all three markets, using the current JKP-only 50 | US high-cap Static ML*, three regional Portfolio ML models and Market references |
-| Iteration 1 | US high-cap Portfolio ML becomes benchmark-relative; 1%, 2% and 4% pretest tracking-error budgets | Base Portfolio ML, base Static ML and original Market |
-| Iteration 2 | Carries the active formulation into a 250-stock US high-cap universe; capacity and cost sensitivity | Iteration 1 and base references; separate 250-stock Market disclosed |
-| Iteration 3 | Tests no decay against 3-, 5- and 10-year half-lives for recent observations | Iterations 1–2 and base references |
-| Final | Compares base Portfolio ML and all three iterated Portfolio ML results | Wider report also includes Market and base Static ML |
+| Iteration 1 | Annual refitting already in Base | Retained as design; P(better) N/A |
+| Iteration 2 | Gamma 5 | Previous accepted version |
+| Iteration 3 | Exit rank 120 and costs x2 | Previous accepted version; inherit no rejected changes |
+| Iteration 4 | Market plus pretest-calibrated 1% TE tilt | Previous accepted version, with accepted ancestry stated |
+| Iteration 5 | 3/5/10-year half-life search plus no decay | Previous accepted version |
+| Final | Only accepted changes combined | Base, Static ML* and Market; test-selected, not unseen confirmation |
 
 Internal candidate grids are hyperparameter choices within a method. They are not additional headline ML families.
 

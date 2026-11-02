@@ -396,14 +396,6 @@ def load_config(
     raw = _read_yaml(path, seen=())
     raw = _apply_overrides(raw, overrides)
     cfg = _build(Config, raw, "")
-    if cfg.paths.outputs.parent.name.startswith("iteration_"):
-        # Iteration YAML inherits base.yaml. Preserve its historical reference
-        # labels when the base mandate changes to Static-ML*.
-        cfg=dataclasses.replace(cfg,
-            return_model=dataclasses.replace(cfg.return_model,validation_scope="all"),
-            static_ml=_build(StaticMLConfig,_read_yaml(PROJECT_ROOT/"configs/kati_base.yaml",seen=())["static_ml"],"static_ml"),
-            reporting=dataclasses.replace(cfg.reporting,main_types=tuple(t.replace("Static-ML*","Static-ML") for t in cfg.reporting.main_types)),
-            regimes=dataclasses.replace(cfg.regimes,plot_types=tuple(t.replace("Static-ML*","Static-ML") for t in cfg.regimes.plot_types)))
     for target in (cfg.paths.raw, cfg.paths.processed, cfg.paths.outputs):
         _require(target.resolve().is_relative_to(PROJECT_ROOT.resolve()),
                  f"Kati writes must stay inside its own folder: {target}")

@@ -27,18 +27,9 @@ def collect_series(root=ROOT):
         for folder, label in folders:
             records.append((market, "base", label, base / folder / "pf.parquet"))
         records.append((market, "base", "Market (base basket)", root / "outputs/base/overall analysis/market_references" / market / "pf.parquet"))
-    for number in (1, 2, 3):
+    for number in range(1,6):
         base = root / f"outputs/iteration_{number}/us_large"
-        owner = number if number < 3 else 2
-        cal = root / f"outputs/iteration_{owner}/us_large/active/calibrated.csv"
-        if not cal.exists():
-            continue
-        for row in pd.read_csv(cal).itertuples():
-            if number == 3 and not np.isclose(row.te_target, .02):
-                continue
-            records.append(("us_large", f"iteration_{number}", f"Portfolio ML iteration {number} (TE {row.te_target:.0%})", base / f"active/gte{row.gamma_te:g}/pf.parquet"))
-        if number == 2:
-            records.append(("us_large", "iteration_2", "Market (250-stock basket)", base / "benchmarks/pf_test.parquet"))
+        records.append(('us_large',f'iteration_{number}',f'Portfolio ML iteration {number}',base/'pf.parquet'))
     series = []
     for market, group, label, path in records:
         if not path.exists():
@@ -109,11 +100,12 @@ let themes=[...new Set(DATA.features.map(f=>f.theme))].sort();$('theme').innerHT
 const reports=REPORTS;$('reports').innerHTML=reports.map(r=>`<li><a href="${esc(r.path)}">${esc(r.title)}</a></li>`).join('')||'<li>No fitted-model reports yet.</li>';features();draw();
 </script></html>'''
     links = []
-    for rel, title in (("base/overall analysis/index.html", "Base: all markets"), ("base/overall analysis/all_models_and_iterations/index.html", "All base models and iterations"), ("base/overall analysis/us_high_cap_progression/index.html", "Four US high-cap Portfolio ML versions"), ("base/overall analysis/figure1/index.html", "Figure 1 frontiers")):
+    template=template.replace('<option value="iteration_3">All iterations + base</option>','<option value="iteration_3">Iteration 3 + earlier versions</option><option value="iteration_4">Iteration 4 + earlier versions</option><option value="iteration_5">All five experiments + base</option>')
+    for rel, title in (("base/overall analysis/index.html", "Base: all markets"), ("iteration_summary/index.html", "Five experiments: P(better), verdicts and final strategy"), ("base/overall analysis/figure1/index.html", "Figure 1 frontiers")):
         if (out / rel).exists():
             links.append(dict(path=rel, title=title))
-    for i in (1, 2, 3):
-        rel = f"iteration_{i}/us_large/overall analysis/index.html"
+    for i in range(1,6):
+        rel = f"iteration_{i}/us_large/index.html"
         if (out / rel).exists():
             links.append(dict(path=rel, title=f"Iteration {i} comparison"))
     for token, filename in (("OVERVIEW", "selection_groups_and_reasons.png"), ("DETAIL", "selected50_return_association.png")):

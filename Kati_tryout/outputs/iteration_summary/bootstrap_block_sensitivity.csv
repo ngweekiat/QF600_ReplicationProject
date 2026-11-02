@@ -1,0 +1,13 @@
+iteration,block_months,P_better,passes_80
+2,3,0.8184,True
+2,6,0.8466,True
+2,12,0.8888,True
+3,3,0.2837,False
+3,6,0.2804,False
+3,12,0.2832,False
+4,3,0.9856,True
+4,6,0.9946,True
+4,12,0.9954,True
+5,3,0.0406,False
+5,6,0.0552,False
+5,12,0.0702,False

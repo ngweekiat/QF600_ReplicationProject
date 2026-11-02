@@ -1,12 +1,10 @@
-base: iteration_1.yaml
+base: base.yaml
 paths:
-  processed: data/processed/us_large/universe_250
+  processed: data/processed/us_large/with_zero_returns
   outputs: outputs/iteration_2/us_large
   reference_r: data/reference
-universe:
-  target_n: 250
-  entry_rank: 220
-  exit_rank: 300
+investor:
+  gamma: 5.0
 features:
   themes:
     accruals:

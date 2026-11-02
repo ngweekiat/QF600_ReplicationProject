@@ -18,7 +18,7 @@ For return year 2020, candidate coefficients fit on realised returns from 2005â€
 
 The return predictor feeds Static ML* and prediction diagnostics. Portfolio ML has a separate RFF model that learns portfolio-weight coefficients directly from risk/cost-adjusted utility; it does not consume `pred_ld1`. Its existing separate market tuning is preserved. Consequently, changing return-forecast validation alone should not change the base Portfolio ML results. Its completed outputs can be reused.
 
-The base change leaves iteration model equations and saved outputs intact. Effective iteration return-model settings retain their previous broad validation rule. Iteration 1 shares the base processed predictions file, so a later explicit iteration rerun may read refreshed base forecasts for its forecast diagnostics/reference strategies. Iterations 2â€“3 retain their distinct 250-stock processed files.
+The active five-step iteration sequence uses the unchanged base data read-only. It does not refit an alternative return-prediction model or use the old 250-stock breadth configuration. See [the current protocol](FIVE_ITERATION_PROTOCOL.md). Historical three-step outputs are preserved in `outputs/legacy_iterations/`.
 
 ## Files and output audit
 

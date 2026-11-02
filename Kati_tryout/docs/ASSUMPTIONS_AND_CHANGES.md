@@ -1,5 +1,7 @@
 # Current assumptions, exclusions and changes
 
+The active US high-cap experiment sequence is [the five-step protocol](FIVE_ITERATION_PROTOCOL.md). It replaces the former three-iteration breadth/capacity sequence. Acceptance uses only the unchanged 2020–2025 test period's paired-bootstrap P(better net Sharpe) against the previous accepted version, threshold 80%. Annual refitting is already in Base. Rejected candidates remain reported; only accepted changes are inherited. Drawdown adds no gate. Test-selected final performance is not independent unseen confirmation. All regional base calculations and characteristics remain unchanged.
+
 Base calibration selects the ridge penalty from the original 101-value validation grid. This applies to return models and regional Portfolio ML models. Market-specific validation, the equations, other hyperparameter selection and iteration settings are retained.
 
 The latest authorised base adaptation is [market-specific RFF tuning](MARKET_SPECIFIC_RFF_TUNING.md): return-forecast hyperparameters are scored on historical members of each market separately, while fitting still uses its screened regional training panel. Portfolio ML already tunes its own RFF portfolio-weight model separately by market. No models or backtests were run for this change. The saved 100-candidate Static ML* results predate it.

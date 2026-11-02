@@ -1,6 +1,6 @@
-"""iteration_2: original active Portfolio-ML engine; use calibrate/run/capacity/report as applicable."""
+"""Gamma 5 on the last accepted US high-cap setup; paired test-P comparison."""
 from pathlib import Path
-import runpy,sys
-ROOT=Path(__file__).resolve().parents[2]
-if "--config" not in sys.argv:sys.argv += ["--config",str(ROOT/"configs/us_large/iteration_2.yaml")]
-runpy.run_path(str(ROOT/"scripts/shared/active_engine.py"),run_name="__main__")
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from iteration_sequence import main
+if __name__=='__main__':raise SystemExit(main(['--upto','2',*sys.argv[1:]]))

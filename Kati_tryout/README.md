@@ -1,5 +1,7 @@
 # Kati_tryout
 
+The active US high-cap iteration sequence now has **five separate experiment folders**: annual refitting already in Base; gamma 5; exit 120/costs x2; Market plus 1% TE tilt; recent-history weighting. Acceptance is test-period **P(better net Sharpe) >= 80%** against the last accepted version. Rejected experiments remain visible but are not inherited. Open `outputs/iteration_summary/index.html` and [the protocol](docs/FIVE_ITERATION_PROTOCOL.md). The three-market Base dates and calculations remain unchanged. Former iteration outputs/scripts are preserved under their respective `legacy_iterations/` folders.
+
 Kati_tryout uses the **US high-cap-only association-selected 50**, measured over **2005–2014**. Open [the correlation/covariance report](outputs/us_high_cap_selection/index.html) and [the current selection guide](docs/US_HIGH_CAP_SELECTION.md). This selection fits no ML model. Open [Kati_tryout.ipynb](Kati_tryout.ipynb) for all Python source, explanations and execution controls.
 
 The build is prepared and verified first. Fresh investment model fits are a separate step; old Keats model results and caches are not Kati results. Keats remains separate and unchanged by this copy.
@@ -19,7 +21,7 @@ Old characteristic archives, inputs and fits were removed at the user's request.
 | `docs/` | [User guide](docs/USER_GUIDE.md) and [assumptions/changes](docs/ASSUMPTIONS_AND_CHANGES.md) |
 | `tests/` | Verification tests |
 
-Base uses **Static ML\*** for US high-cap only, and Portfolio ML for US high-cap, US mid-cap and EU high-cap. Market is a comparison reference. See [base changes and tuning](docs/BASE_STATIC_ML_STAR_AND_FIGURE1.md). Iterations 1–3 retain their existing US high-cap Portfolio ML experiments and original fixed Static ML reference.
+Base uses **Static ML\*** for US high-cap only, and Portfolio ML for US high-cap, US mid-cap and EU high-cap. Market is a comparison reference. See [base changes and tuning](docs/BASE_STATIC_ML_STAR_AND_FIGURE1.md). The five US high-cap experiments use the unchanged current Base, Static ML* and Market as references; their accepted-only ancestry is documented in each summary.
 
 Base ridge calibration uses **validation selection from 101 penalties** (zero plus 100 positive log-spaced values). Return-model selection is market-specific. Portfolio ML selects its own penalties independently. Iterations retain their original ridge grid.
 

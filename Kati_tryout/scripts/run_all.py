@@ -38,7 +38,7 @@ class Job:
 
 def plan(universes,scope,group="base",skip_figure1=False):
     from script_groups import normalise_group
-    level=3 if group=="all" else ("base","iteration_1","iteration_2","iteration_3").index(normalise_group(group))
+    level=5 if group=="all" else (0 if group=='base' else int(normalise_group(group).split('_')[1]))
     jobs=[Job("audit","audit","all"),Job("prepare","prepare","all",dependencies=("audit",)),Job("validate","validate","all",dependencies=("prepare",))]
     tables=[]
     for u in universes:
@@ -50,37 +50,22 @@ def plan(universes,scope,group="base",skip_figure1=False):
         table=add("base.tables","11",deps=tuple(x for x in (static,pf) if x));tables.append(table)
         if scope=="full":add("base.regimes","10",deps=(table,));add("base.availability","15",deps=(table,))
         add("base.market_reference","market",deps=(cov,))
-        if level<1 or u!="us_large":continue
-        market=add("iteration_1.market_reference","04","active_pfml",deps=(cov,ret))
-        cal1=add("iteration_1.calibration","12","active_pfml",("calibrate",),deps=(cov,ret,market))
-        runs1=[add(f"iteration_1.run_{t:g}","12","active_pfml",("run",),t,deps=(cal1,)) for t in (.01,.02,.04)]
-        cap1=add("iteration_1.capacity","12","active_pfml",("capacity",),deps=(cal1,))
-        add("iteration_1.report","12","active_pfml",("report",),deps=(*runs1,pf,market))
-        add("iteration_1.overall_analysis","overall","active_pfml",("--only-group","iteration_1"),deps=(*runs1,pf,static))
-        if level<2:continue
-        prep2=add("iteration_2.prepare","prepare","universe_250")
-        cov2=add("iteration_2.covariance","02","universe_250",deps=(prep2,));ret2=add("iteration_2.returns","03","universe_250",deps=(prep2,))
-        bench2=add("iteration_2.reference_benchmarks","04","universe_250",deps=(cov2,ret2))
-        cal2=add("iteration_2.calibration","12","universe_250",("calibrate",),deps=(cov2,ret2,bench2))
-        runs2=[add(f"iteration_2.run_{t:g}","12","universe_250",("run",),t,deps=(cal2,)) for t in (.01,.02,.04)]
-        cap2=add("iteration_2.capacity","12","universe_250",("capacity",),deps=(cal2,))
-        add("iteration_2.overall_analysis","overall","universe_250",("--only-group","iteration_2"),deps=(*runs2,runs1[1],pf,static))
-        add("iteration_2.breadth","13","universe_250",deps=(cap1,cap2,runs1[1],runs2[1]))
-        if scope=="full":add("iteration_2.monitor","monitor","universe_250",deps=(runs2[1],bench2,ret2))
-        if level<3:continue
-        run3=add("iteration_3.run","12","halflife",("run",),deps=(cal2,cov2,ret2))
-        add("iteration_3.report","14","halflife",deps=(run3,runs2[1],bench2))
-        add("iteration_3.overall_analysis","overall","halflife",("--only-group","iteration_3"),deps=(run3,runs1[1],runs2[1],pf,static))
-        add("final_comparison","overall","halflife",("--only-group","final"),deps=(run3,runs1[1],runs2[1],pf))
     jobs.append(Job("base.comparison","compare","all",dependencies=tuple(tables)))
     if set(universes)==set(UNIVERSES):
         jobs.append(Job("base.overall_analysis","overall","all",extra=("--only-group","base"),dependencies=tuple(tables)+tuple(f"{u}.base.market_reference" for u in universes)))
-        if level==3:
-            jobs.append(Job("overall.master_comparison","overall","all",extra=("--only-group","master"),dependencies=("base.overall_analysis","us_large.final_comparison")))
+    if level and 'us_large' in universes:
+        previous='us_large.base.tables'
+        for number in range(1,level+1):
+            name=f'us_large.iteration_{number}.experiment'
+            jobs.append(Job(name,'experiment','us_large',f'iteration_{number}',dependencies=(previous,'us_large.base.market_reference')))
+            previous=name
+        if level==5 and set(universes)==set(UNIVERSES):
+            jobs.append(Job('us_large.iteration_verification','verify-iterations','us_large',dependencies=(previous,)))
+            jobs.append(Job('overall.master_comparison','overall','all',extra=('--only-group','master'),dependencies=('us_large.iteration_verification','base.overall_analysis')))
     if scope=="full" and not skip_figure1:
         chosen="all" if set(universes)==set(UNIVERSES) else universes[0]
-        extras=("--jobs","3")+(("--include-iterations",) if level==3 and "us_large" in universes else ())
-        deps=tuple(tables)+(("us_large.final_comparison",) if level==3 and "us_large" in universes else ())
+        extras=("--jobs","2")
+        deps=tuple(tables)
         jobs.append(Job("figure1.frontiers","figure1",chosen,extra=extras,dependencies=deps))
     jobs.append(Job("organisation","organise","all",extra=("--only-group","base") if group=="base" else ()))
     jobs.append(Job("dashboard","dashboard","all"))
@@ -88,7 +73,7 @@ def plan(universes,scope,group="base",skip_figure1=False):
 
 
 def output_paths(job):
-    if job.stage in ("audit","validate","15","compare","organise","overall","figure1"):return []
+    if job.stage in ("audit","validate","15","compare","organise","overall","figure1","experiment","verify-iterations"):return []
     cfg=load_config(config_path(job.universe,job.variant));p,o=cfg.paths.processed,cfg.paths.outputs
     if job.stage=="prepare":return [p/"preparation.json",p/"panel.parquet"]
     if job.stage=="02":return [p/"covariance"/n for n in ("cov_factor.parquet","cov_loadings.parquet","cov_diagnostics.csv","provenance.json")]
@@ -142,7 +127,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--scope", choices=("core", "full"), default="core")
     parser.add_argument("--universe", choices=(*UNIVERSES, "all"), default="all")
-    parser.add_argument("--group",choices=("base","iteration_1","iteration_2","iteration_3","all"),default="base")
+    parser.add_argument("--group",choices=("base",*(f'iteration_{i}' for i in range(1,6)),"all"),default="base")
     parser.add_argument("--list-jobs",action="store_true",help="Show dependencies without running experiments")
     parser.add_argument("--skip-figure1",action="store_true",help="Run full diagnostics without fitting the separate frontier grid")
     args = parser.parse_args()

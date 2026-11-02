@@ -10,9 +10,9 @@ SCRIPTS={x:x for x in ("03","04","05","06","07","10","11","12","13","14","monito
 def calibrated_gamma(universe, variant, target=0.02):
     import pandas as pd
     from jkmp.config import load_config
-    owner = "universe_250" if variant in ("universe_250", "halflife") else "active_pfml"
+    owner = "iteration_4"
     cfg = load_config(config_path(universe, owner))
-    path = cfg.paths.outputs / "active/calibrated.csv"
+    path = cfg.paths.outputs / "calibrated.csv"
     if not path.exists():
         raise FileNotFoundError(f"Calibrate this universe first; missing {path}. Never reuse the original gamma_TE.")
     points = pd.read_csv(path)
@@ -33,7 +33,16 @@ def run_stage(stage,universe,variant="base",extra=(),target=.02):
     if stage=="verify":
         from verify import main
         return main(list(extra))
+    if stage=='verify-iterations':
+        from verify_iterations import main
+        return main()
     group=normalise_group(variant);variant=GROUP_VARIANTS[group]
+    if stage in ('experiment','12'):
+        if group=='base' or universe!='us_large':raise ValueError('Choose US high-cap iteration_1 through iteration_5')
+        from iteration_sequence import main
+        return main(['--upto',group.split('_')[1],*extra])
+    if group!='base' and stage in (*SCRIPTS,'prepare','01','02'):
+        raise ValueError('Iteration inputs are read-only Base data. Run the experiment stage or scripts/iteration_N/run.py.')
     if group!="base" and universe!="us_large" and stage not in ("audit","00","validate","compare","organise","overall","figure1"):
         raise ValueError("Iterations are scoped to US high-cap Portfolio ML only; no other-market output is created.")
     from jkmp.imputation_audit import enable_reporting
@@ -91,13 +100,13 @@ def run_stage(stage,universe,variant="base",extra=(),target=.02):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__,allow_abbrev=False)
-    parser.add_argument("stage",choices=["audit","validate","prepare","00","01","02","15","compare","organise","market","overall","figure1","dashboard","verify","select-characteristics",*SCRIPTS])
+    parser.add_argument("stage",choices=["audit","validate","prepare","00","01","02","15","compare","organise","market","overall","figure1","dashboard","verify","verify-iterations","select-characteristics","experiment",*SCRIPTS])
     parser.add_argument("--universe",choices=[*UNIVERSES,"all"],default="us_large")
     parser.add_argument("--group",choices=GROUPS,default="base")
     parser.add_argument("--variant",choices=VARIANTS,default=None,help="Legacy alias for a group")
     parser.add_argument("--te-target",type=float,default=.02)
     args,extra=parser.parse_known_args();group=normalise_group(args.variant or args.group)
-    if args.stage not in SCRIPTS and args.stage not in ("compare","overall","figure1","organise") and extra:parser.error(f"Unexpected arguments: {extra}")
+    if args.stage not in SCRIPTS and args.stage not in ("compare","overall","figure1","organise","experiment") and extra:parser.error(f"Unexpected arguments: {extra}")
     universes=UNIVERSES if args.universe=="all" else [args.universe]
     if group!="base" and args.universe=="all":universes=["us_large"]
     if args.stage in ("audit","validate","00","compare","organise","overall","dashboard","verify","select-characteristics"):universes=["us_large"]

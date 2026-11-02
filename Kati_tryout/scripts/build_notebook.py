@@ -50,15 +50,18 @@ def caption(path, source):
 def source_groups():
     scripts = sorted((ROOT / "scripts").rglob("*.py"))
     tests = sorted((ROOT / "tests").rglob("*.py"))
-    configs = sorted((ROOT / "configs").rglob("*.yaml"))
+    configs = sorted((ROOT / "configs").rglob("*.yaml")) + [ROOT/'configs/us_high_cap_iterations.json']
     settings = ROOT / "settings.json"
     grouped = [
         ("Workflow entry points and preparation", [p for p in scripts if p.parent == ROOT / "scripts"]),
         ("Shared data and estimation stages", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "shared"]),
         ("Base: US high-cap Static ML* and regional Portfolio ML", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "base"]),
-        ("Iteration 1: benchmark-relative US high-cap Portfolio ML", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_1"]),
-        ("Iteration 2: broader US high-cap Portfolio ML and capacity", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_2"]),
-        ("Iteration 3: recent-history weighting", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_3"]),
+        ("Iteration 1: annual refitting already in Base", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_1"]),
+        ("Iteration 2: gamma 5", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_2"]),
+        ("Iteration 3: exit 120 and doubled costs", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_3"]),
+        ("Iteration 4: Market plus 1% TE tilt", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_4"]),
+        ("Iteration 5: recent-history weighting", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_5"]),
+        ("Legacy iteration source (reference only)", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "legacy_iterations"]),
         ("Reporting and statistical comparisons", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "analysis"]),
         ("Calculation libraries", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "jkmp"]),
         ("Verification tests", tests),
@@ -118,10 +121,12 @@ print("Python:", sys.executable)
 | Run | Markets and methods | Comparison |
 |---|---|---|
 | Base | Static ML* in US high-cap only; Portfolio ML in US high-cap, US mid-cap and EU high-cap | Four retained base ML results and the requested Market references |
-| Iteration 1 | US high-cap Portfolio ML; benchmark-relative construction, 1%/2%/4% tracking-error targets | Base Portfolio ML, base Static ML and Market |
-| Iteration 2 | US high-cap Portfolio ML; 250-stock breadth and capacity | Iteration 1 and unchanged base references |
-| Iteration 3 | US high-cap Portfolio ML; recent-history weighting | Iterations 1–2 and unchanged base references |
-| Final | US high-cap Portfolio ML base and iterations 1–3 | Four-version progression, with Market/Static references in the wider reports |
+| Iteration 1 | Annual refitting already included in Base | Retained as design; P(better) N/A |
+| Iteration 2 | Gamma 5 | Previous accepted version and Base/Static ML*/Market |
+| Iteration 3 | Exit 120 and costs x2 | Previous accepted version; rejected changes are not inherited |
+| Iteration 4 | Market plus pretest-calibrated 1% TE tilt | Inherits only accepted preceding changes |
+| Iteration 5 | Recent-history weighting | Previous accepted version; all results retained |
+| Final | Only accepted changes | P(better) >= 80% on the unchanged 2020–2025 test period |
 
 Base return-forecast RFF settings are selected separately on historical members of each market, using `return_model.validation_scope: universe`. Coefficients still fit on screened regional training data. Portfolio ML has its own separate RFF portfolio-weight model and market-specific utility tuning. See `docs/MARKET_SPECIFIC_RFF_TUNING.md`. This source update has not fitted models or refreshed backtest results.
 

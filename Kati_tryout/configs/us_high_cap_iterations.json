@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "universe": "us_large",
+  "evaluation_period": "existing Kati test period; no separate unseen holdout",
+  "acceptance_threshold": 0.8,
+  "statistic": "paired circular-block bootstrap frequency of a positive paper-net-Sharpe difference",
+  "bootstrap_reps": 10000,
+  "bootstrap_block_months": 6,
+  "bootstrap_seed": 20261102,
+  "drawdown_is_acceptance_gate": false,
+  "iterations": [
+    {"number": 1, "name": "Refit yearly", "kind": "already_in_base"},
+    {"number": 2, "name": "Gamma 5", "override": {"gamma": 5.0}},
+    {"number": 3, "name": "Exit 120, costs x2", "override": {"exit_rank": 120, "cost_multiple": 2.0}},
+    {"number": 4, "name": "Market + 1% TE-target tilt", "override": {"benchmark_relative": true, "te_target": 0.01}},
+    {"number": 5, "name": "Recent-history weighting", "override": {"half_lives": [3, 5, 10, null]}}
+  ]
+}
