@@ -1,0 +1,14 @@
+# Same supported Python range as the parent project: 3.11 through 3.13.
+numpy>=2.0,<2.3
+pandas>=2.2,<2.3
+scipy
+pyarrow
+pyyaml
+wrds>=3.5
+matplotlib
+joblib
+openpyxl
+python-dotenv>=1.0,<2
+pytest
+ipython
+ipykernel

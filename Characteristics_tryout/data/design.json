@@ -5,12 +5,12 @@
   "recommendation_count": 50,
   "screen_return_start": "2005-01-31",
   "screen_return_end": "2014-12-31",
-  "validation_return_start": "2015-01-31",
-  "validation_return_end": "2019-12-31",
+  "validation_return_start": null,
+  "validation_return_end": null,
   "untouched_test_start": "2020-01-31",
   "untouched_test_end": "2025-12-31",
   "selection_target": "existing observed next-month USD excess return; assumed-zero targets excluded",
-  "scope": "both existing broad regional training panels and all three held-stock universes",
+  "scope": "US high-cap held-stock observations only for characteristic selection",
   "source_vintage": "2026-11-01T06:43:42.183440+00:00",
   "reference_paper": {
     "pdf": "research paper 1.pdf",
@@ -19,8 +19,15 @@
     "printed_page_3056": "115 features; drops poorly covered early features from JKP153; rank to [0,1], missing=0.5",
     "economic_feature_importance": "utility value loss after removing signals; distinct from predictive correlation"
   },
-  "preselection_score": "0.55 abs equally weighted signed mean monthly rank IC percentile +0.20 minimum universe coverage percentile +0.15 yearly directional stability percentile +0.10 persistence percentile",
-  "final_selection": "pre-2020 balanced-universe evidence with theme quotas and redundancy penalty; never ranks test returns",
+  "preselection_score": "0.55 absolute US high-cap mean monthly rank IC percentile + 0.20 US coverage percentile + 0.15 yearly association-sign stability percentile + 0.10 rank persistence percentile",
+  "final_selection": "2005\u20132014 US high-cap association ranking; 13 A, 13 T and 24 S; no ML/regression fits",
   "missing_characteristics": "source NaNs preserved; no source zeros inserted",
-  "preselection_pilot": "all held stock-months across all three universes in 2005-2014; full capped data then includes broad training populations"
+  "preselection_pilot": "Only US high-cap held-stock observations in the 2005\u20132014 measurement window; no ML fit",
+  "current_selection": "us_high_cap_selection/recommended_50.json",
+  "selection_return_start": "2005-01-31",
+  "selection_return_end": "2014-12-31",
+  "validation_outcomes_used_for_current_selection": false,
+  "models_fitted_for_selection": false,
+  "historical_download_note": "download_200.json describes the earlier full-period data acquisition cache, not the current US-only 200-candidate cap",
+  "held_out_from_selection_start": "2015-01-31"
 }

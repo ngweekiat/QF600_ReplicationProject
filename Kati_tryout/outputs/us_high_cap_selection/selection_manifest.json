@@ -1,0 +1,40 @@
+{
+  "scope": "us_large only",
+  "mode": "training",
+  "candidates": 404,
+  "eligible": 397,
+  "cap": 200,
+  "selected": 50,
+  "sample_description": "9,682 US high-cap held-stock months; 128 distinct stocks; return months 2005\u20132014.",
+  "selection_return_start": "2005-01-31",
+  "selection_return_end": "2014-12-31",
+  "training_only": true,
+  "other_markets_used": false,
+  "test_outcomes_used": false,
+  "models_fitted": false,
+  "regression_r2_used": false,
+  "selection_weights": {
+    "oriented_rank_ic": 0.55,
+    "coverage": 0.2,
+    "yearly_direction_stability": 0.15,
+    "rank_persistence": 0.1
+  },
+  "reason_counts": {
+    "S": 24,
+    "A": 13,
+    "T": 13
+  },
+  "published_group_count": 32,
+  "proxy_group_count": 18,
+  "source_files": [
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Kati_tryout\\data\\characteristics\\us_high_cap_inputs\\us_high_cap_sample.parquet",
+      "sha256": "4b6c4be0aab208a10be09bc8f015b56edcf986392a98bf3efe09f12651ce908d"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Kati_tryout\\data\\characteristics\\us_high_cap_inputs\\candidate_registry.csv",
+      "sha256": "ad206a4a516366e3002bcc12777133ab545600d2826a93a0ee43d7257dc84a95"
+    }
+  ],
+  "caveat": "Best under the declared association/diversity rule; no global optimality or joint-ML performance claim."
+}

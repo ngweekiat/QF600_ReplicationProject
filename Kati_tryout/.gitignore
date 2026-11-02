@@ -1,0 +1,8 @@
+# Local licensed data, fitted caches and generated reports stay together here.
+# Publishing these files requires an explicit data/LFS decision.
+/data/
+/outputs/
+__pycache__/
+.pytest_cache/
+.ipynb_checkpoints/
+*.pyc

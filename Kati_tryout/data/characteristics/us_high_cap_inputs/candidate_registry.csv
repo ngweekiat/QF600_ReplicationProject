@@ -1,0 +1,405 @@
+characteristic,dtype,description,name_new,direction,published_theme,published_jkp_153,source
+prc,double precision,Price per share in dollars,Price per share,-1.0,Size,True,WRDS contrib.global_factor source column description
+market_equity,double precision,Market equity (characteristic),Market Equity,-1.0,Size,True,WRDS contrib.global_factor source column description
+div1m_me,double precision,Dividend to Price - 1 Month,,,,False,WRDS contrib.global_factor source column description
+divspc1m_me,double precision,Special Dividend to Price - 1 Month,,,,False,WRDS contrib.global_factor source column description
+div3m_me,double precision,Dividend to Price - 3 Months,,,,False,WRDS contrib.global_factor source column description
+div6m_me,double precision,Dividend to Price - 6 Months,,,,False,WRDS contrib.global_factor source column description
+div12m_me,double precision,Dividend yield,Dividend yield,1.0,Value,True,WRDS contrib.global_factor source column description
+divspc12m_me,double precision,Special Dividend to Price - 12 Month,,,,False,WRDS contrib.global_factor source column description
+eqnpo_1m,double precision,Net Equity Payout - 1 Month,,,,False,WRDS contrib.global_factor source column description
+eqnpo_3m,double precision,Net Equity Payout - 3 Month,,,,False,WRDS contrib.global_factor source column description
+eqnpo_6m,double precision,Net Equity Payout - 6 Month,,,,False,WRDS contrib.global_factor source column description
+eqnpo_12m,double precision,Equity net payout,Equity net payout,1.0,Value,True,WRDS contrib.global_factor source column description
+chcsho_1m,double precision,Change in Shares - 1 Month,,,,False,WRDS contrib.global_factor source column description
+chcsho_3m,double precision,Change in Shares - 3 Month,,,,False,WRDS contrib.global_factor source column description
+chcsho_6m,double precision,Change in Shares - 6 Month,,,,False,WRDS contrib.global_factor source column description
+chcsho_12m,double precision,Net stock issues,Net stock issues,-1.0,Value,True,WRDS contrib.global_factor source column description
+ret_1_0,double precision,Short-term reversal,Short-term reversal,-1.0,Short-Term Reversal,True,WRDS contrib.global_factor source column description
+ret_2_0,double precision,Momentum 0-2 Months,,,,False,WRDS contrib.global_factor source column description
+ret_3_0,double precision,Momentum 0-3 Months,,,,False,WRDS contrib.global_factor source column description
+ret_3_1,double precision,Price momentum t-3 to t-1,Price momentum t-3 to t-1,1.0,Momentum,True,WRDS contrib.global_factor source column description
+ret_6_0,double precision,Momentum 0-6 Months,,,,False,WRDS contrib.global_factor source column description
+ret_6_1,double precision,Price momentum t-6 to t-1,Price momentum t-6 to t-1,1.0,Momentum,True,WRDS contrib.global_factor source column description
+ret_9_0,double precision,Momentum 0-9 Months,,,,False,WRDS contrib.global_factor source column description
+ret_9_1,double precision,Price momentum t-9 to t-1,Price momentum t-9 to t-1,1.0,Momentum,True,WRDS contrib.global_factor source column description
+ret_12_0,double precision,Momentum 0-12 Months,,,,False,WRDS contrib.global_factor source column description
+ret_12_1,double precision,Price momentum t-12 to t-1,Price momentum t-12 to t-1,1.0,Momentum,True,WRDS contrib.global_factor source column description
+ret_12_7,double precision,Price momentum t-12 to t-7,Price momentum t-12 to t-7,1.0,Profit Growth,True,WRDS contrib.global_factor source column description
+ret_18_1,double precision,Momentum 1-18 Months,,,,False,WRDS contrib.global_factor source column description
+ret_24_1,double precision,Momentum 1-24 Months,,,,False,WRDS contrib.global_factor source column description
+ret_24_12,double precision,Momentum 12-24 Months,,,,False,WRDS contrib.global_factor source column description
+ret_36_1,double precision,Momentum 1-36 Months,,,,False,WRDS contrib.global_factor source column description
+ret_36_12,double precision,Momentum 12-36 Months,,,,False,WRDS contrib.global_factor source column description
+ret_48_12,double precision,Momentum 12-48 Months,,,,False,WRDS contrib.global_factor source column description
+ret_48_1,double precision,Momentum 1-48 Months,,,,False,WRDS contrib.global_factor source column description
+ret_60_1,double precision,Momentum 1-60 Months,,,,False,WRDS contrib.global_factor source column description
+ret_60_12,double precision,Long-term reversal,Long-term reversal,-1.0,Investment,True,WRDS contrib.global_factor source column description
+ret_60_36,double precision,Momentum 36-60 Months,,,,False,WRDS contrib.global_factor source column description
+seas_1_1an,double precision,"Year 1-lagged return, annual","Year 1-lagged return, annual",1.0,Profit Growth,True,WRDS contrib.global_factor source column description
+seas_1_1na,double precision,"Year 1-lagged return, nonannual","Year 1-lagged return, nonannual",1.0,Momentum,True,WRDS contrib.global_factor source column description
+seas_2_5an,double precision,"Years 2-5 lagged returns, annual","Years 2-5 lagged returns, annual",1.0,Seasonality,True,WRDS contrib.global_factor source column description
+seas_2_5na,double precision,"Years 2-5 lagged returns, nonannual","Years 2-5 lagged returns, nonannual",-1.0,Investment,True,WRDS contrib.global_factor source column description
+seas_6_10an,double precision,"Years 6-10 lagged returns, annual","Years 6-10 lagged returns, annual",1.0,Seasonality,True,WRDS contrib.global_factor source column description
+seas_6_10na,double precision,"Years 6-10 lagged returns, nonannual","Years 6-10 lagged returns, nonannual",-1.0,Low Risk,True,WRDS contrib.global_factor source column description
+seas_11_15an,double precision,"Years 11-15 lagged returns, annual","Years 11-15 lagged returns, annual",1.0,Seasonality,True,WRDS contrib.global_factor source column description
+seas_11_15na,double precision,"Years 11-15 lagged returns, nonannual","Years 11-15 lagged returns, nonannual",-1.0,Seasonality,True,WRDS contrib.global_factor source column description
+seas_16_20an,double precision,"Years 16-20 lagged returns, annual","Years 16-20 lagged returns, annual",1.0,Seasonality,True,WRDS contrib.global_factor source column description
+seas_16_20na,double precision,"Years 16-20 lagged returns, nonannual","Years 16-20 lagged returns, nonannual",-1.0,Accruals,True,WRDS contrib.global_factor source column description
+assets,double precision,Assets,,,,False,WRDS contrib.global_factor source column description
+sales,double precision,Sales,,,,False,WRDS contrib.global_factor source column description
+book_equity,double precision,Book Equity,,,,False,WRDS contrib.global_factor source column description
+net_income,double precision,Net Income,,,,False,WRDS contrib.global_factor source column description
+enterprise_value,double precision,Enterprise Value,,,,False,WRDS contrib.global_factor source column description
+at_gr1,double precision,Asset Growth,Asset Growth,-1.0,Investment,True,WRDS contrib.global_factor source column description
+ca_gr1,double precision,Current Asset Growth 1yr,,,,False,WRDS contrib.global_factor source column description
+nca_gr1,double precision,Non-Current Asset Growth 1yr,,,,False,WRDS contrib.global_factor source column description
+lt_gr1,double precision,Total Liabilities Growth 1yr,,,,False,WRDS contrib.global_factor source column description
+cl_gr1,double precision,Current Liabilities Growth 1yr,,,,False,WRDS contrib.global_factor source column description
+ncl_gr1,double precision,Non-Current Liabilities Growth 1yr,,,,False,WRDS contrib.global_factor source column description
+be_gr1,double precision,Book Equity Growth 1yr,,,,False,WRDS contrib.global_factor source column description
+pstk_gr1,double precision,Preferred Stock Growth 1 yr,,,,False,WRDS contrib.global_factor source column description
+debt_gr1,double precision,Total Debt Growth 1yr,,,,False,WRDS contrib.global_factor source column description
+sale_gr1,double precision,Sales Growth (1 year),Sales Growth (1 year),-1.0,Investment,True,WRDS contrib.global_factor source column description
+cogs_gr1,double precision,Cost of Goods Sold Growth 1yr,,,,False,WRDS contrib.global_factor source column description
+sga_gr1,double precision,"Selling, General, and Administrative Expenses Growth 1yr",,,,False,WRDS contrib.global_factor source column description
+opex_gr1,double precision,Operating Expenses Growth 1yr,,,,False,WRDS contrib.global_factor source column description
+at_gr3,double precision,Asset Growth 3yr,,,,False,WRDS contrib.global_factor source column description
+ca_gr3,double precision,Current Asset Growth 3yr,,,,False,WRDS contrib.global_factor source column description
+nca_gr3,double precision,Non-Current Asset Growth 3yr,,,,False,WRDS contrib.global_factor source column description
+lt_gr3,double precision,Total Liabilities Growth 3yr,,,,False,WRDS contrib.global_factor source column description
+cl_gr3,double precision,Current Liabilities Growth 3yr,,,,False,WRDS contrib.global_factor source column description
+ncl_gr3,double precision,Non-Current Liabilities Growth 3yr,,,,False,WRDS contrib.global_factor source column description
+be_gr3,double precision,Book Equity Growth 3yr,,,,False,WRDS contrib.global_factor source column description
+pstk_gr3,double precision,Preferred Stock Growth 3yr,,,,False,WRDS contrib.global_factor source column description
+debt_gr3,double precision,Growth in book debt (3 years),Growth in book debt (3 years),-1.0,Debt Issuance,True,WRDS contrib.global_factor source column description
+sale_gr3,double precision,Sales Growth (3 years),Sales Growth (3 years),-1.0,Investment,True,WRDS contrib.global_factor source column description
+cogs_gr3,double precision,Cost of Goods Sold Growth 3yr,,,,False,WRDS contrib.global_factor source column description
+sga_gr3,double precision,"Selling, General, and Administrative Expenses Growth 3yr",,,,False,WRDS contrib.global_factor source column description
+opex_gr3,double precision,Operating Expenses Growth 3yr,,,,False,WRDS contrib.global_factor source column description
+cash_gr1a,double precision,Cash and Short-Term Investments Change 1yr,,,,False,WRDS contrib.global_factor source column description
+inv_gr1a,double precision,Inventory change,Inventory change,-1.0,Investment,True,WRDS contrib.global_factor source column description
+rec_gr1a,double precision,Receivables Change 1yr,,,,False,WRDS contrib.global_factor source column description
+ppeg_gr1a,double precision,"Property, Plans and Equipment Gross Change 1yr",,,,False,WRDS contrib.global_factor source column description
+lti_gr1a,double precision,Change in long-term investments,Change in long-term investments,-1.0,Seasonality,True,WRDS contrib.global_factor source column description
+intan_gr1a,double precision,Intangible Assets Change 1yr,,,,False,WRDS contrib.global_factor source column description
+debtst_gr1a,double precision,Short-Term Debt Change 1yr,,,,False,WRDS contrib.global_factor source column description
+ap_gr1a,double precision,Accounts Payable Change 1yr,,,,False,WRDS contrib.global_factor source column description
+txp_gr1a,double precision,Income Tax Payable Change 1yr,,,,False,WRDS contrib.global_factor source column description
+debtlt_gr1a,double precision,Long-Term Debt Change 1yr,,,,False,WRDS contrib.global_factor source column description
+txditc_gr1a,double precision,Deferred Taxes and Investment Credit Change 1yr,,,,False,WRDS contrib.global_factor source column description
+coa_gr1a,double precision,Change in current operating assets,Change in current operating assets,-1.0,Investment,True,WRDS contrib.global_factor source column description
+col_gr1a,double precision,Change in current operating liabilities,Change in current operating liabilities,-1.0,Investment,True,WRDS contrib.global_factor source column description
+cowc_gr1a,double precision,Change in current operating working capital,Change in current operating working capital,-1.0,Accruals,True,WRDS contrib.global_factor source column description
+ncoa_gr1a,double precision,Change in noncurrent operating assets,Change in noncurrent operating assets,-1.0,Investment,True,WRDS contrib.global_factor source column description
+ncol_gr1a,double precision,Change in noncurrent operating liabilities,Change in noncurrent operating liabilities,-1.0,Debt Issuance,True,WRDS contrib.global_factor source column description
+nncoa_gr1a,double precision,Change in net noncurrent operating assets,Change in net noncurrent operating assets,-1.0,Investment,True,WRDS contrib.global_factor source column description
+oa_gr1a,double precision,Operating Assets Change 1yr,,,,False,WRDS contrib.global_factor source column description
+ol_gr1a,double precision,Operating Liabilities Change 1yr,,,,False,WRDS contrib.global_factor source column description
+noa_gr1a,double precision,Change in net operating assets,Change in net operating assets,-1.0,Investment,True,WRDS contrib.global_factor source column description
+fna_gr1a,double precision,Financial Assets Change 1yr,,,,False,WRDS contrib.global_factor source column description
+fnl_gr1a,double precision,Change in financial liabilities,Change in financial liabilities,-1.0,Debt Issuance,True,WRDS contrib.global_factor source column description
+nfna_gr1a,double precision,Change in net financial assets,Change in net financial assets,1.0,Debt Issuance,True,WRDS contrib.global_factor source column description
+gp_gr1a,double precision,Gross Profit Change 1yr,,,,False,WRDS contrib.global_factor source column description
+ebitda_gr1a,double precision,Operating Profit before Depreciation Change 1yr,,,,False,WRDS contrib.global_factor source column description
+ebit_gr1a,double precision,Operating Profit after Depreciation Change 1yr,,,,False,WRDS contrib.global_factor source column description
+ope_gr1a,double precision,Operating Earnings to Equity Change 1yr,,,,False,WRDS contrib.global_factor source column description
+ni_gr1a,double precision,Net Income Change 1yr,,,,False,WRDS contrib.global_factor source column description
+nix_gr1a,double precision,Net Income Including Extraordinary Items Change 1yr,,,,False,WRDS contrib.global_factor source column description
+dp_gr1a,double precision,Depreciation and Amortization Change 1yr,,,,False,WRDS contrib.global_factor source column description
+ocf_gr1a,double precision,Operating Cash Flow Change 1yr,,,,False,WRDS contrib.global_factor source column description
+fcf_gr1a,double precision,Free Cash Flow Change 1yr,,,,False,WRDS contrib.global_factor source column description
+nwc_gr1a,double precision,Net Working Capital Change 1yr,,,,False,WRDS contrib.global_factor source column description
+eqnetis_gr1a,double precision,Equity Net Issuance Change 1yr,,,,False,WRDS contrib.global_factor source column description
+dltnetis_gr1a,double precision,Net Long-Term Debt Issuance Change 1yr,,,,False,WRDS contrib.global_factor source column description
+dstnetis_gr1a,double precision,Net Short-Term Debt Issuance Change 1yr,,,,False,WRDS contrib.global_factor source column description
+dbnetis_gr1a,double precision,Net Debt Issuance Change 1yr,,,,False,WRDS contrib.global_factor source column description
+netis_gr1a,double precision,Net Issuance Change 1yr,,,,False,WRDS contrib.global_factor source column description
+fincf_gr1a,double precision,Financial Cash Flow Change 1yr,,,,False,WRDS contrib.global_factor source column description
+eqnpo_gr1a,double precision,Equity Net Payout Change 1yr,,,,False,WRDS contrib.global_factor source column description
+tax_gr1a,double precision,Tax expense surprise,Tax expense surprise,1.0,Profit Growth,True,WRDS contrib.global_factor source column description
+div_gr1a,double precision,Dividend Payout Ratio Change 1yr,,,,False,WRDS contrib.global_factor source column description
+eqbb_gr1a,double precision,Equity Buyback Change 1yr,,,,False,WRDS contrib.global_factor source column description
+eqis_gr1a,double precision,Equity Issuance Change 1yr,,,,False,WRDS contrib.global_factor source column description
+eqpo_gr1a,double precision,Net Equity Payout Change 1yr,,,,False,WRDS contrib.global_factor source column description
+capx_gr1a,double precision,Capital Expenditures Change 1yr,,,,False,WRDS contrib.global_factor source column description
+cash_gr3a,double precision,Cash and Short-Term Investments Change 3yr,,,,False,WRDS contrib.global_factor source column description
+inv_gr3a,double precision,Inventory Change 3yr,,,,False,WRDS contrib.global_factor source column description
+rec_gr3a,double precision,Receivables Change 3yr,,,,False,WRDS contrib.global_factor source column description
+ppeg_gr3a,double precision,"Property, Plans and Equipment Gross Change 3yr",,,,False,WRDS contrib.global_factor source column description
+lti_gr3a,double precision,Investment and Advances Change 3yr,,,,False,WRDS contrib.global_factor source column description
+intan_gr3a,double precision,Intangible Assets Change 3yr,,,,False,WRDS contrib.global_factor source column description
+debtst_gr3a,double precision,Short-Term Debt Change 3yr,,,,False,WRDS contrib.global_factor source column description
+ap_gr3a,double precision,Accounts Payable Change 3yr,,,,False,WRDS contrib.global_factor source column description
+txp_gr3a,double precision,Income Tax Payable Change 3yr,,,,False,WRDS contrib.global_factor source column description
+debtlt_gr3a,double precision,Long-Term Debt Change 3yr,,,,False,WRDS contrib.global_factor source column description
+txditc_gr3a,double precision,Deferred Taxes and Investment Credit Change 3yr,,,,False,WRDS contrib.global_factor source column description
+coa_gr3a,double precision,Current Operating Assets Change 3yr,,,,False,WRDS contrib.global_factor source column description
+col_gr3a,double precision,Current Operating Liabilities Change 3yr,,,,False,WRDS contrib.global_factor source column description
+cowc_gr3a,double precision,Current Operating Working Capital Change 3yr,,,,False,WRDS contrib.global_factor source column description
+ncoa_gr3a,double precision,Non-Current Operating Assets Change 3yr,,,,False,WRDS contrib.global_factor source column description
+ncol_gr3a,double precision,Non-Current Operating Liabilities Change 3yr,,,,False,WRDS contrib.global_factor source column description
+nncoa_gr3a,double precision,Net Non-Current Operating Assets Change 3yr,,,,False,WRDS contrib.global_factor source column description
+oa_gr3a,double precision,Operating Assets Change 3yr,,,,False,WRDS contrib.global_factor source column description
+ol_gr3a,double precision,Operating Liabilities Change 3yr,,,,False,WRDS contrib.global_factor source column description
+fna_gr3a,double precision,Financial Assets Change 3yr,,,,False,WRDS contrib.global_factor source column description
+fnl_gr3a,double precision,Financial Liabilities Change 3yr,,,,False,WRDS contrib.global_factor source column description
+nfna_gr3a,double precision,Net Financial Assets Change 3yr,,,,False,WRDS contrib.global_factor source column description
+gp_gr3a,double precision,Gross Profit Change 3yr,,,,False,WRDS contrib.global_factor source column description
+ebitda_gr3a,double precision,Operating Profit before Depreciation Change 3yr,,,,False,WRDS contrib.global_factor source column description
+ebit_gr3a,double precision,Operating Profit after Depreciation Change 3yr,,,,False,WRDS contrib.global_factor source column description
+ope_gr3a,double precision,Operating Earnings to Equity Change 3yr,,,,False,WRDS contrib.global_factor source column description
+ni_gr3a,double precision,Net Income Change 3yr,,,,False,WRDS contrib.global_factor source column description
+nix_gr3a,double precision,Net Income Including Extraordinary Items Change 3yr,,,,False,WRDS contrib.global_factor source column description
+dp_gr3a,double precision,Depreciation and Amortization Change 3yr,,,,False,WRDS contrib.global_factor source column description
+ocf_gr3a,double precision,Operating Cash Flow Change 3yr,,,,False,WRDS contrib.global_factor source column description
+fcf_gr3a,double precision,Free Cash Flow Change 3yr,,,,False,WRDS contrib.global_factor source column description
+nwc_gr3a,double precision,Net Working Capital Change 3yr,,,,False,WRDS contrib.global_factor source column description
+eqnetis_gr3a,double precision,Equity Net Issuance Change 3yr,,,,False,WRDS contrib.global_factor source column description
+dltnetis_gr3a,double precision,Net Long-Term Debt Issuance Change 3yr,,,,False,WRDS contrib.global_factor source column description
+dstnetis_gr3a,double precision,Net Short-Term Debt Issuance Change 3yr,,,,False,WRDS contrib.global_factor source column description
+dbnetis_gr3a,double precision,Net Debt Issuance Change 3yr,,,,False,WRDS contrib.global_factor source column description
+netis_gr3a,double precision,Net Issuance Change 3yr,,,,False,WRDS contrib.global_factor source column description
+fincf_gr3a,double precision,Financial Cash Flow Change 3yr,,,,False,WRDS contrib.global_factor source column description
+eqnpo_gr3a,double precision,Equity Net Payout Change 3yr,,,,False,WRDS contrib.global_factor source column description
+tax_gr3a,double precision,Effective Tax Rate Change 3yr,,,,False,WRDS contrib.global_factor source column description
+div_gr3a,double precision,Dividend Payout Ratio Change 3yr,,,,False,WRDS contrib.global_factor source column description
+eqbb_gr3a,double precision,Equity Buyback Change 3yr,,,,False,WRDS contrib.global_factor source column description
+eqis_gr3a,double precision,Equity Issuance Change 3yr,,,,False,WRDS contrib.global_factor source column description
+eqpo_gr3a,double precision,Net Equity Payout Change 3yr,,,,False,WRDS contrib.global_factor source column description
+capx_gr3a,double precision,Capital Expenditures Change 3yr,,,,False,WRDS contrib.global_factor source column description
+capx_at,double precision,Capital Expenditures scaled by Assets,,,,False,WRDS contrib.global_factor source column description
+rd_at,double precision,R+D scaled by Assets,,,,False,WRDS contrib.global_factor source column description
+gp_sale,double precision,Gross Profit Margin,,,,False,WRDS contrib.global_factor source column description
+ebitda_sale,double precision,Operating Profit Margin before Depreciation,,,,False,WRDS contrib.global_factor source column description
+ebit_sale,double precision,Profit margin,Profit margin,1.0,Profitability,True,WRDS contrib.global_factor source column description
+pi_sale,double precision,Pretax Profit Margin,,,,False,WRDS contrib.global_factor source column description
+ni_sale,double precision,Net Profit Margin before extraordinary income,,,,False,WRDS contrib.global_factor source column description
+nix_sale,double precision,Net Profit Margin,,,,False,WRDS contrib.global_factor source column description
+ocf_sale,double precision,Operating Cash Flow Margin,,,,False,WRDS contrib.global_factor source column description
+fcf_sale,double precision,Free Cash Flow Margin,,,,False,WRDS contrib.global_factor source column description
+gp_at,double precision,Gross profits-to-assets,Gross profits-to-assets,1.0,Quality,True,WRDS contrib.global_factor source column description
+ebitda_at,double precision,Operating Profit before Depreciation scaled by Assets,,,,False,WRDS contrib.global_factor source column description
+ebit_at,double precision,Operating Profit after Depreciation scaled by Assets,,,,False,WRDS contrib.global_factor source column description
+fi_at,double precision,Firm Income scaled by Assets,,,,False,WRDS contrib.global_factor source column description
+cop_at,double precision,Cash-based operating profits-to-book assets,Cash-based operating profits-to-book assets,1.0,Quality,True,WRDS contrib.global_factor source column description
+ope_be,double precision,Operating profits-to-book equity,Operating profits-to-book equity,1.0,Profitability,True,WRDS contrib.global_factor source column description
+ni_be,double precision,Return on equity,Return on equity,1.0,Profitability,True,WRDS contrib.global_factor source column description
+nix_be,double precision,Net Income Including Extraordinary Items scaled by BE,,,,False,WRDS contrib.global_factor source column description
+ocf_be,double precision,Operating Cash Flow scaled by BE,,,,False,WRDS contrib.global_factor source column description
+fcf_be,double precision,Free Cash Flow scaled by BE,,,,False,WRDS contrib.global_factor source column description
+gp_bev,double precision,Gross Profit scaled by BEV,,,,False,WRDS contrib.global_factor source column description
+ebitda_bev,double precision,Operating Profit before Depreciation scaled by BEV,,,,False,WRDS contrib.global_factor source column description
+ebit_bev,double precision,Return on net operating assets,Return on net operating assets,1.0,Profitability,True,WRDS contrib.global_factor source column description
+fi_bev,double precision,Firm Income scaled by BEV,,,,False,WRDS contrib.global_factor source column description
+cop_bev,double precision,Cash Based Operating Profitability scaled by BEV,,,,False,WRDS contrib.global_factor source column description
+gp_ppen,double precision,Gross Profit scaled by PPEN,,,,False,WRDS contrib.global_factor source column description
+ebitda_ppen,double precision,Operating Profit before Depreciation scaled by PPEN,,,,False,WRDS contrib.global_factor source column description
+fcf_ppen,double precision,Free Cash Flow scaled by PPEN,,,,False,WRDS contrib.global_factor source column description
+fincf_at,double precision,Financial Cash Flow scaled by Assets,,,,False,WRDS contrib.global_factor source column description
+netis_at,double precision,Net total issuance,Net total issuance,-1.0,Value,True,WRDS contrib.global_factor source column description
+eqnetis_at,double precision,Net equity issuance,Net equity issuance,-1.0,Value,True,WRDS contrib.global_factor source column description
+eqis_at,double precision,Equity Issuance scaled by Assets,,,,False,WRDS contrib.global_factor source column description
+dbnetis_at,double precision,Net debt issuance,Net debt issuance,-1.0,Seasonality,True,WRDS contrib.global_factor source column description
+dltnetis_at,double precision,Net Long-Term Debt Issuance scaled by Assets,,,,False,WRDS contrib.global_factor source column description
+dstnetis_at,double precision,Net Short-Term Debt Issuance scaled by Assets,,,,False,WRDS contrib.global_factor source column description
+eqnpo_at,double precision,Equity Net Payout scaled by Assets,,,,False,WRDS contrib.global_factor source column description
+eqbb_at,double precision,Net Equity Payout scaled by Assets,,,,False,WRDS contrib.global_factor source column description
+div_at,double precision,Total Dividends scaled by Assets,,,,False,WRDS contrib.global_factor source column description
+oaccruals_at,double precision,Operating accruals,Operating accruals,-1.0,Accruals,True,WRDS contrib.global_factor source column description
+oaccruals_ni,double precision,Percent operating accruals,Percent operating accruals,-1.0,Accruals,True,WRDS contrib.global_factor source column description
+taccruals_at,double precision,Total accruals,Total accruals,-1.0,Accruals,True,WRDS contrib.global_factor source column description
+taccruals_ni,double precision,Percent total accruals,Percent total accruals,-1.0,Accruals,True,WRDS contrib.global_factor source column description
+noa_at,double precision,Net operating assets,Net operating assets,-1.0,Debt Issuance,True,WRDS contrib.global_factor source column description
+be_bev,double precision,Common Equity scaled by BEV,,,,False,WRDS contrib.global_factor source column description
+debt_bev,double precision,Total Debt scaled by BEV,,,,False,WRDS contrib.global_factor source column description
+cash_bev,double precision,Cash and Short-Term Investments scaled by BEV,,,,False,WRDS contrib.global_factor source column description
+pstk_bev,double precision,Preferred Stock scaled by BEV,,,,False,WRDS contrib.global_factor source column description
+debtlt_bev,double precision,Long-Term Debt scaled by BEV,,,,False,WRDS contrib.global_factor source column description
+debtst_bev,double precision,Short-Term Debt scaled by BEV,,,,False,WRDS contrib.global_factor source column description
+debt_mev,double precision,Total Debt scaled by MEV,,,,False,WRDS contrib.global_factor source column description
+pstk_mev,double precision,Preferred Stock scaled by MEV,,,,False,WRDS contrib.global_factor source column description
+debtlt_mev,double precision,Long-Term Debt scaled by MEV,,,,False,WRDS contrib.global_factor source column description
+debtst_mev,double precision,Short-Term Debt scaled by MEV,,,,False,WRDS contrib.global_factor source column description
+int_debtlt,double precision,Interest scaled by Long-Term Debt,,,,False,WRDS contrib.global_factor source column description
+int_debt,double precision,Interest scaled by Total Debt,,,,False,WRDS contrib.global_factor source column description
+cash_lt,double precision,Cash Balance scaled by Total Liabilities,,,,False,WRDS contrib.global_factor source column description
+inv_act,double precision,Inventory scaled by Current Assets,,,,False,WRDS contrib.global_factor source column description
+rec_act,double precision,Receivables scaled by Current Assets,,,,False,WRDS contrib.global_factor source column description
+ebitda_debt,double precision,Operating Profit before Depreciation scaled by Total Debt,,,,False,WRDS contrib.global_factor source column description
+debtst_debt,double precision,Short-Term Debt scaled by Total Debt,,,,False,WRDS contrib.global_factor source column description
+cl_lt,double precision,Current Liabilities scaled by Total Liabilities,,,,False,WRDS contrib.global_factor source column description
+debtlt_debt,double precision,Long-Term Debt scaled by Total Debt,,,,False,WRDS contrib.global_factor source column description
+profit_cl,double precision,Profit before D1 scaled by Current Liabilities,,,,False,WRDS contrib.global_factor source column description
+ocf_cl,double precision,Operating Cash Flow scaled by Current Liabilities,,,,False,WRDS contrib.global_factor source column description
+ocf_debt,double precision,Operating Cash Flow scaled by Total Debt,,,,False,WRDS contrib.global_factor source column description
+lt_ppen,double precision,Total Liabilities scaled by Total Tangible Assets,,,,False,WRDS contrib.global_factor source column description
+debtlt_be,double precision,Long-Term Debt to Book Equity,,,,False,WRDS contrib.global_factor source column description
+fcf_ocf,double precision,Free Cash Flow scaled by Operating Cash Flow,,,,False,WRDS contrib.global_factor source column description
+opex_at,double precision,Operating leverage,Operating leverage,1.0,Quality,True,WRDS contrib.global_factor source column description
+nwc_at,double precision,Working Capital scaled by Assets,,,,False,WRDS contrib.global_factor source column description
+debt_at,double precision,Debt-to-Assets,,,,False,WRDS contrib.global_factor source column description
+debt_be,double precision,Debt to Shareholders Equity Ratio,,,,False,WRDS contrib.global_factor source column description
+ebit_int,double precision,Interest Coverage Ratio,,,,False,WRDS contrib.global_factor source column description
+cash_cl,double precision,Cash Ratio,,,,False,WRDS contrib.global_factor source column description
+caliq_cl,double precision,Quick Ratio,,,,False,WRDS contrib.global_factor source column description
+ca_cl,double precision,Current Ratio,,,,False,WRDS contrib.global_factor source column description
+inv_days,double precision,Days Inventory Outstanding,,,,False,WRDS contrib.global_factor source column description
+rec_days,double precision,Days Sales Outstanding,,,,False,WRDS contrib.global_factor source column description
+ap_days,double precision,Days Accounts Payable Outstanding,,,,False,WRDS contrib.global_factor source column description
+cash_conversion,double precision,Cash Conversion Cycle,,,,False,WRDS contrib.global_factor source column description
+inv_turnover,double precision,Inventory Turnover,,,,False,WRDS contrib.global_factor source column description
+at_turnover,double precision,Capital turnover,Capital turnover,1.0,Quality,True,WRDS contrib.global_factor source column description
+rec_turnover,double precision,Receivables Turnover,,,,False,WRDS contrib.global_factor source column description
+ap_turnover,double precision,Account Payables Turnover,,,,False,WRDS contrib.global_factor source column description
+spi_at,double precision,Special Items scaled by Assets,,,,False,WRDS contrib.global_factor source column description
+xido_at,double precision,Extraordinary Items and Discontinued Operations scaled by Assets,,,,False,WRDS contrib.global_factor source column description
+nri_at,double precision,Non-Recurring Items scaled by Assets,,,,False,WRDS contrib.global_factor source column description
+adv_sale,double precision,Advertising scaled by Sales,,,,False,WRDS contrib.global_factor source column description
+staff_sale,double precision,Labor Expense scaled by Sales,,,,False,WRDS contrib.global_factor source column description
+rd_sale,double precision,R+D-to-sales,R&D-to-sales,1.0,Low Leverage,True,WRDS contrib.global_factor source column description
+div_ni,double precision,Dividend Payout Ratio,,,,False,WRDS contrib.global_factor source column description
+sale_bev,double precision,Assets turnover,Asset turnover,1.0,Quality,True,WRDS contrib.global_factor source column description
+sale_be,double precision,Sales scaled by Total Stockholders Equity,,,,False,WRDS contrib.global_factor source column description
+sale_nwc,double precision,Sales scaled by Working Capital,,,,False,WRDS contrib.global_factor source column description
+tax_pi,double precision,Effective Tax Rate,,,,False,WRDS contrib.global_factor source column description
+be_me,double precision,Book-to-market equity,Book-to-market equity,1.0,Value,True,WRDS contrib.global_factor source column description
+at_me,double precision,Assets-to-market,Assets-to-market,1.0,Value,True,WRDS contrib.global_factor source column description
+cash_me,double precision,Cash and Short-Term Investments scaled by Market Equity,,,,False,WRDS contrib.global_factor source column description
+gp_me,double precision,Gross Profit scaled by ME,,,,False,WRDS contrib.global_factor source column description
+ebitda_me,double precision,Operating Profit before Depreciation scaled by ME,,,,False,WRDS contrib.global_factor source column description
+ebit_me,double precision,Operating Profit after Depreciation scaled by ME,,,,False,WRDS contrib.global_factor source column description
+ope_me,double precision,Operating Earnings to Equity scaled by ME,,,,False,WRDS contrib.global_factor source column description
+ni_me,double precision,Earnings-to-price,Earnings-to-price,1.0,Value,True,WRDS contrib.global_factor source column description
+nix_me,double precision,Net Income Including Extraordinary Items scaled by ME,,,,False,WRDS contrib.global_factor source column description
+sale_me,double precision,Sales-to-market,Sales-to-market,1.0,Value,True,WRDS contrib.global_factor source column description
+ocf_me,double precision,Operating cash flow-to-market,Operating cash flow-to-market,1.0,Value,True,WRDS contrib.global_factor source column description
+fcf_me,double precision,Free cash flow-to-price,Free cash flow-to-price,1.0,Value,True,WRDS contrib.global_factor source column description
+cop_me,double precision,Cash Based Operating Profitability scaled by ME,,,,False,WRDS contrib.global_factor source column description
+rd_me,double precision,R+D-to-market,R&D-to-market,1.0,Size,True,WRDS contrib.global_factor source column description
+div_me,double precision,Total Dividends scaled by ME,,,,False,WRDS contrib.global_factor source column description
+eqbb_me,double precision,Equity Buyback scaled by ME,,,,False,WRDS contrib.global_factor source column description
+eqis_me,double precision,Equity Issuance scaled by ME,,,,False,WRDS contrib.global_factor source column description
+eqpo_me,double precision,Payout yield,Payout yield,1.0,Value,True,WRDS contrib.global_factor source column description
+eqnpo_me,double precision,Net payout yield,Net payout yield,1.0,Value,True,WRDS contrib.global_factor source column description
+eqnetis_me,double precision,Equity Net Issuance scaled by ME,,,,False,WRDS contrib.global_factor source column description
+dltnetis_mev,double precision,Net Long-Term Debt Issuance scaled by MEV,,,,False,WRDS contrib.global_factor source column description
+dstnetis_mev,double precision,Net Short-Term Debt Issuance scaled by MEV,,,,False,WRDS contrib.global_factor source column description
+dbnetis_mev,double precision,Net Debt Issuance scaled by MEV,,,,False,WRDS contrib.global_factor source column description
+netis_mev,double precision,Net Issuance scaled by MEV,,,,False,WRDS contrib.global_factor source column description
+at_mev,double precision,Total Assets scaled by MEV,,,,False,WRDS contrib.global_factor source column description
+be_mev,double precision,Book Equity scaled by MEV,,,,False,WRDS contrib.global_factor source column description
+bev_mev,double precision,Book-to-market enterprise value,Book-to-market enterprise value,1.0,Value,True,WRDS contrib.global_factor source column description
+ppen_mev,double precision,"Property, Plans and Equipment Net scaled by MEV",,,,False,WRDS contrib.global_factor source column description
+cash_mev,double precision,Cash and Short-Term Investments scaled by MEV,,,,False,WRDS contrib.global_factor source column description
+gp_mev,double precision,Gross Profit scaled by MEV,,,,False,WRDS contrib.global_factor source column description
+ebitda_mev,double precision,Ebitda-to-market enterprise value,Ebitda-to-market enterprise value,1.0,Value,True,WRDS contrib.global_factor source column description
+ebit_mev,double precision,Operating Profit after Depreciation scaled by MEV,,,,False,WRDS contrib.global_factor source column description
+cop_mev,double precision,Cash Based Operating Profitability scaled by MEV,,,,False,WRDS contrib.global_factor source column description
+sale_mev,double precision,Sales scaled by MEV,,,,False,WRDS contrib.global_factor source column description
+ocf_mev,double precision,Operating Cash Flow scaled by MEV,,,,False,WRDS contrib.global_factor source column description
+fcf_mev,double precision,Free Cash Flow scaled by MEV,,,,False,WRDS contrib.global_factor source column description
+fincf_mev,double precision,Financial Cash Flow Change scaled by MEV,,,,False,WRDS contrib.global_factor source column description
+ni_inc8q,double precision,Number of consecutive quarters with earnings increases,Number of consecutive quarters with earnings increases,1.0,Quality,True,WRDS contrib.global_factor source column description
+ppeinv_gr1a,double precision,Change PPE and Inventory,Change PPE and Inventory,-1.0,Investment,True,WRDS contrib.global_factor source column description
+lnoa_gr1a,double precision,Change in long-term net operating assets,Change in long-term net operating assets,-1.0,Investment,True,WRDS contrib.global_factor source column description
+capx_gr1,double precision,CAPEX growth (1 year),CAPEX growth (1 year),-1.0,Investment,True,WRDS contrib.global_factor source column description
+capx_gr2,double precision,CAPEX growth (2 years),CAPEX growth (2 years),-1.0,Investment,True,WRDS contrib.global_factor source column description
+capx_gr3,double precision,CAPEX growth (3 years),CAPEX growth (3 years),-1.0,Investment,True,WRDS contrib.global_factor source column description
+sti_gr1a,double precision,Change in short-term investments,Change in short-term investments,1.0,Seasonality,True,WRDS contrib.global_factor source column description
+niq_at,double precision,Quarterly return on assets,Quarterly return on assets,1.0,Quality,True,WRDS contrib.global_factor source column description
+niq_at_chg1,double precision,Change in quarterly return on assets,Change in quarterly return on assets,1.0,Profit Growth,True,WRDS contrib.global_factor source column description
+niq_be,double precision,Quarterly return on equity,Quarterly return on equity,1.0,Profitability,True,WRDS contrib.global_factor source column description
+niq_be_chg1,double precision,Change in quarterly return on equity,Change in quarterly return on equity,1.0,Profit Growth,True,WRDS contrib.global_factor source column description
+saleq_gr1,double precision,Sales growth (1 quarter),Sales growth (1 quarter),-1.0,Investment,True,WRDS contrib.global_factor source column description
+rd5_at,double precision,R&D capital-to-book assets,R&D capital-to-book assets,1.0,Low Leverage,True,WRDS contrib.global_factor source column description
+dsale_dinv,double precision,Change sales minus change Inventory,Change sales minus change Inventory,1.0,Profit Growth,True,WRDS contrib.global_factor source column description
+dsale_drec,double precision,Change sales minus change receivables,Change sales minus change receivables,-1.0,Profit Growth,True,WRDS contrib.global_factor source column description
+dgp_dsale,double precision,Change gross margin minus change sales,Change gross margin minus change sales,1.0,Quality,True,WRDS contrib.global_factor source column description
+dsale_dsga,double precision,Change sales minus change SG1,Change sales minus change SG&A,1.0,Profit Growth,True,WRDS contrib.global_factor source column description
+saleq_su,double precision,Standardized Revenue surprise,Standardized Revenue surprise,1.0,Profit Growth,True,WRDS contrib.global_factor source column description
+niq_su,double precision,Standardized earnings surprise,Standardized earnings surprise,1.0,Profit Growth,True,WRDS contrib.global_factor source column description
+debt_me,double precision,Debt-to-market,Debt-to-market,1.0,Value,True,WRDS contrib.global_factor source column description
+netdebt_me,double precision,Net debt-to-price,Net debt-to-price,-1.0,Low Leverage,True,WRDS contrib.global_factor source column description
+capex_abn,double precision,Abnormal corporate investment,Abnormal corporate investment,-1.0,Debt Issuance,True,WRDS contrib.global_factor source column description
+inv_gr1,double precision,Inventory growth,Inventory growth,-1.0,Investment,True,WRDS contrib.global_factor source column description
+be_gr1a,double precision,Change in common equity,Change in common equity,-1.0,Investment,True,WRDS contrib.global_factor source column description
+op_at,double precision,Operating profits-to-book assets,Operating profits-to-book assets,1.0,Quality,True,WRDS contrib.global_factor source column description
+pi_nix,double precision,Taxable income-to-book income,Taxable income-to-book income,1.0,Seasonality,True,WRDS contrib.global_factor source column description
+op_atl1,double precision,Operating profits-to-lagged book assets,Operating profits-to-lagged book assets,1.0,Quality,True,WRDS contrib.global_factor source column description
+gp_atl1,double precision,Gross profits-to-lagged assets,Gross profits-to-lagged assets,1.0,Quality,True,WRDS contrib.global_factor source column description
+ope_bel1,double precision,Operating profits-to-lagged book equity,Operating profits-to-lagged book equity,1.0,Profitability,True,WRDS contrib.global_factor source column description
+cop_atl1,double precision,Cash-based operating profits-to-lagged book assets,Cash-based operating profits-to-lagged book assets,1.0,Quality,True,WRDS contrib.global_factor source column description
+at_be,double precision,Book leverage,Book leverage,-1.0,Low Leverage,True,WRDS contrib.global_factor source column description
+ocfq_saleq_std,double precision,Cash flow volatility,Cash flow volatility,-1.0,Low Risk,True,WRDS contrib.global_factor source column description
+aliq_at,double precision,Liquidity of book assets,Liquidity of book assets,-1.0,Investment,True,WRDS contrib.global_factor source column description
+aliq_mat,double precision,Liquidity of market assets,Liquidity of market assets,-1.0,Low Leverage,True,WRDS contrib.global_factor source column description
+tangibility,double precision,Asset tangibility,Asset tangibility,1.0,Low Leverage,True,WRDS contrib.global_factor source column description
+eq_dur,double precision,Equity duration,Equity duration,-1.0,Value,True,WRDS contrib.global_factor source column description
+f_score,double precision,Pitroski F-score,Pitroski F-score,1.0,Profitability,True,WRDS contrib.global_factor source column description
+o_score,double precision,Ohlson O-score,Ohlson O-score,-1.0,Profitability,True,WRDS contrib.global_factor source column description
+z_score,double precision,Altman Z-score,Altman Z-score,1.0,Low Leverage,True,WRDS contrib.global_factor source column description
+kz_index,double precision,Kaplan-Zingales index,Kaplan-Zingales index,1.0,Seasonality,True,WRDS contrib.global_factor source column description
+intrinsic_value,double precision,Intrinsic Value,,,,False,WRDS contrib.global_factor source column description
+ival_me,double precision,Intrinsic value-to-market,Intrinsic value-to-market,1.0,Value,True,WRDS contrib.global_factor source column description
+sale_emp_gr1,double precision,Labor force efficiency,Labor force efficiency,1.0,Profit Growth,True,WRDS contrib.global_factor source column description
+emp_gr1,double precision,Hiring rate,Hiring rate,-1.0,Investment,True,WRDS contrib.global_factor source column description
+cash_at,double precision,Cash-to-assets,Cash-to-assets,1.0,Low Leverage,True,WRDS contrib.global_factor source column description
+earnings_variability,double precision,Earnings variability,Earnings variability,-1.0,Low Risk,True,WRDS contrib.global_factor source column description
+ni_ar1,double precision,Earnings persistence,Earnings persistence,1.0,Debt Issuance,True,WRDS contrib.global_factor source column description
+ni_ivol,double precision,Earnings volatility,Earnings volatility,1.0,Low Leverage,True,WRDS contrib.global_factor source column description
+niq_saleq_std,double precision,Net Income to Sales Quarterly Volatility,,,,False,WRDS contrib.global_factor source column description
+ni_emp,double precision,Net Income scaled by Employees,,,,False,WRDS contrib.global_factor source column description
+sale_emp,double precision,Sales scaled by Employees,,,,False,WRDS contrib.global_factor source column description
+ni_at,double precision,Net Income scaled by Assets,,,,False,WRDS contrib.global_factor source column description
+ocf_at,double precision,Operating cash flow to assets,Operating cash flow to assets,1.0,Profitability,True,WRDS contrib.global_factor source column description
+ocf_at_chg1,double precision,Change in operating cash flow to assets,Change in operating cash flow to assets,1.0,Profit Growth,True,WRDS contrib.global_factor source column description
+roeq_be_std,double precision,Quarterly ROE Volatility,,,,False,WRDS contrib.global_factor source column description
+roe_be_std,double precision,ROE Volatility,,,,False,WRDS contrib.global_factor source column description
+gpoa_ch5,double precision,Gross Product to Assets 5 yr Change,,,,False,WRDS contrib.global_factor source column description
+roe_ch5,double precision,ROE 5 yr Change,,,,False,WRDS contrib.global_factor source column description
+roa_ch5,double precision,ROA 5 yr Change,,,,False,WRDS contrib.global_factor source column description
+cfoa_ch5,double precision,Operating Cash Flow to Assets 5 yr Change,,,,False,WRDS contrib.global_factor source column description
+gmar_ch5,double precision,Gross Product to Sales 5 yr Change,,,,False,WRDS contrib.global_factor source column description
+beta_60m,double precision,Market Beta,Market Beta,-1.0,Low Risk,True,WRDS contrib.global_factor source column description
+ivol_capm_60m,double precision,Idiosyncratic volatility from the CAPM (60 months),,,,False,WRDS contrib.global_factor source column description
+resff3_12_1,double precision,Residual momentum t-12 to t-1,Residual momentum t-12 to t-1,1.0,Momentum,True,WRDS contrib.global_factor source column description
+resff3_6_1,double precision,Residual momentum t-6 to t-1,Residual momentum t-6 to t-1,1.0,Momentum,True,WRDS contrib.global_factor source column description
+mispricing_perf,double precision,Mispricing factor: Performance,Mispricing factor: Performance,1.0,Quality,True,WRDS contrib.global_factor source column description
+mispricing_mgmt,double precision,Mispricing factor: Management,Mispricing factor: Management,1.0,Investment,True,WRDS contrib.global_factor source column description
+bidaskhl_21d,double precision,The high-low bid-ask spread,The high-low bid-ask spread,1.0,Low Leverage,True,WRDS contrib.global_factor source column description
+rvolhl_21d,double precision,The high-low return volatility,,,,False,WRDS contrib.global_factor source column description
+rskew_21d,double precision,Total skewness,Total skewness,-1.0,Short-Term Reversal,True,WRDS contrib.global_factor source column description
+zero_trades_252d,double precision,Number of zero trades with turnover as tiebreaker (12 months),Number of zero trades with turnover as tiebreaker (12 months),1.0,Low Risk,True,WRDS contrib.global_factor source column description
+rvol_252d,double precision,Return volatility (252 days),,,,False,WRDS contrib.global_factor source column description
+dolvol_126d,double precision,Dollar trading volume,Dollar trading volume,-1.0,Size,True,WRDS contrib.global_factor source column description
+dolvol_var_126d,double precision,Coefficient of variation for dollar trading volume,Coefficient of variation for dollar trading volume,-1.0,Profitability,True,WRDS contrib.global_factor source column description
+corr_1260d,double precision,Market correlation,Market correlation,-1.0,Seasonality,True,WRDS contrib.global_factor source column description
+ivol_ff3_21d,double precision,Idiosyncratic volatility from the Fama-French 3-factor model,Idiosyncratic volatility from the Fama-French 3-factor model,-1.0,Low Risk,True,WRDS contrib.global_factor source column description
+iskew_ff3_21d,double precision,Idiosyncratic skewness from the Fama-French 3-factor model,Idiosyncratic skewness from the Fama-French 3-factor model,-1.0,Short-Term Reversal,True,WRDS contrib.global_factor source column description
+beta_21d,double precision,Market beta (21 days),,,,False,WRDS contrib.global_factor source column description
+ivol_capm_21d,double precision,Idiosyncratic volatility from the CAPM (21 days),Idiosyncratic volatility from the CAPM (21 days),-1.0,Low Risk,True,WRDS contrib.global_factor source column description
+iskew_capm_21d,double precision,Idiosyncratic skewness from the CAPM,Idiosyncratic skewness from the CAPM,-1.0,Short-Term Reversal,True,WRDS contrib.global_factor source column description
+coskew_21d,double precision,Coskewness,Coskewness,-1.0,Seasonality,True,WRDS contrib.global_factor source column description
+betadown_252d,double precision,Downside beta,Downside beta,-1.0,Low Risk,True,WRDS contrib.global_factor source column description
+prc_highprc_252d,double precision,Current price to high price over last year,Current price to high price over last year,1.0,Momentum,True,WRDS contrib.global_factor source column description
+zero_trades_126d,double precision,Number of zero trades with turnover as tiebreaker (6 months),Number of zero trades with turnover as tiebreaker (6 months),1.0,Low Risk,True,WRDS contrib.global_factor source column description
+rvol_21d,double precision,Return volatility,Return volatility,-1.0,Low Risk,True,WRDS contrib.global_factor source column description
+ami_126d,double precision,Amihud Measure,Amihud Measure,1.0,Size,True,WRDS contrib.global_factor source column description
+turnover_126d,double precision,Share turnover,Share turnover,-1.0,Low Risk,True,WRDS contrib.global_factor source column description
+turnover_var_126d,double precision,Coefficient of variation for share turnover,Coefficient of variation for share turnover,-1.0,Profitability,True,WRDS contrib.global_factor source column description
+beta_dimson_21d,double precision,Dimson beta,Dimson beta,-1.0,Low Risk,True,WRDS contrib.global_factor source column description
+beta_252d,double precision,Market beta (252 days),,,,False,WRDS contrib.global_factor source column description
+ivol_capm_252d,double precision,Idiosyncratic volatility from the CAPM (252 days),Idiosyncratic volatility from the CAPM (252 days),-1.0,Low Risk,True,WRDS contrib.global_factor source column description
+rmax5_21d,double precision,Highest 5 days of return,Highest 5 days of return,-1.0,Low Risk,True,WRDS contrib.global_factor source column description
+rmax1_21d,double precision,Maximum daily return,Maximum daily return,-1.0,Low Risk,True,WRDS contrib.global_factor source column description
+ivol_hxz4_21d,double precision,Idiosyncratic volatility from the q-factor model,Idiosyncratic volatility from the q-factor model,-1.0,Low Risk,True,WRDS contrib.global_factor source column description
+iskew_hxz4_21d,double precision,Idiosyncratic skewness from the q-factor model,Idiosyncratic skewness from the q-factor model,-1.0,Short-Term Reversal,True,WRDS contrib.global_factor source column description
+zero_trades_21d,double precision,Number of zero trades with turnover as tiebreaker (1 month),Number of zero trades with turnover as tiebreaker (1 month),1.0,Low Risk,True,WRDS contrib.global_factor source column description
+betabab_1260d,double precision,Frazzini-Pedersen market beta,Frazzini-Pedersen market beta,-1.0,Low Risk,True,WRDS contrib.global_factor source column description
+rmax5_rvol_21d,double precision,Highest 5 days of return scaled by volatility,Highest 5 days of return scaled by volatility,-1.0,Short-Term Reversal,True,WRDS contrib.global_factor source column description
+age,double precision,Firm age,Firm age,-1.0,Low Leverage,True,WRDS contrib.global_factor source column description
+qmj_prof,double precision,Quality minus Junk: Profitability,Quality minus Junk: Profitability,1.0,Quality,True,WRDS contrib.global_factor source column description
+qmj_growth,double precision,Quality minus Junk: Growth,Quality minus Junk: Growth,1.0,Quality,True,WRDS contrib.global_factor source column description
+qmj_safety,double precision,Quality minus Junk: Safety,Quality minus Junk: Safety,1.0,Quality,True,WRDS contrib.global_factor source column description
+qmj,double precision,Quality minus Junk: Composite,Quality minus Junk: Composite,1.0,Quality,True,WRDS contrib.global_factor source column description

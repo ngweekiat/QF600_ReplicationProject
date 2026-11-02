@@ -1,0 +1,1265 @@
+{
+  "status": "PASS",
+  "checks": 251,
+  "passed": 251,
+  "models_refitted": false,
+  "model_backtest_complete": false,
+  "data_stock_months": 2886029,
+  "details": [
+    {
+      "check": "exactly_50_unique_inputs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "no_targets_or_identifiers_added_as_predictors",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "original_keats_source_unchanged",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "association_selection_is_us_high_cap_2005_2014_only",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "no_ml_regression_or_test_outcomes_in_selection",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "active_names_match_us_association_report",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "existing_ml_and_weight_learning_source_preserved",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "non_feature_model_settings_preserved",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "old_characteristic_archives_removed",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "snapshot_all_three_markets_and_training_panels",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "frozen_group_metadata_matches_selected_50",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "theme_sign_policy",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/base:frozen_50_only",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/base:local_paths",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/base:all_covariance_themes_supported",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_mid/base:frozen_50_only",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_mid/base:local_paths",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_mid/base:all_covariance_themes_supported",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "eu_large/base:frozen_50_only",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "eu_large/base:local_paths",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "eu_large/base:all_covariance_themes_supported",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_1:frozen_50_only",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_1:local_paths",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_1:all_covariance_themes_supported",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_2:frozen_50_only",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_2:local_paths",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_2:all_covariance_themes_supported",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_3:frozen_50_only",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_3:local_paths",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_3:all_covariance_themes_supported",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large:prepared_panel_exists",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large:unique_formation_keys",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large:declared_horizon",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large:explicit_zero_return_policy",
+      "status": "PASS",
+      "detail": "15 labelled assumptions"
+    },
+    {
+      "check": "us_large:broad_training_population_preserved",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large:independent_three_month_rank_recalculation",
+      "status": "PASS",
+      "detail": "11951 rows; all 50 ranks, missing raw observations become 0.5"
+    },
+    {
+      "check": "us_large:independent_theme_recalculation",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large:cost_liquidity_stays_raw_even_when_selected_as_signal",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_mid:prepared_panel_exists",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_mid:unique_formation_keys",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_mid:declared_horizon",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_mid:explicit_zero_return_policy",
+      "status": "PASS",
+      "detail": "21 labelled assumptions"
+    },
+    {
+      "check": "us_mid:broad_training_population_preserved",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_mid:independent_three_month_rank_recalculation",
+      "status": "PASS",
+      "detail": "11951 rows; all 50 ranks, missing raw observations become 0.5"
+    },
+    {
+      "check": "us_mid:independent_theme_recalculation",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_mid:cost_liquidity_stays_raw_even_when_selected_as_signal",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "eu_large:prepared_panel_exists",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "eu_large:unique_formation_keys",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "eu_large:declared_horizon",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "eu_large:explicit_zero_return_policy",
+      "status": "PASS",
+      "detail": "20 labelled assumptions"
+    },
+    {
+      "check": "eu_large:broad_training_population_preserved",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "eu_large:independent_three_month_rank_recalculation",
+      "status": "PASS",
+      "detail": "10985 rows; all 50 ranks, missing raw observations become 0.5"
+    },
+    {
+      "check": "eu_large:independent_theme_recalculation",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "eu_large:cost_liquidity_stays_raw_even_when_selected_as_signal",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:audit:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:prepare:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:validate:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.base.covariance:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.base.returns:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.base.returns:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.base.static:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.base.static:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.base.inputs:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.base.inputs:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.base.portfolio:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.base.portfolio:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.base.tables:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.base.tables:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.base.regimes:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.base.regimes:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.base.availability:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.base.market_reference:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_1.market_reference:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_1.market_reference:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_1.calibration:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_1.calibration:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_1.run_0.01:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_1.run_0.01:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_1.run_0.02:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_1.run_0.02:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_1.run_0.04:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_1.run_0.04:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_1.capacity:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_1.capacity:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_1.report:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_1.report:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_1.overall_analysis:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.prepare:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.covariance:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.returns:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.returns:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.reference_benchmarks:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.reference_benchmarks:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.calibration:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.calibration:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.run_0.01:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.run_0.01:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.run_0.02:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.run_0.02:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.run_0.04:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.run_0.04:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.capacity:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.capacity:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.overall_analysis:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.breadth:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.breadth:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.monitor:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_2.monitor:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_3.run:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_3.run:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_3.report:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_3.report:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_3.overall_analysis:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.final_comparison:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_mid.base.covariance:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_mid.base.returns:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_mid.base.returns:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_mid.base.static:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_mid.base.static:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_mid.base.inputs:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_mid.base.inputs:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_mid.base.portfolio:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_mid.base.portfolio:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_mid.base.tables:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_mid.base.tables:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_mid.base.regimes:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_mid.base.regimes:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_mid.base.availability:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_mid.base.market_reference:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:eu_large.base.covariance:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:eu_large.base.returns:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:eu_large.base.returns:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:eu_large.base.static:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:eu_large.base.static:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:eu_large.base.inputs:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:eu_large.base.inputs:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:eu_large.base.portfolio:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:eu_large.base.portfolio:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:eu_large.base.tables:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:eu_large.base.tables:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:eu_large.base.regimes:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:eu_large.base.regimes:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:eu_large.base.availability:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:eu_large.base.market_reference:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:base.comparison:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:base.overall_analysis:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:overall.master_comparison:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:figure1.frontiers:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:organisation:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:dashboard:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "iterations_only_us_high_cap",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "frontier_toggle_independent",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/base:actual_12_month_signal_history_keys",
+      "status": "PASS",
+      "detail": "13545 required distinct keys; 0 unavailable after exclusions"
+    },
+    {
+      "check": "us_mid/base:actual_12_month_signal_history_keys",
+      "status": "PASS",
+      "detail": "16070 required distinct keys; 0 unavailable after exclusions"
+    },
+    {
+      "check": "eu_large/base:actual_12_month_signal_history_keys",
+      "status": "PASS",
+      "detail": "13506 required distinct keys; 0 unavailable after exclusions"
+    },
+    {
+      "check": "us_large/iteration_2:actual_12_month_signal_history_keys",
+      "status": "PASS",
+      "detail": "41274 required distinct keys; 0 unavailable after exclusions"
+    },
+    {
+      "check": "all_python_sources_parse",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "every_code_cell_has_prior_markdown",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_embedded_source_matches_files",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_contains_all_python_source",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/_bootstrap.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/association_statistics.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/build_notebook.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/comparison_analysis.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/dashboard.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/figure1.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/organise_results.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/prepare_inputs.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/remove_old_characteristics.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/run.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/run_all.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/script_groups.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/select_characteristics.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/selection_rules.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/update_us_selection.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/us_high_cap_selection.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/verify.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/workflow.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/shared/01_prepare.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/shared/02_covariance.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/shared/03_return_model.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/shared/04_benchmarks.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/shared/06_pfml_inputs.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/shared/15_holdout.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/shared/active_engine.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/base/05_static_ml.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/base/07_portfolio_ml.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/base/08_figure1.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/base/10_regimes.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/base/11_tables.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/base/compare_results.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/iteration_1/run.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/iteration_2/compare_breadth.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/iteration_2/monitor.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/iteration_2/run.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/iteration_3/compare_halflife.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/iteration_3/run.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/analysis/__init__.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/analysis/ml_comparison/__init__.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/analysis/ml_comparison/cli.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/analysis/ml_comparison/data.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/analysis/ml_comparison/inference.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/analysis/ml_comparison/metrics.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/__init__.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/config.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/costs.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/covariance.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/data/__init__.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/data/lag_history.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/data/prepare.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/data/universe.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/data/wrds_pull.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/evaluation/__init__.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/evaluation/active.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/evaluation/cost_sensitivity.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/evaluation/holdout.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/evaluation/metrics.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/evaluation/monitor.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/evaluation/regimes.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/features.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/imputation_audit.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/models/__init__.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/models/random_features.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/models/return_model.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/models/ridge.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/portfolio/__init__.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/portfolio/accounting.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/portfolio/active.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/portfolio/benchmarks.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/portfolio/grids.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/portfolio/portfolio_ml.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/portfolio/recursion.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/portfolio/static_ml.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/portfolio/trading_speed.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/jkmp/strategies.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:tests/conftest.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:tests/test_accounting.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:tests/test_active_math.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:tests/test_dashboard.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:tests/test_isolation.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:tests/test_portfolio_math.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:tests/test_rff_forecast.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:tests/test_themes.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:configs/eu_large/base.yaml",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:configs/kati_base.yaml",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:configs/us_large/base.yaml",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:configs/us_large/iteration_1.yaml",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:configs/us_large/iteration_2.yaml",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:configs/us_large/iteration_3.yaml",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:configs/us_mid/base.yaml",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:settings.json",
+      "status": "PASS",
+      "detail": ""
+    }
+  ]
+}

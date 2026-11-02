@@ -1,0 +1,10 @@
+{
+  "scope": "us_large",
+  "period": "2005\u20132014",
+  "method": "correlation/covariance association analysis; A/T/S diversity rules",
+  "selected_50": "us_high_cap_selection/recommended_50.json",
+  "candidate_200": "us_high_cap_selection/candidate_200.csv",
+  "report": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\outputs\\us_high_cap_selection",
+  "models_fitted": false,
+  "historical_download_200_file": "download_200.json"
+}

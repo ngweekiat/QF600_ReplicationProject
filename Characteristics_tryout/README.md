@@ -1,8 +1,16 @@
 # Characteristics_tryout
 
+## Current selection: US high-cap only, 2005–2014
+
+Open [the current report and charts](outputs/us_high_cap_selection/index.html). The current `data/recommended_50.json` is selected from 404 candidates using only US high-cap observations from 2005–2014. No regression or ML model is fitted: association ranking, coverage, stability, persistence, group quotas and redundancy penalties produce 13 A, 13 T and 24 S selections. The 50 cover 13 groups, with 32 published and 18 provisional labels.
+
+Run `python -X utf8 Characteristics_tryout/run.py select-us-high-cap` to reproduce it. `screen`, `analyse`, `finalize` and `explain-selection` use this US-only analysis. Legacy multi-market selection is disabled, and old selection archives were deleted at the user's request. `download_200.json` describes the source acquisition cache; the current US-only 200 cap is `data/us_high_cap_selection/candidate_200.csv`.
+
+Reports include 50×50 raw/ranked correlation and covariance matrices, 51×51 return-augmented matrices, observed-pair counts, per-stock associations, charts, score/exclusion tables and source hashes. Current selection pointers are in `data/current_selection.json`. Kati uses this new 50; old fitted-model archives were removed and the ML implementation is preserved. The [decision chart](outputs/us_high_cap_selection/charts/selection_decision_path.pdf) shows the full 404 → 397 → 200 → 50 path and each inclusion reason.
+
 Independent experimental code copied from the characteristics study archived in Downloads/characteristcs. It lives outside keats_pipeline and does not activate a new feature set in its ML models.
 
-## What it does
+## Historical study background (superseded for current calculations)
 
 - Reads the existing US high-cap, US mid-cap and European high-cap Keats training panels and memberships.
 - Screens source characteristics using return years 2005-2014, caps the full download at 200, and proposes 50 shared features using 2015-2019 validation.
@@ -53,6 +61,18 @@ To reuse the downloaded dataset without copying it back into this project:
 ```
 
 Pass the same --data-dir on every stage. --output-dir can select a separate report destination. Environment equivalents are CHARACTERISTICS_DATA_DIR and CHARACTERISTICS_OUTPUT_DIR. The default data and output folders are under Characteristics_tryout, independent of the terminal working directory. Analysis can create ranked exports inside the selected cache; the upload itself does not run that analysis or modify the Downloads archive.
+
+## Selection explanation charts
+
+Open `outputs/selection_explanation/index.html` for a searchable guide to the frozen suggested 50, or use `selection_overview.png` for presentations. `selected_50_evidence.png` shows each input's validation evidence across the three markets. Both charts also have PDF and SVG versions. The guide distinguishes published group labels from provisional correlation-based assignments.
+
+Rebuild from the included source-table snapshots with:
+
+```powershell
+& $characteristicPython Characteristics_tryout/run.py explain-selection
+```
+
+Use `--analysis-dir <folder>` to read another completed analysis archive. This stage explains the existing recommendation without selecting new inputs or refitting Keats models.
 
 ## Input dependencies and credentials
 

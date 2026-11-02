@@ -1,0 +1,2134 @@
+{
+  "source_hashes": {
+    "scripts/jkmp/models/random_features.py": "c6fc8773cc52a7de0fa91f05ce85356527b81d7a2c4f72a29d5431dea4bc0d8f",
+    "scripts/jkmp/models/return_model.py": "51b85da47eb83354d0102668cf3c73395dc045b79f87106938f6d583545f9d65",
+    "scripts/jkmp/models/ridge.py": "178e33b4035375bbdad868e28c07e29938042205661ebf9cca172c4d3637820e",
+    "scripts/jkmp/models/__init__.py": "762f18df3551020b75f9df494d2224c178400fdaaf579d3f5d7419a0742fbc18",
+    "scripts/jkmp/portfolio/accounting.py": "093129e7e4853da7b0fa1c167db34af84fb7ff37eb1fe25ce9024bc71b983d7d",
+    "scripts/jkmp/portfolio/active.py": "31cb75304f867b30718518ee17a9f6d4554d5885f8ccbb4eb8ee1c4098d3a948",
+    "scripts/jkmp/portfolio/benchmarks.py": "0e7141ab8b9f8c76bc83d1562ddb90be6decb21a795a424038da99c26636284c",
+    "scripts/jkmp/portfolio/grids.py": "48d0b857374a5b069c9327fa15ca943e386b466e4372d6d62696568b4d703ff2",
+    "scripts/jkmp/portfolio/portfolio_ml.py": "97726144cdce07d619264810bbeeb629ac6855f5d6d4dd8f22af38767dea760b",
+    "scripts/jkmp/portfolio/recursion.py": "23eaebb8ad00927d07ab8bbea71d0490ebc625dc5c4c5b872efd3a21f249e9b0",
+    "scripts/jkmp/portfolio/static_ml.py": "5bc00a71494c1a7c95a7b687df765c19686bdb90f7ad367b3a49690750148836",
+    "scripts/jkmp/portfolio/trading_speed.py": "e363b4570dbeb51e4effeb2b309365cec2ec918d31ee18bfa8092486ff4efd64",
+    "scripts/jkmp/portfolio/__init__.py": "113157f9ce696b474f167d4851150b2da5a887bb28053ce3699cc5327f77006a"
+  },
+  "non_feature_configs": {
+    "configs/kati_base.yaml": {
+      "seed": 1,
+      "paths": {
+        "raw": "data/raw",
+        "processed": "data/processed",
+        "outputs": "outputs",
+        "reference_r": "data/reference"
+      },
+      "data_sources": {
+        "jkp_table": "contrib.global_factor",
+        "crsp_daily_table": "crsp.dsf_v2",
+        "factor_details_url": "https://raw.githubusercontent.com/bkelly-lab/ReplicationCrisis/master/GlobalFactors/Factor%20Details.xlsx",
+        "cluster_labels_url": "https://raw.githubusercontent.com/bkelly-lab/ReplicationCrisis/master/GlobalFactors/Cluster%20Labels.csv",
+        "ff_factors_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_CSV.zip",
+        "ff_factors_daily_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_daily_CSV.zip",
+        "fred_csv_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}"
+      },
+      "dates": {
+        "warmup_start": "1994-12-31",
+        "validation_start": "2015-01-31",
+        "validation_end": "2019-12-31",
+        "test_start": "2020-01-31",
+        "test_end": "2025-12-31",
+        "holdout_start": null,
+        "holdout_end": null,
+        "data_end": "2025-12-31",
+        "holdout_locked": true,
+        "evaluate": "test"
+      },
+      "universe": {
+        "exchanges": [
+          1,
+          3
+        ],
+        "share_codes": [
+          10,
+          11,
+          12
+        ],
+        "jkp_flags": [
+          "common",
+          "primary_sec",
+          "obs_main"
+        ],
+        "target_n": 80,
+        "entry_rank": 70,
+        "exit_rank": 100,
+        "reconstitution_month": 12,
+        "min_feature_pct": 0.5,
+        "lookback_months": 11
+      },
+      "covariance": {
+        "factor_universe_top_n": 500,
+        "sectors": {
+          "consumer": [
+            "NoDur",
+            "Durbl",
+            "Shops"
+          ],
+          "industrials": [
+            "Manuf",
+            "Chems",
+            "Other"
+          ],
+          "tech_telecom": [
+            "BusEq",
+            "Telcm"
+          ],
+          "energy_utilities": [
+            "Enrgy",
+            "Utils"
+          ],
+          "health": [
+            "Hlth"
+          ],
+          "finance": [
+            "Money"
+          ]
+        },
+        "window_days": 2520,
+        "min_window_days": 2520,
+        "half_life_corr_days": 378,
+        "half_life_var_days": 126,
+        "half_life_idio_days": 126,
+        "idio_min_obs": 200,
+        "idio_min_window": 252,
+        "idio_initial_obs": 63,
+        "days_per_month": 21
+      },
+      "trading_costs": {
+        "price_impact": 0.1,
+        "dolvol_column": "dolvol_126d",
+        "dolvol_units": "dollars"
+      },
+      "investor": {
+        "gamma": 10.0,
+        "wealth": 10000000000.0,
+        "wealth_end_date": "2019-12-31",
+        "mu": 0.007,
+        "m_iterations": 10,
+        "gamma_te": 100.0,
+        "te_targets": [
+          0.01,
+          0.02,
+          0.04
+        ],
+        "gamma_te_grid": [
+          1.0,
+          2.5,
+          5.0,
+          10.0,
+          25.0,
+          50.0,
+          100.0,
+          250.0
+        ],
+        "gamma_grid": [
+          1.0,
+          5.0,
+          10.0,
+          20.0,
+          100.0
+        ],
+        "wealth_grid": [
+          1000000000.0,
+          10000000000.0,
+          50000000000.0,
+          100000000000.0,
+          250000000000.0
+        ]
+      },
+      "portfolio": {
+        "charge_exit_tc": true
+      },
+      "ridge_grid": {
+        "include_zero": true,
+        "log_min": -10.0,
+        "log_max": 10.0,
+        "n": 100
+      },
+      "return_model": {
+        "p_grid": [
+          2,
+          4,
+          8,
+          16,
+          32,
+          64,
+          128,
+          256,
+          512
+        ],
+        "rff_variance_grid": [
+          0.049787068367863944,
+          0.1353352832366127
+        ],
+        "horizons": [
+          1
+        ],
+        "val_years": 5,
+        "pred_years": [
+          2015,
+          2025
+        ]
+      },
+      "portfolio_ml": {
+        "use_rff": true,
+        "p_grid": [
+          8,
+          16,
+          32,
+          64,
+          128,
+          256,
+          512
+        ],
+        "rff_variance_grid": [
+          0.049787068367863944,
+          0.1353352832366127
+        ],
+        "scale_by_vol": true,
+        "add_original_features": false,
+        "add_constant": true,
+        "benchmark_relative": false,
+        "half_life_years": [
+          null
+        ]
+      },
+      "static_ml": {
+        "k_grid": [
+          1.0,
+          0.3333333333333333,
+          0.2
+        ],
+        "u_grid": [
+          0.0,
+          0.1,
+          0.25,
+          0.5,
+          1.0
+        ],
+        "g_grid": [
+          0.0,
+          1.0,
+          2.0
+        ]
+      },
+      "factor_ml": {
+        "n_portfolios": 5
+      },
+      "monitor": {
+        "ir_window": 36,
+        "drawdown_te_multiple": 2.0,
+        "te_budget": 0.02,
+        "beta_limits": [
+          0.8,
+          1.2
+        ],
+        "theme_limit": 1.0,
+        "ic_window": 12,
+        "ic_negative_months": 6,
+        "tc_months": 3,
+        "bias_window": 36
+      },
+      "grids": {
+        "n_jobs": 5,
+        "frontier_vol_max": 0.5,
+        "frontier_vol_step": 0.01
+      },
+      "feature_importance": {
+        "markowitz_gamma": 100.0,
+        "n_seeds": 20
+      },
+      "reporting": {
+        "main_types": [
+          "Static-ML",
+          "Portfolio-ML"
+        ],
+        "subperiods": [
+          {
+            "label": "1981\u20132000",
+            "start": "1981-01-31",
+            "end": "2000-12-31"
+          },
+          {
+            "label": "2001\u20132020",
+            "start": "2001-01-31",
+            "end": "2020-12-31"
+          }
+        ],
+        "ic_size_buckets": [
+          [
+            1,
+            80
+          ],
+          [
+            81,
+            250
+          ]
+        ],
+        "capacity_ir": 0.3,
+        "cost_vix_start": "1990-01-31",
+        "cost_vol_window": 60
+      },
+      "regimes": {
+        "fred_series": [
+          "USREC",
+          "VIXCLS",
+          "FEDFUNDS"
+        ],
+        "fed_change_months": 3,
+        "fed_threshold": 0.1,
+        "vix_norm": "window",
+        "plot_types": [
+          "Static-ML",
+          "Portfolio-ML"
+        ],
+        "episodes": [
+          {
+            "label": "COVID crash",
+            "start": "2020-02-01",
+            "end": "2020-04-30"
+          },
+          {
+            "label": "2022 hikes / bear market",
+            "start": "2022-01-01",
+            "end": "2022-12-31"
+          },
+          {
+            "label": "SVB / regional banks",
+            "start": "2023-03-01",
+            "end": "2023-03-31"
+          },
+          {
+            "label": "Tariff shock",
+            "start": "2025-04-01",
+            "end": "2025-04-30"
+          }
+        ]
+      }
+    },
+    "configs/eu_large/base.yaml": {
+      "seed": 1,
+      "paths": {
+        "raw": "data/raw/eu_large",
+        "processed": "data/processed/eu_large/with_zero_returns",
+        "outputs": "outputs/base/eu_large",
+        "reference_r": "data/reference"
+      },
+      "data_sources": {
+        "jkp_table": "contrib.global_factor",
+        "crsp_daily_table": "crsp.dsf_v2",
+        "factor_details_url": "https://raw.githubusercontent.com/bkelly-lab/ReplicationCrisis/master/GlobalFactors/Factor%20Details.xlsx",
+        "cluster_labels_url": "https://raw.githubusercontent.com/bkelly-lab/ReplicationCrisis/master/GlobalFactors/Cluster%20Labels.csv",
+        "ff_factors_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_CSV.zip",
+        "ff_factors_daily_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_daily_CSV.zip",
+        "fred_csv_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}"
+      },
+      "dates": {
+        "warmup_start": "1994-12-31",
+        "validation_start": "2015-01-31",
+        "validation_end": "2019-12-31",
+        "test_start": "2020-01-31",
+        "test_end": "2025-12-31",
+        "holdout_start": null,
+        "holdout_end": null,
+        "data_end": "2025-12-31",
+        "holdout_locked": true,
+        "evaluate": "test"
+      },
+      "universe": {
+        "exchanges": [
+          1,
+          3
+        ],
+        "share_codes": [
+          10,
+          11,
+          12
+        ],
+        "jkp_flags": [
+          "common",
+          "primary_sec",
+          "obs_main"
+        ],
+        "target_n": 80,
+        "entry_rank": 70,
+        "exit_rank": 100,
+        "reconstitution_month": 12,
+        "min_feature_pct": 0.5,
+        "lookback_months": 11
+      },
+      "covariance": {
+        "factor_universe_top_n": 500,
+        "sectors": {
+          "consumer": [
+            "NoDur",
+            "Durbl",
+            "Shops"
+          ],
+          "industrials": [
+            "Manuf",
+            "Chems",
+            "Other"
+          ],
+          "tech_telecom": [
+            "BusEq",
+            "Telcm"
+          ],
+          "energy_utilities": [
+            "Enrgy",
+            "Utils"
+          ],
+          "health": [
+            "Hlth"
+          ],
+          "finance": [
+            "Money"
+          ]
+        },
+        "window_days": 2520,
+        "min_window_days": 2520,
+        "half_life_corr_days": 378,
+        "half_life_var_days": 126,
+        "half_life_idio_days": 126,
+        "idio_min_obs": 200,
+        "idio_min_window": 252,
+        "idio_initial_obs": 63,
+        "days_per_month": 21
+      },
+      "trading_costs": {
+        "price_impact": 0.1,
+        "dolvol_column": "dolvol_126d",
+        "dolvol_units": "dollars"
+      },
+      "investor": {
+        "gamma": 10.0,
+        "wealth": 10000000000.0,
+        "wealth_end_date": "2019-12-31",
+        "mu": 0.007,
+        "m_iterations": 10,
+        "gamma_te": 100.0,
+        "te_targets": [
+          0.01,
+          0.02,
+          0.04
+        ],
+        "gamma_te_grid": [
+          1.0,
+          2.5,
+          5.0,
+          10.0,
+          25.0,
+          50.0,
+          100.0,
+          250.0
+        ],
+        "gamma_grid": [
+          1.0,
+          5.0,
+          10.0,
+          20.0,
+          100.0
+        ],
+        "wealth_grid": [
+          1000000000.0,
+          10000000000.0,
+          50000000000.0,
+          100000000000.0,
+          250000000000.0
+        ]
+      },
+      "portfolio": {
+        "charge_exit_tc": true
+      },
+      "ridge_grid": {
+        "include_zero": true,
+        "log_min": -10.0,
+        "log_max": 10.0,
+        "n": 100
+      },
+      "return_model": {
+        "p_grid": [
+          2,
+          4,
+          8,
+          16,
+          32,
+          64,
+          128,
+          256,
+          512
+        ],
+        "rff_variance_grid": [
+          0.049787068367863944,
+          0.1353352832366127
+        ],
+        "horizons": [
+          1
+        ],
+        "val_years": 5,
+        "pred_years": [
+          2015,
+          2025
+        ]
+      },
+      "portfolio_ml": {
+        "use_rff": true,
+        "p_grid": [
+          8,
+          16,
+          32,
+          64,
+          128,
+          256,
+          512
+        ],
+        "rff_variance_grid": [
+          0.049787068367863944,
+          0.1353352832366127
+        ],
+        "scale_by_vol": true,
+        "add_original_features": false,
+        "add_constant": true,
+        "benchmark_relative": false,
+        "half_life_years": [
+          null
+        ]
+      },
+      "static_ml": {
+        "k_grid": [
+          1.0,
+          0.3333333333333333,
+          0.2
+        ],
+        "u_grid": [
+          0.0,
+          0.1,
+          0.25,
+          0.5,
+          1.0
+        ],
+        "g_grid": [
+          0.0,
+          1.0,
+          2.0
+        ]
+      },
+      "factor_ml": {
+        "n_portfolios": 5
+      },
+      "monitor": {
+        "ir_window": 36,
+        "drawdown_te_multiple": 2.0,
+        "te_budget": 0.02,
+        "beta_limits": [
+          0.8,
+          1.2
+        ],
+        "theme_limit": 1.0,
+        "ic_window": 12,
+        "ic_negative_months": 6,
+        "tc_months": 3,
+        "bias_window": 36
+      },
+      "grids": {
+        "n_jobs": 1,
+        "frontier_vol_max": 0.5,
+        "frontier_vol_step": 0.01
+      },
+      "feature_importance": {
+        "markowitz_gamma": 100.0,
+        "n_seeds": 20
+      },
+      "reporting": {
+        "main_types": [
+          "Static-ML",
+          "Portfolio-ML"
+        ],
+        "subperiods": [
+          {
+            "label": "2020-2022",
+            "start": "2020-01-31",
+            "end": "2022-12-31"
+          },
+          {
+            "label": "2023-2025",
+            "start": "2023-01-31",
+            "end": "2025-12-31"
+          }
+        ],
+        "ic_size_buckets": [
+          [
+            1,
+            80
+          ],
+          [
+            81,
+            250
+          ]
+        ],
+        "capacity_ir": 0.3,
+        "cost_vix_start": "2020-01-31",
+        "cost_vol_window": 60
+      },
+      "regimes": {
+        "fred_series": [
+          "USREC",
+          "VIXCLS",
+          "FEDFUNDS"
+        ],
+        "fed_change_months": 3,
+        "fed_threshold": 0.1,
+        "vix_norm": "window",
+        "plot_types": [
+          "Static-ML",
+          "Portfolio-ML"
+        ],
+        "episodes": [
+          {
+            "label": "COVID crash",
+            "start": "2020-02-01",
+            "end": "2020-04-30"
+          },
+          {
+            "label": "2022 hikes / bear market",
+            "start": "2022-01-01",
+            "end": "2022-12-31"
+          },
+          {
+            "label": "SVB / regional banks",
+            "start": "2023-03-01",
+            "end": "2023-03-31"
+          },
+          {
+            "label": "Tariff shock",
+            "start": "2025-04-01",
+            "end": "2025-04-30"
+          }
+        ]
+      }
+    },
+    "configs/us_large/base.yaml": {
+      "seed": 1,
+      "paths": {
+        "raw": "data/raw/us_large",
+        "processed": "data/processed/us_large/with_zero_returns",
+        "outputs": "outputs/base/us_large",
+        "reference_r": "data/reference"
+      },
+      "data_sources": {
+        "jkp_table": "contrib.global_factor",
+        "crsp_daily_table": "crsp.dsf_v2",
+        "factor_details_url": "https://raw.githubusercontent.com/bkelly-lab/ReplicationCrisis/master/GlobalFactors/Factor%20Details.xlsx",
+        "cluster_labels_url": "https://raw.githubusercontent.com/bkelly-lab/ReplicationCrisis/master/GlobalFactors/Cluster%20Labels.csv",
+        "ff_factors_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_CSV.zip",
+        "ff_factors_daily_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_daily_CSV.zip",
+        "fred_csv_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}"
+      },
+      "dates": {
+        "warmup_start": "1994-12-31",
+        "validation_start": "2015-01-31",
+        "validation_end": "2019-12-31",
+        "test_start": "2020-01-31",
+        "test_end": "2025-12-31",
+        "holdout_start": null,
+        "holdout_end": null,
+        "data_end": "2025-12-31",
+        "holdout_locked": true,
+        "evaluate": "test"
+      },
+      "universe": {
+        "exchanges": [
+          1,
+          3
+        ],
+        "share_codes": [
+          10,
+          11,
+          12
+        ],
+        "jkp_flags": [
+          "common",
+          "primary_sec",
+          "obs_main"
+        ],
+        "target_n": 80,
+        "entry_rank": 70,
+        "exit_rank": 100,
+        "reconstitution_month": 12,
+        "min_feature_pct": 0.5,
+        "lookback_months": 11
+      },
+      "covariance": {
+        "factor_universe_top_n": 500,
+        "sectors": {
+          "consumer": [
+            "NoDur",
+            "Durbl",
+            "Shops"
+          ],
+          "industrials": [
+            "Manuf",
+            "Chems",
+            "Other"
+          ],
+          "tech_telecom": [
+            "BusEq",
+            "Telcm"
+          ],
+          "energy_utilities": [
+            "Enrgy",
+            "Utils"
+          ],
+          "health": [
+            "Hlth"
+          ],
+          "finance": [
+            "Money"
+          ]
+        },
+        "window_days": 2520,
+        "min_window_days": 2520,
+        "half_life_corr_days": 378,
+        "half_life_var_days": 126,
+        "half_life_idio_days": 126,
+        "idio_min_obs": 200,
+        "idio_min_window": 252,
+        "idio_initial_obs": 63,
+        "days_per_month": 21
+      },
+      "trading_costs": {
+        "price_impact": 0.1,
+        "dolvol_column": "dolvol_126d",
+        "dolvol_units": "dollars"
+      },
+      "investor": {
+        "gamma": 10.0,
+        "wealth": 10000000000.0,
+        "wealth_end_date": "2019-12-31",
+        "mu": 0.007,
+        "m_iterations": 10,
+        "gamma_te": 100.0,
+        "te_targets": [
+          0.01,
+          0.02,
+          0.04
+        ],
+        "gamma_te_grid": [
+          1.0,
+          2.5,
+          5.0,
+          10.0,
+          25.0,
+          50.0,
+          100.0,
+          250.0
+        ],
+        "gamma_grid": [
+          1.0,
+          5.0,
+          10.0,
+          20.0,
+          100.0
+        ],
+        "wealth_grid": [
+          1000000000.0,
+          10000000000.0,
+          50000000000.0,
+          100000000000.0,
+          250000000000.0
+        ]
+      },
+      "portfolio": {
+        "charge_exit_tc": true
+      },
+      "ridge_grid": {
+        "include_zero": true,
+        "log_min": -10.0,
+        "log_max": 10.0,
+        "n": 100
+      },
+      "return_model": {
+        "p_grid": [
+          2,
+          4,
+          8,
+          16,
+          32,
+          64,
+          128,
+          256,
+          512
+        ],
+        "rff_variance_grid": [
+          0.049787068367863944,
+          0.1353352832366127
+        ],
+        "horizons": [
+          1
+        ],
+        "val_years": 5,
+        "pred_years": [
+          2015,
+          2025
+        ]
+      },
+      "portfolio_ml": {
+        "use_rff": true,
+        "p_grid": [
+          8,
+          16,
+          32,
+          64,
+          128,
+          256,
+          512
+        ],
+        "rff_variance_grid": [
+          0.049787068367863944,
+          0.1353352832366127
+        ],
+        "scale_by_vol": true,
+        "add_original_features": false,
+        "add_constant": true,
+        "benchmark_relative": false,
+        "half_life_years": [
+          null
+        ]
+      },
+      "static_ml": {
+        "k_grid": [
+          1.0,
+          0.3333333333333333,
+          0.2
+        ],
+        "u_grid": [
+          0.0,
+          0.1,
+          0.25,
+          0.5,
+          1.0
+        ],
+        "g_grid": [
+          0.0,
+          1.0,
+          2.0
+        ]
+      },
+      "factor_ml": {
+        "n_portfolios": 5
+      },
+      "monitor": {
+        "ir_window": 36,
+        "drawdown_te_multiple": 2.0,
+        "te_budget": 0.02,
+        "beta_limits": [
+          0.8,
+          1.2
+        ],
+        "theme_limit": 1.0,
+        "ic_window": 12,
+        "ic_negative_months": 6,
+        "tc_months": 3,
+        "bias_window": 36
+      },
+      "grids": {
+        "n_jobs": 1,
+        "frontier_vol_max": 0.5,
+        "frontier_vol_step": 0.01
+      },
+      "feature_importance": {
+        "markowitz_gamma": 100.0,
+        "n_seeds": 20
+      },
+      "reporting": {
+        "main_types": [
+          "Static-ML",
+          "Portfolio-ML"
+        ],
+        "subperiods": [
+          {
+            "label": "2020-2022",
+            "start": "2020-01-31",
+            "end": "2022-12-31"
+          },
+          {
+            "label": "2023-2025",
+            "start": "2023-01-31",
+            "end": "2025-12-31"
+          }
+        ],
+        "ic_size_buckets": [
+          [
+            1,
+            80
+          ],
+          [
+            81,
+            250
+          ]
+        ],
+        "capacity_ir": 0.3,
+        "cost_vix_start": "2020-01-31",
+        "cost_vol_window": 60
+      },
+      "regimes": {
+        "fred_series": [
+          "USREC",
+          "VIXCLS",
+          "FEDFUNDS"
+        ],
+        "fed_change_months": 3,
+        "fed_threshold": 0.1,
+        "vix_norm": "window",
+        "plot_types": [
+          "Static-ML",
+          "Portfolio-ML"
+        ],
+        "episodes": [
+          {
+            "label": "COVID crash",
+            "start": "2020-02-01",
+            "end": "2020-04-30"
+          },
+          {
+            "label": "2022 hikes / bear market",
+            "start": "2022-01-01",
+            "end": "2022-12-31"
+          },
+          {
+            "label": "SVB / regional banks",
+            "start": "2023-03-01",
+            "end": "2023-03-31"
+          },
+          {
+            "label": "Tariff shock",
+            "start": "2025-04-01",
+            "end": "2025-04-30"
+          }
+        ]
+      }
+    },
+    "configs/us_large/iteration_1.yaml": {
+      "seed": 1,
+      "paths": {
+        "raw": "data/raw/us_large",
+        "processed": "data/processed/us_large/with_zero_returns",
+        "outputs": "outputs/iteration_1/us_large",
+        "reference_r": "data/reference"
+      },
+      "data_sources": {
+        "jkp_table": "contrib.global_factor",
+        "crsp_daily_table": "crsp.dsf_v2",
+        "factor_details_url": "https://raw.githubusercontent.com/bkelly-lab/ReplicationCrisis/master/GlobalFactors/Factor%20Details.xlsx",
+        "cluster_labels_url": "https://raw.githubusercontent.com/bkelly-lab/ReplicationCrisis/master/GlobalFactors/Cluster%20Labels.csv",
+        "ff_factors_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_CSV.zip",
+        "ff_factors_daily_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_daily_CSV.zip",
+        "fred_csv_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}"
+      },
+      "dates": {
+        "warmup_start": "1994-12-31",
+        "validation_start": "2015-01-31",
+        "validation_end": "2019-12-31",
+        "test_start": "2020-01-31",
+        "test_end": "2025-12-31",
+        "holdout_start": null,
+        "holdout_end": null,
+        "data_end": "2025-12-31",
+        "holdout_locked": true,
+        "evaluate": "test"
+      },
+      "universe": {
+        "exchanges": [
+          1,
+          3
+        ],
+        "share_codes": [
+          10,
+          11,
+          12
+        ],
+        "jkp_flags": [
+          "common",
+          "primary_sec",
+          "obs_main"
+        ],
+        "target_n": 80,
+        "entry_rank": 70,
+        "exit_rank": 100,
+        "reconstitution_month": 12,
+        "min_feature_pct": 0.5,
+        "lookback_months": 11
+      },
+      "covariance": {
+        "factor_universe_top_n": 500,
+        "sectors": {
+          "consumer": [
+            "NoDur",
+            "Durbl",
+            "Shops"
+          ],
+          "industrials": [
+            "Manuf",
+            "Chems",
+            "Other"
+          ],
+          "tech_telecom": [
+            "BusEq",
+            "Telcm"
+          ],
+          "energy_utilities": [
+            "Enrgy",
+            "Utils"
+          ],
+          "health": [
+            "Hlth"
+          ],
+          "finance": [
+            "Money"
+          ]
+        },
+        "window_days": 2520,
+        "min_window_days": 2520,
+        "half_life_corr_days": 378,
+        "half_life_var_days": 126,
+        "half_life_idio_days": 126,
+        "idio_min_obs": 200,
+        "idio_min_window": 252,
+        "idio_initial_obs": 63,
+        "days_per_month": 21
+      },
+      "trading_costs": {
+        "price_impact": 0.1,
+        "dolvol_column": "dolvol_126d",
+        "dolvol_units": "dollars"
+      },
+      "investor": {
+        "gamma": 10.0,
+        "wealth": 10000000000.0,
+        "wealth_end_date": "2019-12-31",
+        "mu": 0.007,
+        "m_iterations": 10,
+        "gamma_te": 100.0,
+        "te_targets": [
+          0.01,
+          0.02,
+          0.04
+        ],
+        "gamma_te_grid": [
+          1.0,
+          2.5,
+          5.0,
+          10.0,
+          25.0,
+          50.0,
+          100.0,
+          250.0
+        ],
+        "gamma_grid": [
+          1.0,
+          5.0,
+          10.0,
+          20.0,
+          100.0
+        ],
+        "wealth_grid": [
+          1000000000.0,
+          10000000000.0,
+          50000000000.0,
+          100000000000.0,
+          250000000000.0
+        ]
+      },
+      "portfolio": {
+        "charge_exit_tc": true
+      },
+      "ridge_grid": {
+        "include_zero": true,
+        "log_min": -10.0,
+        "log_max": 10.0,
+        "n": 100
+      },
+      "return_model": {
+        "p_grid": [
+          2,
+          4,
+          8,
+          16,
+          32,
+          64,
+          128,
+          256,
+          512
+        ],
+        "rff_variance_grid": [
+          0.049787068367863944,
+          0.1353352832366127
+        ],
+        "horizons": [
+          1
+        ],
+        "val_years": 5,
+        "pred_years": [
+          2015,
+          2025
+        ]
+      },
+      "portfolio_ml": {
+        "use_rff": true,
+        "p_grid": [
+          8,
+          16,
+          32,
+          64,
+          128,
+          256,
+          512
+        ],
+        "rff_variance_grid": [
+          0.049787068367863944,
+          0.1353352832366127
+        ],
+        "scale_by_vol": true,
+        "add_original_features": false,
+        "add_constant": false,
+        "benchmark_relative": true,
+        "half_life_years": [
+          null
+        ]
+      },
+      "static_ml": {
+        "k_grid": [
+          1.0,
+          0.3333333333333333,
+          0.2
+        ],
+        "u_grid": [
+          0.0,
+          0.1,
+          0.25,
+          0.5,
+          1.0
+        ],
+        "g_grid": [
+          0.0,
+          1.0,
+          2.0
+        ]
+      },
+      "factor_ml": {
+        "n_portfolios": 5
+      },
+      "monitor": {
+        "ir_window": 36,
+        "drawdown_te_multiple": 2.0,
+        "te_budget": 0.02,
+        "beta_limits": [
+          0.8,
+          1.2
+        ],
+        "theme_limit": 1.0,
+        "ic_window": 12,
+        "ic_negative_months": 6,
+        "tc_months": 3,
+        "bias_window": 36
+      },
+      "grids": {
+        "n_jobs": 1,
+        "frontier_vol_max": 0.5,
+        "frontier_vol_step": 0.01
+      },
+      "feature_importance": {
+        "markowitz_gamma": 100.0,
+        "n_seeds": 20
+      },
+      "reporting": {
+        "main_types": [
+          "Static-ML",
+          "Portfolio-ML"
+        ],
+        "subperiods": [
+          {
+            "label": "2020-2022",
+            "start": "2020-01-31",
+            "end": "2022-12-31"
+          },
+          {
+            "label": "2023-2025",
+            "start": "2023-01-31",
+            "end": "2025-12-31"
+          }
+        ],
+        "ic_size_buckets": [
+          [
+            1,
+            80
+          ],
+          [
+            81,
+            250
+          ]
+        ],
+        "capacity_ir": 0.3,
+        "cost_vix_start": "2020-01-31",
+        "cost_vol_window": 60
+      },
+      "regimes": {
+        "fred_series": [
+          "USREC",
+          "VIXCLS",
+          "FEDFUNDS"
+        ],
+        "fed_change_months": 3,
+        "fed_threshold": 0.1,
+        "vix_norm": "window",
+        "plot_types": [
+          "Static-ML",
+          "Portfolio-ML"
+        ],
+        "episodes": [
+          {
+            "label": "COVID crash",
+            "start": "2020-02-01",
+            "end": "2020-04-30"
+          },
+          {
+            "label": "2022 hikes / bear market",
+            "start": "2022-01-01",
+            "end": "2022-12-31"
+          },
+          {
+            "label": "SVB / regional banks",
+            "start": "2023-03-01",
+            "end": "2023-03-31"
+          },
+          {
+            "label": "Tariff shock",
+            "start": "2025-04-01",
+            "end": "2025-04-30"
+          }
+        ]
+      }
+    },
+    "configs/us_large/iteration_2.yaml": {
+      "seed": 1,
+      "paths": {
+        "raw": "data/raw/us_large",
+        "processed": "data/processed/us_large/universe_250",
+        "outputs": "outputs/iteration_2/us_large",
+        "reference_r": "data/reference"
+      },
+      "data_sources": {
+        "jkp_table": "contrib.global_factor",
+        "crsp_daily_table": "crsp.dsf_v2",
+        "factor_details_url": "https://raw.githubusercontent.com/bkelly-lab/ReplicationCrisis/master/GlobalFactors/Factor%20Details.xlsx",
+        "cluster_labels_url": "https://raw.githubusercontent.com/bkelly-lab/ReplicationCrisis/master/GlobalFactors/Cluster%20Labels.csv",
+        "ff_factors_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_CSV.zip",
+        "ff_factors_daily_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_daily_CSV.zip",
+        "fred_csv_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}"
+      },
+      "dates": {
+        "warmup_start": "1994-12-31",
+        "validation_start": "2015-01-31",
+        "validation_end": "2019-12-31",
+        "test_start": "2020-01-31",
+        "test_end": "2025-12-31",
+        "holdout_start": null,
+        "holdout_end": null,
+        "data_end": "2025-12-31",
+        "holdout_locked": true,
+        "evaluate": "test"
+      },
+      "universe": {
+        "exchanges": [
+          1,
+          3
+        ],
+        "share_codes": [
+          10,
+          11,
+          12
+        ],
+        "jkp_flags": [
+          "common",
+          "primary_sec",
+          "obs_main"
+        ],
+        "target_n": 250,
+        "entry_rank": 220,
+        "exit_rank": 300,
+        "reconstitution_month": 12,
+        "min_feature_pct": 0.5,
+        "lookback_months": 11
+      },
+      "covariance": {
+        "factor_universe_top_n": 500,
+        "sectors": {
+          "consumer": [
+            "NoDur",
+            "Durbl",
+            "Shops"
+          ],
+          "industrials": [
+            "Manuf",
+            "Chems",
+            "Other"
+          ],
+          "tech_telecom": [
+            "BusEq",
+            "Telcm"
+          ],
+          "energy_utilities": [
+            "Enrgy",
+            "Utils"
+          ],
+          "health": [
+            "Hlth"
+          ],
+          "finance": [
+            "Money"
+          ]
+        },
+        "window_days": 2520,
+        "min_window_days": 2520,
+        "half_life_corr_days": 378,
+        "half_life_var_days": 126,
+        "half_life_idio_days": 126,
+        "idio_min_obs": 200,
+        "idio_min_window": 252,
+        "idio_initial_obs": 63,
+        "days_per_month": 21
+      },
+      "trading_costs": {
+        "price_impact": 0.1,
+        "dolvol_column": "dolvol_126d",
+        "dolvol_units": "dollars"
+      },
+      "investor": {
+        "gamma": 10.0,
+        "wealth": 10000000000.0,
+        "wealth_end_date": "2019-12-31",
+        "mu": 0.007,
+        "m_iterations": 10,
+        "gamma_te": 100.0,
+        "te_targets": [
+          0.01,
+          0.02,
+          0.04
+        ],
+        "gamma_te_grid": [
+          1.0,
+          2.5,
+          5.0,
+          10.0,
+          25.0,
+          50.0,
+          100.0,
+          250.0
+        ],
+        "gamma_grid": [
+          1.0,
+          5.0,
+          10.0,
+          20.0,
+          100.0
+        ],
+        "wealth_grid": [
+          1000000000.0,
+          10000000000.0,
+          50000000000.0,
+          100000000000.0,
+          250000000000.0
+        ]
+      },
+      "portfolio": {
+        "charge_exit_tc": true
+      },
+      "ridge_grid": {
+        "include_zero": true,
+        "log_min": -10.0,
+        "log_max": 10.0,
+        "n": 100
+      },
+      "return_model": {
+        "p_grid": [
+          2,
+          4,
+          8,
+          16,
+          32,
+          64,
+          128,
+          256,
+          512
+        ],
+        "rff_variance_grid": [
+          0.049787068367863944,
+          0.1353352832366127
+        ],
+        "horizons": [
+          1
+        ],
+        "val_years": 5,
+        "pred_years": [
+          2015,
+          2025
+        ]
+      },
+      "portfolio_ml": {
+        "use_rff": true,
+        "p_grid": [
+          8,
+          16,
+          32,
+          64,
+          128,
+          256,
+          512
+        ],
+        "rff_variance_grid": [
+          0.049787068367863944,
+          0.1353352832366127
+        ],
+        "scale_by_vol": true,
+        "add_original_features": false,
+        "add_constant": false,
+        "benchmark_relative": true,
+        "half_life_years": [
+          null
+        ]
+      },
+      "static_ml": {
+        "k_grid": [
+          1.0,
+          0.3333333333333333,
+          0.2
+        ],
+        "u_grid": [
+          0.0,
+          0.1,
+          0.25,
+          0.5,
+          1.0
+        ],
+        "g_grid": [
+          0.0,
+          1.0,
+          2.0
+        ]
+      },
+      "factor_ml": {
+        "n_portfolios": 5
+      },
+      "monitor": {
+        "ir_window": 36,
+        "drawdown_te_multiple": 2.0,
+        "te_budget": 0.02,
+        "beta_limits": [
+          0.8,
+          1.2
+        ],
+        "theme_limit": 1.0,
+        "ic_window": 12,
+        "ic_negative_months": 6,
+        "tc_months": 3,
+        "bias_window": 36
+      },
+      "grids": {
+        "n_jobs": 1,
+        "frontier_vol_max": 0.5,
+        "frontier_vol_step": 0.01
+      },
+      "feature_importance": {
+        "markowitz_gamma": 100.0,
+        "n_seeds": 20
+      },
+      "reporting": {
+        "main_types": [
+          "Static-ML",
+          "Portfolio-ML"
+        ],
+        "subperiods": [
+          {
+            "label": "2020-2022",
+            "start": "2020-01-31",
+            "end": "2022-12-31"
+          },
+          {
+            "label": "2023-2025",
+            "start": "2023-01-31",
+            "end": "2025-12-31"
+          }
+        ],
+        "ic_size_buckets": [
+          [
+            1,
+            80
+          ],
+          [
+            81,
+            250
+          ]
+        ],
+        "capacity_ir": 0.3,
+        "cost_vix_start": "2020-01-31",
+        "cost_vol_window": 60
+      },
+      "regimes": {
+        "fred_series": [
+          "USREC",
+          "VIXCLS",
+          "FEDFUNDS"
+        ],
+        "fed_change_months": 3,
+        "fed_threshold": 0.1,
+        "vix_norm": "window",
+        "plot_types": [
+          "Static-ML",
+          "Portfolio-ML"
+        ],
+        "episodes": [
+          {
+            "label": "COVID crash",
+            "start": "2020-02-01",
+            "end": "2020-04-30"
+          },
+          {
+            "label": "2022 hikes / bear market",
+            "start": "2022-01-01",
+            "end": "2022-12-31"
+          },
+          {
+            "label": "SVB / regional banks",
+            "start": "2023-03-01",
+            "end": "2023-03-31"
+          },
+          {
+            "label": "Tariff shock",
+            "start": "2025-04-01",
+            "end": "2025-04-30"
+          }
+        ]
+      }
+    },
+    "configs/us_large/iteration_3.yaml": {
+      "seed": 1,
+      "paths": {
+        "raw": "data/raw/us_large",
+        "processed": "data/processed/us_large/universe_250",
+        "outputs": "outputs/iteration_3/us_large",
+        "reference_r": "data/reference"
+      },
+      "data_sources": {
+        "jkp_table": "contrib.global_factor",
+        "crsp_daily_table": "crsp.dsf_v2",
+        "factor_details_url": "https://raw.githubusercontent.com/bkelly-lab/ReplicationCrisis/master/GlobalFactors/Factor%20Details.xlsx",
+        "cluster_labels_url": "https://raw.githubusercontent.com/bkelly-lab/ReplicationCrisis/master/GlobalFactors/Cluster%20Labels.csv",
+        "ff_factors_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_CSV.zip",
+        "ff_factors_daily_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_daily_CSV.zip",
+        "fred_csv_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}"
+      },
+      "dates": {
+        "warmup_start": "1994-12-31",
+        "validation_start": "2015-01-31",
+        "validation_end": "2019-12-31",
+        "test_start": "2020-01-31",
+        "test_end": "2025-12-31",
+        "holdout_start": null,
+        "holdout_end": null,
+        "data_end": "2025-12-31",
+        "holdout_locked": true,
+        "evaluate": "test"
+      },
+      "universe": {
+        "exchanges": [
+          1,
+          3
+        ],
+        "share_codes": [
+          10,
+          11,
+          12
+        ],
+        "jkp_flags": [
+          "common",
+          "primary_sec",
+          "obs_main"
+        ],
+        "target_n": 250,
+        "entry_rank": 220,
+        "exit_rank": 300,
+        "reconstitution_month": 12,
+        "min_feature_pct": 0.5,
+        "lookback_months": 11
+      },
+      "covariance": {
+        "factor_universe_top_n": 500,
+        "sectors": {
+          "consumer": [
+            "NoDur",
+            "Durbl",
+            "Shops"
+          ],
+          "industrials": [
+            "Manuf",
+            "Chems",
+            "Other"
+          ],
+          "tech_telecom": [
+            "BusEq",
+            "Telcm"
+          ],
+          "energy_utilities": [
+            "Enrgy",
+            "Utils"
+          ],
+          "health": [
+            "Hlth"
+          ],
+          "finance": [
+            "Money"
+          ]
+        },
+        "window_days": 2520,
+        "min_window_days": 2520,
+        "half_life_corr_days": 378,
+        "half_life_var_days": 126,
+        "half_life_idio_days": 126,
+        "idio_min_obs": 200,
+        "idio_min_window": 252,
+        "idio_initial_obs": 63,
+        "days_per_month": 21
+      },
+      "trading_costs": {
+        "price_impact": 0.1,
+        "dolvol_column": "dolvol_126d",
+        "dolvol_units": "dollars"
+      },
+      "investor": {
+        "gamma": 10.0,
+        "wealth": 10000000000.0,
+        "wealth_end_date": "2019-12-31",
+        "mu": 0.007,
+        "m_iterations": 10,
+        "gamma_te": 100.0,
+        "te_targets": [
+          0.01,
+          0.02,
+          0.04
+        ],
+        "gamma_te_grid": [
+          1.0,
+          2.5,
+          5.0,
+          10.0,
+          25.0,
+          50.0,
+          100.0,
+          250.0
+        ],
+        "gamma_grid": [
+          1.0,
+          5.0,
+          10.0,
+          20.0,
+          100.0
+        ],
+        "wealth_grid": [
+          1000000000.0,
+          10000000000.0,
+          50000000000.0,
+          100000000000.0,
+          250000000000.0
+        ]
+      },
+      "portfolio": {
+        "charge_exit_tc": true
+      },
+      "ridge_grid": {
+        "include_zero": true,
+        "log_min": -10.0,
+        "log_max": 10.0,
+        "n": 100
+      },
+      "return_model": {
+        "p_grid": [
+          2,
+          4,
+          8,
+          16,
+          32,
+          64,
+          128,
+          256,
+          512
+        ],
+        "rff_variance_grid": [
+          0.049787068367863944,
+          0.1353352832366127
+        ],
+        "horizons": [
+          1
+        ],
+        "val_years": 5,
+        "pred_years": [
+          2015,
+          2025
+        ]
+      },
+      "portfolio_ml": {
+        "use_rff": true,
+        "p_grid": [
+          8,
+          16,
+          32,
+          64,
+          128,
+          256,
+          512
+        ],
+        "rff_variance_grid": [
+          0.049787068367863944,
+          0.1353352832366127
+        ],
+        "scale_by_vol": true,
+        "add_original_features": false,
+        "add_constant": false,
+        "benchmark_relative": true,
+        "half_life_years": [
+          3,
+          5,
+          10,
+          null
+        ]
+      },
+      "static_ml": {
+        "k_grid": [
+          1.0,
+          0.3333333333333333,
+          0.2
+        ],
+        "u_grid": [
+          0.0,
+          0.1,
+          0.25,
+          0.5,
+          1.0
+        ],
+        "g_grid": [
+          0.0,
+          1.0,
+          2.0
+        ]
+      },
+      "factor_ml": {
+        "n_portfolios": 5
+      },
+      "monitor": {
+        "ir_window": 36,
+        "drawdown_te_multiple": 2.0,
+        "te_budget": 0.02,
+        "beta_limits": [
+          0.8,
+          1.2
+        ],
+        "theme_limit": 1.0,
+        "ic_window": 12,
+        "ic_negative_months": 6,
+        "tc_months": 3,
+        "bias_window": 36
+      },
+      "grids": {
+        "n_jobs": 1,
+        "frontier_vol_max": 0.5,
+        "frontier_vol_step": 0.01
+      },
+      "feature_importance": {
+        "markowitz_gamma": 100.0,
+        "n_seeds": 20
+      },
+      "reporting": {
+        "main_types": [
+          "Static-ML",
+          "Portfolio-ML"
+        ],
+        "subperiods": [
+          {
+            "label": "2020-2022",
+            "start": "2020-01-31",
+            "end": "2022-12-31"
+          },
+          {
+            "label": "2023-2025",
+            "start": "2023-01-31",
+            "end": "2025-12-31"
+          }
+        ],
+        "ic_size_buckets": [
+          [
+            1,
+            80
+          ],
+          [
+            81,
+            250
+          ]
+        ],
+        "capacity_ir": 0.3,
+        "cost_vix_start": "2020-01-31",
+        "cost_vol_window": 60
+      },
+      "regimes": {
+        "fred_series": [
+          "USREC",
+          "VIXCLS",
+          "FEDFUNDS"
+        ],
+        "fed_change_months": 3,
+        "fed_threshold": 0.1,
+        "vix_norm": "window",
+        "plot_types": [
+          "Static-ML",
+          "Portfolio-ML"
+        ],
+        "episodes": [
+          {
+            "label": "COVID crash",
+            "start": "2020-02-01",
+            "end": "2020-04-30"
+          },
+          {
+            "label": "2022 hikes / bear market",
+            "start": "2022-01-01",
+            "end": "2022-12-31"
+          },
+          {
+            "label": "SVB / regional banks",
+            "start": "2023-03-01",
+            "end": "2023-03-31"
+          },
+          {
+            "label": "Tariff shock",
+            "start": "2025-04-01",
+            "end": "2025-04-30"
+          }
+        ]
+      }
+    },
+    "configs/us_mid/base.yaml": {
+      "seed": 1,
+      "paths": {
+        "raw": "data/raw/us_mid",
+        "processed": "data/processed/us_mid/with_zero_returns",
+        "outputs": "outputs/base/us_mid",
+        "reference_r": "data/reference"
+      },
+      "data_sources": {
+        "jkp_table": "contrib.global_factor",
+        "crsp_daily_table": "crsp.dsf_v2",
+        "factor_details_url": "https://raw.githubusercontent.com/bkelly-lab/ReplicationCrisis/master/GlobalFactors/Factor%20Details.xlsx",
+        "cluster_labels_url": "https://raw.githubusercontent.com/bkelly-lab/ReplicationCrisis/master/GlobalFactors/Cluster%20Labels.csv",
+        "ff_factors_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_CSV.zip",
+        "ff_factors_daily_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_daily_CSV.zip",
+        "fred_csv_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}"
+      },
+      "dates": {
+        "warmup_start": "1994-12-31",
+        "validation_start": "2015-01-31",
+        "validation_end": "2019-12-31",
+        "test_start": "2020-01-31",
+        "test_end": "2025-12-31",
+        "holdout_start": null,
+        "holdout_end": null,
+        "data_end": "2025-12-31",
+        "holdout_locked": true,
+        "evaluate": "test"
+      },
+      "universe": {
+        "exchanges": [
+          1,
+          3
+        ],
+        "share_codes": [
+          10,
+          11,
+          12
+        ],
+        "jkp_flags": [
+          "common",
+          "primary_sec",
+          "obs_main"
+        ],
+        "target_n": 80,
+        "entry_rank": 70,
+        "exit_rank": 100,
+        "reconstitution_month": 12,
+        "min_feature_pct": 0.5,
+        "lookback_months": 11
+      },
+      "covariance": {
+        "factor_universe_top_n": 500,
+        "sectors": {
+          "consumer": [
+            "NoDur",
+            "Durbl",
+            "Shops"
+          ],
+          "industrials": [
+            "Manuf",
+            "Chems",
+            "Other"
+          ],
+          "tech_telecom": [
+            "BusEq",
+            "Telcm"
+          ],
+          "energy_utilities": [
+            "Enrgy",
+            "Utils"
+          ],
+          "health": [
+            "Hlth"
+          ],
+          "finance": [
+            "Money"
+          ]
+        },
+        "window_days": 2520,
+        "min_window_days": 2520,
+        "half_life_corr_days": 378,
+        "half_life_var_days": 126,
+        "half_life_idio_days": 126,
+        "idio_min_obs": 200,
+        "idio_min_window": 252,
+        "idio_initial_obs": 63,
+        "days_per_month": 21
+      },
+      "trading_costs": {
+        "price_impact": 0.1,
+        "dolvol_column": "dolvol_126d",
+        "dolvol_units": "dollars"
+      },
+      "investor": {
+        "gamma": 10.0,
+        "wealth": 10000000000.0,
+        "wealth_end_date": "2019-12-31",
+        "mu": 0.007,
+        "m_iterations": 10,
+        "gamma_te": 100.0,
+        "te_targets": [
+          0.01,
+          0.02,
+          0.04
+        ],
+        "gamma_te_grid": [
+          1.0,
+          2.5,
+          5.0,
+          10.0,
+          25.0,
+          50.0,
+          100.0,
+          250.0
+        ],
+        "gamma_grid": [
+          1.0,
+          5.0,
+          10.0,
+          20.0,
+          100.0
+        ],
+        "wealth_grid": [
+          1000000000.0,
+          10000000000.0,
+          50000000000.0,
+          100000000000.0,
+          250000000000.0
+        ]
+      },
+      "portfolio": {
+        "charge_exit_tc": true
+      },
+      "ridge_grid": {
+        "include_zero": true,
+        "log_min": -10.0,
+        "log_max": 10.0,
+        "n": 100
+      },
+      "return_model": {
+        "p_grid": [
+          2,
+          4,
+          8,
+          16,
+          32,
+          64,
+          128,
+          256,
+          512
+        ],
+        "rff_variance_grid": [
+          0.049787068367863944,
+          0.1353352832366127
+        ],
+        "horizons": [
+          1
+        ],
+        "val_years": 5,
+        "pred_years": [
+          2015,
+          2025
+        ]
+      },
+      "portfolio_ml": {
+        "use_rff": true,
+        "p_grid": [
+          8,
+          16,
+          32,
+          64,
+          128,
+          256,
+          512
+        ],
+        "rff_variance_grid": [
+          0.049787068367863944,
+          0.1353352832366127
+        ],
+        "scale_by_vol": true,
+        "add_original_features": false,
+        "add_constant": true,
+        "benchmark_relative": false,
+        "half_life_years": [
+          null
+        ]
+      },
+      "static_ml": {
+        "k_grid": [
+          1.0,
+          0.3333333333333333,
+          0.2
+        ],
+        "u_grid": [
+          0.0,
+          0.1,
+          0.25,
+          0.5,
+          1.0
+        ],
+        "g_grid": [
+          0.0,
+          1.0,
+          2.0
+        ]
+      },
+      "factor_ml": {
+        "n_portfolios": 5
+      },
+      "monitor": {
+        "ir_window": 36,
+        "drawdown_te_multiple": 2.0,
+        "te_budget": 0.02,
+        "beta_limits": [
+          0.8,
+          1.2
+        ],
+        "theme_limit": 1.0,
+        "ic_window": 12,
+        "ic_negative_months": 6,
+        "tc_months": 3,
+        "bias_window": 36
+      },
+      "grids": {
+        "n_jobs": 1,
+        "frontier_vol_max": 0.5,
+        "frontier_vol_step": 0.01
+      },
+      "feature_importance": {
+        "markowitz_gamma": 100.0,
+        "n_seeds": 20
+      },
+      "reporting": {
+        "main_types": [
+          "Static-ML",
+          "Portfolio-ML"
+        ],
+        "subperiods": [
+          {
+            "label": "2020-2022",
+            "start": "2020-01-31",
+            "end": "2022-12-31"
+          },
+          {
+            "label": "2023-2025",
+            "start": "2023-01-31",
+            "end": "2025-12-31"
+          }
+        ],
+        "ic_size_buckets": [
+          [
+            461,
+            540
+          ],
+          [
+            376,
+            460
+          ],
+          [
+            541,
+            625
+          ]
+        ],
+        "capacity_ir": 0.3,
+        "cost_vix_start": "2020-01-31",
+        "cost_vol_window": 60
+      },
+      "regimes": {
+        "fred_series": [
+          "USREC",
+          "VIXCLS",
+          "FEDFUNDS"
+        ],
+        "fed_change_months": 3,
+        "fed_threshold": 0.1,
+        "vix_norm": "window",
+        "plot_types": [
+          "Static-ML",
+          "Portfolio-ML"
+        ],
+        "episodes": [
+          {
+            "label": "COVID crash",
+            "start": "2020-02-01",
+            "end": "2020-04-30"
+          },
+          {
+            "label": "2022 hikes / bear market",
+            "start": "2022-01-01",
+            "end": "2022-12-31"
+          },
+          {
+            "label": "SVB / regional banks",
+            "start": "2023-03-01",
+            "end": "2023-03-31"
+          },
+          {
+            "label": "Tariff shock",
+            "start": "2025-04-01",
+            "end": "2025-04-30"
+          }
+        ]
+      }
+    }
+  },
+  "old_feature_archives_removed": true
+}

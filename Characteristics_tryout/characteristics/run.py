@@ -48,10 +48,13 @@ def acquire(lags_only=False):
 
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('stage',choices=['paths','acquire','acquire-lags','screen','analyse','finalize','prepare'])
+    parser.add_argument('stage',choices=['paths','acquire','acquire-lags','acquire-us-high-cap','screen','analyse','finalize','prepare','explain-selection','select-us-high-cap'])
     parser.add_argument('--wait',action='store_true',help='Analyse partitions while explicit acquisition completes them')
     parser.add_argument('--data-dir',type=Path,help='Existing cache or new data directory (default: Characteristics_tryout/data)')
     parser.add_argument('--output-dir',type=Path,help='Analysis destination (default: Characteristics_tryout/outputs)')
+    parser.add_argument('--analysis-dir',type=Path,help='Completed selection diagnostics for explain-selection (default: output directory)')
+    parser.add_argument('--selection-mode',choices=['training'],default='training',help='2005–2014 US high-cap measurement window; this stage does not train ML')
+    parser.add_argument('--legacy-multimarket',action='store_true',help='Retired option; old multi-market selection is disabled')
     args=parser.parse_args(argv)
     if args.data_dir is not None:os.environ['CHARACTERISTICS_DATA_DIR']=str(args.data_dir.expanduser().resolve())
     if args.output_dir is not None:os.environ['CHARACTERISTICS_OUTPUT_DIR']=str(args.output_dir.expanduser().resolve())
@@ -60,19 +63,21 @@ def main(argv=None):
     if args.stage=='paths':
         print(json.dumps(dict(tryout=str(TRYOUT_ROOT),project=str(PROJECT),keats_inputs=str(KEATS),data=str(DATA),outputs=str(OUTPUT)),indent=2))
         return 0
+    if args.legacy_multimarket or args.analysis_dir is not None:
+        parser.error('Current calculations use the US high-cap 2005–2014 selection only; legacy selection is disabled.')
+    if args.stage=='select-us-high-cap' or args.stage in ('screen','analyse','finalize','explain-selection'):
+        from .us_high_cap_selection import select_us_high_cap
+        select_us_high_cap(args.selection_mode)
+        return 0
     if args.stage=='acquire':return acquire()
+    if args.stage=='acquire-us-high-cap':
+        from .selection_acquire import acquire_new_columns
+        return acquire_new_columns()
     if args.stage=='acquire-lags':return acquire(lags_only=True)
     if args.stage=='prepare':
-        from .acquire import prepare_local
-        prepare_local();return 0
-    if args.stage=='screen':
-        from .selection import preselect
-        preselect();return 0
-    if args.stage=='finalize':
-        from .finalize import finalize
-        finalize();return 0
-    from .analysis import analyse
-    analyse(wait=args.wait);return 0
+        from .activate_us_selection import activate
+        activate();return 0
+    raise ValueError(f'Unsupported current stage: {args.stage}')
 
 
 if __name__=='__main__':raise SystemExit(main())

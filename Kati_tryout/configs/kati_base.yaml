@@ -1,0 +1,301 @@
+seed: 1
+paths:
+  raw: data/raw
+  processed: data/processed
+  outputs: outputs
+  reference_r: data/reference
+data_sources:
+  jkp_table: contrib.global_factor
+  crsp_daily_table: crsp.dsf_v2
+  factor_details_url: https://raw.githubusercontent.com/bkelly-lab/ReplicationCrisis/master/GlobalFactors/Factor%20Details.xlsx
+  cluster_labels_url: https://raw.githubusercontent.com/bkelly-lab/ReplicationCrisis/master/GlobalFactors/Cluster%20Labels.csv
+  ff_factors_url: https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_CSV.zip
+  ff_factors_daily_url: https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_daily_CSV.zip
+  fred_csv_url: https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}
+dates:
+  warmup_start: '1994-12-31'
+  validation_start: '2015-01-31'
+  validation_end: '2019-12-31'
+  test_start: '2020-01-31'
+  test_end: '2025-12-31'
+  holdout_start: null
+  holdout_end: null
+  data_end: 2025-12-31
+  holdout_locked: true
+  evaluate: test
+universe:
+  exchanges:
+  - 1
+  - 3
+  share_codes:
+  - 10
+  - 11
+  - 12
+  jkp_flags:
+  - common
+  - primary_sec
+  - obs_main
+  target_n: 80
+  entry_rank: 70
+  exit_rank: 100
+  reconstitution_month: 12
+  min_feature_pct: 0.5
+  lookback_months: 11
+features:
+  percentile_rank: true
+  impute_value: 0.5
+  themes:
+    accruals:
+    - seas_16_20na
+    - ocf_mev
+    - cowc_gr1a
+    debt_issuance:
+    - ni_ar1
+    - dltnetis_gr3a
+    - dstnetis_gr1a
+    investment:
+    - mispricing_mgmt
+    - inv_gr1a
+    - aliq_at
+    - capx_gr3a
+    - rec_gr1a
+    - fincf_mev
+    low_leverage:
+    - netdebt_me
+    - age
+    - fcf_ppen
+    low_risk:
+    - rmax5_21d
+    - div1m_me
+    - betadown_252d
+    - seas_6_10na
+    - betabab_1260d
+    - beta_252d
+    momentum:
+    - ret_6_1
+    - ret_12_1
+    - resff3_6_1
+    profit_growth:
+    - sale_emp_gr1
+    - ret_12_7
+    - seas_1_1an
+    profitability:
+    - ebit_sale
+    - be_mev
+    - ebit_bev
+    quality:
+    - at_turnover
+    - assets
+    - div_at
+    - mispricing_perf
+    - sale_bev
+    - qmj_safety
+    seasonality:
+    - corr_1260d
+    - seas_2_5an
+    short_term_reversal:
+    - rmax5_rvol_21d
+    - rskew_21d
+    size:
+    - market_equity
+    - enterprise_value
+    - book_equity
+    - dolvol_126d
+    value:
+    - ebitda_mev
+    - chcsho_1m
+    - eqnpo_3m
+    - sale_mev
+    - gp_mev
+    - eqnpo_12m
+covariance:
+  factor_universe_top_n: 500
+  sectors:
+    consumer:
+    - NoDur
+    - Durbl
+    - Shops
+    industrials:
+    - Manuf
+    - Chems
+    - Other
+    tech_telecom:
+    - BusEq
+    - Telcm
+    energy_utilities:
+    - Enrgy
+    - Utils
+    health:
+    - Hlth
+    finance:
+    - Money
+  window_days: 2520
+  min_window_days: 2520
+  half_life_corr_days: 378
+  half_life_var_days: 126
+  half_life_idio_days: 126
+  idio_min_obs: 200
+  idio_min_window: 252
+  idio_initial_obs: 63
+  days_per_month: 21
+trading_costs:
+  price_impact: 0.1
+  dolvol_column: dolvol_126d
+  dolvol_units: dollars
+investor:
+  gamma: 10.0
+  wealth: 10000000000.0
+  wealth_end_date: '2019-12-31'
+  mu: 0.007
+  m_iterations: 10
+  gamma_te: 100.0
+  te_targets:
+  - 0.01
+  - 0.02
+  - 0.04
+  gamma_te_grid:
+  - 1.0
+  - 2.5
+  - 5.0
+  - 10.0
+  - 25.0
+  - 50.0
+  - 100.0
+  - 250.0
+  gamma_grid:
+  - 1.0
+  - 5.0
+  - 10.0
+  - 20.0
+  - 100.0
+  wealth_grid:
+  - 1000000000.0
+  - 10000000000.0
+  - 50000000000.0
+  - 100000000000.0
+  - 250000000000.0
+portfolio:
+  charge_exit_tc: true
+ridge_grid:
+  include_zero: true
+  log_min: -10.0
+  log_max: 10.0
+  n: 100
+return_model:
+  p_grid:
+  - 2
+  - 4
+  - 8
+  - 16
+  - 32
+  - 64
+  - 128
+  - 256
+  - 512
+  rff_variance_grid:
+  - 0.049787068367863944
+  - 0.1353352832366127
+  horizons:
+  - 1
+  val_years: 5
+  pred_years:
+  - 2015
+  - 2025
+portfolio_ml:
+  use_rff: true
+  p_grid:
+  - 8
+  - 16
+  - 32
+  - 64
+  - 128
+  - 256
+  - 512
+  rff_variance_grid:
+  - 0.049787068367863944
+  - 0.1353352832366127
+  scale_by_vol: true
+  add_original_features: false
+  add_constant: true
+  benchmark_relative: false
+  half_life_years:
+  - null
+static_ml:
+  k_grid:
+  - 1.0
+  - 0.3333333333333333
+  - 0.2
+  u_grid:
+  - 0.0
+  - 0.1
+  - 0.25
+  - 0.5
+  - 1.0
+  g_grid:
+  - 0.0
+  - 1.0
+  - 2.0
+factor_ml:
+  n_portfolios: 5
+monitor:
+  ir_window: 36
+  drawdown_te_multiple: 2.0
+  te_budget: 0.02
+  beta_limits:
+  - 0.8
+  - 1.2
+  theme_limit: 1.0
+  ic_window: 12
+  ic_negative_months: 6
+  tc_months: 3
+  bias_window: 36
+grids:
+  n_jobs: 5
+  frontier_vol_max: 0.5
+  frontier_vol_step: 0.01
+feature_importance:
+  markowitz_gamma: 100.0
+  n_seeds: 20
+reporting:
+  main_types:
+  - Static-ML
+  - Portfolio-ML
+  subperiods:
+  - label: "1981\u20132000"
+    start: 1981-01-31
+    end: 2000-12-31
+  - label: "2001\u20132020"
+    start: 2001-01-31
+    end: 2020-12-31
+  ic_size_buckets:
+  - - 1
+    - 80
+  - - 81
+    - 250
+  capacity_ir: 0.3
+  cost_vix_start: 1990-01-31
+  cost_vol_window: 60
+regimes:
+  fred_series:
+  - USREC
+  - VIXCLS
+  - FEDFUNDS
+  fed_change_months: 3
+  fed_threshold: 0.1
+  vix_norm: window
+  plot_types:
+  - Static-ML
+  - Portfolio-ML
+  episodes:
+  - label: COVID crash
+    start: 2020-02-01
+    end: 2020-04-30
+  - label: 2022 hikes / bear market
+    start: 2022-01-01
+    end: 2022-12-31
+  - label: SVB / regional banks
+    start: 2023-03-01
+    end: 2023-03-31
+  - label: Tariff shock
+    start: 2025-04-01
+    end: 2025-04-30

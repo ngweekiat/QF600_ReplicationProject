@@ -1,0 +1,107 @@
+base: ../kati_base.yaml
+paths:
+  raw: data/raw/us_mid
+  processed: data/processed/us_mid/with_zero_returns
+  outputs: outputs/base/us_mid
+  reference_r: data/reference
+dates:
+  warmup_start: '1994-12-31'
+  validation_start: '2015-01-31'
+  validation_end: '2019-12-31'
+  test_start: '2020-01-31'
+  test_end: '2025-12-31'
+  holdout_start: null
+  holdout_end: null
+  data_end: '2025-12-31'
+  holdout_locked: true
+  evaluate: test
+features:
+  themes:
+    accruals:
+    - seas_16_20na
+    - ocf_mev
+    - cowc_gr1a
+    debt_issuance:
+    - ni_ar1
+    - dltnetis_gr3a
+    - dstnetis_gr1a
+    investment:
+    - mispricing_mgmt
+    - inv_gr1a
+    - aliq_at
+    - capx_gr3a
+    - rec_gr1a
+    - fincf_mev
+    low_leverage:
+    - netdebt_me
+    - age
+    - fcf_ppen
+    low_risk:
+    - rmax5_21d
+    - div1m_me
+    - betadown_252d
+    - seas_6_10na
+    - betabab_1260d
+    - beta_252d
+    momentum:
+    - ret_6_1
+    - ret_12_1
+    - resff3_6_1
+    profit_growth:
+    - sale_emp_gr1
+    - ret_12_7
+    - seas_1_1an
+    profitability:
+    - ebit_sale
+    - be_mev
+    - ebit_bev
+    quality:
+    - at_turnover
+    - assets
+    - div_at
+    - mispricing_perf
+    - sale_bev
+    - qmj_safety
+    seasonality:
+    - corr_1260d
+    - seas_2_5an
+    short_term_reversal:
+    - rmax5_rvol_21d
+    - rskew_21d
+    size:
+    - market_equity
+    - enterprise_value
+    - book_equity
+    - dolvol_126d
+    value:
+    - ebitda_mev
+    - chcsho_1m
+    - eqnpo_3m
+    - sale_mev
+    - gp_mev
+    - eqnpo_12m
+return_model:
+  pred_years:
+  - 2015
+  - 2025
+  val_years: 5
+investor:
+  wealth_end_date: '2019-12-31'
+reporting:
+  ic_size_buckets:
+  - - 461
+    - 540
+  - - 376
+    - 460
+  - - 541
+    - 625
+  subperiods:
+  - label: 2020-2022
+    start: '2020-01-31'
+    end: '2022-12-31'
+  - label: 2023-2025
+    start: '2023-01-31'
+    end: '2025-12-31'
+  cost_vix_start: '2020-01-31'
+grids:
+  n_jobs: 1

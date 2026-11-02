@@ -1,0 +1,120 @@
+{
+  "scope": "us_large only",
+  "mode": "training",
+  "candidates": 404,
+  "eligible": 397,
+  "cap": 200,
+  "selected": 50,
+  "sample_description": "9,682 US high-cap held-stock months; 128 distinct stocks; measurement return months 2005\u20132014. No ML training.",
+  "selection_return_start": "2005-01-31",
+  "selection_return_end": "2014-12-31",
+  "training_only": true,
+  "other_markets_used": false,
+  "test_outcomes_used": false,
+  "models_fitted": false,
+  "regression_r2_used": false,
+  "selection_weights": {
+    "oriented_rank_ic": 0.55,
+    "coverage": 0.2,
+    "yearly_direction_stability": 0.15,
+    "rank_persistence": 0.1
+  },
+  "reason_counts": {
+    "S": 24,
+    "A": 13,
+    "T": 13
+  },
+  "published_group_count": 32,
+  "proxy_group_count": 18,
+  "source_files": [
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\metadata_US.parquet",
+      "sha256": "da47b514f121cc33b3648d0c7b705a7bead6238e30d0b3c3c01334a7aba7173f"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\candidate_registry.csv",
+      "sha256": "ad206a4a516366e3002bcc12777133ab545600d2826a93a0ee43d7257dc84a95"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_000.parquet",
+      "sha256": "0c1e67c98cb922d75a0df2286e42d5c51366416e7a06dcdae2afbcefb4808a50"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_001.parquet",
+      "sha256": "c3e9b746770b0696c1a22f818e6cde8a6f41949d5edc13ef8776c42fc66bc0c1"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_002.parquet",
+      "sha256": "72e8da43fb93400512fcbbe70596769e30bcb799399638d49251d3d20523ec21"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_003.parquet",
+      "sha256": "a62ccddd14a125de10cf4759ad535efec02fb21eb0b441db77c8db5ee7c28a52"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_004.parquet",
+      "sha256": "a7a543970c933265819225f85cc42286feb372bd4ca7eb75771efa3363220348"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_005.parquet",
+      "sha256": "bd2d95dbb89bc2cf371f718d51f600a315aaeb5ffc35463f4e4076bb224bc85b"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_006.parquet",
+      "sha256": "1f43b29699450edfb8aac8472be05c2f0af66f1bed17a2b986a4d64757f4d6dc"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_007.parquet",
+      "sha256": "3bc7c104901c928652f891520d4fb023bf5fdf5b915d8dfa8e612f0c7f744815"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_008.parquet",
+      "sha256": "fe134486454f46838a19e5daf5139ed45b6528dc749261a6ac93bfa31472efc4"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_009.parquet",
+      "sha256": "ec0c35836751a5781002cae99a8fd9f7e7973eb922736b20a483d4382b286dbc"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_010.parquet",
+      "sha256": "c79f12e5a6d7890f2b017a26323e93e7f20946ba852bb84d740ea2d96cba8260"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_011.parquet",
+      "sha256": "09f60c5650166b6687a3dadd1a81e9e504bd1bd3b5e884b0a23efa21391a1348"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_012.parquet",
+      "sha256": "23652325a2ff3d58994ce1ef73f3423fd21f021b9ad9231a58781d7b03affd3b"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_013.parquet",
+      "sha256": "ba7f10488d8aa4c8dfe87b4d3dec1d2e727d8b9c84bf662a009eef690defe614"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_014.parquet",
+      "sha256": "56064035dec95c932af8f8cfd13ae1fb70904f274958f2fac0ca2fad0e1b8217"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_015.parquet",
+      "sha256": "88579d1b2997a116a508e8d4beb3fc16d3c290b0d785d878d03bd632f6be1223"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_016.parquet",
+      "sha256": "17662b09c804b97eaff3906d2b5400bfcafc432db1abe7141ec64b204778f5b0"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_017.parquet",
+      "sha256": "f1cfdedf5f0f24e52991ed7661f9ab9d3b1034be178d913572896cb38a2fb82c"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\US_year2014.parquet",
+      "sha256": "168aa1e35b4815d687a84e5f1d609d9771866795e9dabc1cd43abfaf64abf0ca"
+    },
+    {
+      "path": "C:\\Users\\katiravan\\Desktop\\SMU\\Term 1\\SMU QF 600 Asset Pricing\\Assrt pricing replication project\\QF600_ReplicationProject\\Characteristics_tryout\\data\\pilot\\prc_US.parquet",
+      "sha256": "7e19eff58b3f9a46bab8513ea598ccb34cf7eb70150b8c1a294048109b7fd754"
+    }
+  ],
+  "caveat": "Best under the declared association/diversity rule; no global optimality or joint-ML performance claim."
+}

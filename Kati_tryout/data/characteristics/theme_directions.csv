@@ -1,0 +1,51 @@
+characteristic,theme,theme_assignment_method,published_jkp_153,direction,training_direction,model_theme,model_theme_direction,model_direction_source
+seas_16_20na,Accruals,published JKP cluster,True,-1.0,-1,accruals,-1.0,published JKP direction
+ocf_mev,Accruals,empirical training correlation proxy; not published semantic cluster,False,,1,accruals,1.0,2005–2014 US high-cap empirical sign for provisional group
+ni_ar1,Debt Issuance,published JKP cluster,True,1.0,1,debt_issuance,1.0,published JKP direction
+dltnetis_gr3a,Debt Issuance,empirical training correlation proxy; not published semantic cluster,False,,1,debt_issuance,1.0,2005–2014 US high-cap empirical sign for provisional group
+mispricing_mgmt,Investment,published JKP cluster,True,1.0,1,investment,1.0,published JKP direction
+inv_gr1a,Investment,published JKP cluster,True,-1.0,-1,investment,-1.0,published JKP direction
+netdebt_me,Low Leverage,published JKP cluster,True,-1.0,-1,low_leverage,-1.0,published JKP direction
+age,Low Leverage,published JKP cluster,True,-1.0,1,low_leverage,-1.0,published JKP direction
+rmax5_21d,Low Risk,published JKP cluster,True,-1.0,-1,low_risk,-1.0,published JKP direction
+div1m_me,Low Risk,empirical training correlation proxy; not published semantic cluster,False,,-1,low_risk,-1.0,2005–2014 US high-cap empirical sign for provisional group
+ret_6_1,Momentum,published JKP cluster,True,1.0,-1,momentum,1.0,published JKP direction
+ret_12_1,Momentum,published JKP cluster,True,1.0,1,momentum,1.0,published JKP direction
+sale_emp_gr1,Profit Growth,published JKP cluster,True,1.0,-1,profit_growth,1.0,published JKP direction
+ret_12_7,Profit Growth,published JKP cluster,True,1.0,1,profit_growth,1.0,published JKP direction
+ebit_sale,Profitability,published JKP cluster,True,1.0,-1,profitability,1.0,published JKP direction
+be_mev,Profitability,empirical training correlation proxy; not published semantic cluster,False,,1,profitability,1.0,2005–2014 US high-cap empirical sign for provisional group
+at_turnover,Quality,published JKP cluster,True,1.0,1,quality,1.0,published JKP direction
+assets,Quality,empirical training correlation proxy; not published semantic cluster,False,,-1,quality,-1.0,2005–2014 US high-cap empirical sign for provisional group
+corr_1260d,Seasonality,published JKP cluster,True,-1.0,-1,seasonality,-1.0,published JKP direction
+seas_2_5an,Seasonality,published JKP cluster,True,1.0,-1,seasonality,1.0,published JKP direction
+rmax5_rvol_21d,Short-Term Reversal,published JKP cluster,True,-1.0,-1,short_term_reversal,-1.0,published JKP direction
+rskew_21d,Short-Term Reversal,published JKP cluster,True,-1.0,-1,short_term_reversal,-1.0,published JKP direction
+market_equity,Size,published JKP cluster,True,-1.0,-1,size,-1.0,published JKP direction
+enterprise_value,Size,empirical training correlation proxy; not published semantic cluster,False,,-1,size,-1.0,2005–2014 US high-cap empirical sign for provisional group
+ebitda_mev,Value,published JKP cluster,True,1.0,1,value,1.0,published JKP direction
+chcsho_1m,Value,empirical training correlation proxy; not published semantic cluster,False,,-1,value,-1.0,2005–2014 US high-cap empirical sign for provisional group
+div_at,Quality,empirical training correlation proxy; not published semantic cluster,False,,1,quality,1.0,2005–2014 US high-cap empirical sign for provisional group
+eqnpo_3m,Value,empirical training correlation proxy; not published semantic cluster,False,,1,value,1.0,2005–2014 US high-cap empirical sign for provisional group
+sale_mev,Value,empirical training correlation proxy; not published semantic cluster,False,,1,value,1.0,2005–2014 US high-cap empirical sign for provisional group
+mispricing_perf,Quality,published JKP cluster,True,1.0,1,quality,1.0,published JKP direction
+betadown_252d,Low Risk,published JKP cluster,True,-1.0,-1,low_risk,-1.0,published JKP direction
+seas_1_1an,Profit Growth,published JKP cluster,True,1.0,1,profit_growth,1.0,published JKP direction
+gp_mev,Value,empirical training correlation proxy; not published semantic cluster,False,,1,value,1.0,2005–2014 US high-cap empirical sign for provisional group
+ebit_bev,Profitability,published JKP cluster,True,1.0,1,profitability,1.0,published JKP direction
+sale_bev,Quality,published JKP cluster,True,1.0,1,quality,1.0,published JKP direction
+qmj_safety,Quality,published JKP cluster,True,1.0,1,quality,1.0,published JKP direction
+seas_6_10na,Low Risk,published JKP cluster,True,-1.0,-1,low_risk,-1.0,published JKP direction
+eqnpo_12m,Value,published JKP cluster,True,1.0,1,value,1.0,published JKP direction
+betabab_1260d,Low Risk,published JKP cluster,True,-1.0,-1,low_risk,-1.0,published JKP direction
+book_equity,Size,empirical training correlation proxy; not published semantic cluster,False,,-1,size,-1.0,2005–2014 US high-cap empirical sign for provisional group
+aliq_at,Investment,published JKP cluster,True,-1.0,-1,investment,-1.0,published JKP direction
+beta_252d,Low Risk,empirical training correlation proxy; not published semantic cluster,False,,-1,low_risk,-1.0,2005–2014 US high-cap empirical sign for provisional group
+capx_gr3a,Investment,empirical training correlation proxy; not published semantic cluster,False,,-1,investment,-1.0,2005–2014 US high-cap empirical sign for provisional group
+rec_gr1a,Investment,empirical training correlation proxy; not published semantic cluster,False,,-1,investment,-1.0,2005–2014 US high-cap empirical sign for provisional group
+fincf_mev,Investment,empirical training correlation proxy; not published semantic cluster,False,,-1,investment,-1.0,2005–2014 US high-cap empirical sign for provisional group
+cowc_gr1a,Accruals,published JKP cluster,True,-1.0,-1,accruals,-1.0,published JKP direction
+resff3_6_1,Momentum,published JKP cluster,True,1.0,-1,momentum,1.0,published JKP direction
+fcf_ppen,Low Leverage,empirical training correlation proxy; not published semantic cluster,False,,1,low_leverage,1.0,2005–2014 US high-cap empirical sign for provisional group
+dstnetis_gr1a,Debt Issuance,empirical training correlation proxy; not published semantic cluster,False,,-1,debt_issuance,-1.0,2005–2014 US high-cap empirical sign for provisional group
+dolvol_126d,Size,published JKP cluster,True,-1.0,-1,size,-1.0,published JKP direction

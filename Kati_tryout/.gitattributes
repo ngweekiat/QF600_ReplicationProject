@@ -1,0 +1,4 @@
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+data/**/*.parquet filter=lfs diff=lfs merge=lfs -text

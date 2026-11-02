@@ -1,0 +1,75 @@
+base: iteration_2.yaml
+paths:
+  outputs: outputs/iteration_3/us_large
+  reference_r: data/reference
+portfolio_ml:
+  half_life_years:
+  - 3
+  - 5
+  - 10
+  - null
+features:
+  themes:
+    accruals:
+    - seas_16_20na
+    - ocf_mev
+    - cowc_gr1a
+    debt_issuance:
+    - ni_ar1
+    - dltnetis_gr3a
+    - dstnetis_gr1a
+    investment:
+    - mispricing_mgmt
+    - inv_gr1a
+    - aliq_at
+    - capx_gr3a
+    - rec_gr1a
+    - fincf_mev
+    low_leverage:
+    - netdebt_me
+    - age
+    - fcf_ppen
+    low_risk:
+    - rmax5_21d
+    - div1m_me
+    - betadown_252d
+    - seas_6_10na
+    - betabab_1260d
+    - beta_252d
+    momentum:
+    - ret_6_1
+    - ret_12_1
+    - resff3_6_1
+    profit_growth:
+    - sale_emp_gr1
+    - ret_12_7
+    - seas_1_1an
+    profitability:
+    - ebit_sale
+    - be_mev
+    - ebit_bev
+    quality:
+    - at_turnover
+    - assets
+    - div_at
+    - mispricing_perf
+    - sale_bev
+    - qmj_safety
+    seasonality:
+    - corr_1260d
+    - seas_2_5an
+    short_term_reversal:
+    - rmax5_rvol_21d
+    - rskew_21d
+    size:
+    - market_equity
+    - enterprise_value
+    - book_equity
+    - dolvol_126d
+    value:
+    - ebitda_mev
+    - chcsho_1m
+    - eqnpo_3m
+    - sale_mev
+    - gp_mev
+    - eqnpo_12m

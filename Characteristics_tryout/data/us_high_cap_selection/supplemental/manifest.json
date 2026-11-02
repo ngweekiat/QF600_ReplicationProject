@@ -1,0 +1,2033 @@
+{
+  "status": "complete",
+  "models_fitted": false,
+  "new_columns": [
+    "seas_16_20na",
+    "dltnetis_gr3a",
+    "inv_gr1a",
+    "div1m_me",
+    "seas_2_5an",
+    "rskew_21d",
+    "eqnpo_3m",
+    "rec_gr1a",
+    "cowc_gr1a",
+    "fcf_ppen",
+    "dstnetis_gr1a"
+  ],
+  "files": [
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_1994.parquet",
+      "rows": 4824,
+      "source_rows": 4824,
+      "sha256": "787f6f39c382a620acbc3f4a27a1f54640590130775255f797de1a135638d723",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_1995.parquet",
+      "rows": 64375,
+      "source_rows": 64375,
+      "sha256": "d4f8a92bb06e096d512125abb45130c98a62802e4b54ef93292430fcbb79e027",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_1996.parquet",
+      "rows": 68345,
+      "source_rows": 68345,
+      "sha256": "7d3895227099ea7a1f35e8d78d4164218a6c9d30387ab48344e9e51431bfcac5",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_1997.parquet",
+      "rows": 72012,
+      "source_rows": 72012,
+      "sha256": "36084f12cf2ab377d7212bbd09af0f140a64578d3d62224787ab18191f5205f8",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_1998.parquet",
+      "rows": 73007,
+      "source_rows": 73007,
+      "sha256": "9973a336b17ce1fdf460e2dd06c71ab5381dd9b0d5c5a3422a5f2ee3e67ee694",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_1999.parquet",
+      "rows": 69490,
+      "source_rows": 69490,
+      "sha256": "63290bc4818084fccdcaa0659157ba9f5a7c0194fbd10f0c782c03ca445cfb01",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2000.parquet",
+      "rows": 65697,
+      "source_rows": 65697,
+      "sha256": "f9d2a437737f8a563bb22638e5bbfaa90d1d8b4c98e3207fe70c843fa627ae72",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2001.parquet",
+      "rows": 63796,
+      "source_rows": 63796,
+      "sha256": "0581078b06c396ed5c84b441765904af2449fd3db6900d8d958fc3054db5b9d0",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2002.parquet",
+      "rows": 60593,
+      "source_rows": 60593,
+      "sha256": "d405d002ff8b87dba7e492119dab76da05129978e0d136a9c4eb3244b629ac8a",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2003.parquet",
+      "rows": 56149,
+      "source_rows": 56149,
+      "sha256": "d23963c82e370f61af4e0e4c1dfa4a4f45a023ae0994ac0839c45d7ad9b6aab5",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2004.parquet",
+      "rows": 53051,
+      "source_rows": 53051,
+      "sha256": "aa7d2d330438393b3a3f8ce643869fad821e8d2478a44dd15b246257f50c280e",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2005.parquet",
+      "rows": 51559,
+      "source_rows": 51559,
+      "sha256": "2e6c236ac93b2f1545c52f711f24a5b74289e1db5a9b3321c66e6a5111b07b0a",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2006.parquet",
+      "rows": 50687,
+      "source_rows": 50687,
+      "sha256": "d3ebd9a118c949c09e4e2671a5558ff6fec4b96a378a18138016cbb7cc930ac7",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2007.parquet",
+      "rows": 49505,
+      "source_rows": 49505,
+      "sha256": "7a6cedb4219371a73c3a57e67350d04d4414d8c16f929996eeb81748c7d5be7f",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2008.parquet",
+      "rows": 48896,
+      "source_rows": 48896,
+      "sha256": "49c45fe3c38e2bc04319860d10b17f805e1a6a7ce3e37872c042ede702909ffe",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2009.parquet",
+      "rows": 48240,
+      "source_rows": 48240,
+      "sha256": "a1c64fc7817b7a61921e951cac55153f93a45b04b494721568146e1a301371b2",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2010.parquet",
+      "rows": 46271,
+      "source_rows": 46271,
+      "sha256": "89c6ea1b10a07acb018b10add1911aeb1561c8d9df546bafc468a62670a7172c",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2011.parquet",
+      "rows": 44733,
+      "source_rows": 44733,
+      "sha256": "b4bd80a6577533bddf8ad6c18fcab9b0147a23bc89d3097ca3d3f217d35bddb8",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2012.parquet",
+      "rows": 43882,
+      "source_rows": 43882,
+      "sha256": "bd881cde31cd8c670e061a3c462abe0d13901c3c941126ce6ffc37c2366b6c43",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2013.parquet",
+      "rows": 42895,
+      "source_rows": 42895,
+      "sha256": "769702d8738c5f3c1f335a43d69751e6c7edbd40e15c946a1c9f07e4dbd2ee5b",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2014.parquet",
+      "rows": 42587,
+      "source_rows": 42587,
+      "sha256": "642e3d3fa7f303fbc4797134c768018c01df3819c940c52d3eacb214ab0078e6",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2015.parquet",
+      "rows": 43652,
+      "source_rows": 43652,
+      "sha256": "9da43127342af25350214b85fb4cf3ea94ffdf051f67e748f6087588b3afa90b",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2016.parquet",
+      "rows": 43950,
+      "source_rows": 43950,
+      "sha256": "7f1211449b2b7ed450c0b6c9aec81b00968b42cbe5028b894c66017fa714e47f",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2017.parquet",
+      "rows": 43180,
+      "source_rows": 43180,
+      "sha256": "6750e5e7ee3e61904dda235471b27c3b6c8a7eb72c47ed7e64a7ba7b7f333d82",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2018.parquet",
+      "rows": 42604,
+      "source_rows": 42604,
+      "sha256": "c782c508a161d208a4a5b6c1268cacd99eb4a0252d89fca01f7e15a13aa99067",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2019.parquet",
+      "rows": 42955,
+      "source_rows": 42955,
+      "sha256": "f0d887a4f17c78bb6443981ddee3f8f6ed9fb31ecc70887d953e9490a299da44",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2020.parquet",
+      "rows": 43476,
+      "source_rows": 43476,
+      "sha256": "ff7bb7050e1f223b341e9b1811d87b2b23fdab941bc45e18a4b95e2764a746c1",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2021.parquet",
+      "rows": 43693,
+      "source_rows": 43693,
+      "sha256": "be152b5b959786e655c59820256fc925aada135f4d3d9e2d533a10fb478e29d9",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2022.parquet",
+      "rows": 46914,
+      "source_rows": 46914,
+      "sha256": "0bb24d57d25561eb6162a66b537e941f93c0d49170e09a31466c1b2c8cf6758a",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2023.parquet",
+      "rows": 50375,
+      "source_rows": 50375,
+      "sha256": "e84f7e7aaf661121d6389c97598fa5fa96116f234b47c202d4fca17370c70fd1",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2024.parquet",
+      "rows": 49647,
+      "source_rows": 49647,
+      "sha256": "8a8194814b3b0f122051a7326a57711f63c71d54e63c150705670fad824bd304",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\US_2025.parquet",
+      "rows": 44678,
+      "source_rows": 44678,
+      "sha256": "e8bf5c8d1444fcf9325d37400b8a491834a939cbeffcc5af26858c10bc776777",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2004.parquet",
+      "rows": 10,
+      "source_rows": 10,
+      "sha256": "4c39a0c3c67b322a3f852e369c9cc03422502d87921fb592da06917dfbe27e4b",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2005.parquet",
+      "rows": 74,
+      "source_rows": 74,
+      "sha256": "f938d25069df184628057226c4cbb903f2ceb6ac0c743ecc0edb7acfb23afa4f",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2006.parquet",
+      "rows": 54,
+      "source_rows": 54,
+      "sha256": "62e2ce591743af656c6e30ccea64d38c9ca0901b17ec311d90eefb713dfbc096",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2007.parquet",
+      "rows": 67,
+      "source_rows": 67,
+      "sha256": "71010d54c95c2fdfdc0e95d933cbe4fa839e8c779dfc91ae76dee539e59e3352",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2008.parquet",
+      "rows": 50,
+      "source_rows": 50,
+      "sha256": "a6508bbdd598b7d897e6c7572806de333833faabbd64f226f5fbb0e1d2afeef4",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2009.parquet",
+      "rows": 50,
+      "source_rows": 50,
+      "sha256": "e155eaa01a72ca3f30ab44049c81c4a7dd1d94749d947a59a11ca3f82d36cb20",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2010.parquet",
+      "rows": 37,
+      "source_rows": 35,
+      "sha256": "385f8f4e704891a69d81862af5ae5705550edd717d2348ab60b694803b6d3bea",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2011.parquet",
+      "rows": 68,
+      "source_rows": 68,
+      "sha256": "7405e53a00d3e58734e243b1f29e1b5098e1ac0c24f627d3c89de2e075d31456",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2012.parquet",
+      "rows": 45,
+      "source_rows": 45,
+      "sha256": "a502b59d86b39d5732540d2282ea8c87f939dfec69f012ec13ac683de7818d32",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2013.parquet",
+      "rows": 60,
+      "source_rows": 60,
+      "sha256": "a211a432903e95c38b6fcbdf8e9e0d62e321156deb94ad7b1e7363c7d4c91662",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2014.parquet",
+      "rows": 40,
+      "source_rows": 40,
+      "sha256": "f8e931eb171be86dca7ae1e11c6a648e28fa116fd6b8700e0dc1bfa2fe11f130",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2015.parquet",
+      "rows": 76,
+      "source_rows": 76,
+      "sha256": "3c0315471c37be59ef38b5638a2cdda3535f1a6e770e4b770ac702233a81a70d",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2016.parquet",
+      "rows": 29,
+      "source_rows": 29,
+      "sha256": "68ec2c12d259b5990476d083fe4b02f07a426d5f136f6e51136f54645fe400a1",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2017.parquet",
+      "rows": 20,
+      "source_rows": 20,
+      "sha256": "028ddd3be7ac291324351abf2c29a7474cd05aaae557fe8be434000c3a2d4a43",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2018.parquet",
+      "rows": 23,
+      "source_rows": 23,
+      "sha256": "ff69bb9f2bfd60e1d2baf9947a9932412c9a57195f8b61735b5203c5ac1999d9",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2019.parquet",
+      "rows": 49,
+      "source_rows": 49,
+      "sha256": "aa1b688066498d6b4e28161b6c11058f0c53b735a18018b549f6b1e9cc36518c",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2020.parquet",
+      "rows": 75,
+      "source_rows": 75,
+      "sha256": "2576d4d04c581e85e9f30cc77b41d50db2fd2df62b4f146c9bfd1922f65a5588",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2021.parquet",
+      "rows": 46,
+      "source_rows": 46,
+      "sha256": "d9b5316487dc7a603957b62571663ef1ba8dea0f2d2eed5ba4c76fae66d95792",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2022.parquet",
+      "rows": 12,
+      "source_rows": 12,
+      "sha256": "530b658387cd0ee0fcdab0a0ca3cc4ffb6c1d9e8207ce92ca82317aec9868d43",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2023.parquet",
+      "rows": 20,
+      "source_rows": 20,
+      "sha256": "ade5f36b110b86afc76c9d20f81de54995f02bdb8c8f82d2c9b0d178f955e96d",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_US_2024.parquet",
+      "rows": 27,
+      "source_rows": 27,
+      "sha256": "3bcf1bc1a4e9d6fadcb829cc45bfb564f0fa585e6ceb6f60d7ec2112ec57972c",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_1994.parquet",
+      "rows": 712,
+      "source_rows": 712,
+      "sha256": "dbd6a9d940806722ee387c135a91b9180aa2c0291043354c74d25a0544f9602d",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_1995.parquet",
+      "rows": 9874,
+      "source_rows": 9874,
+      "sha256": "233cf5326eb0e0d1a612014f92282e2b98a7aeb87d1211de8d3f920722955109",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_1996.parquet",
+      "rows": 13918,
+      "source_rows": 13918,
+      "sha256": "ca10e0bf8813bc27c11af42ae25077a72b85d2997e8cd9aac6a50baf2f8c08b6",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_1997.parquet",
+      "rows": 18090,
+      "source_rows": 18090,
+      "sha256": "566311ba078c206d5e326dfbaab40a22110d3523814a6df9202565cb948493a2",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_1998.parquet",
+      "rows": 23296,
+      "source_rows": 23296,
+      "sha256": "ac7a3c592f983a4e4d85a0baa67f706e199301cfc963b81e9fe8bdf15334bd0c",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_1999.parquet",
+      "rows": 26153,
+      "source_rows": 26153,
+      "sha256": "1741ab92c1681165989d6b6c49d28cc18d35c644c3d8b6f6a95499def638feca",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2000.parquet",
+      "rows": 30040,
+      "source_rows": 30040,
+      "sha256": "f800f5a2beafb4b1998e440bad1c2efacff1fe3ea1103a6535871c93d1a0d248",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2001.parquet",
+      "rows": 36909,
+      "source_rows": 36909,
+      "sha256": "a80bcdb35a4132ebe2b4ed05cd08d9b1faf23b4e95e4a455050d4313f7a7e9bc",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2002.parquet",
+      "rows": 41603,
+      "source_rows": 41603,
+      "sha256": "159d0c346f314fc2efe62944469b6cd2ae3d0040621e3c9e83377e68414b6f76",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2003.parquet",
+      "rows": 40594,
+      "source_rows": 40594,
+      "sha256": "32ee13e80fbae85f9b152f0f616dabcd20d47520caef9c74daab8376d99538c7",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2004.parquet",
+      "rows": 40040,
+      "source_rows": 40040,
+      "sha256": "83893482facc332f8c35eaeb16599242bcb12a1fadb88b9a277a2aa7333122cd",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2005.parquet",
+      "rows": 40274,
+      "source_rows": 40274,
+      "sha256": "5fd937c88c953cf351d0c43a6301bc1a94c918c67467b9e9bcd3108698f02a61",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2006.parquet",
+      "rows": 43402,
+      "source_rows": 43402,
+      "sha256": "3a9d5bcd723a527f978da1ebc7927e95a927fd9b9013b999186be9f09348766b",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2007.parquet",
+      "rows": 47983,
+      "source_rows": 47983,
+      "sha256": "639abd5f9cef2ad9e00739528c4a8c5cc0557a69835b773dd55b1574bb6077f4",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2008.parquet",
+      "rows": 50315,
+      "source_rows": 50315,
+      "sha256": "7c524f0615c7418963918a253f5e8dec7c2f117298668c7824466c2b52e72434",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2009.parquet",
+      "rows": 47853,
+      "source_rows": 47853,
+      "sha256": "c9f7d33516e24bb4a53bedab579d6ce2bcfb1d5de0b234eb8eba1b0971d3817d",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2010.parquet",
+      "rows": 46529,
+      "source_rows": 46529,
+      "sha256": "bb054ce496b7d69cb07bcbbfc87bf266f54c8f03097726202e30fc5452980b2a",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2011.parquet",
+      "rows": 46656,
+      "source_rows": 46656,
+      "sha256": "9ede2b2a92b0991dc55fc1018c3a811e11001a53c1e58fd967f4ae7ccab047ac",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2012.parquet",
+      "rows": 45900,
+      "source_rows": 45900,
+      "sha256": "c14cb965618e73995b99e6892cd3bd8c3a18120f12be1ff07655547f86546b41",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2013.parquet",
+      "rows": 45195,
+      "source_rows": 45195,
+      "sha256": "27a66c230c4abbc4aa0f06fad9db6431e751f91d29e920662e2dc43f69f19276",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2014.parquet",
+      "rows": 45717,
+      "source_rows": 45717,
+      "sha256": "d92560ae7cf3be399f1fd960e79b87209286674e6b1c3f0e06b98f4406e24284",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2015.parquet",
+      "rows": 46276,
+      "source_rows": 46276,
+      "sha256": "e2c173f9de71497837d1fb9ad96eb3e297ac86449fba64ff2b1b2d751a43b3da",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2016.parquet",
+      "rows": 47318,
+      "source_rows": 47318,
+      "sha256": "bdaad3bb1e6b363ddffdd8e91cc2d2cf03404c2c113d9f872d89370496a49a7a",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2017.parquet",
+      "rows": 47262,
+      "source_rows": 47262,
+      "sha256": "44e31af69c444f28d401ebe9abebbc0f8711b7c2f11d49265af735b8f20896a1",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2018.parquet",
+      "rows": 45015,
+      "source_rows": 45015,
+      "sha256": "8f0e579e53240b191bc57554fea53b0ec1f7794c347c1ba10072a9b861025d54",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2019.parquet",
+      "rows": 48517,
+      "source_rows": 48517,
+      "sha256": "0471bc495c1a3d8f064f60ce982c8b5c2f308c7355817e889542fecfd5e06882",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2020.parquet",
+      "rows": 48883,
+      "source_rows": 48883,
+      "sha256": "c60e4256adbcc51b93fb5b8bf296be3ceae8a6a312aa1612d09d2ef000e5942d",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2021.parquet",
+      "rows": 49575,
+      "source_rows": 49575,
+      "sha256": "98c038b95afb3b432fe3b23832aea84d065fa707a21aa879ff4b17c37ad01761",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2022.parquet",
+      "rows": 51092,
+      "source_rows": 51092,
+      "sha256": "1c24b564d9b319ee4ce311448d3092837f34ff6d03d00652f81fdbbdaf86d33b",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2023.parquet",
+      "rows": 52345,
+      "source_rows": 52345,
+      "sha256": "1a0d52f7bc22e66209162dc880a147270669c1c5e65d55572c4a7814a1720d75",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2024.parquet",
+      "rows": 51839,
+      "source_rows": 51839,
+      "sha256": "7c932544dbc709f2001aee42b79a0ed567a8978f168e096b0375ae9def36bebb",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\EU_2025.parquet",
+      "rows": 41136,
+      "source_rows": 41136,
+      "sha256": "07dc5f93b46dd75093668369a61768a09b22b86ae792f44b4e5c56828cbe8315",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2004.parquet",
+      "rows": 2,
+      "source_rows": 2,
+      "sha256": "89686b0675e4905f5031c2ca12a9fa727586fe5d0ba63d03336d04baddc2ca4b",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2005.parquet",
+      "rows": 15,
+      "source_rows": 15,
+      "sha256": "c5ee3ce275a2672906e20440c33cf14b774de2e56df8683d3cdbd453ebfc43c3",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2006.parquet",
+      "rows": 33,
+      "source_rows": 33,
+      "sha256": "71aca279a05f82750cef3c61f6f965bdca9b73bd25c669595fe87489a7df0fb9",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2007.parquet",
+      "rows": 24,
+      "source_rows": 24,
+      "sha256": "7a9efeb2af412f921554debd0d2c0d46870094dbdbbf0f10a5929a358e59eb8d",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2008.parquet",
+      "rows": 17,
+      "source_rows": 17,
+      "sha256": "7374a2d0f76399267f97d20d4c584715aee532594f0b9316c9228b91a036c4d7",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2009.parquet",
+      "rows": 19,
+      "source_rows": 19,
+      "sha256": "d7829745ef2071b97755113295536d40f88a43660f4a64df9dfba5c7ebfa7cd7",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2010.parquet",
+      "rows": 16,
+      "source_rows": 15,
+      "sha256": "6d50505443741efb89d1fbf27ca146b09147b49d6332f66b41e094384ca06991",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2011.parquet",
+      "rows": 39,
+      "source_rows": 39,
+      "sha256": "7c5e69d8aec8cc7dab86bdf21e8b1270207bcb026b42720c1b4ee1d03fc006f7",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2012.parquet",
+      "rows": 12,
+      "source_rows": 12,
+      "sha256": "88dfb57b9a5e32299266fee756614aa068dd13c672c2af06fa4dbdad157e6c18",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2013.parquet",
+      "rows": 14,
+      "source_rows": 14,
+      "sha256": "c02a680e4b990b3e38e22cd69a4128b13ad849f8492fe1fc2f291c1905a9e30e",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2014.parquet",
+      "rows": 16,
+      "source_rows": 16,
+      "sha256": "3f4ffa9de436f06cbab6a23eca73c2c8074a167bcf4d09a4205d1f9d1d9360d2",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2015.parquet",
+      "rows": 22,
+      "source_rows": 22,
+      "sha256": "340ce48d98f8b361f302d64885cb761cb13830bd5efaaace846eed32de1d2064",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2016.parquet",
+      "rows": 19,
+      "source_rows": 19,
+      "sha256": "1ba4b5ec891a23575046c98c77de814b54ae9f0b8c064d7350d98c222b87af54",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2017.parquet",
+      "rows": 35,
+      "source_rows": 35,
+      "sha256": "0061dcd59e5b6009b8ede439949b15b0850782deb9b29144d61d1d0191d43e42",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2018.parquet",
+      "rows": 10,
+      "source_rows": 10,
+      "sha256": "013e692d186764c0975c9cc14e995d65b5b12cd2f213e7b3bb5731f1b8a8b545",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2019.parquet",
+      "rows": 25,
+      "source_rows": 25,
+      "sha256": "bf7a07f3831e2036afebdd2d2ad15eb32be2fd33a45481ca5b1ec56d5e456b7a",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2020.parquet",
+      "rows": 27,
+      "source_rows": 27,
+      "sha256": "23da2f0a708b8ce32daae51e45a3f48a5cc7b02ffa14b813b070c00d38adb43c",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2021.parquet",
+      "rows": 25,
+      "source_rows": 25,
+      "sha256": "5cffd7729b7a0343bce4ef59bc8f8f1aba5d3cd910e8c72193fd5c91c5d37664",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2022.parquet",
+      "rows": 38,
+      "source_rows": 38,
+      "sha256": "7c0a2ae6b589ec5da77e4e668907dc022e0f1f4611789bd1203dd4de9457340a",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2023.parquet",
+      "rows": 19,
+      "source_rows": 19,
+      "sha256": "f1e158960290c8a8d38f76c4238815438db6f19772de4b1bc7ca69eef7fc4aff",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    },
+    {
+      "path": "us_high_cap_selection\\supplemental\\lag_EU_2024.parquet",
+      "rows": 15,
+      "source_rows": 15,
+      "sha256": "8a9dd7a3987eb7259dfe7f933b35527bad71a67e69721c26025c9de1c9203596",
+      "columns": [
+        "seas_16_20na",
+        "dltnetis_gr3a",
+        "inv_gr1a",
+        "div1m_me",
+        "seas_2_5an",
+        "rskew_21d",
+        "eqnpo_3m",
+        "rec_gr1a",
+        "cowc_gr1a",
+        "fcf_ppen",
+        "dstnetis_gr1a"
+      ]
+    }
+  ]
+}

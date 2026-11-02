@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "old_feature_archives_removed": true,
+  "removed": [
+    "Kati_tryout\\data\\archives\\20261102_121716_previous_50",
+    "Kati_tryout\\outputs\\archive\\20261102_121716_previous_50",
+    "Characteristics_tryout\\data\\selection_archive\\20261102_122021_previous_cross_market"
+  ],
+  "active_selection": "US high-cap 2005\u20132014 association 50",
+  "models_fitted": false,
+  "recovery": "Removed from local disk; no repository backup of these archives was created."
+}
