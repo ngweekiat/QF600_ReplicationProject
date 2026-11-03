@@ -1,0 +1,8 @@
+# Descriptive comparison of the Kati_tryout chain on Kati_tryout's own window, 2020-2025 (research log, trials 6-7).
+# Walk-forward continues through 2025 on the holdout data; not a trial, no decision depends on it.
+base: active_pfml.yaml
+paths:
+  processed: data/processed_holdout
+dates:
+  holdout_locked: false
+  evaluate: holdout

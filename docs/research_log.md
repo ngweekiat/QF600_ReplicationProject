@@ -312,3 +312,28 @@ with the largest ridge penalty (e^10, the grid's end) in every December, so it s
   is mechanical: the two new IRs (0.48, 0.37) narrow the spread of trial Sharpes that sets the hurdle.
 - **Holdout.** Not run for K4.2–K4.3; nothing was accepted, so no configuration is carried forward.
 
+**Descriptive comparison on Kati_tryout's window, 2020-01 .. 2025-12 (planned 2026-11-03, before running; not a trial).**
+The same three steps and the baseline, run with the walk-forward continuing through 2025 (`data/processed_holdout`,
+return model and β refitted each year on data to the year before; December choices backward-looking only), each
+strategy from value weights at 2019-12 as in Kati_tryout. Reported with Kati_tryout's measures (net Sharpe, P(test) by
+the same paired block bootstrap, additive drawdown) and net IR. 2021–2025 is this project's already-used holdout, and
+no step was accepted on 1981–2020, so nothing here changes a decision; it only puts the two branches on the same
+months. Market 2020–2025 is spliced from the test and holdout benchmark runs (value weights restart at 2020-12).
+
+**Result, 2020-01 .. 2025-12 (72 months; `outputs/kati_chain_2020/`, `scripts/18_kati_chain.py window`).** K4's 2020 aims
+from the through-2025 walk-forward equal the stored 1981–2020 run's (986 rows, max |Δ| = 0).
+
+| | Net return | Net Sharpe | Active net vs Market | Realised TE | Net IR (net-active SD) | Additive DD (pp) | Costs | P(test) vs reference | P vs Market |
+|---|---|---|---|---|---|---|---|---|---|
+| Base Portfolio-ML | 1.14% | 0.174 | −13.99% | 15.6% | −0.90 | −9.76 | 0.20% | — | — |
+| K4 | 14.72% | 0.862 | −0.41% | 1.7% | −0.24 | −27.16 | 0.06% | 96.4% vs Base | 47.5% |
+| K4.2 | 15.00% | 0.871 | −0.13% | 1.1% | −0.11 | −27.23 | 0.03% | 77.7% vs K4 | 63.5% |
+| K4.3 | 15.26% | 0.874 | +0.13% | 0.4% | +0.35 | −27.86 | 0.01% | 57.7% vs K4.2 | 91.6% |
+| Market | 15.13% | 0.864 | 0 | 0 | — | −27.94 | 0.03% | — | — |
+
+- With Kati_tryout's gate on these months, K4 would be accepted (96.4%) and K4.2 (77.7%) and K4.3 (57.7%) not; descriptive
+  only, no decision changes (1981–2020 decided: none accepted).
+- The pattern matches Kati_tryout's own 2020–2025 table (K4 99.6%, K4.2 66.9%, K4.3 53.2%, net Sharpe ≈ 0.87, additive DD
+  ≈ −27 to −28 pp): in a period when Market's Sharpe (0.86) far exceeds the total-return baseline's (0.17), anchoring to
+  Market wins on net Sharpe, and the refinements move the book further towards the index (TE 1.7% → 1.1% → 0.4%).
+

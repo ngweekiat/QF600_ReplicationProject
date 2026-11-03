@@ -35,14 +35,21 @@ def active_search(inp: GridInputs, cfg: Config, gamma_te: float, signal_dates: S
                   hp_years: Sequence[int]) -> dict[str, SearchResult]:
     """The coefficient search of active Portfolio-ML at ``gamma_te`` for every signal set, with signals kept for
     ``signal_dates`` (the aim months). ``run_active`` selects from it; trial 6 executes every candidate in it."""
-    pm = cfg.portfolio_ml
-    if not pm.benchmark_relative:
+    if not cfg.portfolio_ml.benchmark_relative:
         raise ValueError("active Portfolio-ML needs portfolio_ml.benchmark_relative: true (configs/experiments/active_pfml.yaml)")
+    return pfml_search(inp, cfg, gamma_te, signal_dates, hp_years)
+
+
+def pfml_search(inp: GridInputs, cfg: Config, gamma: float, signal_dates: Sequence[pd.Timestamp],
+                hp_years: Sequence[int]) -> dict[str, SearchResult]:
+    """The yearly-sums coefficient search of Portfolio-ML (total-return or active, as ``cfg.portfolio_ml`` says) at
+    risk aversion ``gamma``, with signals kept for ``signal_dates``."""
+    pm = cfg.portfolio_ml
     _, tags, _ = signal_set(pm.use_rff, pm.rff_variance_grid)
     results = {}
     for tag, g in zip(tags, pm.rff_variance_grid if pm.use_rff else [None]):
         ym = build_yearly_moments(inp.panel, inp.wealth, inp.cov, inp.rf, inp.pfml_dates, cfg.features.names,
-                                  signal_dates=pd.DatetimeIndex(sorted(signal_dates)), gamma=gamma_te,
+                                  signal_dates=pd.DatetimeIndex(sorted(signal_dates)), gamma=gamma,
                                   mu=cfg.investor.mu, lb=cfg.universe.lookback_months,
                                   iterations=cfg.investor.m_iterations, scale_by_vol=pm.scale_by_vol,
                                   add_constant=pm.add_constant, **_signal_kwargs(cfg, g))

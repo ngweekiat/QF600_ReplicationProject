@@ -10,6 +10,9 @@ selection, judged on 1981–2020 by Kati_tryout's paired block bootstrap of net 
         -> outputs/kati_chain/{books.npz, candidates.csv, chosen_*.csv, k42/, k43/, pretest_*.csv}
     python scripts/18_kati_chain.py report --config configs/experiments/active_pfml.yaml
         acceptance tests, results table and slides -> outputs/kati_chain/{summary.csv, tests.csv, figures/}
+    python scripts/18_kati_chain.py window --config configs/experiments/kati_chain_2020.yaml
+        the same chain and baseline on Kati_tryout's window 2020-01 .. 2025-12 (walk-forward through 2025, each
+        strategy from value weights at 2019-12); descriptive -> outputs/kati_chain_2020/
 """
 
 from __future__ import annotations
@@ -25,16 +28,16 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
-from jkmp.config import load_config  # noqa: E402
+from jkmp.config import PROJECT_ROOT, load_config  # noqa: E402
 from jkmp.covariance import load_covariance  # noqa: E402
 from jkmp.data.prepare import risk_free_monthly  # noqa: E402
 from jkmp.evaluation.bootstrap import p_better_sharpe  # noqa: E402
 from jkmp.evaluation.chain_report import best_stays_best, chain_stats, rank_correlation  # noqa: E402
-from jkmp.portfolio.active import active_search, active_with_choices  # noqa: E402
+from jkmp.portfolio.active import active_search, active_with_choices, pfml_search  # noqa: E402
 from jkmp.portfolio.executed import (active_series, candidate_aims, candidate_table, choose,  # noqa: E402
                                      executed_books, executed_scores, one_se_pick)
 from jkmp.portfolio.grids import grid_inputs  # noqa: E402
-from jkmp.portfolio.portfolio_ml import select_hypers  # noqa: E402
+from jkmp.portfolio.portfolio_ml import run_portfolio_ml, select_hypers  # noqa: E402
 from jkmp.portfolio.recursion import month_inputs  # noqa: E402
 
 MONTH = pd.offsets.MonthEnd(1)
@@ -63,8 +66,10 @@ def _decembers(first_year, last_year):
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("step", choices=["verify", "run", "report"])
-    parser.add_argument("--config", required=True, help="configs/experiments/active_pfml.yaml")
+    parser.add_argument("step", choices=["verify", "run", "report", "window"])
+    parser.add_argument("--config", required=True, help="configs/experiments/active_pfml.yaml (kati_chain_2020.yaml for window)")
+    parser.add_argument("--start", default="2020-01-31", help="window step: first return month")
+    parser.add_argument("--end", default="2025-12-31", help="window step: last return month")
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
     cfg = load_config(args.config)
@@ -107,10 +112,16 @@ def main() -> None:
             raise AssertionError("the K4.2 machinery does not reproduce trial 2a")
         return
 
-    # run: execute every candidate from the first aim month, then select and implement
+    # run / window: execute every candidate from the first aim month, then select and implement
     formation = pd.DatetimeIndex(sorted(inp.cov))
     ret = formation + MONTH
-    full = formation[(ret.year > inp.hp_years[0]) & (ret <= inp.eval_dates[-1] + MONTH)]
+    eval_dates = inp.eval_dates
+    if args.step == "window":
+        out = cfg.paths.outputs / "kati_chain_2020"
+        out.mkdir(parents=True, exist_ok=True)
+        eval_dates = formation[(ret >= pd.Timestamp(args.start)) & (ret <= pd.Timestamp(args.end))]
+        test_years = sorted({(d + MONTH).year for d in eval_dates})
+    full = formation[(ret.year > inp.hp_years[0]) & (ret <= eval_dates[-1] + MONTH)]
     results = active_search(inp, cfg, gamma, full, inp.hp_years)
     table = candidate_table(results, cfg.ridge_grid.values)
     table.to_csv(out / "candidates.csv", index=False)
@@ -119,7 +130,7 @@ def main() -> None:
                            iterations=inv.m_iterations, charge_exit_tc=pf_cfg.charge_exit_tc)
     np.savez_compressed(out / "books.npz", eom_ret=books["eom_ret"].to_numpy(), r=books["r"], tc=books["tc"],
                         turnover=books["turnover"])
-    bench = pd.read_parquet(cfg.paths.outputs / "benchmarks" / "pf_oos.parquet").query("type == 'Market'")
+    bench = _market(cfg, oos=True)
     net, gross = active_series(books, bench)
 
     first_dec, last_dec = books["eom_ret"][0].year, test_years[-1] - 1
@@ -154,19 +165,63 @@ def main() -> None:
     for name, picks in (("k42", picks42), ("k43", picks43)):
         chosen = choose(table, [picks[i] for i in sel], test_dec, [scores[i][picks[i]] for i in sel])
         chosen.to_csv(out / f"chosen_{name}.csv", index=False)
-        res = active_with_choices(results, chosen, inp, cfg, gamma, inp.eval_dates, name)
+        res = active_with_choices(results, chosen, inp, cfg, gamma, eval_dates, name)
         (out / name).mkdir(exist_ok=True)
         for f in ("pf", "weights", "aims"):
             res[f].to_parquet(out / name / f"{f}.parquet", index=False)
-    print(pd.DataFrame(rows).to_string(index=False, float_format=lambda x: f"{x:.4g}"))
+    if args.step == "run":
+        print(pd.DataFrame(rows).to_string(index=False, float_format=lambda x: f"{x:.4g}"))
+        return
+    # window: K4 with the original selection, the total-return baseline, Market; then the same report
+    proxy, _ = _proxy_chosen(results, test_years)
+    k4 = active_with_choices(results, proxy, inp, cfg, gamma, eval_dates, "K4")
+    stored_aims = pd.read_parquet(stored / "aims.parquet")
+    a20 = k4["aims"][k4["aims"]["eom"].isin(stored_aims["eom"])].merge(stored_aims, on=["id", "eom"], suffixes=("", "_test"))
+    gap = float((a20["w_aim"] - a20["w_aim_test"]).abs().max()) if len(a20) else float("nan")
+    logging.info("K4 aims for 2020 vs the stored 1981-2020 run: %d rows, max |diff| %.2e", len(a20), gap)
+    base_cfg = load_config(PROJECT_ROOT / "configs/experiments/holdout.yaml")
+    base_res = pfml_search(inp, base_cfg, base_cfg.investor.gamma, eval_dates, inp.hp_years)
+    base = run_portfolio_ml(base_res, inp.panel, inp.wealth, inp.cov, inp.rf, eval_dates, eval_dates,
+                            gamma=base_cfg.investor.gamma, mu=inv.mu, iterations=inv.m_iterations,
+                            charge_exit_tc=pf_cfg.charge_exit_tc, label="Portfolio-ML")
+    for name, res in (("k4", k4), ("base", base)):
+        (out / name).mkdir(exist_ok=True)
+        res["pf"].to_parquet(out / name / "pf.parquet", index=False)
+        res["weights"].to_parquet(out / name / "weights.parquet", index=False)
+    market = _market(cfg, oos=False)
+    market = market[market["eom_ret"].between(pd.Timestamp(args.start), pd.Timestamp(args.end))]
+    (out / "window.json").write_text(json.dumps({"start": args.start, "end": args.end, "gamma_te": gamma,
+                                                 "k4_aims_2020_vs_test_max_abs_diff": gap}, indent=2))
+    pfs = {k: pd.read_parquet(out / d / "pf.parquet") for k, d in (("Base", "base"), ("K4", "k4"), ("K4.2", "k42"), ("K4.3", "k43"))}
+    summarise(out, pfs, market, cfg.kati_chain, f"{args.start[:4]}–{args.end[:4]}", pretest=False)
+
+
+def _market(cfg, oos: bool) -> pd.DataFrame:
+    """The value-weighted top-80 universe with its own trading cost: 1971–2020 (``oos``) or 1981–2020 from the test
+    run, continued with the holdout run's 2021–2025 when the config is unlocked (value weights restart at 2020-12)."""
+    main = load_config().paths.outputs / "benchmarks"
+    b = pd.read_parquet(main / ("pf_oos.parquet" if oos else "pf_test.parquet")).query("type == 'Market'")
+    if not cfg.dates.holdout_locked:
+        h = load_config(PROJECT_ROOT / "configs/experiments/holdout.yaml").paths.outputs / "benchmarks" / "pf_test.parquet"
+        b = pd.concat([b, pd.read_parquet(h).query("type == 'Market'")], ignore_index=True)
+    if b["eom_ret"].duplicated().any():
+        raise ValueError("overlapping Market rows")
+    return b.sort_values("eom_ret").reset_index(drop=True)
 
 
 def report(cfg, out, gamma, stored) -> None:
-    kc, o = cfg.kati_chain, cfg.paths.outputs
+    o = cfg.paths.outputs
     market = pd.read_parquet(o / "benchmarks" / "pf_test.parquet").query("type == 'Market'")
     pfs = {"Base": pd.read_parquet(o / "portfolio_ml" / "rff" / "pf.parquet"), "K4": pd.read_parquet(stored / "pf.parquet"),
            "K4.2": pd.read_parquet(out / "k42" / "pf.parquet"), "K4.3": pd.read_parquet(out / "k43" / "pf.parquet")}
+    summarise(out, pfs, market, cfg.kati_chain, "1981–2020", pretest=True)
+
+
+def summarise(out, pfs, market, kc, window: str, pretest: bool) -> None:
+    """Kati_tryout's acceptance tests and results table for Base → K4 → K4.2 → K4.3 over one window, and its slides."""
     pfs = {k: v.sort_values("eom_ret").reset_index(drop=True) for k, v in pfs.items()}
+    if any(not v["eom_ret"].equals(market.sort_values("eom_ret")["eom_ret"].reset_index(drop=True)) for v in pfs.values()):
+        raise ValueError("strategies and Market cover different months")
     m = market.sort_values("eom_ret").reset_index(drop=True)
 
     def p_test(a, b):
@@ -191,8 +246,8 @@ def report(cfg, out, gamma, stored) -> None:
     print("\n" + tests.to_string(index=False, float_format=lambda x: f"{x:.4f}"))
     final = accepted[-1] if accepted else "Base"
     print(f"\nAccepted in sequence (gate {kc.accept_threshold:.0%}, no waivers): {accepted or 'none'}; final: {final}")
-    (out / "decision.json").write_text(json.dumps({"accepted": accepted, "final": final, "gamma_te": gamma}, indent=2))
-    figures(out, pfs, m, summary, tests)
+    (out / "decision.json").write_text(json.dumps({"window": window, "accepted": accepted, "final": final}, indent=2))
+    figures(out, pfs, m, summary, tests, window, pretest)
 
 
 def _style(ax):
@@ -202,7 +257,7 @@ def _style(ax):
     ax.set_axisbelow(True)
 
 
-def figures(out, pfs, market, summary, tests) -> None:
+def figures(out, pfs, market, summary, tests, window: str, pretest: bool) -> None:
     fd = out / "figures"
     fd.mkdir(exist_ok=True)
     plt.rcParams.update({"figure.facecolor": SURF, "axes.facecolor": SURF, "savefig.facecolor": SURF, "font.size": 9,
@@ -227,7 +282,7 @@ def figures(out, pfs, market, summary, tests) -> None:
             _style(ax)
         axes[0].legend(frameon=False, fontsize=8)
         s, t = summary.loc[step], tests[tests["step"] == step].iloc[0]
-        fig.suptitle(f"{NAMES[step]} vs the market, 1981–2020 — net return {s['net_return']:.2%}/yr (Market "
+        fig.suptitle(f"{NAMES[step]} vs the market, {window} — net return {s['net_return']:.2%}/yr (Market "
                      f"{summary.loc['Market', 'net_return']:.2%}), net Sharpe {s['net_sharpe']:.3f}, active "
                      f"{s['active_return']:+.2%}/yr, P(better vs {t['reference']}) {t['p_better']:.1%}"
                      f"{' — accepted' if t['accepted'] else ' — not accepted'}", x=0.01, ha="left", fontsize=10.5,
@@ -235,6 +290,8 @@ def figures(out, pfs, market, summary, tests) -> None:
         fig.tight_layout()
         fig.savefig(fd / f"{step.replace('.', '_')}_vs_market.png", dpi=180)
         plt.close(fig)
+    if not pretest:
+        return
     d = pd.read_csv(out / "pretest_diagnostics.csv")
     fig, axes = plt.subplots(1, 3, figsize=(14, 3.9))
     axes[0].bar(d["december"].str[:4], d["rank_corr"], color=COL["step"])
