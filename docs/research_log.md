@@ -4,7 +4,7 @@ Every run of a variant counts as a trial. Each entry is pre-registered (hypothes
 threshold, kill criterion, date) **before** it runs; the result and the decision are appended after.
 Test window: return months 1981-01 .. 2020-12. The holdout 2021-01 .. 2025-12 stays locked until Phase 7.
 
-**Running trial count: 7** (trial 1 baseline; trials 2a–2c active Portfolio-ML at three TE budgets; trial 3 top-250; trial 4 half-life; trial 5 annual risk-budget recalibration, post-holdout)
+**Running trial count: 8** (trial 1 baseline; trials 2a–2c active Portfolio-ML at three TE budgets; trial 3 top-250; trial 4 half-life; trials 6–7 the Kati_tryout selection steps, post-holdout; trial 5 withdrawn, not counted)
 
 ---
 
@@ -237,4 +237,45 @@ numbers can only be descriptive (see *Holdout* below).
 - **Trials.** One evaluated variant (trial 5, count → 7); the deflated Sharpe ratio is recomputed with 7 trials.
 - **Presentation.** In the report this trial replaces trial 3 as "iteration 2". Trial 3 stays recorded, counted and
   reported, as a breadth sensitivity.
+
+**Withdrawn (2026-11-03), not counted.** The 25 grid runs and the December γ_TE schedule were produced; no return,
+tracking error, information ratio or other performance number of the scheduled strategy was computed. Withdrawn on
+the decision to adopt the Kati_tryout iteration chain instead (below). Its code was removed; this entry stays.
+
+---
+
+## Kati_tryout chain on the replication: iterations K4, K4.2, K4.3 (trials 2a, 6, 7), post-holdout
+
+**Pre-registration (2026-11-03, before any run of trials 6–7).** The team's Kati_tryout branch built a three-step
+chain on one benchmark-relative book (its iterations 4 → 4.2 → 4.3). We apply the same three steps to this
+replication's design: 1981–2020 test (480 months), top-80 universe, 18 characteristics, \$10B, the 1971–1980 head start
+as pretest. Kati_tryout's 2020–2025 results are not used as evidence. All three run after the holdout, so their
+2021–2025 numbers can only be descriptive.
+
+- **Acceptance test (all three), Kati_tryout's.** Paired circular block bootstrap of the candidate-minus-reference net
+  Sharpe ratio (paper convention: 12·mean(r − tc) / (√12·sd(r))) over 1981–2020: 10,000 resamples, 6-month blocks,
+  seed 20261102, ties at half weight. **Accept if P(better) ≥ 80%.** No waivers: a step below 80% is recorded as not
+  accepted. Also reported: net IR and active return vs the value-weighted universe (trial 2's benchmark), realised TE,
+  trading cost, utility at γ = 10, worst additive drawdown, and P(better net Sharpe vs Market).
+- **K4 — Market anchor = trial 2a (no new trial).** Benchmark-relative Portfolio-ML on the value-weighted top-80
+  universe, no constant signal, γ_TE calibrated on 1972–1980 to a 1% ex-ante TE (31.19). Reference: the baseline
+  Portfolio-ML (trial 1).
+- **Trial 6 — K4.2, executed validation.** Candidates: the 1,414 (g, p, λ) of K4's search (2 RFF variances × 7 feature
+  counts × 101 ridge penalties). Each candidate is run as a fixed-candidate executed book (β re-estimated each year as
+  usual, the K4 trading speed m and costs, exits charged) from value weights, return months 1972-01 .. 2020-12. Its
+  executed score at December D: 12·[mean(net active return) − (γ_TE/2)·sample variance(gross active return)] over return
+  months 1972-01 .. D, active vs the value-weighted universe net of its own cost. Each December the highest executed
+  score is used for the next return year (ties: the original order). Implemented over 1981–2020 from value weights.
+  Pretest diagnostics (Decembers 1972–1980): Spearman rank correlation of the original and executed scores; the number
+  of December choices that differ; the executed rank of the original winner. Reference: K4. Accept if P ≥ 80%.
+- **Trial 7 — K4.3, simpler selection.** Builds on trial 6, as in Kati_tryout, whatever trial 6's verdict. Each
+  December: the standard error of the best candidate's executed score by a circular block bootstrap of its monthly
+  active returns (2,000 resamples, 6-month blocks, seed 20261103; mean and variance recomputed in each resample);
+  eligible = executed score ≥ best − 1 SE; choose the fewest RFF features p, then the largest λ, then the smaller g.
+  Pretest diagnostics (Decembers 1972–1980): eligible count, share of resamples in which the best stays best, the
+  complexity (p) of the chosen settings. Reference: trial 6. Accept if P ≥ 80%.
+- **Final.** The last step that passes the gate in sequence; steps that fail stay reported.
+- **Holdout.** Descriptive post-hoc 2021–2025 figures only after the 1981–2020 decisions are written here.
+- **Trials.** Trials 6 and 7 (count → 8); the deflated Sharpe ratio is recomputed with 8.
+- **Credit.** The iteration designs are Kati_tryout's (team); this entry adapts them to the replication's sample.
 
