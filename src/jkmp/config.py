@@ -298,6 +298,24 @@ class RegimesConfig:
 
 
 @dataclass(frozen=True)
+class KatiChainConfig:
+    te_target: float          # K4: the TE budget whose pretest-calibrated γ_TE (outputs/active/calibrated.csv) is used
+    accept_threshold: float   # accept a step if P(better net Sharpe) >= this
+    accept_reps: int          # paired circular block bootstrap of the acceptance test
+    accept_block: int
+    accept_seed: int
+    se_reps: int              # K4.3: bootstrap of the best executed score's standard error
+    se_block: int
+    se_seed: int
+    pretest_end: dt.date      # last December of the pretest diagnostics (the last before the test window)
+
+    def __post_init__(self) -> None:
+        _require(0 < self.accept_threshold < 1, "kati_chain.accept_threshold must be in (0, 1)")
+        _require(min(self.accept_reps, self.se_reps) >= 100 and min(self.accept_block, self.se_block) >= 1,
+                 "kati_chain bootstrap needs >= 100 resamples and blocks >= 1")
+
+
+@dataclass(frozen=True)
 class MacroStressConfig:
     target_series: tuple[str, ...]   # FRED target-rate series, oldest first; spliced at each one's first date
     move_threshold: float            # pp: a month is a hike / cut if the month-end target moved by more than this
@@ -399,6 +417,7 @@ class Config:
     reporting: ReportingConfig
     regimes: RegimesConfig
     macro_stress: MacroStressConfig
+    kati_chain: KatiChainConfig
 
     def as_dict(self) -> dict[str, Any]:
         """Plain-Python copy (dicts, lists, str paths) for saving alongside run outputs."""

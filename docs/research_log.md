@@ -279,3 +279,36 @@ as pretest. Kati_tryout's 2020–2025 results are not used as evidence. All thre
 - **Trials.** Trials 6 and 7 (count → 8); the deflated Sharpe ratio is recomputed with 8.
 - **Credit.** The iteration designs are Kati_tryout's (team); this entry adapts them to the replication's sample.
 
+**Verification (2026-11-03).** The executed-book engine and the choice-driven run reproduce stored trial 2a exactly
+(max |Δr| 2.8e-17, |Δtc| 8.7e-19, |Δturnover| 2.8e-17; `outputs/kati_chain/verify.json`).
+
+**Pretest diagnostics (Decembers 1972–1980, `outputs/kati_chain/pretest_diagnostics.csv`).** Rank correlation of the
+original and executed scores 0.98–1.00 from 1973 (0.22 in 1972, with 12 months of history; 0.92 in 1980). The executed
+winner differs from the original winner in all 9 Decembers, and in 1980 the original winner ranks 334th of 1,414 on
+executed score; the executed winners trade less (1980: cost 0.04% vs 0.18% a year). For K4.3, 104–279 candidates lie
+within one SE of the best, the best stays bootstrap-best in only 3–43% of resamples, and the one-SE rule chooses p = 8
+with the largest ridge penalty (e^10, the grid's end) in every December, so it shrinks the active book towards zero.
+
+**Result (1981–2020, 480 months; `outputs/kati_chain/{summary,tests,active_stats}.csv`).**
+
+| | Net return | Net Sharpe | Active net vs VW | Realised TE | Net IR (gross-active SD) | Costs | P(better net Sharpe) vs reference | P vs Market |
+|---|---|---|---|---|---|---|---|---|
+| Base Portfolio-ML (trial 1) | 3.66% | 0.612 | −4.00% | 14.6% | −0.27 | 0.41% | — | — |
+| K4 = trial 2a | 8.90% | 0.609 | +1.24% | 2.47% | 0.50 | 0.14% | **49.4%** vs Base | 99.99% |
+| K4.2 (trial 6) | 8.18% | 0.555 | +0.52% | 1.09% | 0.48 | 0.04% | **0.02%** vs K4 | 100% |
+| K4.3 (trial 7) | 7.76% | 0.520 | +0.10% | 0.28% | 0.37 | 0.03% | **0.03%** vs K4.2 | 98.9% |
+| Market (VW top-80) | 7.66% | 0.513 | 0 | 0 | — | 0.10% | — | — |
+
+- **Decision (pre-registered gate, 80%, no waivers): none accepted.** K4 does not beat the baseline's net Sharpe
+  (49.4%), although it adds +1.24% a year over the index at a net IR of 0.50; K4.2 and K4.3 each lower net Sharpe with
+  P(better) ≈ 0. The chain's last accepted version is the baseline.
+- **What the steps do.** Executed selection picks settings that trade less and take less active risk (TE 2.47% → 1.09%),
+  and the one-SE rule pushes to the most regularised model (TE 0.28%): each step moves the book towards the index, so
+  net Sharpe falls towards Market's 0.51. The same convergence to the index appears in Kati_tryout's 2020–2025 chain.
+- **On the metric.** Net Sharpe is the gate Kati_tryout used; for a benchmark-relative book it rewards market exposure
+  and cannot see the value of an active book. Measured by net IR (trial 2's metric), K4 is a clear improvement on the
+  baseline and K4.2–K4.3 dilute it.
+- **Deflated Sharpe ratio** of the final kept version (trial 3) with the 8 trials' IRs: 0.92 (6 trials: 0.90). The rise
+  is mechanical: the two new IRs (0.48, 0.37) narrow the spread of trial Sharpes that sets the hurdle.
+- **Holdout.** Not run for K4.2–K4.3; nothing was accepted, so no configuration is carried forward.
+

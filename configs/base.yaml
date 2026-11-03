@@ -249,3 +249,13 @@ macro_stress:                  # scripts/16_macro_stress.py: Fed-policy scenario
   interval: 0.90               # coverage of the reported ranges
   cost_multipliers: [1.0, 2.0, 3.0]  # stressed liquidity: Λ × k in the cost to exit (Addendum A2)
   exit_months: [1, 3]          # exit at once, or split evenly over 3 months
+kati_chain:                    # trials 6–7 (scripts/18_kati_chain.py): Kati_tryout iterations 4, 4.2, 4.3 on the replication
+  te_target: 0.01              # K4 = trial 2a: γ_TE calibrated on 1972–1980 to a 1% ex-ante TE
+  accept_threshold: 0.80       # Kati_tryout's gate, without waivers
+  accept_reps: 10000           # paired circular block bootstrap of the net-Sharpe difference
+  accept_block: 6
+  accept_seed: 20261102
+  se_reps: 2000                # K4.3: bootstrap SE of the best executed score
+  se_block: 6
+  se_seed: 20261103
+  pretest_end: 1980-12-31      # pretest diagnostics on the Decembers up to the test window

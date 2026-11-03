@@ -13,19 +13,55 @@ validation return months is interpolated (log TE against log γ_TE) at each budg
 from __future__ import annotations
 
 import logging
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 
 import numpy as np
 import pandas as pd
 
 from jkmp.config import Config
 from jkmp.evaluation.metrics import active_weights, ex_ante_exposures
+from jkmp.portfolio.accounting import portfolio_returns
 from jkmp.portfolio.grids import GridInputs, _signal_kwargs
-from jkmp.portfolio.portfolio_ml import build_yearly_moments, run_portfolio_ml, search_yearly, signal_set
+from jkmp.portfolio.portfolio_ml import (SearchResult, aim_portfolios, build_yearly_moments, pfml_weights,
+                                         run_portfolio_ml, search_yearly, signal_set)
+from jkmp.portfolio.recursion import month_inputs
 
 log = logging.getLogger(__name__)
 
 LABEL = "Portfolio-ML (active)"
+
+
+def active_search(inp: GridInputs, cfg: Config, gamma_te: float, signal_dates: Sequence[pd.Timestamp],
+                  hp_years: Sequence[int]) -> dict[str, SearchResult]:
+    """The coefficient search of active Portfolio-ML at ``gamma_te`` for every signal set, with signals kept for
+    ``signal_dates`` (the aim months). ``run_active`` selects from it; trial 6 executes every candidate in it."""
+    pm = cfg.portfolio_ml
+    if not pm.benchmark_relative:
+        raise ValueError("active Portfolio-ML needs portfolio_ml.benchmark_relative: true (configs/experiments/active_pfml.yaml)")
+    _, tags, _ = signal_set(pm.use_rff, pm.rff_variance_grid)
+    results = {}
+    for tag, g in zip(tags, pm.rff_variance_grid if pm.use_rff else [None]):
+        ym = build_yearly_moments(inp.panel, inp.wealth, inp.cov, inp.rf, inp.pfml_dates, cfg.features.names,
+                                  signal_dates=pd.DatetimeIndex(sorted(signal_dates)), gamma=gamma_te,
+                                  mu=cfg.investor.mu, lb=cfg.universe.lookback_months,
+                                  iterations=cfg.investor.m_iterations, scale_by_vol=pm.scale_by_vol,
+                                  add_constant=pm.add_constant, **_signal_kwargs(cfg, g))
+        results[tag] = search_yearly(ym, tag, pm.p_grid, cfg.ridge_grid.values, hp_years, pm.half_life_years)
+    return results
+
+
+def active_with_choices(results: Mapping[str, SearchResult], chosen: pd.DataFrame, inp: GridInputs, cfg: Config,
+                        gamma_te: float, eval_dates: Sequence[pd.Timestamp], label: str) -> dict[str, pd.DataFrame]:
+    """Active Portfolio-ML over ``eval_dates`` (from value weights) with the yearly (tag, p, λ) of ``chosen`` (columns
+    year, tag, p, l_no, l, h) instead of the original December selection; aims, recursion and accounting unchanged."""
+    eval_dates = pd.DatetimeIndex(sorted(eval_dates))
+    aims, coefs = aim_portfolios(results, chosen, eval_dates)
+    inputs = month_inputs(inp.panel, inp.wealth, inp.cov, eval_dates, mu_col=None)
+    weights = pfml_weights(inputs, aims, inp.panel, inp.wealth, inp.rf, gamma=gamma_te, mu=cfg.investor.mu,
+                           iterations=cfg.investor.m_iterations, charge_exit_tc=cfg.portfolio.charge_exit_tc,
+                           benchmark_relative=True)
+    pf = portfolio_returns(weights, inp.panel, inp.wealth).assign(type=label)
+    return {"aims": aims, "aim_coefs": coefs, "weights": weights.assign(type=label), "pf": pf}
 
 
 def run_active(inp: GridInputs, cfg: Config, gamma_te: float, eval_dates: Sequence[pd.Timestamp],
@@ -33,18 +69,8 @@ def run_active(inp: GridInputs, cfg: Config, gamma_te: float, eval_dates: Sequen
     """Active Portfolio-ML at ``gamma_te``: search (g, p, λ) over ``hp_years``, build aims for ``eval_dates`` and
     run the active recursion over them from VW initial weights (``run_portfolio_ml`` outputs), as scripts/07 runs
     the baseline over the test window."""
-    pm = cfg.portfolio_ml
-    if not pm.benchmark_relative:
-        raise ValueError("run_active needs portfolio_ml.benchmark_relative: true (configs/experiments/active_pfml.yaml)")
     eval_dates = pd.DatetimeIndex(sorted(eval_dates))
-    _, tags, _ = signal_set(pm.use_rff, pm.rff_variance_grid)
-    results = {}
-    for tag, g in zip(tags, pm.rff_variance_grid if pm.use_rff else [None]):
-        ym = build_yearly_moments(inp.panel, inp.wealth, inp.cov, inp.rf, inp.pfml_dates, cfg.features.names,
-                                  signal_dates=eval_dates, gamma=gamma_te, mu=cfg.investor.mu,
-                                  lb=cfg.universe.lookback_months, iterations=cfg.investor.m_iterations,
-                                  scale_by_vol=pm.scale_by_vol, add_constant=pm.add_constant, **_signal_kwargs(cfg, g))
-        results[tag] = search_yearly(ym, tag, pm.p_grid, cfg.ridge_grid.values, hp_years, pm.half_life_years)
+    results = active_search(inp, cfg, gamma_te, eval_dates, hp_years)
     return run_portfolio_ml(results, inp.panel, inp.wealth, inp.cov, inp.rf, eval_dates, eval_dates, gamma=gamma_te,
                             mu=cfg.investor.mu, iterations=cfg.investor.m_iterations,
                             charge_exit_tc=cfg.portfolio.charge_exit_tc, label=LABEL, benchmark_relative=True)
