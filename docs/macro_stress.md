@@ -62,6 +62,39 @@ Only complete windows inside the saved return history are used. Overlapping wind
 - The factor model covers priced factor risk only; stock-specific risk enters as noise.
 - 1982–1987 `DFEDTAR` values are the Fed staff's reconstructed targets.
 
+## Addendum A: rate sensitivity and liquidity stress (pre-registered 2026-11-03, before any number below was computed)
+
+Same status: evaluation of the frozen final version, not a trial. Motivation: markets react to the *surprise* in a
+decision, not the decision. With a December hike priced at 80%, the shock is mostly a no-hike.
+
+**A1. Rate sensitivity.** Data: FRED `DGS2` (2-year Treasury yield, daily) → month-end yield; Δy_m = change on the
+previous month-end, in percentage points. For each factor k of the risk model (6 sectors, 6 themes), OLS of the
+monthly factor return on Δy with an intercept gives β_k (return per 1 pp). The current book's active rate
+sensitivity is s = Σ_k b_k β_k, with b = Xᵀa of the 2025-11 book. Estimation-error variance bᵀCov(β̂)b, with
+Cov(β̂) = residual factor covariance / Σ(Δy − mean Δy)². The paper index's own sensitivity comes from the same
+regression on its monthly excess return. Windows: **1982-10 .. 2025-12** (headline, same span as the policy events)
+and **2000-01 .. 2025-12** (robustness).
+
+**Shocks.** December surprise from the market-implied probability p = 0.8 and a 25 bp move: a hike surprises by
++(1 − p)·25 = **+5 bp**, no hike by −p·25 = **−20 bp** (the probability-weighted surprise is zero by construction).
+Plus a **+100 bp** rate shock. Each shock moves the 2-year yield one-for-one (stated assumption; empirical
+pass-through below one would scale every result down proportionally). For each shock: expected one-month active
+return s × shock, and a 90% range adding the factor residual risk bᵀΣ_res b, the idiosyncratic active variance and
+the estimation-error variance; the index's expected return; total ≈ index + active.
+
+**A2. Liquidity stress: cost to exit.** For the 2025-11 book, at the fund's wealth that month W and the book's own
+Λ_i (= 0.2 / dollar volume, as in every cost in this project):
+- *exit the active book* (trade back to the top-250 VW index): cost / W = ½ W Σ_i k Λ_i a_i²;
+- *liquidate everything to cash*: the same with a_i replaced by the full weight w_i.
+
+Cost multipliers k ∈ {1, 2, 3} (stressed liquidity), executed at once or split evenly over 3 months (quadratic
+cost: 1/3 of the one-shot cost if volume is unchanged). Also at the frontier wealth levels (\$1B–\$250B by end-2020,
+rescaled by the same wealth path). Compared with the final version's annual net active return (1981–2020: 2.02%;
+2021–2025: 0.63%).
+
+**Caveats.** Linear rate betas from monthly data (FOMC and non-FOMC moves mixed); the 2-year yield proxies the
+policy path; dollar volume is from 2025-11 and falls in real liquidity crises (the multipliers stand in for that).
+
 ---
 
 ## Results (run 2026-11-03; `scripts/16_macro_stress.py` → `outputs/macro_stress/`, `outputs/figures/macro_stress.png`)
@@ -123,3 +156,63 @@ the energy & utilities underweight (−0.10); the low-risk tilt in this book is 
 **Limits.** Overlapping windows and few analogues (n = 6 modern S1 turns); descriptive only. The current-book lens
 covers factor P&L, not stock-specific alpha, so it is conservative relative to the historical lens. The book is from
 2025-11. Nothing here fed back into any model choice.
+
+## Results, Addendum A (run 2026-11-03; `rate_betas.csv`, `rate_scenarios.csv`, `exit_cost.csv`)
+
+**A1. Rate sensitivity.** Factor betas on monthly 2-year-yield changes (return per +1 pp):
+
+| Factor | 1982–2025 (n = 519) | 2000–2025 (n = 312) |
+|---|---|---|
+| Low risk theme | **−1.38%** (se 0.28) | **−2.23%** (se 0.51) |
+| Value theme | +0.29% (se 0.16) | +0.40% (se 0.29) |
+| Investment / quality / momentum / short-term reversal | within ±0.13% (not significant) | within ±0.07% (not significant) |
+| Paper index (excess return) | −0.07% (se 0.63; R² 0.00) | **+3.77%** (se 1.00; R² 0.04) |
+
+Only the low-risk theme has a clear, stable rate sensitivity: bond-like, low-volatility stocks fall when yields rise.
+The index's own sensitivity changes sign across windows: since 2000, yields have tended to rise on good growth news
+(positive stock–bond correlation), so all yield moves, not only policy surprises, drive this estimate.
+
+The current book (2025-11) is close to rate-neutral: active sensitivity **−0.02% per +1 pp** (1982–2025; −0.03% on
+2000–2025), with an estimation standard error larger than the estimate. Its low-risk exposure (+0.03) is too small
+to carry the low-risk theme's rate risk.
+
+One-month scenarios, current book (percentage points; 90% range includes residual factor, idiosyncratic and
+estimation risk):
+
+| Scenario (Δ 2-year yield) | Active expected | Active 90% range | Index expected: 1982–2025 / 2000–2025 |
+|---|---|---|---|
+| December hike, as expected (+5 bp) | −0.00 | −0.52 .. +0.52 | −0.00 / +0.19 |
+| December no hike, dovish surprise (−20 bp) | +0.00 | −0.51 .. +0.52 | +0.01 / −0.75 |
+| +100 bp rate shock | −0.02 | −0.54 .. +0.50 | −0.07 / +3.77 |
+
+The December surprise moves the active book by well under 0.1 bp in expectation; its one-month risk (about
+±0.5 pp) comes from everything other than rates. For the total portfolio, the sign of the rate effect depends on the
+stock–bond regime, so no robust direction can be claimed.
+
+**A2. Cost to exit.** The fund held \$18.47B in 2025-11 (\$10B at end-2020 rolled forward with the market). Cost as a
+share of the fund, trading at once (spreading over 3 months divides each figure by 3):
+
+| Position traded | Normal costs (k = 1) | k = 2 | k = 3 |
+|---|---|---|---|
+| Active book → index | **0.36%** (\$66M) | 0.72% (\$133M) | 1.08% (\$199M) |
+| Everything → cash | 1.30% (\$239M) | 2.59% (\$479M) | 3.89% (\$718M) |
+
+Against the strategy's net active return (2.02% a year in 1981–2020, 0.63% in 2021–2025), exiting the active book at
+once costs 0.18 years of test-period active return, or 0.57 years at the holdout rate; under tripled costs, 0.53 and
+1.7 years. Spreading the exit over 3 months brings the normal-cost figure to 0.12% of the fund.
+
+By fund size (end-2020 wealth; same book, active exit at once, normal costs): \$1B 0.04%, \$10B 0.36%, \$50B 1.80%,
+\$100B 3.60%, \$250B 8.99%. Cost per unit of wealth rises linearly with size (quadratic impact), the mechanism behind
+JKMP's Fig. 1B. These larger-size figures hold the \$10B book fixed; the model at a larger size would hold a smaller,
+slower active book (as the capacity analysis of trial 3 does), so they are upper bounds.
+
+**Reading.**
+1. The final version's active book is effectively rate-neutral: neither the December decision nor a +100 bp shock
+   moves its expected active return by more than a few hundredths of a percentage point. What the December decision
+   changes is the *index*, which a benchmark-relative investor holds anyway.
+2. The one rate-sensitive building block is the low-risk theme. A manager who wanted to limit rate risk in the
+   active book would monitor its low-risk exposure, which is small in the current book.
+3. De-risking is affordable at \$10B: exiting the active book at once costs about two months of 1981–2020 active
+   return at normal costs (0.18 years; 0.57 years at the weaker holdout rate). Tripled costs spread over 3 months
+   cost the same 0.36% of the fund. It becomes expensive at large sizes (\$100B+), the same size effect that drives
+   the paper's implementable frontier.

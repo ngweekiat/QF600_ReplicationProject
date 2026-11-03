@@ -1,14 +1,17 @@
 """Macro stress tests (jkmp.evaluation.macro_stress): target splicing, hike / cut / hold months, the S1 / S2 / S3
-classification (including the 2026 path), window sums, the current-book factor P&L and the S3 mixture."""
+classification (including the 2026 path), window sums, the current-book factor P&L, the S3 mixture, and the
+Addendum A rate betas, December surprises and cost to exit."""
 
 import numpy as np
 import pandas as pd
 import pytest
 
 from jkmp.covariance import CovParts
-from jkmp.evaluation.macro_stress import (book_exposure, book_window_returns, classify_events, distribution_stats,
-                                          mixture, monthly_factor_returns, policy_moves, policy_target,
-                                          scenario_starts, simulate, summarise_windows, tc_ratio, window_sums)
+from jkmp.evaluation.macro_stress import (book_exposure, book_window_returns, classify_events, december_surprises,
+                                          distribution_stats, exit_cost, mixture, month_end_changes,
+                                          monthly_factor_returns, policy_moves, policy_target, rate_betas,
+                                          rate_scenario, scenario_starts, simulate, summarise_windows, tc_ratio,
+                                          window_sums)
 
 
 def _daily(points):
@@ -95,3 +98,59 @@ def test_simulation_and_mixture_recover_the_mixed_mean():
     assert st["p05"] <= st["p50"] <= st["p95"] and st["es05"] <= st["p05"]
     with pytest.raises(ValueError):
         simulate(pd.Series(dtype=float), 1e-6, 3, 0.0, 10, rng)
+
+
+def test_month_end_changes():
+    days = pd.bdate_range("2020-01-01", "2020-03-31")
+    level = pd.Series(1.0, index=days)
+    level["2020-02-14":] = 1.25
+    level["2020-03-20":] = 1.0
+    dy = month_end_changes(pd.DataFrame({"date": days, "value": level.to_numpy()}))
+    assert list(dy.index) == [pd.Timestamp("2020-02-29"), pd.Timestamp("2020-03-31")]
+    assert dy.tolist() == pytest.approx([0.25, -0.25])
+
+
+def test_rate_betas_recover_known_slopes_and_standard_errors():
+    rng = np.random.default_rng(3)
+    idx = pd.date_range("2000-01-31", periods=600, freq="ME")
+    dy = pd.Series(rng.normal(0, 0.2, len(idx)), index=idx, name="dy")
+    noise = rng.normal(0, 0.01, (len(idx), 2))
+    ret = pd.DataFrame({"f1": 0.001 - 0.05 * dy + noise[:, 0], "f2": 0.02 * dy + noise[:, 1]}, index=idx)
+    rb = rate_betas(ret, dy, idx[0], idx[-1])
+    assert rb.n == 600 and rb.beta.to_numpy() == pytest.approx([-0.05, 0.02], abs=0.006)
+    sxx = ((dy - dy.mean()) ** 2).sum()
+    assert np.sqrt(rb.cov_beta[0, 0]) == pytest.approx(np.sqrt(rb.resid_cov[0, 0] / sxx))
+    assert np.sqrt(rb.resid_cov[1, 1]) == pytest.approx(0.01, rel=0.1)
+    with pytest.raises(ValueError):
+        rate_betas(ret, dy, idx[0], idx[10])
+
+
+def test_december_surprises_are_zero_in_expectation():
+    s = december_surprises(0.8, 0.25)
+    assert s["hike (as expected)"] == pytest.approx(0.05) and s["no hike (dovish surprise)"] == pytest.approx(-0.20)
+    assert 0.8 * s["hike (as expected)"] + 0.2 * s["no hike (dovish surprise)"] == pytest.approx(0.0)
+
+
+def test_rate_scenario_expectation_and_range():
+    idx = pd.date_range("2000-01-31", periods=120, freq="ME")
+    rng = np.random.default_rng(5)
+    dy = pd.Series(rng.normal(0, 0.2, 120), index=idx, name="dy")
+    ret = pd.DataFrame({"a": -0.04 * dy + rng.normal(0, 0.01, 120), "b": rng.normal(0, 0.01, 120)}, index=idx)
+    rb = rate_betas(ret, dy, idx[0], idx[-1])
+    b = pd.Series({"b": 0.5, "a": 2.0})
+    out = rate_scenario(b, rb, idio_var=1e-5, shock=1.0, interval=0.9)
+    s = 2.0 * rb.beta["a"] + 0.5 * rb.beta["b"]
+    assert out["sensitivity"] == pytest.approx(s) and out["expected"] == pytest.approx(s)
+    assert out["low"] < out["expected"] < out["high"]
+    assert out["expected"] - out["low"] == pytest.approx(out["high"] - out["expected"])
+
+
+def test_exit_cost_quadratic_and_split():
+    pos = pd.Series({1: 0.02, 2: -0.01})
+    lam = pd.Series({1: 2e-10, 2: 4e-10, 3: 1.0})
+    one = exit_cost(pos, lam, wealth=1e10, multiplier=1.0, months=1)
+    assert one == pytest.approx(0.5 * 1e10 * (2e-10 * 0.02**2 + 4e-10 * 0.01**2))
+    assert exit_cost(pos, lam, 1e10, 3.0, 1) == pytest.approx(3 * one)
+    assert exit_cost(pos, lam, 1e10, 1.0, 3) == pytest.approx(one / 3)
+    with pytest.raises(ValueError):
+        exit_cost(pd.Series({9: 0.1}), lam, 1e10, 1.0, 1)

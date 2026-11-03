@@ -143,10 +143,11 @@ def main() -> None:
     run = fh.paths.outputs / "active" / f"gte{g:g}"
     w = pd.read_parquet(run / "weights.parquet")
     last = w["eom"].max()
-    panel = pd.read_parquet(fh.paths.processed / "panel.parquet", columns=["id", "eom", "me"],
+    panel = pd.read_parquet(fh.paths.processed / "panel.parquet", columns=["id", "eom", "me", "lambda"],
                             filters=[("eom", "==", last)])
     parts = load_covariance(fh.paths.processed / "covariance")[last]
-    b, idio = ms.book_exposure(active_weights(w[w["eom"] == last], panel), parts)
+    aw = active_weights(w[w["eom"] == last], panel)
+    b, idio = ms.book_exposure(aw, parts)
     b.rename("exposure").to_frame().assign(eom=last, idio_var_monthly=idio).to_csv(out / "current_book_exposure.csv")
     daily = pd.read_parquet(fh.paths.processed / "covariance" / "factor_returns.parquet")
     fmon = ms.monthly_factor_returns(daily, parts.factors)
@@ -171,6 +172,48 @@ def main() -> None:
     book.to_csv(out / "scenarios_current_book.csv", index=False)
     pd.concat(contrib, axis=1).to_csv(out / "current_book_factor_contributions.csv")
 
+    # Addendum A1: rate sensitivity of the current book and of the paper index; December surprise, +100 bp
+    dy = ms.month_end_changes(load_fred(base.data_sources.fred_csv_url, [m.rate_series], base.paths.raw,
+                                        force=args.force)[m.rate_series])
+    index_ret = final[final["type"] == INDEX].set_index("eom_ret")[["net"]].rename(columns={"net": "index"})
+    shocks = {**ms.december_surprises(m.p_hike, m.hike_size), f"+{m.rate_shock * 100:g} bp shock": m.rate_shock}
+    beta_rows, rate_rows = [], []
+    for win in m.rate_windows:
+        lo, hi = pd.Timestamp(win.start), pd.Timestamp(win.end)
+        rf, ri = ms.rate_betas(fmon[b.index], dy, lo, hi), ms.rate_betas(index_ret, dy, lo, hi)
+        for rb in (rf, ri):
+            beta_rows.append(pd.DataFrame({"window": win.label, "column": rb.beta.index, "beta": rb.beta.to_numpy(),
+                                           "se": np.sqrt(np.diag(rb.cov_beta)), "r2": rb.r2.to_numpy(), "n": rb.n}))
+        for label, shock in shocks.items():
+            act = ms.rate_scenario(b, rf, idio, shock, m.interval)
+            idx_exp = float(ri.beta["index"]) * shock
+            rate_rows.append({"window": win.label, "scenario": label, **act, "index_expected": idx_exp,
+                              "total_expected": idx_exp + act["expected"]})
+    rate_tab = pd.DataFrame(rate_rows)
+    pd.concat(beta_rows, ignore_index=True).to_csv(out / "rate_betas.csv", index=False)
+    rate_tab.to_csv(out / "rate_scenarios.csv", index=False)
+
+    # Addendum A2: cost to exit the active book (to the index) or everything (to cash), stressed liquidity
+    wealth_now = float(pd.read_parquet(fh.paths.processed / "wealth.parquet").set_index("eom").loc[last, "wealth"])
+    lam = panel.set_index("id")["lambda"]
+    fin = final[final["type"] == FINAL]
+    split = fin["eom_ret"] <= pd.Timestamp(base.dates.test_end)
+    annual = {"test": fin.loc[split, "net"].mean() * 12, "holdout": fin.loc[~split, "net"].mean() * 12}
+    exit_rows = []
+    for level in base.investor.wealth_grid:
+        wl = wealth_now * level / base.investor.wealth   # same wealth path, rescaled to this end-2020 size
+        for pos_name, pos in (("active book -> index", aw.set_index("id")["a"]),
+                              ("everything -> cash", aw.set_index("id")["w"])):
+            for k in m.cost_multipliers:
+                for months in m.exit_months:
+                    c = ms.exit_cost(pos, lam, wl, k, months)
+                    exit_rows.append({"wealth_2020": level, "wealth_now": wl, "position": pos_name,
+                                      "multiplier": k, "months": months, "cost_fraction": c, "cost_usd": c * wl,
+                                      "years_of_active_test": c / annual["test"],
+                                      "years_of_active_holdout": c / annual["holdout"]})
+    exit_tab = pd.DataFrame(exit_rows)
+    exit_tab.to_csv(out / "exit_cost.csv", index=False)
+
     figures = base.paths.outputs / "figures"
     figures.mkdir(parents=True, exist_ok=True)
     _plot(summary, s3, s3_stats, m.p_hike, h3, figures)
@@ -188,6 +231,11 @@ def main() -> None:
     print(f"monthly idiosyncratic active vol {np.sqrt(idio):.4%}")
     print("\nCurrent-book lens, net active return (decimal):")
     print(book.to_string(index=False, float_format="{:+.4f}".format))
+    print("\nRate scenarios, one month (decimal; shock in pp of the 2-year yield):")
+    print(rate_tab.to_string(index=False, float_format="{:+.5f}".format))
+    print(f"\nCost to exit at the fund's wealth ({wealth_now / 1e9:.2f}B in {last.date()}), base size only:")
+    print(exit_tab[exit_tab["wealth_2020"] == base.investor.wealth].to_string(index=False, float_format="{:.5g}".format))
+    print(f"annual net active: test {annual['test']:.4%}, holdout {annual['holdout']:.4%}")
 
 
 if __name__ == "__main__":

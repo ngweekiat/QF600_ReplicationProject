@@ -10,14 +10,19 @@ with ``DFEDTARU``): a month is a hike / cut / hold by the change in its month-en
 Two lenses. Historical: sums of saved monthly returns over each analogue window (return months).
 Current book: the last book's factor exposures b = Xᵀa applied to the risk model's monthly factor returns in
 each analogue window, plus idiosyncratic noise; S3 mixes the two outcome sets with the market-implied P(hike).
+
+Addendum A: rate sensitivity (factor betas on monthly 2-year-yield changes, applied to the December surprise
+and a +100 bp shock) and liquidity stress (cost to exit the active book, or everything, at stressed costs).
 """
 
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
+from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
+from scipy.stats import norm
 
 from jkmp.covariance import CovParts
 from jkmp.evaluation.metrics import ex_ante_exposures
@@ -163,6 +168,70 @@ def mixture(draws_a: np.ndarray, draws_b: np.ndarray, p: float, rng: np.random.G
     if len(draws_a) != len(draws_b):
         raise ValueError("mixture components need the same number of draws")
     return np.where(rng.random(len(draws_a)) < p, draws_a, draws_b)
+
+
+def month_end_changes(daily: pd.DataFrame) -> pd.Series:
+    """Month-end level of a daily ``date, value`` series and its change on the previous month-end (index:
+    month-end; the first month, with no previous month-end, is dropped)."""
+    s = daily.set_index("date")["value"].sort_index()
+    m = s.groupby(s.index.to_period("M")).last()
+    m.index = m.index.to_timestamp(how="end").normalize()
+    return m.diff().iloc[1:].rename("dy")
+
+
+@dataclass(frozen=True)
+class RateBetas:
+    """OLS of each return column on Δy with an intercept, over one window."""
+    beta: pd.Series        # return per 1 pp of Δy, per column
+    cov_beta: np.ndarray   # joint covariance of the slope estimates (residual cov / Σ(Δy − mean)²)
+    resid_cov: np.ndarray  # residual covariance of the columns (monthly)
+    r2: pd.Series
+    n: int
+
+
+def rate_betas(returns: pd.DataFrame, dy: pd.Series, start: pd.Timestamp, end: pd.Timestamp) -> RateBetas:
+    """Rate betas of ``returns`` (columns; index: month-end) on ``dy`` over return months start .. end."""
+    d = returns.join(dy, how="inner").loc[start:end].dropna()
+    if len(d) < 24:
+        raise ValueError(f"only {len(d)} overlapping months for the rate betas")
+    y, x = d[returns.columns].to_numpy(), d[dy.name].to_numpy()
+    X = np.column_stack([np.ones(len(x)), x])
+    coef, *_ = np.linalg.lstsq(X, y, rcond=None)
+    resid = y - X @ coef
+    resid_cov = resid.T @ resid / (len(d) - 2)
+    sxx = float(((x - x.mean()) ** 2).sum())
+    r2 = 1 - (resid ** 2).sum(axis=0) / ((y - y.mean(axis=0)) ** 2).sum(axis=0)
+    cols = list(returns.columns)
+    return RateBetas(pd.Series(coef[1], index=cols), resid_cov / sxx, resid_cov, pd.Series(r2, index=cols), len(d))
+
+
+def december_surprises(p_hike: float, hike_size: float) -> dict[str, float]:
+    """Policy surprise of each outcome when a ``hike_size`` move is priced with probability ``p_hike`` (pp):
+    a hike surprises by its unpriced part, no hike by minus the priced part; their expectation is zero."""
+    return {"hike (as expected)": (1.0 - p_hike) * hike_size, "no hike (dovish surprise)": -p_hike * hike_size}
+
+
+def rate_scenario(b: pd.Series, rb: RateBetas, idio_var: float, shock: float, interval: float) -> dict[str, float]:
+    """One-month active return of a book with factor exposures ``b`` under a Δy = ``shock`` (pp): expected
+    s·shock with s = bᵀβ, and a central ``interval`` range adding residual factor risk, idiosyncratic risk and
+    the estimation error of s."""
+    bv = b[rb.beta.index].to_numpy()
+    s = float(bv @ rb.beta.to_numpy())
+    est_var = float(bv @ rb.cov_beta @ bv) * shock**2
+    var = float(bv @ rb.resid_cov @ bv) + idio_var + est_var
+    z = norm.ppf(0.5 + interval / 2)
+    mean = s * shock
+    return {"shock": shock, "sensitivity": s, "expected": mean, "se_estimate": np.sqrt(est_var),
+            "low": mean - z * np.sqrt(var), "high": mean + z * np.sqrt(var)}
+
+
+def exit_cost(position: pd.Series, lam: pd.Series, wealth: float, multiplier: float, months: int) -> float:
+    """Cost of trading ``position`` (weights) to zero, as a fraction of wealth: (W/2)·Σ kΛ_i x_i², split evenly
+    over ``months`` (quadratic impact with unchanged volume: 1/months of the one-shot cost)."""
+    lam = lam.reindex(position.index)
+    if lam.isna().any():
+        raise ValueError("positions without a trading-cost coefficient")
+    return float(0.5 * wealth * multiplier * (lam * position**2).sum() / months)
 
 
 def distribution_stats(x: np.ndarray) -> dict[str, float]:

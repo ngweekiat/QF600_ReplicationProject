@@ -308,9 +308,21 @@ class MacroStressConfig:
     p_hike: float                    # market-implied probability of the next hike (an input, not a forecast)
     n_draws: int                     # current-book simulation draws
     methods: tuple[str, ...]         # baseline methods in the historical lens
+    rate_series: str                 # FRED yield series for the rate sensitivity (Addendum A1)
+    rate_windows: tuple[EpisodeConfig, ...]  # estimation windows of the rate betas (first = headline)
+    hike_size: float                 # pp: size of the priced policy move behind the December surprise
+    rate_shock: float                # pp: an outright rate shock
+    interval: float                  # coverage of the reported scenario ranges
+    cost_multipliers: tuple[float, ...]  # Λ multipliers in the cost-to-exit stress (Addendum A2)
+    exit_months: tuple[int, ...]     # execution horizons: the trade split evenly over this many months
 
     def __post_init__(self) -> None:
         _require(len(self.target_series) >= 1, "macro_stress.target_series needs at least one series")
+        _require(len(self.rate_windows) >= 1, "macro_stress.rate_windows needs at least one window")
+        _require(self.hike_size > 0, "macro_stress.hike_size must be > 0")
+        _require(0.0 < self.interval < 1.0, "macro_stress.interval must be in (0, 1)")
+        _require(min(self.cost_multipliers) > 0 and min(self.exit_months) >= 1,
+                 "macro_stress cost multipliers must be > 0 and exit months >= 1")
         _require(self.move_threshold >= 0, "macro_stress.move_threshold must be >= 0")
         _require(len(self.horizons) >= 1 and min(self.horizons) >= 1, "macro_stress.horizons must be >= 1")
         _require(min(self.s3_outcome_months, self.s3_offset_months, self.s3_horizon) >= 1,

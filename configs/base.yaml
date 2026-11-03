@@ -240,3 +240,12 @@ macro_stress:                  # scripts/16_macro_stress.py: Fed-policy scenario
   p_hike: 0.8                  # CME FedWatch, 2026-10-29: ~80% probability of a December 2026 hike
   n_draws: 10000               # current-book simulation draws (seed: top-level seed)
   methods: [Market, Portfolio-ML, Static-ML*, Markowitz-ML, Factor-ML]
+  rate_series: DGS2            # 2-year Treasury yield (daily): rate sensitivity, docs/macro_stress.md Addendum A1
+  rate_windows:                # rate-beta estimation windows (return months); the first is the headline
+    - {label: 1982–2025, start: 1982-10-31, end: 2025-12-31}
+    - {label: 2000–2025, start: 2000-01-31, end: 2025-12-31}
+  hike_size: 0.25              # pp: December surprise = +(1 - p_hike) * 0.25 if hike, -p_hike * 0.25 if not
+  rate_shock: 1.00             # pp: outright +100 bp shock
+  interval: 0.90               # coverage of the reported ranges
+  cost_multipliers: [1.0, 2.0, 3.0]  # stressed liquidity: Λ × k in the cost to exit (Addendum A2)
+  exit_months: [1, 3]          # exit at once, or split evenly over 3 months
