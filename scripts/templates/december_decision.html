@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>December Fed Decision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500&display=swap" rel="stylesheet">
+<style>
+/* Layout: a one-page risk tool. Context strip, then the two inputs, then outcome cards, then the two
+   response charts, then what drives the active response. Summary before detail. */
+:root {
+  --bg: #f6f6f9;
+  --surface: #ffffff;
+  --ink: #17161d;
+  --muted: #5c5a66;
+  --line: #e2e1ea;
+  --accent: #6250d6;
+  --accent-soft: rgba(98, 80, 214, 0.16);
+  --index: #7f7e79;
+  --index-soft: rgba(127, 126, 121, 0.16);
+  --pos: #2a78d6;
+  --neg: #d0582c;
+  --font-body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "IBM Plex Serif", Georgia, serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121117; --surface: #1c1b22; --ink: #ecebf2; --muted: #a8a6b3; --line: #2f2e38;
+    --accent: #9085e9; --accent-soft: rgba(144, 133, 233, 0.22); --index: #a6a5a0; --index-soft: rgba(166, 165, 160, 0.2);
+    --pos: #5b9bea; --neg: #e47a52; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121117; --surface: #1c1b22; --ink: #ecebf2; --muted: #a8a6b3; --line: #2f2e38;
+  --accent: #9085e9; --accent-soft: rgba(144, 133, 233, 0.22); --index: #a6a5a0; --index-soft: rgba(166, 165, 160, 0.2);
+  --pos: #5b9bea; --neg: #e47a52; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.5;
+  font-variant-numeric: tabular-nums; }
+main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 40px; display: grid; gap: 18px; }
+h1 { font-family: var(--font-display); font-weight: 500; font-size: 30px; line-height: 1.15; margin: 0; text-wrap: balance; }
+h2 { font-size: 15px; font-weight: 600; margin: 0; }
+p { margin: 0; }
+.lede { color: var(--muted); max-width: 68ch; }
+.strip { display: flex; flex-wrap: wrap; gap: 8px; }
+.fact { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: 13px; }
+.fact b { font-weight: 600; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 10px;
+  align-content: start; }
+.controls { display: grid; grid-template-columns: 1fr 1fr auto; gap: 22px; align-items: end; }
+.control { display: grid; gap: 6px; }
+.control label { font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; gap: 12px; }
+.control output { color: var(--ink); font-weight: 600; font-size: 15px; }
+input[type="range"] { width: 100%; accent-color: var(--accent); height: 22px; }
+input[type="range"]:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg button { font: inherit; font-size: 13px; padding: 7px 12px; background: var(--surface); color: var(--muted); border: 0;
+  cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.outcomes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.outcome { border-top: 4px solid var(--line); }
+.outcome.hike { border-top-color: var(--neg); }
+.outcome.hold { border-top-color: var(--pos); }
+.outcome.mix { border-top-color: var(--accent); }
+.outcome .head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.pill { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); }
+.big { font-size: 26px; font-weight: 600; line-height: 1.1; }
+.sub { font-size: 13px; color: var(--muted); }
+dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin: 0; font-size: 14px; }
+dt { color: var(--muted); }
+dd { margin: 0; text-align: right; font-weight: 500; }
+.charts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.chart { position: relative; }
+.chart svg { width: 100%; height: auto; display: block; }
+.chart svg text { fill: var(--muted); font-size: 11px; font-family: var(--font-body); }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+  padding: 6px 9px; font-size: 12px; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12); white-space: nowrap; display: none; }
+.lower { display: grid; grid-template-columns: 1.1fr 1fr; gap: 12px; }
+.bars { display: grid; gap: 5px; }
+.bar-row { display: grid; grid-template-columns: 150px 1fr 70px; gap: 10px; align-items: center; font-size: 13px; }
+.bar-track { position: relative; height: 12px; }
+.bar-track::before { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--line); }
+.bar { position: absolute; top: 0; height: 12px; border-radius: 3px; }
+.bar-val { text-align: right; }
+.notes { font-size: 13px; color: var(--muted); display: grid; gap: 6px; padding-left: 18px; margin: 0; }
+.legend { display: flex; gap: 14px; font-size: 12px; color: var(--muted); flex-wrap: wrap; }
+.sw { display: inline-block; width: 18px; height: 10px; border-radius: 2px; vertical-align: middle; margin-right: 5px; }
+@media (max-width: 760px) {
+  .controls, .outcomes, .charts, .lower { grid-template-columns: 1fr; }
+  .bar-row { grid-template-columns: 110px 1fr 60px; }
+  h1 { font-size: 25px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<main>
+  <header style="display:grid;gap:8px">
+    <h1>December 2026 Fed decision: what it means for the strategy</h1>
+    <p class="lede">Markets move on the surprise in a decision, not the decision itself. If a hike of size h is priced with
+      probability p, a hike surprises by +(1&nbsp;−&nbsp;p)·h and a hold by −p·h. This page maps each surprise through the
+      2-year Treasury yield into the final strategy's one-month active return and its benchmark's return.</p>
+  </header>
+
+  <div class="strip" id="facts"></div>
+
+  <section class="card controls" aria-label="Scenario inputs">
+    <div class="control">
+      <label for="p">Market-implied probability of a December hike <output id="p-out" for="p"></output></label>
+      <input type="range" id="p" min="0" max="100" step="1">
+    </div>
+    <div class="control">
+      <label for="h">Size of the priced move <output id="h-out" for="h"></output></label>
+      <input type="range" id="h" min="0" max="100" step="5">
+    </div>
+    <div class="control">
+      <span class="sub" id="win-label">Rate betas estimated on</span>
+      <div class="seg" role="group" aria-labelledby="win-label" id="win"></div>
+    </div>
+  </section>
+
+  <section class="outcomes" aria-label="Outcomes">
+    <article class="card outcome hike" id="o-hike"></article>
+    <article class="card outcome hold" id="o-hold"></article>
+    <article class="card outcome mix" id="o-mix"></article>
+  </section>
+
+  <section class="charts">
+    <div class="card chart"><h2>Active book: one-month return vs the index</h2>
+      <div class="legend"><span><span class="sw" style="background:var(--accent)"></span>expected</span>
+        <span><span class="sw" style="background:var(--accent-soft)"></span>90% range</span></div>
+      <svg id="c-active" viewBox="0 0 520 260" role="img" aria-label="Active return by policy surprise"></svg>
+      <div class="tip" id="t-active"></div></div>
+    <div class="card chart"><h2>Benchmark index: one-month excess return</h2>
+      <div class="legend"><span><span class="sw" style="background:var(--index)"></span>expected</span>
+        <span><span class="sw" style="background:var(--index-soft)"></span>90% range</span></div>
+      <svg id="c-index" viewBox="0 0 520 260" role="img" aria-label="Index return by policy surprise"></svg>
+      <div class="tip" id="t-index"></div></div>
+  </section>
+
+  <section class="lower">
+    <div class="card"><h2>What drives the active book's rate response</h2>
+      <p class="sub">Contribution of each factor exposure to the active return for a +100 bp move in the 2-year yield
+        (exposure × rate beta). The sum is the book's sensitivity.</p>
+      <div class="bars" id="bars"></div></div>
+    <div class="card"><h2>How to read this</h2>
+      <ul class="notes">
+        <li>Expected values are linear in the surprise, so the probability-weighted expected effect is zero by construction.
+          The decision changes the spread of outcomes, not their average.</li>
+        <li>The 90% range adds everything other than rates: residual factor risk, stock-specific risk and the
+          estimation error of the rate betas.</li>
+        <li>Rate betas come from monthly changes in the 2-year yield, which mix policy news and growth news. The index's
+          sensitivity changes sign between the two windows for that reason.</li>
+        <li>Each surprise is assumed to move the 2-year yield one-for-one; a smaller pass-through scales every expected
+          value down in proportion.</li>
+        <li>Holdings are the strategy's last book in the data. This is a scenario range for a frozen strategy, not a
+          forecast of returns or of the Fed.</li>
+      </ul></div>
+  </section>
+  <p class="sub" id="source"></p>
+</main>
+<script>
+const D = __DASHBOARD_DATA__;
+const NAMES = {theme_low_risk: "Low risk", theme_value: "Value", theme_investment: "Investment", theme_quality: "Quality",
+  theme_momentum: "Momentum", theme_short_term_reversal: "Short-term reversal", sec_consumer: "Consumer",
+  sec_industrials: "Industrials", sec_tech_telecom: "Tech & telecom", sec_energy_utilities: "Energy & utilities",
+  sec_health: "Health", sec_finance: "Finance"};
+const state = {p: Math.round(D.p_hike * 100), h: Math.round(D.hike_size * 100), w: 0};
+const $ = id => document.getElementById(id);
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+const bp = x => { const v = x * 1e4; return (v > 0.0049 ? "+" : v < -0.0049 ? "−" : "") + Math.abs(v).toFixed(Math.abs(v) < 10 ? 1 : 0) + " bp"; };
+const usd = x => { const v = x * D.wealth_now, a = Math.abs(v), s = v > 0 ? "+" : v < 0 ? "−" : "";
+  return a >= 1e9 ? `${s}$${(a / 1e9).toFixed(2)}B` : a >= 1e6 ? `${s}$${(a / 1e6).toFixed(1)}M` : `${s}$${(a / 1e3).toFixed(0)}k`; };
+const sgnBp = v => (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(v === 0 || Number.isInteger(v) ? 0 : 1) + " bp";
+
+function scen(c, shockPp) {
+  const exp = c.sensitivity * shockPp;
+  const half = D.z * Math.sqrt(c.resid_var + (c.se_per_pp * shockPp) ** 2);
+  return {exp, lo: exp - half, hi: exp + half};
+}
+
+function facts() {
+  const lower = (D.target_upper - 0.25).toFixed(2), upper = D.target_upper.toFixed(2);
+  const items = [[`Fed target range`, `${lower}–${upper}%`, `since ${D.target_date}`],
+    [`2-year Treasury yield`, `${D.yield_2y.toFixed(2)}%`, D.yield_date],
+    [`Priced December hike`, `~${Math.round(D.p_hike * 100)}%`, "CME FedWatch, 2026-10-29"],
+    [`Strategy book`, `$${(D.wealth_now / 1e9).toFixed(1)}B`, `holdings of ${D.book_eom}`]];
+  $("facts").innerHTML = items.map(([k, v, s]) => `<span class="fact">${k}: <b>${v}</b> <span class="sub">(${s})</span></span>`).join("");
+}
+
+function cards() {
+  const W = D.windows[state.w], p = state.p / 100, hpp = state.h / 100;
+  const sh = (1 - p) * hpp, sn = -p * hpp;
+  const card = (title, prob, shock, extra) => {
+    const a = scen(W.active, shock), i = scen(W.index, shock);
+    return `<div class="head"><h2>${title}</h2><span class="pill">${prob}</span></div>
+      <div><div class="big">${bp(a.exp)}</div><div class="sub">expected active return, ${usd(a.exp)} on the fund</div></div>
+      <dl><dt>Policy surprise</dt><dd>${sgnBp(Math.round(shock * 1000) / 10)}</dd>
+        <dt>Active, 90% range</dt><dd>${bp(a.lo)} to ${bp(a.hi)}</dd>
+        <dt>Index, expected</dt><dd>${bp(i.exp)}</dd>
+        <dt>Total portfolio, expected</dt><dd>${bp(i.exp + a.exp)}</dd></dl>${extra || ""}`;
+  };
+  $("o-hike").innerHTML = card("If the Fed hikes", `${state.p}%`, sh);
+  $("o-hold").innerHTML = card("If the Fed holds", `${100 - state.p}%`, sn);
+  const spread = Math.abs(W.active.sensitivity) * hpp * Math.sqrt(p * (1 - p));
+  const ispread = Math.abs(W.index.sensitivity) * hpp * Math.sqrt(p * (1 - p));
+  $("o-mix").innerHTML = `<div class="head"><h2>Probability-weighted</h2><span class="pill">both outcomes</span></div>
+    <div><div class="big">0.0 bp</div><div class="sub">expected surprise and expected active effect: p·(1−p)·h − (1−p)·p·h = 0</div></div>
+    <dl><dt>Spread of expected active effect</dt><dd>±${(spread * 1e4).toFixed(2)} bp</dd>
+      <dt>Spread of expected index effect</dt><dd>±${(ispread * 1e4).toFixed(1)} bp</dd>
+      <dt>Active one-month risk (90%)</dt><dd>±${(D.z * Math.sqrt(W.active.resid_var) * 1e4).toFixed(0)} bp</dd>
+      <dt>Active rate sensitivity</dt><dd>${bp(W.active.sensitivity)} / pp</dd></dl>`;
+}
+
+function chart(svgId, tipId, c, color, soft) {
+  const svg = $(svgId), W = 520, H = 260, m = {l: 52, r: 14, t: 14, b: 34};
+  const xs = Array.from({length: 81}, (_, k) => -100 + k * 2.5);          // surprise, bp
+  const pts = xs.map(x => ({x, ...scen(c, x / 100)}));
+  let ymax = Math.max(...pts.map(q => Math.max(Math.abs(q.lo), Math.abs(q.hi)))) * 1e4;
+  const step = [1, 2, 5, 10, 20, 25, 50, 100, 200, 250, 500, 1000].find(s => ymax / s <= 4) || 2000;
+  ymax = Math.ceil(ymax / step) * step;
+  const X = x => m.l + (x + 100) / 200 * (W - m.l - m.r), Y = y => m.t + (ymax - y * 1e4) / (2 * ymax) * (H - m.t - m.b);
+  const p = state.p / 100, hpp = state.h / 100;
+  const marks = [{x: (1 - p) * hpp * 100, prob: p, lab: "hike"}, {x: -p * hpp * 100, prob: 1 - p, lab: "hold"}];
+  let g = "";
+  for (let v = -ymax; v <= ymax + 1e-9; v += step) {
+    g += `<line x1="${m.l}" x2="${W - m.r}" y1="${Y(v / 1e4)}" y2="${Y(v / 1e4)}" stroke="${css("--line")}" stroke-width="${v === 0 ? 1.2 : 0.8}"/>`;
+    g += `<text x="${m.l - 6}" y="${Y(v / 1e4) + 4}" text-anchor="end">${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v)}</text>`;
+  }
+  for (const v of [-100, -50, 0, 50, 100])
+    g += `<text x="${X(v)}" y="${H - m.b + 16}" text-anchor="middle">${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v)}</text>`;
+  g += `<text x="${(m.l + W - m.r) / 2}" y="${H - 4}" text-anchor="middle">Policy surprise in the 2-year yield (bp)</text>`;
+  g += `<text x="12" y="${(m.t + H - m.b) / 2}" text-anchor="middle" transform="rotate(-90 12 ${(m.t + H - m.b) / 2})">bp of fund</text>`;
+  const band = pts.map(q => `${X(q.x)},${Y(q.hi)}`).join(" ") + " " + pts.slice().reverse().map(q => `${X(q.x)},${Y(q.lo)}`).join(" ");
+  g += `<polygon points="${band}" fill="${soft}"/>`;
+  g += `<polyline points="${pts.map(q => `${X(q.x)},${Y(q.exp)}`).join(" ")}" fill="none" stroke="${color}" stroke-width="2"/>`;
+  for (const mk of marks) {
+    const s = scen(c, mk.x / 100), r = 4 + 6 * mk.prob;
+    g += `<circle cx="${X(mk.x)}" cy="${Y(s.exp)}" r="${r}" fill="${color}" stroke="${css("--surface")}" stroke-width="2"/>`;
+    g += `<text x="${X(mk.x)}" y="${Y(s.exp) - r - 6}" text-anchor="middle" style="fill:${css("--ink")};font-weight:600">${mk.lab} ${Math.round(mk.prob * 100)}%</text>`;
+  }
+  g += `<line id="${svgId}-x" y1="${m.t}" y2="${H - m.b}" stroke="${css("--muted")}" stroke-dasharray="3 3" visibility="hidden"/>`;
+  g += `<rect x="${m.l}" y="${m.t}" width="${W - m.l - m.r}" height="${H - m.t - m.b}" fill="transparent" id="${svgId}-hit"/>`;
+  svg.innerHTML = g;
+  const hit = $(`${svgId}-hit`), cross = $(`${svgId}-x`), tip = $(tipId);
+  hit.onpointermove = e => {
+    const box = svg.getBoundingClientRect(), vx = (e.clientX - box.left) * W / box.width;
+    const x = Math.max(-100, Math.min(100, (vx - m.l) / (W - m.l - m.r) * 200 - 100)), s = scen(c, x / 100);
+    cross.setAttribute("x1", X(x)); cross.setAttribute("x2", X(x)); cross.setAttribute("visibility", "visible");
+    tip.style.display = "block";
+    tip.innerHTML = `Surprise ${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(0)} bp<br>Expected <b>${bp(s.exp)}</b><br>90%: ${bp(s.lo)} to ${bp(s.hi)}`;
+    const left = (X(x) / W) * box.width + (box.left - svg.parentElement.getBoundingClientRect().left);
+    tip.style.left = Math.min(left + 12, svg.parentElement.clientWidth - tip.offsetWidth - 8) + "px";
+    tip.style.top = ((svg.offsetTop) + 20) + "px";
+  };
+  hit.onpointerleave = () => { cross.setAttribute("visibility", "hidden"); tip.style.display = "none"; };
+}
+
+function bars() {
+  const W = D.windows[state.w], rows = Object.entries(W.active.contributions).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
+  const mx = Math.max(...rows.map(r => Math.abs(r[1]))) || 1;
+  $("bars").innerHTML = rows.map(([k, v]) => {
+    const w = Math.abs(v) / mx * 50, left = v >= 0 ? 50 : 50 - w;
+    return `<div class="bar-row"><span>${NAMES[k] || k}</span><div class="bar-track"><div class="bar" style="left:${left}%;width:${w}%;background:${v >= 0 ? "var(--pos)" : "var(--neg)"}"></div></div><span class="bar-val">${bp(v)}</span></div>`;
+  }).join("") + `<div class="bar-row" style="font-weight:600;border-top:1px solid var(--line);padding-top:6px"><span>Book sensitivity</span><span></span><span class="bar-val">${bp(W.active.sensitivity)}</span></div>`;
+}
+
+function render() {
+  $("p").value = state.p; $("h").value = state.h;
+  $("p-out").textContent = `${state.p}%`; $("h-out").textContent = `${state.h} bp`;
+  $("win").innerHTML = D.windows.map((w, k) => `<button type="button" aria-pressed="${k === state.w}" data-k="${k}">${w.label}</button>`).join("");
+  $("win").querySelectorAll("button").forEach(b => b.onclick = () => { state.w = +b.dataset.k; render(); });
+  cards(); bars();
+  const W = D.windows[state.w];
+  chart("c-active", "t-active", W.active, css("--accent"), css("--accent-soft"));
+  chart("c-index", "t-index", W.index, css("--index"), css("--index-soft"));
+  $("source").textContent = `Rate betas: OLS of monthly factor and index returns on 2-year yield changes, ${W.label} (n = ${W.n} months). ` +
+    `Final strategy: benchmark-relative Portfolio-ML, top-250 US stocks, 2% tracking-error budget; index = value-weighted top-250. ` +
+    `Generated by scripts/16_macro_stress.py; see docs/macro_stress.md, Addendum A.`;
+}
+$("p").oninput = e => { state.p = +e.target.value; render(); };
+$("h").oninput = e => { state.h = +e.target.value; render(); };
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
+new MutationObserver(render).observe(document.documentElement, {attributes: true, attributeFilter: ["data-theme"]});
+facts(); render();
+</script>
+</body>
+</html>

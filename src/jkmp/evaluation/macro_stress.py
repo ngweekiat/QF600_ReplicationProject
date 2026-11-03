@@ -225,6 +225,15 @@ def rate_scenario(b: pd.Series, rb: RateBetas, idio_var: float, shock: float, in
             "low": mean - z * np.sqrt(var), "high": mean + z * np.sqrt(var)}
 
 
+def rate_components(b: pd.Series, rb: RateBetas, idio_var: float) -> dict[str, float]:
+    """The pieces ``rate_scenario`` combines, so a scenario can be recomputed for any shock Δ:
+    expected = sensitivity·Δ, variance = resid_var + (se_per_pp·Δ)². Also each column's contribution b_k·β_k."""
+    bv = b[rb.beta.index].to_numpy()
+    return {"sensitivity": float(bv @ rb.beta.to_numpy()), "se_per_pp": float(np.sqrt(bv @ rb.cov_beta @ bv)),
+            "resid_var": float(bv @ rb.resid_cov @ bv) + idio_var,
+            "contributions": dict(zip(rb.beta.index, (bv * rb.beta.to_numpy()).tolist()))}
+
+
 def exit_cost(position: pd.Series, lam: pd.Series, wealth: float, multiplier: float, months: int) -> float:
     """Cost of trading ``position`` (weights) to zero, as a fraction of wealth: (W/2)·Σ kΛ_i x_i², split evenly
     over ``months`` (quadratic impact with unchanged volume: 1/months of the one-shot cost)."""

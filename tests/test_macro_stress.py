@@ -10,7 +10,7 @@ from jkmp.covariance import CovParts
 from jkmp.evaluation.macro_stress import (book_exposure, book_window_returns, classify_events, december_surprises,
                                           distribution_stats, exit_cost, mixture, month_end_changes,
                                           monthly_factor_returns, policy_moves, policy_target, rate_betas,
-                                          rate_scenario, scenario_starts, simulate, summarise_windows, tc_ratio,
+                                          rate_components, rate_scenario, scenario_starts, simulate, summarise_windows, tc_ratio,
                                           window_sums)
 
 
@@ -154,3 +154,19 @@ def test_exit_cost_quadratic_and_split():
     assert exit_cost(pos, lam, 1e10, 1.0, 3) == pytest.approx(one / 3)
     with pytest.raises(ValueError):
         exit_cost(pd.Series({9: 0.1}), lam, 1e10, 1.0, 1)
+
+
+def test_rate_components_reproduce_rate_scenario_for_any_shock():
+    idx = pd.date_range("2000-01-31", periods=120, freq="ME")
+    rng = np.random.default_rng(8)
+    dy = pd.Series(rng.normal(0, 0.2, 120), index=idx, name="dy")
+    ret = pd.DataFrame({"a": -0.03 * dy + rng.normal(0, 0.01, 120), "b": 0.01 * dy + rng.normal(0, 0.02, 120)}, index=idx)
+    rb = rate_betas(ret, dy, idx[0], idx[-1])
+    b = pd.Series({"a": 1.5, "b": -0.4})
+    c = rate_components(b, rb, idio_var=2e-5)
+    assert sum(c["contributions"].values()) == pytest.approx(c["sensitivity"])
+    for shock in (-0.2, 0.05, 1.0):
+        sc = rate_scenario(b, rb, 2e-5, shock, 0.9)
+        half = 1.6448536269514722 * np.sqrt(c["resid_var"] + (c["se_per_pp"] * shock) ** 2)
+        assert sc["expected"] == pytest.approx(c["sensitivity"] * shock)
+        assert sc["high"] - sc["expected"] == pytest.approx(half)

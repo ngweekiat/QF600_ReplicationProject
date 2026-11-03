@@ -15,6 +15,7 @@ outputs/figures/macro_stress.{png,pdf}.
 from __future__ import annotations
 
 import argparse
+import json
 import logging
 
 import matplotlib
@@ -23,6 +24,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
+from scipy.stats import norm  # noqa: E402
 
 from jkmp.config import PROJECT_ROOT, load_config  # noqa: E402
 from jkmp.covariance import load_covariance  # noqa: E402
@@ -177,10 +179,12 @@ def main() -> None:
                                         force=args.force)[m.rate_series])
     index_ret = final[final["type"] == INDEX].set_index("eom_ret")[["net"]].rename(columns={"net": "index"})
     shocks = {**ms.december_surprises(m.p_hike, m.hike_size), f"+{m.rate_shock * 100:g} bp shock": m.rate_shock}
-    beta_rows, rate_rows = [], []
+    beta_rows, rate_rows, dash_windows = [], [], []
     for win in m.rate_windows:
         lo, hi = pd.Timestamp(win.start), pd.Timestamp(win.end)
         rf, ri = ms.rate_betas(fmon[b.index], dy, lo, hi), ms.rate_betas(index_ret, dy, lo, hi)
+        dash_windows.append({"label": win.label, "n": rf.n, "active": ms.rate_components(b, rf, idio),
+                             "index": ms.rate_components(pd.Series({"index": 1.0}), ri, 0.0)})
         for rb in (rf, ri):
             beta_rows.append(pd.DataFrame({"window": win.label, "column": rb.beta.index, "beta": rb.beta.to_numpy(),
                                            "se": np.sqrt(np.diag(rb.cov_beta)), "r2": rb.r2.to_numpy(), "n": rb.n}))
@@ -213,6 +217,18 @@ def main() -> None:
                                       "years_of_active_holdout": c / annual["holdout"]})
     exit_tab = pd.DataFrame(exit_rows)
     exit_tab.to_csv(out / "exit_cost.csv", index=False)
+
+    # Interactive December-decision page: the rate-model pieces, rendered into the template
+    target = ms.policy_target(fred, m.target_series)
+    y2 = load_fred(base.data_sources.fred_csv_url, [m.rate_series], base.paths.raw)[m.rate_series]
+    dash = {"book_eom": str(last.date()), "wealth_now": wealth_now, "p_hike": m.p_hike, "hike_size": m.hike_size,
+            "interval": m.interval, "z": float(norm.ppf(0.5 + m.interval / 2)), "target_upper": float(target.iloc[-1]),
+            "target_date": str(target.index[target.ne(target.shift())][-1].date()),
+            "yield_2y": float(y2["value"].iloc[-1]), "yield_date": str(y2["date"].iloc[-1].date()),
+            "windows": dash_windows}
+    (out / "december_dashboard.json").write_text(json.dumps(dash, indent=2))
+    template = (PROJECT_ROOT / "scripts" / "templates" / "december_decision.html").read_text()
+    (out / "december_decision.html").write_text(template.replace("__DASHBOARD_DATA__", json.dumps(dash)))
 
     figures = base.paths.outputs / "figures"
     figures.mkdir(parents=True, exist_ok=True)

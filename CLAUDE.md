@@ -49,7 +49,9 @@ against Markowitz-ML, Factor-ML, Static-ML\* and simple benchmarks on returns *n
 - **Macro stress tests (extension, evaluation only, not a trial):** `evaluation/macro_stress.py`, `scripts/16_macro_stress.py` →
   `outputs/macro_stress/`, `outputs/figures/macro_stress.png`; Fed-policy scenarios S1–S3 for the 2026 hike / hold / December decision, rate sensitivity
   and cost-to-exit stress (Addendum A), pre-registered and reported in `docs/macro_stress.md` (D38).
-- **Not yet:** Rank-ML, Fig. 2.
+- **Report figures:** `evaluation/figure_data.py`, `scripts/17_report_figures.py` → `outputs/figures/report/` (numbered in report
+  order, PNG + PDF, captions in `INDEX.md`), including Fig. 2 (performance over time) and Table 3 as heatmaps.
+- **Not yet:** Rank-ML.
 
 New portfolio methods should produce target weights `id, eom, w` and reuse
 `accounting.add_start_weights` (targets independent of inherited weights) or
@@ -158,6 +160,7 @@ uv venv --python 3.12 .venv && uv pip install --python .venv/bin/python -e ".[de
 .venv/bin/python scripts/15_holdout.py               # holdout Tables 2–3, decay, final active stats, deflated Sharpe
 .venv/bin/python scripts/11_monitor.py               # monthly monitor flags + one-page dashboard (needs the holdout runs)
 .venv/bin/python scripts/16_macro_stress.py [--force] # Fed-policy stress scenarios S1–S3 (needs the 1981–2020 and holdout runs)
+.venv/bin/python scripts/17_report_figures.py        # all report / presentation figures -> outputs/figures/report/ (needs 04–16)
 ```
 
 **Python 3.11–3.13 only.** `wrds` pins pandas < 2.3, which has no Python 3.14 wheels; a source
