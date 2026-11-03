@@ -68,6 +68,8 @@ def build_dashboard(root=ROOT):
     root = Path(root)
     out = root / "outputs"
     out.mkdir(parents=True, exist_ok=True)
+    from branch_explorer import build as build_branch_explorer
+    build_branch_explorer(root)
     series = collect_series(root)
     from dashboard_plotly import build_plotly
     build_plotly(root, series)
@@ -121,6 +123,7 @@ const reports=REPORTS;$('reports').innerHTML=reports.map(r=>`<li><a href="${esc(
         content = f'<img src="{rel}" alt="Frozen characteristic selection evidence">' if (out / rel).exists() else '<p>Selection chart not bundled; the table above retains the frozen evidence.</p>'
         template = template.replace(token, content)
     template = template.replace('<title>Kati_tryout results</title>', '<title>Kati_tryout results</title><script src="dashboard_assets/plotly.min.js"></script>')
+    template = template.replace('<nav>', '<nav><a href="wee_kiat_attempt_explorer.html">Wee Kiat Attempt script explorer</a>')
     template = template.replace('<section id="models">', '<div class="card"><h2>Interactive Plotly research explorer</h2><p>Explore all iterations, annual feature counts, returns, drawdowns, costs, validation diagnostics and the full original figure catalogue.</p><p><a href="dashboard_plotly.html">Open the interactive iteration explorer →</a></p></div><section id="models">')
     template = template.replace("$('plot').innerHTML=svg+'</svg>';", "Plotly.react('plot',rows.map((s,j)=>({name:s.label,x:dates,y:curves[j],type:'scatter',mode:'lines'})),{height:440,hovermode:'x unified',yaxis:{tickformat:key==='turnover'?'.2f':'.1%'},margin:{t:20},legend:{orientation:'h'}},{responsive:true,displaylogo:false});")
     template = template.replace('Performance for the new 50 requires a later explicit refit.', 'Saved fitted results are available below. The current research chain is Base → 4 → 4.2 → 4.3; other experiments retain their historical references.')

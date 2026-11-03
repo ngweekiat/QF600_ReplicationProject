@@ -5,6 +5,10 @@ or open `outputs/dashboard_plotly.html` directly. Plotly is bundled under
 `outputs/dashboard_assets/`, so hover, zoom, legend filters and PNG export work
 offline. Select an iteration for cumulative returns, additive drawdowns, market
 differences, costs, turnover, rolling returns, annual returns and distributions.
+
+The [Wee Kiat Attempt script explorer](outputs/wee_kiat_attempt_explorer.html)
+maps the scripts from the `wee-kiat-attempt` branch and links to each exact
+GitHub source file.
 Annual model choices use saved `chosen.csv` files. The source explorer plots
 numeric CSV diagnostics as lines, bars, distributions, boxes or heatmaps; original
 annotated figures are listed alongside them. Tables above 400 KB stay linked rather
