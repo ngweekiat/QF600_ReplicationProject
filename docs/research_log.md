@@ -4,7 +4,7 @@ Every run of a variant counts as a trial. Each entry is pre-registered (hypothes
 threshold, kill criterion, date) **before** it runs; the result and the decision are appended after.
 Test window: return months 1981-01 .. 2020-12. The holdout 2021-01 .. 2025-12 stays locked until Phase 7.
 
-**Running trial count: 6** (trial 1 baseline; trials 2a–2c active Portfolio-ML at three TE budgets; trial 3 top-250; trial 4 half-life)
+**Running trial count: 7** (trial 1 baseline; trials 2a–2c active Portfolio-ML at three TE budgets; trial 3 top-250; trial 4 half-life; trial 5 annual risk-budget recalibration, post-holdout)
 
 ---
 
@@ -203,3 +203,38 @@ P(net IR > 0) = 77.8% over 60 months. Baseline Portfolio-ML: utility 0.019 → �
 no method beats another among Portfolio-ML, its linear version, Static-ML\* and the final version with P ≥ 80% (all
 0.16–0.84); all four beat Factor-ML and Markowitz-ML with P = 1.00. Deflated Sharpe ratio of the final version over
 1981–2020 with 6 trials: SR₀ = 0.44 a year (annualised), DSR = **0.90**. Nothing here fed back into any model choice.
+
+---
+
+## Trial 5 — Annual risk-budget recalibration (`configs/experiments/risk_budget.yaml`), post-holdout
+
+**Pre-registration (2026-11-03, before any run of this variant).** This trial is run after the holdout, so its 2021–2025
+numbers can only be descriptive (see *Holdout* below).
+
+- **Motivation (found on 1981–2020, no 2021–2025 information).** Trial 2's result: γ_TE calibrated once on 1972–1980 to a
+  2% budget gave an out-of-sample ex-ante TE of 3.63% and a realised TE of 4.63% over 1981–2020 (trial 2b), about 2× the
+  budget; trial 2's entry names re-calibrating γ_TE each year on the trailing ex-ante TE as the follow-up. A real mandate
+  would treat a 2× overshoot as a breach.
+- **Reference.** Trial 2b: benchmark-relative Portfolio-ML, top-80 universe, γ_TE = 12.82 fixed, 2% budget; net IR 0.42
+  vs the value-weighted universe (the trial 2 benchmark, net of its own trading cost).
+- **Change (one).** γ_TE is re-set each December. A grid of 25 values log-spaced from 3 to 300 (`risk_budget` in
+  `configs/base.yaml`); for each grid value the fixed-γ_TE active strategy is run from return year 1972, as in trial 2's
+  calibration. Each December D: the mean annualised ex-ante TE of each grid path over formation months D−11 .. D;
+  γ* by linear interpolation of log γ_TE on log TE at the 2% target, snapped to the nearest grid value (clipped to the
+  grid's ends if the target lies outside, and counted); used for return year D + 1, in both the aim portfolio and the
+  trading speed m. The implemented strategy runs over 1981–2020 from value weights, as every method does. Universe,
+  signals, grids, December (g, p, λ) selection and costs are trial 2b's.
+- **Metrics.** Primary, risk-budget compliance: (i) realised TE over 1981–2020; (ii) mean |ex-ante TE_t − 2%| over the
+  implemented strategy's formation months. Secondary: net IR vs the trial 2 benchmark; P(better) by trial 3's rule,
+  P(mean d_t > 0) with d_t = an_t / sd(a) of the new book minus the same for trial 2b.
+- **Keep** if compliance improves on both (i) (closer to 2%) and (ii) (smaller), **and** P(better net IR) ≥ 20% (that is,
+  P(worse) < 80%). It is reported as an IR improvement only if P(better net IR) ≥ 80%.
+- **Kill** if either compliance measure does not improve, or P(better net IR) < 20%.
+- **Also reported.** γ_TE chosen by year; years clipped to a grid end; realised TE and net IR by decade; β, trading cost,
+  turnover; net IR against the paper index (no benchmark cost).
+- **Holdout.** Run only after the 1981–2020 decision below is written: 2021–2025 with the walk-forward continuing (the
+  schedule keeps updating each December through 2024). Descriptive, labelled post-hoc; nothing depends on it.
+- **Trials.** One evaluated variant (trial 5, count → 7); the deflated Sharpe ratio is recomputed with 7 trials.
+- **Presentation.** In the report this trial replaces trial 3 as "iteration 2". Trial 3 stays recorded, counted and
+  reported, as a breadth sensitivity.
+
