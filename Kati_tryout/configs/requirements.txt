@@ -6,6 +6,7 @@ pyarrow
 pyyaml
 wrds>=3.5
 matplotlib
+plotly>=6,<8
 joblib
 openpyxl
 python-dotenv>=1.0,<2

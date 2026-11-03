@@ -1,5 +1,18 @@
 # Kati_tryout
 
+Open `outputs/dashboard.html` and choose **Open the interactive iteration explorer**,
+or open `outputs/dashboard_plotly.html` directly. Plotly is bundled under
+`outputs/dashboard_assets/`, so hover, zoom, legend filters and PNG export work
+offline. Select an iteration for cumulative returns, additive drawdowns, market
+differences, costs, turnover, rolling returns, annual returns and distributions.
+Annual model choices use saved `chosen.csv` files. The source explorer plots
+numeric CSV diagnostics as lines, bars, distributions, boxes or heatmaps; original
+annotated figures are listed alongside them. Tables above 400 KB stay linked rather
+than copied into the page. Archived/revision-history results are excluded.
+Refresh both dashboards with `python -X utf8 Kati_tryout/scripts/dashboard.py`.
+These views read saved results and do not refit any model. The overview Sharpe
+uses net-return SD, explicitly labelled, whereas native reports may use gross SD.
+
 **Current US high-cap research chain: Base / annual refitting → 4 → 4.2 → 4.3.**
 Iteration 2 is excluded from that chain. Open the [updated result images and tables](outputs/iteration_summary/index.html).
 Trials 2, 3 and 5-10 below retain their historical results and original references;

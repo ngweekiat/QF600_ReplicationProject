@@ -1,0 +1,980 @@
+{
+  "series": 19,
+  "numeric_tables": 453,
+  "original_figures": 101,
+  "large_tables": [
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma100_wealth0B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma100_wealth100B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma100_wealth10B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma100_wealth1B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma100_wealth250B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma100_wealth50B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma10_wealth0B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma10_wealth100B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma10_wealth1B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma10_wealth250B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma10_wealth50B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma1_wealth0B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma1_wealth100B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma1_wealth10B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma1_wealth1B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma1_wealth250B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma1_wealth50B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma20_wealth0B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma20_wealth100B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma20_wealth10B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma20_wealth1B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma20_wealth250B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma20_wealth50B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma5_wealth0B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma5_wealth100B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma5_wealth10B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma5_wealth1B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma5_wealth250B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/eu_large/points/gamma5_wealth50B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/monthly_returns.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma100_wealth0B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma100_wealth0B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma100_wealth100B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma100_wealth100B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma100_wealth10B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma100_wealth10B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma100_wealth1B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma100_wealth1B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma100_wealth250B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma100_wealth250B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma100_wealth50B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma100_wealth50B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma10_wealth0B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma10_wealth0B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma10_wealth100B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma10_wealth100B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma10_wealth1B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma10_wealth1B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma10_wealth250B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma10_wealth250B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma10_wealth50B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma10_wealth50B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma1_wealth0B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma1_wealth0B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma1_wealth100B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma1_wealth100B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma1_wealth10B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma1_wealth10B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma1_wealth1B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma1_wealth1B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma1_wealth250B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma1_wealth250B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma1_wealth50B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma1_wealth50B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma20_wealth0B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma20_wealth0B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma20_wealth100B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma20_wealth100B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma20_wealth10B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma20_wealth10B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma20_wealth1B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma20_wealth1B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma20_wealth250B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma20_wealth250B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma20_wealth50B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma20_wealth50B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma5_wealth0B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma5_wealth0B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma5_wealth100B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma5_wealth100B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma5_wealth10B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma5_wealth10B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma5_wealth1B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma5_wealth1B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma5_wealth250B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma5_wealth250B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma5_wealth50B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_large/points/gamma5_wealth50B/validation_static.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma100_wealth0B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma100_wealth100B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma100_wealth10B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma100_wealth1B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma100_wealth250B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma100_wealth50B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma10_wealth0B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma10_wealth100B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma10_wealth1B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma10_wealth250B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma10_wealth50B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma1_wealth0B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma1_wealth100B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma1_wealth10B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma1_wealth1B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma1_wealth250B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma1_wealth50B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma20_wealth0B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma20_wealth100B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma20_wealth10B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma20_wealth1B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma20_wealth250B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma20_wealth50B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma5_wealth0B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma5_wealth100B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma5_wealth10B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma5_wealth1B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma5_wealth250B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "base/overall analysis/figure1/us_mid/points/gamma5_wealth50B/validation_portfolio.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "iteration_3/us_large/membership.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "iteration_4.2/us_large/candidate_cache/full/proxy_scores.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "iteration_4.2/us_large/candidate_cache/pretest/proxy_scores.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "iteration_4.3/us_large/independent_verification.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "us_high_cap_selection/matrices/all_candidates_training/rank_correlation.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "us_high_cap_selection/matrices/all_candidates_training/rank_covariance.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "us_high_cap_selection/matrices/all_candidates_training/rank_with_return_correlation.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "us_high_cap_selection/matrices/all_candidates_training/rank_with_return_covariance.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "us_high_cap_selection/matrices/all_candidates_training/raw_correlation.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "us_high_cap_selection/matrices/all_candidates_training/raw_covariance.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "us_high_cap_selection/matrices/all_candidates_training/raw_with_return_correlation.csv",
+      "reason": "Large table: open source CSV directly"
+    },
+    {
+      "path": "us_high_cap_selection/matrices/all_candidates_training/raw_with_return_covariance.csv",
+      "reason": "Large table: open source CSV directly"
+    }
+  ],
+  "offline": true,
+  "models_fitted": false,
+  "table_sources": [
+    "availability_by_group_and_market.csv",
+    "base/availability.csv",
+    "base/eu_large/imputation_audit/base_02_eu_large_te_0.02.csv",
+    "base/eu_large/imputation_audit/base_03_eu_large_te_0.02.csv",
+    "base/eu_large/imputation_audit/base_05_eu_large_te_0.02.csv",
+    "base/eu_large/imputation_audit/base_06_eu_large_te_0.02.csv",
+    "base/eu_large/imputation_audit/base_07_eu_large_te_0.02.csv",
+    "base/eu_large/imputation_audit/base_10_eu_large_te_0.02.csv",
+    "base/eu_large/imputation_audit/base_11_eu_large_te_0.02.csv",
+    "base/eu_large/imputation_audit/base_audit_us_large_te_0.02.csv",
+    "base/eu_large/imputation_audit/base_compare_us_large_te_0.02.csv",
+    "base/eu_large/imputation_audit/base_figure1_all_te_0.02.csv",
+    "base/eu_large/imputation_audit/base_market_eu_large_te_0.02.csv",
+    "base/eu_large/imputation_audit/base_overall_us_large_te_0.02.csv",
+    "base/eu_large/imputation_audit/base_prepare_eu_large_te_0.02.csv",
+    "base/eu_large/imputation_audit/base_validate_us_large_te_0.02.csv",
+    "base/eu_large/portfolio_ml/rff/chosen.csv",
+    "base/eu_large/regimes/cumulative_utility.csv",
+    "base/eu_large/regimes/labels.csv",
+    "base/eu_large/regimes/regime_table.csv",
+    "base/eu_large/regimes/vix_recost.csv",
+    "base/eu_large/reports/available_monthly_returns.csv",
+    "base/eu_large/reports/available_performance.csv",
+    "base/eu_large/table2_test.csv",
+    "base/eu_large/tables/table2.csv",
+    "base/eu_large/tables/table4.csv",
+    "base/overall analysis/all_base_models_and_regional_markets.csv",
+    "base/overall analysis/all_base_monthly_returns.csv",
+    "base/overall analysis/all_models_and_iterations/annual_performance.csv",
+    "base/overall analysis/all_models_and_iterations/bootstrap_rank_stability.csv",
+    "base/overall analysis/all_models_and_iterations/fixed_weight_cost_sensitivity.csv",
+    "base/overall analysis/all_models_and_iterations/gross_return_correlation.csv",
+    "base/overall analysis/all_models_and_iterations/independent_verification.csv",
+    "base/overall analysis/all_models_and_iterations/monthly_returns.csv",
+    "base/overall analysis/all_models_and_iterations/net_return_correlation.csv",
+    "base/overall analysis/all_models_and_iterations/paired_inference.csv",
+    "base/overall analysis/all_models_and_iterations/performance_summary.csv",
+    "base/overall analysis/all_models_and_iterations/rolling_and_cumulative.csv",
+    "base/overall analysis/all_models_and_iterations/source_inventory.csv",
+    "base/overall analysis/all_models_and_iterations/subperiod_performance.csv",
+    "base/overall analysis/all_models_and_iterations/versus_market.csv",
+    "base/overall analysis/annual_performance.csv",
+    "base/overall analysis/bootstrap_rank_stability.csv",
+    "base/overall analysis/figure1/combined_frontier_summary.csv",
+    "base/overall analysis/figure1/eu_large/accounting_verification.csv",
+    "base/overall analysis/figure1/eu_large/frictionless_constraint_checks.csv",
+    "base/overall analysis/figure1/eu_large/frictionless_monthly.csv",
+    "base/overall analysis/figure1/eu_large/frictionless_reference.csv",
+    "base/overall analysis/figure1/eu_large/frontier_summary.csv",
+    "base/overall analysis/figure1/eu_large/independent_verification.csv",
+    "base/overall analysis/figure1/eu_large/monthly_returns.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma100_wealth0B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma100_wealth100B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma100_wealth10B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma100_wealth1B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma100_wealth250B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma100_wealth50B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma10_wealth0B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma10_wealth100B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma10_wealth10B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma10_wealth1B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma10_wealth250B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma10_wealth50B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma1_wealth0B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma1_wealth100B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma1_wealth10B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma1_wealth1B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma1_wealth250B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma1_wealth50B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma20_wealth0B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma20_wealth100B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma20_wealth10B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma20_wealth1B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma20_wealth250B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma20_wealth50B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma5_wealth0B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma5_wealth100B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma5_wealth10B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma5_wealth1B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma5_wealth250B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/eu_large/points/gamma5_wealth50B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/accounting_verification.csv",
+    "base/overall analysis/figure1/us_large/frictionless_constraint_checks.csv",
+    "base/overall analysis/figure1/us_large/frictionless_monthly.csv",
+    "base/overall analysis/figure1/us_large/frictionless_reference.csv",
+    "base/overall analysis/figure1/us_large/frontier_summary.csv",
+    "base/overall analysis/figure1/us_large/independent_verification.csv",
+    "base/overall analysis/figure1/us_large/points/gamma100_wealth0B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma100_wealth0B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma100_wealth100B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma100_wealth100B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma100_wealth10B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma100_wealth10B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma100_wealth1B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma100_wealth1B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma100_wealth250B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma100_wealth250B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma100_wealth50B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma100_wealth50B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma10_wealth0B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma10_wealth0B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma10_wealth100B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma10_wealth100B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma10_wealth10B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma10_wealth10B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma10_wealth1B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma10_wealth1B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma10_wealth250B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma10_wealth250B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma10_wealth50B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma10_wealth50B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma1_wealth0B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma1_wealth0B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma1_wealth100B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma1_wealth100B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma1_wealth10B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma1_wealth10B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma1_wealth1B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma1_wealth1B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma1_wealth250B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma1_wealth250B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma1_wealth50B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma1_wealth50B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma20_wealth0B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma20_wealth0B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma20_wealth100B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma20_wealth100B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma20_wealth10B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma20_wealth10B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma20_wealth1B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma20_wealth1B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma20_wealth250B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma20_wealth250B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma20_wealth50B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma20_wealth50B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma5_wealth0B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma5_wealth0B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma5_wealth100B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma5_wealth100B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma5_wealth10B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma5_wealth10B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma5_wealth1B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma5_wealth1B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma5_wealth250B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma5_wealth250B/chosen_static.csv",
+    "base/overall analysis/figure1/us_large/points/gamma5_wealth50B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_large/points/gamma5_wealth50B/chosen_static.csv",
+    "base/overall analysis/figure1/us_mid/accounting_verification.csv",
+    "base/overall analysis/figure1/us_mid/frictionless_constraint_checks.csv",
+    "base/overall analysis/figure1/us_mid/frictionless_monthly.csv",
+    "base/overall analysis/figure1/us_mid/frictionless_reference.csv",
+    "base/overall analysis/figure1/us_mid/frontier_summary.csv",
+    "base/overall analysis/figure1/us_mid/independent_verification.csv",
+    "base/overall analysis/figure1/us_mid/monthly_returns.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma100_wealth0B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma100_wealth100B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma100_wealth10B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma100_wealth1B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma100_wealth250B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma100_wealth50B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma10_wealth0B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma10_wealth100B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma10_wealth10B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma10_wealth1B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma10_wealth250B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma10_wealth50B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma1_wealth0B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma1_wealth100B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma1_wealth10B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma1_wealth1B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma1_wealth250B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma1_wealth50B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma20_wealth0B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma20_wealth100B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma20_wealth10B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma20_wealth1B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma20_wealth250B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma20_wealth50B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma5_wealth0B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma5_wealth100B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma5_wealth10B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma5_wealth1B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma5_wealth250B/chosen_portfolio.csv",
+    "base/overall analysis/figure1/us_mid/points/gamma5_wealth50B/chosen_portfolio.csv",
+    "base/overall analysis/fixed_weight_cost_sensitivity.csv",
+    "base/overall analysis/gross_return_correlation.csv",
+    "base/overall analysis/independent_verification.csv",
+    "base/overall analysis/monthly_returns.csv",
+    "base/overall analysis/net_return_correlation.csv",
+    "base/overall analysis/paired_inference.csv",
+    "base/overall analysis/performance_summary.csv",
+    "base/overall analysis/rolling_and_cumulative.csv",
+    "base/overall analysis/same_region_market_comparison.csv",
+    "base/overall analysis/source_inventory.csv",
+    "base/overall analysis/subperiod_performance.csv",
+    "base/overall analysis/us_high_cap_progression/performance_summary.csv",
+    "base/overall analysis/versus_market.csv",
+    "base/results/annual_performance.csv",
+    "base/results/annual_training_schedule.csv",
+    "base/results/bootstrap_rank_stability.csv",
+    "base/results/cost_sensitivity.csv",
+    "base/results/date_alignment_exclusions.csv",
+    "base/results/eu_large__base_return_correlations.csv",
+    "base/results/monthly_returns.csv",
+    "base/results/paired_inference.csv",
+    "base/results/performance_summary.csv",
+    "base/results/rolling_and_cumulative.csv",
+    "base/results/us_large__base_return_correlations.csv",
+    "base/results/us_mid__base_return_correlations.csv",
+    "base/us_large/diagnostic_for_gamma5/block_bootstrap_sensitivity.csv",
+    "base/us_large/diagnostic_for_gamma5/monthly_diagnostic.csv",
+    "base/us_large/imputation_audit/base_02_us_large_te_0.02.csv",
+    "base/us_large/imputation_audit/base_03_us_large_te_0.02.csv",
+    "base/us_large/imputation_audit/base_05_us_large_te_0.02.csv",
+    "base/us_large/imputation_audit/base_06_us_large_te_0.02.csv",
+    "base/us_large/imputation_audit/base_07_us_large_te_0.02.csv",
+    "base/us_large/imputation_audit/base_10_us_large_te_0.02.csv",
+    "base/us_large/imputation_audit/base_11_us_large_te_0.02.csv",
+    "base/us_large/imputation_audit/base_audit_us_large_te_0.02.csv",
+    "base/us_large/imputation_audit/base_compare_us_large_te_0.02.csv",
+    "base/us_large/imputation_audit/base_figure1_all_te_0.02.csv",
+    "base/us_large/imputation_audit/base_market_us_large_te_0.02.csv",
+    "base/us_large/imputation_audit/base_overall_us_large_te_0.02.csv",
+    "base/us_large/imputation_audit/base_prepare_us_large_te_0.02.csv",
+    "base/us_large/imputation_audit/base_validate_us_large_te_0.02.csv",
+    "base/us_large/imputation_audit/iteration_1_overall_us_large_te_0.02.csv",
+    "base/us_large/imputation_audit/iteration_2_overall_us_large_te_0.02.csv",
+    "base/us_large/imputation_audit/iteration_3_overall_us_large_te_0.02.csv",
+    "base/us_large/portfolio_ml/rff/chosen.csv",
+    "base/us_large/regimes/cumulative_utility.csv",
+    "base/us_large/regimes/labels.csv",
+    "base/us_large/regimes/regime_table.csv",
+    "base/us_large/regimes/vix_recost.csv",
+    "base/us_large/reports/available_monthly_returns.csv",
+    "base/us_large/reports/available_performance.csv",
+    "base/us_large/static_ml_star/chosen.csv",
+    "base/us_large/table2_test.csv",
+    "base/us_large/tables/table2.csv",
+    "base/us_large/tables/table3.csv",
+    "base/us_large/tables/table4.csv",
+    "base/us_mid/imputation_audit/base_02_us_mid_te_0.02.csv",
+    "base/us_mid/imputation_audit/base_03_us_mid_te_0.02.csv",
+    "base/us_mid/imputation_audit/base_05_us_mid_te_0.02.csv",
+    "base/us_mid/imputation_audit/base_06_us_mid_te_0.02.csv",
+    "base/us_mid/imputation_audit/base_07_us_mid_te_0.02.csv",
+    "base/us_mid/imputation_audit/base_10_us_mid_te_0.02.csv",
+    "base/us_mid/imputation_audit/base_11_us_mid_te_0.02.csv",
+    "base/us_mid/imputation_audit/base_audit_us_large_te_0.02.csv",
+    "base/us_mid/imputation_audit/base_compare_us_large_te_0.02.csv",
+    "base/us_mid/imputation_audit/base_figure1_all_te_0.02.csv",
+    "base/us_mid/imputation_audit/base_market_us_mid_te_0.02.csv",
+    "base/us_mid/imputation_audit/base_overall_us_large_te_0.02.csv",
+    "base/us_mid/imputation_audit/base_prepare_us_mid_te_0.02.csv",
+    "base/us_mid/imputation_audit/base_validate_us_large_te_0.02.csv",
+    "base/us_mid/portfolio_ml/rff/chosen.csv",
+    "base/us_mid/regimes/cumulative_utility.csv",
+    "base/us_mid/regimes/labels.csv",
+    "base/us_mid/regimes/regime_table.csv",
+    "base/us_mid/regimes/vix_recost.csv",
+    "base/us_mid/reports/available_monthly_returns.csv",
+    "base/us_mid/reports/available_performance.csv",
+    "base/us_mid/table2_test.csv",
+    "base/us_mid/tables/table2.csv",
+    "base/us_mid/tables/table4.csv",
+    "iteration_1/availability.csv",
+    "iteration_1/us_large/annual_performance.csv",
+    "iteration_1/us_large/chosen.csv",
+    "iteration_1/us_large/monthly_returns.csv",
+    "iteration_1/us_large/performance_summary.csv",
+    "iteration_1/us_large/reports/available_monthly_returns.csv",
+    "iteration_1/us_large/reports/available_performance.csv",
+    "iteration_10/availability.csv",
+    "iteration_10/us_large/annual_performance.csv",
+    "iteration_10/us_large/calibrated.csv",
+    "iteration_10/us_large/calibration.csv",
+    "iteration_10/us_large/calibration_trials/gamma_100/chosen.csv",
+    "iteration_10/us_large/calibration_trials/gamma_100/cost_netting_audit.csv",
+    "iteration_10/us_large/calibration_trials/gamma_250/chosen.csv",
+    "iteration_10/us_large/calibration_trials/gamma_250/cost_netting_audit.csv",
+    "iteration_10/us_large/chosen.csv",
+    "iteration_10/us_large/cost_netting_audit.csv",
+    "iteration_10/us_large/monthly_returns.csv",
+    "iteration_10/us_large/performance_summary.csv",
+    "iteration_10/us_large/pretest_seed_sensitivity/active_return_correlation.csv",
+    "iteration_10/us_large/pretest_seed_sensitivity/chosen.csv",
+    "iteration_10/us_large/pretest_seed_sensitivity/cost_netting_audit.csv",
+    "iteration_10/us_large/pretest_seed_sensitivity/pairwise_seed_sensitivity.csv",
+    "iteration_10/us_large/pretest_seed_sensitivity/seed_performance.csv",
+    "iteration_10/us_large/reports/available_monthly_returns.csv",
+    "iteration_10/us_large/reports/available_performance.csv",
+    "iteration_2/availability.csv",
+    "iteration_2/us_large/annual_performance.csv",
+    "iteration_2/us_large/chosen.csv",
+    "iteration_2/us_large/diagnostic_for_market_anchor/block_bootstrap_sensitivity.csv",
+    "iteration_2/us_large/diagnostic_for_market_anchor/monthly_diagnostic.csv",
+    "iteration_2/us_large/monthly_returns.csv",
+    "iteration_2/us_large/performance_summary.csv",
+    "iteration_2/us_large/reports/available_monthly_returns.csv",
+    "iteration_2/us_large/reports/available_performance.csv",
+    "iteration_3/availability.csv",
+    "iteration_3/us_large/annual_performance.csv",
+    "iteration_3/us_large/chosen.csv",
+    "iteration_3/us_large/monthly_returns.csv",
+    "iteration_3/us_large/performance_summary.csv",
+    "iteration_3/us_large/reports/available_monthly_returns.csv",
+    "iteration_3/us_large/reports/available_performance.csv",
+    "iteration_4/availability.csv",
+    "iteration_4/us_large/annual_performance.csv",
+    "iteration_4/us_large/calibrated.csv",
+    "iteration_4/us_large/calibration.csv",
+    "iteration_4/us_large/chosen.csv",
+    "iteration_4/us_large/diagnostic_for_neutrality/block_bootstrap_sensitivity.csv",
+    "iteration_4/us_large/diagnostic_for_neutrality/mechanical_replay_performance.csv",
+    "iteration_4/us_large/diagnostic_for_neutrality/pretest/mechanical_replay_performance.csv",
+    "iteration_4/us_large/diagnostic_for_neutrality/pretest/monthly_risk_and_replay.csv",
+    "iteration_4/us_large/diagnostic_for_neutrality/pretest/sector_active_weights.csv",
+    "iteration_4/us_large/diagnostic_for_neutrality/test/mechanical_replay_performance.csv",
+    "iteration_4/us_large/diagnostic_for_neutrality/test/monthly_risk_and_replay.csv",
+    "iteration_4/us_large/diagnostic_for_neutrality/test/sector_active_weights.csv",
+    "iteration_4/us_large/diagnostic_for_trade_netting/block_bootstrap_sensitivity.csv",
+    "iteration_4/us_large/diagnostic_for_trade_netting/monthly_diagnostic.csv",
+    "iteration_4/us_large/monthly_returns.csv",
+    "iteration_4/us_large/performance_summary.csv",
+    "iteration_4/us_large/pretest_diagnosis/monthly_diagnostic.csv",
+    "iteration_4/us_large/reports/available_monthly_returns.csv",
+    "iteration_4/us_large/reports/available_performance.csv",
+    "iteration_4.2/availability.csv",
+    "iteration_4.2/us_large/active_performance.csv",
+    "iteration_4.2/us_large/annual_performance.csv",
+    "iteration_4.2/us_large/candidate_cache/full/catalog.csv",
+    "iteration_4.2/us_large/candidate_cache/pretest/catalog.csv",
+    "iteration_4.2/us_large/chosen.csv",
+    "iteration_4.2/us_large/diagnostic_chosen.csv",
+    "iteration_4.2/us_large/diagnostic_selection_audit.csv",
+    "iteration_4.2/us_large/ex_ante_exposures.csv",
+    "iteration_4.2/us_large/monthly_returns.csv",
+    "iteration_4.2/us_large/performance_summary.csv",
+    "iteration_4.2/us_large/pretest/chosen.csv",
+    "iteration_4.2/us_large/pretest/ex_ante_exposures.csv",
+    "iteration_4.2/us_large/rationale/december_ranking_diagnostic.csv",
+    "iteration_4.2/us_large/reports/available_monthly_returns.csv",
+    "iteration_4.2/us_large/reports/available_performance.csv",
+    "iteration_4.2/us_large/selection_audit.csv",
+    "iteration_4.3/availability.csv",
+    "iteration_4.3/us_large/active_performance.csv",
+    "iteration_4.3/us_large/annual_performance.csv",
+    "iteration_4.3/us_large/chosen.csv",
+    "iteration_4.3/us_large/diagnostic_chosen.csv",
+    "iteration_4.3/us_large/diagnostic_selection_audit.csv",
+    "iteration_4.3/us_large/ex_ante_exposures.csv",
+    "iteration_4.3/us_large/monthly_returns.csv",
+    "iteration_4.3/us_large/performance_summary.csv",
+    "iteration_4.3/us_large/pretest/chosen.csv",
+    "iteration_4.3/us_large/pretest/ex_ante_exposures.csv",
+    "iteration_4.3/us_large/rationale/final_pretest_bootstrap_winner_stability.csv",
+    "iteration_4.3/us_large/rationale/selection_uncertainty_diagnostic.csv",
+    "iteration_4.3/us_large/reports/available_monthly_returns.csv",
+    "iteration_4.3/us_large/reports/available_performance.csv",
+    "iteration_4.3/us_large/selection_audit.csv",
+    "iteration_4_substages_summary/active_performance.csv",
+    "iteration_4_substages_summary/iteration_4_recomputed_ex_ante_exposures.csv",
+    "iteration_4_substages_summary/monthly_returns.csv",
+    "iteration_4_substages_summary/performance_comparison.csv",
+    "iteration_5/availability.csv",
+    "iteration_5/us_large/annual_performance.csv",
+    "iteration_5/us_large/calibrated.csv",
+    "iteration_5/us_large/calibration.csv",
+    "iteration_5/us_large/chosen.csv",
+    "iteration_5/us_large/monthly_returns.csv",
+    "iteration_5/us_large/performance_summary.csv",
+    "iteration_5/us_large/reports/available_monthly_returns.csv",
+    "iteration_5/us_large/reports/available_performance.csv",
+    "iteration_6/availability.csv",
+    "iteration_6/us_large/annual_performance.csv",
+    "iteration_6/us_large/calibrated.csv",
+    "iteration_6/us_large/calibration.csv",
+    "iteration_6/us_large/chosen.csv",
+    "iteration_6/us_large/cost_preference_validation.csv",
+    "iteration_6/us_large/monthly_returns.csv",
+    "iteration_6/us_large/performance_summary.csv",
+    "iteration_6/us_large/reports/available_monthly_returns.csv",
+    "iteration_6/us_large/reports/available_performance.csv",
+    "iteration_7/availability.csv",
+    "iteration_7/us_large/annual_performance.csv",
+    "iteration_7/us_large/calibrated.csv",
+    "iteration_7/us_large/calibration.csv",
+    "iteration_7/us_large/chosen.csv",
+    "iteration_7/us_large/monthly_returns.csv",
+    "iteration_7/us_large/performance_summary.csv",
+    "iteration_7/us_large/reports/available_monthly_returns.csv",
+    "iteration_7/us_large/reports/available_performance.csv",
+    "iteration_7/us_large/risk_half_life_validation.csv",
+    "iteration_8/availability.csv",
+    "iteration_8/us_large/annual_performance.csv",
+    "iteration_8/us_large/calibrated.csv",
+    "iteration_8/us_large/calibration.csv",
+    "iteration_8/us_large/calibration_trials/gamma_100/chosen.csv",
+    "iteration_8/us_large/calibration_trials/gamma_100/selection_audit.csv",
+    "iteration_8/us_large/calibration_trials/gamma_250/chosen.csv",
+    "iteration_8/us_large/calibration_trials/gamma_250/selection_audit.csv",
+    "iteration_8/us_large/calibration_trials/gamma_50/chosen.csv",
+    "iteration_8/us_large/calibration_trials/gamma_50/selection_audit.csv",
+    "iteration_8/us_large/chosen.csv",
+    "iteration_8/us_large/monthly_returns.csv",
+    "iteration_8/us_large/performance_summary.csv",
+    "iteration_8/us_large/reports/available_monthly_returns.csv",
+    "iteration_8/us_large/reports/available_performance.csv",
+    "iteration_8/us_large/selection_audit.csv",
+    "iteration_9/availability.csv",
+    "iteration_9/us_large/annual_performance.csv",
+    "iteration_9/us_large/calibrated.csv",
+    "iteration_9/us_large/calibration.csv",
+    "iteration_9/us_large/calibration_trials/gamma_100/chosen.csv",
+    "iteration_9/us_large/calibration_trials/gamma_100/cost_audit.csv",
+    "iteration_9/us_large/calibration_trials/gamma_250/chosen.csv",
+    "iteration_9/us_large/calibration_trials/gamma_250/cost_audit.csv",
+    "iteration_9/us_large/chosen.csv",
+    "iteration_9/us_large/cost_audit.csv",
+    "iteration_9/us_large/monthly_returns.csv",
+    "iteration_9/us_large/performance_summary.csv",
+    "iteration_9/us_large/reports/available_monthly_returns.csv",
+    "iteration_9/us_large/reports/available_performance.csv",
+    "iteration_summary/all_trials_current_and_historical.csv",
+    "iteration_summary/bootstrap_block_sensitivity.csv",
+    "iteration_summary/final/performance_summary.csv",
+    "iteration_summary/kept_current_chain.csv",
+    "iteration_summary/statistical_tests_all_iterations.csv",
+    "iteration_summary/statistical_tests_with_descriptions.csv",
+    "us_high_cap_selection/all_candidate_scores.csv",
+    "us_high_cap_selection/candidate_200.csv",
+    "us_high_cap_selection/feature_return_summary.csv",
+    "us_high_cap_selection/group_summary.csv",
+    "us_high_cap_selection/matrices/all_candidates_training/rank_pair_counts.csv",
+    "us_high_cap_selection/matrices/all_candidates_training/rank_with_return_pair_counts.csv",
+    "us_high_cap_selection/matrices/all_candidates_training/raw_pair_counts.csv",
+    "us_high_cap_selection/matrices/all_candidates_training/raw_with_return_pair_counts.csv",
+    "us_high_cap_selection/matrices/selected50/rank_correlation.csv",
+    "us_high_cap_selection/matrices/selected50/rank_covariance.csv",
+    "us_high_cap_selection/matrices/selected50/rank_pair_counts.csv",
+    "us_high_cap_selection/matrices/selected50/rank_with_return_correlation.csv",
+    "us_high_cap_selection/matrices/selected50/rank_with_return_covariance.csv",
+    "us_high_cap_selection/matrices/selected50/rank_with_return_pair_counts.csv",
+    "us_high_cap_selection/matrices/selected50/raw_correlation.csv",
+    "us_high_cap_selection/matrices/selected50/raw_covariance.csv",
+    "us_high_cap_selection/matrices/selected50/raw_pair_counts.csv",
+    "us_high_cap_selection/matrices/selected50/raw_with_return_correlation.csv",
+    "us_high_cap_selection/matrices/selected50/raw_with_return_covariance.csv",
+    "us_high_cap_selection/matrices/selected50/raw_with_return_pair_counts.csv",
+    "us_high_cap_selection/per_stock_selected50_covariance.csv",
+    "us_high_cap_selection/per_stock_selected50_pearson.csv",
+    "us_high_cap_selection/per_stock_selected50_spearman.csv",
+    "us_high_cap_selection/recommended_50.csv",
+    "us_high_cap_selection/recommended_50_jkp_only.csv"
+  ]
+}

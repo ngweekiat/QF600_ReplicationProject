@@ -69,6 +69,8 @@ def build_dashboard(root=ROOT):
     out = root / "outputs"
     out.mkdir(parents=True, exist_ok=True)
     series = collect_series(root)
+    from dashboard_plotly import build_plotly
+    build_plotly(root, series)
     feature_path = root / "data/characteristics/selected_feature_metadata.csv"
     features = pd.read_csv(feature_path).replace({np.nan: None}).to_dict("records") if feature_path.exists() else []
     payload = json.dumps(dict(series=series, features=features), allow_nan=False, default=str).replace("<", "\\u003c")
@@ -118,6 +120,10 @@ const reports=REPORTS;$('reports').innerHTML=reports.map(r=>`<li><a href="${esc(
         rel = "us_high_cap_selection/charts/" + filename
         content = f'<img src="{rel}" alt="Frozen characteristic selection evidence">' if (out / rel).exists() else '<p>Selection chart not bundled; the table above retains the frozen evidence.</p>'
         template = template.replace(token, content)
+    template = template.replace('<title>Kati_tryout results</title>', '<title>Kati_tryout results</title><script src="dashboard_assets/plotly.min.js"></script>')
+    template = template.replace('<section id="models">', '<div class="card"><h2>Interactive Plotly research explorer</h2><p>Explore all iterations, annual feature counts, returns, drawdowns, costs, validation diagnostics and the full original figure catalogue.</p><p><a href="dashboard_plotly.html">Open the interactive iteration explorer →</a></p></div><section id="models">')
+    template = template.replace("$('plot').innerHTML=svg+'</svg>';", "Plotly.react('plot',rows.map((s,j)=>({name:s.label,x:dates,y:curves[j],type:'scatter',mode:'lines'})),{height:440,hovermode:'x unified',yaxis:{tickformat:key==='turnover'?'.2f':'.1%'},margin:{t:20},legend:{orientation:'h'}},{responsive:true,displaylogo:false});")
+    template = template.replace('Performance for the new 50 requires a later explicit refit.', 'Saved fitted results are available below. The current research chain is Base → 4 → 4.2 → 4.3; other experiments retain their historical references.')
     template = template.replace("PAYLOAD", payload).replace("REPORTS", json.dumps(links))
     (out / "dashboard.html").write_text(template, encoding="utf-8")
     (out / "dashboard_status.json").write_text(json.dumps(dict(completed_series=len(series), feature_count=len(features), models_fitted_by_dashboard=False, reported_results="Kati local outputs only"), indent=2)+"\n", encoding="utf-8")
