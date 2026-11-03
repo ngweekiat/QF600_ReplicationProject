@@ -1,7 +1,7 @@
 {
   "status": "PASS",
-  "checks": 263,
-  "passed": 263,
+  "checks": 333,
+  "passed": 333,
   "models_refitted": false,
   "model_backtest_complete": false,
   "data_stock_months": 2886029,
@@ -48,6 +48,11 @@
     },
     {
       "check": "other_ml_and_weight_learning_source_preserved",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "only_opt_in_training_cost_extension_in_portfolio_library",
       "status": "PASS",
       "detail": ""
     },
@@ -298,6 +303,131 @@
     },
     {
       "check": "us_large/iteration_5:all_covariance_themes_supported",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_6:rff_tuning_scope",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_6:ridge_penalties",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_6:frozen_50_only",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_6:local_paths",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_6:all_covariance_themes_supported",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_7:rff_tuning_scope",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_7:ridge_penalties",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_7:frozen_50_only",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_7:local_paths",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_7:all_covariance_themes_supported",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_8:rff_tuning_scope",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_8:ridge_penalties",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_8:frozen_50_only",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_8:local_paths",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_8:all_covariance_themes_supported",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_9:rff_tuning_scope",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_9:ridge_penalties",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_9:frozen_50_only",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_9:local_paths",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_9:all_covariance_themes_supported",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_10:rff_tuning_scope",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_10:ridge_penalties",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_10:frozen_50_only",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_10:local_paths",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "us_large/iteration_10:all_covariance_themes_supported",
       "status": "PASS",
       "detail": ""
     },
@@ -702,6 +832,56 @@
       "detail": ""
     },
     {
+      "check": "plan:us_large.iteration_6.experiment:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_6.experiment:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_7.experiment:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_7.experiment:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_8.experiment:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_8.experiment:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_9.experiment:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_9.experiment:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_10.experiment:dependencies_precede_job",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "plan:us_large.iteration_10.experiment:script_available",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
       "check": "plan:us_large.iteration_verification:dependencies_precede_job",
       "status": "PASS",
       "detail": ""
@@ -732,7 +912,7 @@
       "detail": ""
     },
     {
-      "check": "five_sequential_experiments",
+      "check": "ten_sequential_experiments",
       "status": "PASS",
       "detail": ""
     },
@@ -797,7 +977,42 @@
       "detail": ""
     },
     {
+      "check": "notebook_cell:scripts/active_validation.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/active_validation_rationale.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/active_validation_reports.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/anchor_neutrality_diagnostic.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
       "check": "notebook_cell:scripts/association_statistics.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/base_anchor_revision_reports.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/base_gamma_diagnostic.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/benchmark_netting.py",
       "status": "PASS",
       "detail": ""
     },
@@ -818,6 +1033,16 @@
     },
     {
       "check": "notebook_cell:scripts/figure1.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/iteration_2_diagnostic.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/iteration_4_diagnostic.py",
       "status": "PASS",
       "detail": ""
     },
@@ -847,6 +1072,11 @@
       "detail": ""
     },
     {
+      "check": "notebook_cell:scripts/risk_responsiveness.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
       "check": "notebook_cell:scripts/run.py",
       "status": "PASS",
       "detail": ""
@@ -862,12 +1092,27 @@
       "detail": ""
     },
     {
+      "check": "notebook_cell:scripts/seed_ensemble.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
       "check": "notebook_cell:scripts/select_characteristics.py",
       "status": "PASS",
       "detail": ""
     },
     {
       "check": "notebook_cell:scripts/selection_rules.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/selective_trading.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/stable_selection.py",
       "status": "PASS",
       "detail": ""
     },
@@ -883,6 +1128,11 @@
     },
     {
       "check": "notebook_cell:scripts/verify.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/verify_active_validation.py",
       "status": "PASS",
       "detail": ""
     },
@@ -982,7 +1232,42 @@
       "detail": ""
     },
     {
+      "check": "notebook_cell:scripts/iteration_4.2/run.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/iteration_4.3/run.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
       "check": "notebook_cell:scripts/iteration_5/run.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/iteration_6/run.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/iteration_7/run.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/iteration_8/run.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/iteration_9/run.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:scripts/iteration_10/run.py",
       "status": "PASS",
       "detail": ""
     },
@@ -1227,12 +1512,27 @@
       "detail": ""
     },
     {
+      "check": "notebook_cell:tests/test_active_validation.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
       "check": "notebook_cell:tests/test_additive_reporting.py",
       "status": "PASS",
       "detail": ""
     },
     {
+      "check": "notebook_cell:tests/test_anchor_neutrality_diagnostic.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
       "check": "notebook_cell:tests/test_base_static_star.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:tests/test_benchmark_netting.py",
       "status": "PASS",
       "detail": ""
     },
@@ -1262,6 +1562,26 @@
       "detail": ""
     },
     {
+      "check": "notebook_cell:tests/test_risk_responsiveness.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:tests/test_seed_ensemble.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:tests/test_selective_trading.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:tests/test_stable_selection.py",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
       "check": "notebook_cell:tests/test_themes.py",
       "status": "PASS",
       "detail": ""
@@ -1287,6 +1607,11 @@
       "detail": ""
     },
     {
+      "check": "notebook_cell:configs/us_large/iteration_10.yaml",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
       "check": "notebook_cell:configs/us_large/iteration_2.yaml",
       "status": "PASS",
       "detail": ""
@@ -1307,12 +1632,37 @@
       "detail": ""
     },
     {
+      "check": "notebook_cell:configs/us_large/iteration_6.yaml",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:configs/us_large/iteration_7.yaml",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:configs/us_large/iteration_8.yaml",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:configs/us_large/iteration_9.yaml",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
       "check": "notebook_cell:configs/us_mid/base.yaml",
       "status": "PASS",
       "detail": ""
     },
     {
       "check": "notebook_cell:configs/us_high_cap_iterations.json",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "notebook_cell:configs/us_high_cap_substages.json",
       "status": "PASS",
       "detail": ""
     },

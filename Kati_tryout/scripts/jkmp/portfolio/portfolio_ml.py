@@ -153,6 +153,7 @@ def build_moments(panel: pd.DataFrame, wealth: pd.DataFrame, cov_parts: Mapping[
                   mu: float, lb: int, iterations: int, scale_by_vol: bool = True, use_rff: bool = True,
                   rff_variance: float | None = None, p_max: int | None = None, seed: int | None = None,
                   add_orig: bool = False, add_constant: bool = True,
+                  training_cost_multiplier: float = 1.0,
                   sink: Callable[[MonthMoments], None] | None = None) -> PfmlMoments:
     """R ``pfml_input_fun`` (``balanced = F``) for formation months ``dates``.
 
@@ -163,6 +164,8 @@ def build_moments(panel: pd.DataFrame, wealth: pd.DataFrame, cov_parts: Mapping[
     (docs/deviations.md D20). Needs ``cov_parts`` for every month t−lb−1 .. t and panel rows for
     every universe stock at t in each of those months (guaranteed by ``valid_data``).
     """
+    if not np.isfinite(training_cost_multiplier) or training_cost_multiplier < 1:
+        raise ValueError('training_cost_multiplier must be finite and >= 1')
     features = list(features)
     if use_rff:
         if rff_variance is None or p_max is None or seed is None:
@@ -225,7 +228,10 @@ def build_moments(panel: pd.DataFrame, wealth: pd.DataFrame, cov_parts: Mapping[
         m = trading_speed(cov.full(ids), lam, w_t, gamma, float(rf[t + MONTH]), mu, iterations)
         omega, omega_l1 = weighted_signals(signals, growth, m, lb)
         r_tilde, risk, tc = month_moments(omega, omega_l1, growth[0], row_ret[now], cov, ids, lam, w_t, gamma)
-        mm = MonthMoments(t, ids, r_tilde, risk + tc, risk, signals[0])
+        # Iteration 6 only: penalise costly signal combinations during learning.
+        # Lambda, trading-speed/weight accounting and reported costs are unchanged.
+        denom = risk + tc if training_cost_multiplier == 1 else risk + training_cost_multiplier * tc
+        mm = MonthMoments(t, ids, r_tilde, denom, risk, signals[0])
         if sink is None:
             out.months[t] = mm
         else:

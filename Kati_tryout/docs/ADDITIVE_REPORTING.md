@@ -32,7 +32,7 @@ unchanged. The original wealth evolution used for trading costs and drift is
 economic accounting and retains its compounding. Figure 1 uses annual mean
 returns and volatility and is unaffected.
 
-Base results in all three markets, all five active iterations, the final report,
+Base results in all three markets, all nine active iterations, the final report,
 the overall comparisons, the compact screenshot, the iteration 2/4 presentation
 panels and the embedded notebook are refreshed. Legacy iteration folders remain
 historical reference material and are not regenerated as current results.

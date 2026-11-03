@@ -52,8 +52,22 @@ def verify():
         old_core=[p for p in core if p.relative_to(ROOT).as_posix() in baseline['source_hashes']]
         # The return-model validation population is an authorised adaptation.
         # All other original coefficient/portfolio mathematics stays pinned.
-        preserved_core=[p for p in old_core if p.relative_to(ROOT).as_posix()!='scripts/jkmp/models/return_model.py']
+        preserved_core=[p for p in old_core if p.relative_to(ROOT).as_posix() not in
+                        ('scripts/jkmp/models/return_model.py','scripts/jkmp/portfolio/portfolio_ml.py')]
         check('other_ml_and_weight_learning_source_preserved',all(digest(p)==baseline['source_hashes'][p.relative_to(ROOT).as_posix()] for p in preserved_core))
+        # Authorised iteration-6 extension: reverse ONLY the opt-in addition and
+        # verify the remaining library against the immutable original hash.
+        source=(ROOT/'scripts/jkmp/portfolio/portfolio_ml.py').read_text(encoding='utf-8')
+        original=source.replace('                  training_cost_multiplier: float = 1.0,\n','')
+        original=original.replace("    if not np.isfinite(training_cost_multiplier) or training_cost_multiplier < 1:\n        raise ValueError('training_cost_multiplier must be finite and >= 1')\n",'')
+        extension='''        # Iteration 6 only: penalise costly signal combinations during learning.
+        # Lambda, trading-speed/weight accounting and reported costs are unchanged.
+        denom = risk + tc if training_cost_multiplier == 1 else risk + training_cost_multiplier * tc
+        mm = MonthMoments(t, ids, r_tilde, denom, risk, signals[0])'''
+        original=original.replace(extension,'        mm = MonthMoments(t, ids, r_tilde, risk + tc, risk, signals[0])')
+        check('only_opt_in_training_cost_extension_in_portfolio_library',
+              baseline['source_hashes']['scripts/jkmp/portfolio/portfolio_ml.py'] in
+              {hashlib.sha256(text.encode()).hexdigest() for text in (original,original.replace('\n','\r\n'))})
         check('only_authorised_static_star_library_added',set(p.name for p in core if p not in old_core)=={'static_ml_star.py'})
         from jkmp.config import _read_yaml
         same=True
@@ -87,7 +101,7 @@ def verify():
           spec.loc[spec.published_jkp_153, "direction"]) and
           np.array_equal(spec.loc[~spec.published_jkp_153, "model_theme_direction"], spec.loc[~spec.published_jkp_153, "training_direction"]))
 
-    configs = [(u, "base") for u in UNIVERSES] + [("us_large", f"iteration_{i}") for i in range(1,6)]
+    configs = [(u, "base") for u in UNIVERSES] + [("us_large", f"iteration_{i}") for i in range(1,11)]
     for market, group in configs:
         cfg = load_config(config_path(market, group))
         check(f"{market}/{group}:rff_tuning_scope", cfg.return_model.validation_scope == 'universe')
@@ -140,7 +154,7 @@ def verify():
         if job.stage in {"03", "04", "05", "06", "07", "10", "11", "12", "13", "14", "monitor","experiment"}:
             check(f"plan:{job.name}:script_available", script_path(job.stage, normalise_group(job.variant)).is_file())
     check("iterations_only_us_high_cap", all(job.universe == "us_large" for job in jobs if job.variant != "base"))
-    check('five_sequential_experiments',len([j for j in jobs if j.stage=='experiment'])==5)
+    check('ten_sequential_experiments',len([j for j in jobs if j.stage=='experiment'])==10)
     check("static_star_only_us_high_cap_base",[j.universe for j in jobs if j.stage=='05']==['us_large'])
     cfg=load_config(config_path('us_large'))
     check('expanded_static_star_grid_has_100_candidates',len(cfg.static_ml.k_grid)*len(cfg.static_ml.u_grid)*len(cfg.static_ml.g_grid)==100)

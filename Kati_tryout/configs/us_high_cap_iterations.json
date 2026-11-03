@@ -12,7 +12,29 @@
     {"number": 1, "name": "Refit yearly", "kind": "already_in_base"},
     {"number": 2, "name": "Gamma 5", "override": {"gamma": 5.0}},
     {"number": 3, "name": "Exit 120, costs x2", "override": {"exit_rank": 120, "cost_multiple": 2.0}},
-    {"number": 4, "name": "Market + 1% TE-target tilt", "override": {"benchmark_relative": true, "te_target": 0.01}},
-    {"number": 5, "name": "Recent-history weighting", "override": {"half_lives": [3, 5, 10, null]}}
+    {"number": 4, "name": "Market + 1% TE-target tilt", "parent_iteration": 1, "override": {"benchmark_relative": true, "te_target": 0.01}},
+    {"number": 5, "name": "Recent-history weighting", "override": {"half_lives": [3, 5, 10, null]}},
+    {"number": 6, "name": "More selective trading", "override": {"training_cost_multiplier": 1.0},
+     "training_cost_candidates": [1.0, 1.5, 2.0],
+     "selection_metric": "pretest annual net mean-variance utility at evaluation gamma 10, actual costs",
+     "tie_break": "smaller multiplier", "freeze_before_test": true},
+    {"number": 7, "name": "Stock-specific risk responsiveness", "override": {"idio_half_life_days": 126},
+     "idio_half_life_candidates": [63, 126, 252],
+     "selection_metric": "pretest annual net mean-variance utility at evaluation gamma 10, actual costs",
+     "tie_break": "prefer unchanged 126 days, then smaller half-life", "freeze_before_test": true},
+    {"number": 8, "name": "Stable model selection", "override": {
+       "selection_rule": "one_se", "one_se_rule": {"bootstrap_reps": 2000, "block_months": 6, "seed": 20261103, "se_multiple": 1.0}},
+     "calibration_gamma_grid": [100.0, 250.0, 50.0, 500.0, 10.0, 1000.0, 1.0, 10000.0, 0.01, 1000000.0, 0.0001],
+     "selection_metric": "annual historical mean candidate utility within one block-bootstrap SE of best",
+     "tie_break": "fewer RFF features, stronger ridge, smaller RFF variance", "freeze_before_test": true},
+    {"number": 9, "name": "Benchmark-aware trade netting", "override": {"cost_learning": "recursive_benchmark_netting"},
+     "calibration_gamma_grid": [100.0, 250.0, 50.0, 500.0, 25.0, 1000.0, 10.0, 2500.0],
+     "selection_metric": "original annual maximum historical utility with corrected affine recursive cost representation",
+     "return_risk_proxies_unchanged": true, "freeze_before_test": true},
+    {"number": 10, "name": "RFF seed ensemble", "override": {"ensemble_rule": "equal_seed_aims"},
+     "seeds": [1, 2, 3, 4, 5], "seed_weights": [0.2, 0.2, 0.2, 0.2, 0.2],
+     "calibration_gamma_grid": [100.0, 250.0, 50.0, 500.0, 25.0, 1000.0, 10.0, 2500.0],
+     "selection_metric": "original annual validation utility independently for each seed; equal aim weights fixed before test",
+     "freeze_before_test": true}
   ]
 }

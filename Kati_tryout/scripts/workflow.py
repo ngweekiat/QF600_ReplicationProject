@@ -24,7 +24,7 @@ from jkmp.data.wrds_pull import RAW_FILES
 
 MONTH = pd.offsets.MonthEnd(1)
 UNIVERSES = ("us_large", "us_mid", "eu_large")
-VARIANTS = ("base", *(f"iteration_{i}" for i in range(1,6)))
+VARIANTS = ("base", *(f"iteration_{i}" for i in range(1,11)))
 
 
 def settings():

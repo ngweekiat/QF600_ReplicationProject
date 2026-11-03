@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "parent": "iteration_4",
+  "gamma_te": 174.1,
+  "risk_coefficient_policy": "retain original pretest-calibrated coefficient; no recalibration or forced TE rescaling",
+  "candidate_return_start": "2015-01-31",
+  "pretest_end": "2019-12-31",
+  "policy_pretest_start": "2016-01-31",
+  "test_start": "2020-01-31",
+  "test_end": "2025-12-31",
+  "objective": "12*(mean(active_net)-gamma_te/2*sample_var(active_gross,ddof=1))",
+  "bootstrap_reps": 2000,
+  "bootstrap_block_months": 6,
+  "bootstrap_seed": 20261107,
+  "one_se_multiple": 1.0,
+  "simpler_order": ["fewer RFF features", "stronger ridge", "smaller RFF variance", "candidate id"],
+  "p_test_reps": 10000,
+  "p_test_block_months": 6,
+  "p_test_seed": 20261102,
+  "p_test_is_retention_gate": false,
+  "stages": ["4.2", "4.3"]
+}

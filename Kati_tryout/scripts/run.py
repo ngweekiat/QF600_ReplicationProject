@@ -40,7 +40,8 @@ def run_stage(stage,universe,variant="base",extra=(),target=.02):
     if stage in ('experiment','12'):
         if group=='base' or universe!='us_large':raise ValueError('Choose US high-cap iteration_1 through iteration_5')
         from iteration_sequence import main
-        return main(['--upto',group.split('_')[1],*extra])
+        number=group.split('_')[1]
+        return main(['--upto',number,*(['--start-from',number] if number in ('6','7','8','9','10') else []),*extra])
     if group!='base' and stage in (*SCRIPTS,'prepare','01','02'):
         raise ValueError('Iteration inputs are read-only Base data. Run the experiment stage or scripts/iteration_N/run.py.')
     if group!="base" and universe!="us_large" and stage not in ("audit","00","validate","compare","organise","overall","figure1"):

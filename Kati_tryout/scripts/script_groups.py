@@ -1,7 +1,7 @@
 """Authoritative mapping from run groups to script entry points."""
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-GROUPS=("base",*(f"iteration_{i}" for i in range(1,6)))
+GROUPS=("base",*(f"iteration_{i}" for i in range(1,11)))
 VARIANTS={group:group for group in GROUPS}
 ALIASES={**{x:x for x in GROUPS},**{v:k for k,v in VARIANTS.items()}}
 

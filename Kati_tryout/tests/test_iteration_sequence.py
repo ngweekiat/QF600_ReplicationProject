@@ -68,14 +68,19 @@ def test_rejected_experiments_never_enter_next_candidate(tmp_path,monkeypatch):
     monkeypatch.setattr(seq,'verify_accounting',lambda *a:None)
     monkeypatch.setattr(seq,'write_iteration_report',lambda *a:None)
     monkeypatch.setattr(seq,'report_saved',lambda *a,**k:0)
-    assert seq.main([])==0
+    assert seq.main(['--upto','5'])==0
     assert calls[1]['gamma']==5. and calls[1]['exit_rank']==120
-    assert calls[2]['gamma']==5. and calls[2]['exit_rank']==100 and calls[2]['cost_multiple']==1.
+    assert calls[2]['gamma']==10. and calls[2]['exit_rank']==100 and calls[2]['cost_multiple']==1.
     assert calls[3]['benchmark_relative'] and calls[3]['half_lives']==[3,5,10,None]
     d=json.loads((tmp_path/'outputs/iteration_4/us_large/decision.json').read_text())
-    assert d['inherited_iterations']==[1,2] and d['included_after']==[1,2,4]
+    assert d['inherited_iterations']==[1] and d['included_after']==[1,4]
     d=json.loads((tmp_path/'outputs/iteration_5/us_large/decision.json').read_text())
-    assert not d['accepted'] and d['included_after']==[1,2,4]
+    assert not d['accepted'] and d['included_after']==[1,4]
+    calls.clear()
+    monkeypatch.setattr(seq,'paired_probability',lambda *a,**k:dict(probability=.95,identical=False))
+    assert seq.main(['--upto','4','--only','4'])==0
+    assert len(calls)==1 and calls[0]['gamma']==10. and calls[0]['benchmark_relative']
+    assert json.loads((tmp_path/'outputs/iteration_4/us_large/decision.json').read_text())['inherited_iterations']==[1]
 
 
 def test_frontier_moment_reuse_never_reuses_changed_risk_or_observations():

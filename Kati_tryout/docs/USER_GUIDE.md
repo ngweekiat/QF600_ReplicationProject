@@ -1,6 +1,6 @@
 # Using Kati_tryout
 
-The active experiment map is [the five-step protocol](FIVE_ITERATION_PROTOCOL.md). Use `outputs/iteration_summary/index.html` for all decisions and the final strategy. Each `outputs/iteration_N/us_large/SUMMARY.md` explains included ancestry, P(better) and acceptance.
+The active experiment map is [the ten-step protocol](FIVE_ITERATION_PROTOCOL.md). Use `outputs/iteration_summary/index.html` for all decisions and the final strategy. Each `outputs/iteration_N/us_large/SUMMARY.md` explains included ancestry, P(better) and acceptance.
 
 Open `Kati_tryout.ipynb` in VS Code or Jupyter using the project environment (Python 3.11–3.13). The notebook contains all Python source rather than only links to scripts. Use its outline to jump to a model or iteration and expand a source cell when needed. Every code cell has a Markdown explanation immediately before it.
 

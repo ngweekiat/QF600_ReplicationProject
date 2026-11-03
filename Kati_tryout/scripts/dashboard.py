@@ -27,8 +27,11 @@ def collect_series(root=ROOT):
         for folder, label in folders:
             records.append((market, "base", label, base / folder / "pf.parquet"))
         records.append((market, "base", "Market (base basket)", root / "outputs/base/overall analysis/market_references" / market / "pf.parquet"))
-    for number in range(1,6):
+    for number in range(1,11):
         base = root / f"outputs/iteration_{number}/us_large"
+        records.append(('us_large',f'iteration_{number}',f'Portfolio ML iteration {number}',base/'pf.parquet'))
+    for number in ('4.2','4.3'):
+        base=root/f'outputs/iteration_{number}/us_large'
         records.append(('us_large',f'iteration_{number}',f'Portfolio ML iteration {number}',base/'pf.parquet'))
     series = []
     for market, group, label, path in records:
@@ -83,7 +86,7 @@ def build_dashboard(root=ROOT):
 const $=x=>document.getElementById(x), esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const colors=['#16739b','#b35a27','#4b885e','#845aa0','#ca9b2d','#c45065','#35636a','#535e96'];
 const pct=x=>Number.isFinite(x)?(100*x).toFixed(2)+'%':'—', num=x=>Number.isFinite(x)?x.toFixed(3):'—'; let visible=new Set(DATA.series.map(s=>s.label));
-function candidates(){let level=Number($('group').value.split('_')[1]||0),market=$('market').value;return DATA.series.filter(s=>s.market===market&&(s.group==='base'||Number(s.group.split('_')[1])<=level));}
+function candidates(){let group=$('group').value,level=Number(group.split('_')[1]||0),market=$('market').value;let branch=group==='iteration_4'?new Set(['base','iteration_4']):group==='iteration_4.2'?new Set(['base','iteration_4','iteration_4.2']):group==='iteration_4.3'?new Set(['base','iteration_4','iteration_4.2','iteration_4.3']):null;return DATA.series.filter(s=>s.market===market&&(branch?branch.has(s.group):(s.group==='base'||(/^iteration_\d+$/.test(s.group)&&Number(s.group.split('_')[1])<=level))));}
 function draw(){let all=candidates();$('legend').innerHTML=all.map((s,i)=>`<label style="color:${colors[i%colors.length]}"><input type="checkbox" data-label="${esc(s.label)}" ${visible.has(s.label)?'checked':''}> ${esc(s.label)}</label>`).join('');$('legend').querySelectorAll('input').forEach(el=>el.onchange=()=>{el.checked?visible.add(el.dataset.label):visible.delete(el.dataset.label);draw()});
 let ss=all.filter(s=>visible.has(s.label));if(!ss.length){$('status').textContent=all.length?'Select at least one strategy.':'No completed Kati model results yet. Run the models using the notebook controls or scripts/run_all.py.';$('plot').innerHTML='';$('metrics').innerHTML='';return;}
 let dates=ss[0].points.map(p=>p.date).filter(d=>ss.every(s=>s.points.some(p=>p.date===d)));if(!dates.length){$('status').textContent='These strategies have no common result months.';$('plot').innerHTML='';$('metrics').innerHTML='';return;}
@@ -100,14 +103,17 @@ let themes=[...new Set(DATA.features.map(f=>f.theme))].sort();$('theme').innerHT
 const reports=REPORTS;$('reports').innerHTML=reports.map(r=>`<li><a href="${esc(r.path)}">${esc(r.title)}</a></li>`).join('')||'<li>No fitted-model reports yet.</li>';features();draw();
 </script></html>'''
     links = []
-    template=template.replace('<option value="iteration_3">All iterations + base</option>','<option value="iteration_3">Iteration 3 + earlier versions</option><option value="iteration_4">Iteration 4 + earlier versions</option><option value="iteration_5">All five experiments + base</option>')
-    for rel, title in (("base/overall analysis/index.html", "Base: all markets"), ("iteration_summary/index.html", "Five experiments: P(better), verdicts and final strategy"), ("base/overall analysis/figure1/index.html", "Figure 1 frontiers")):
+    template=template.replace('<option value="iteration_3">All iterations + base</option>','<option value="iteration_3">Iteration 3 + earlier versions</option><option value="iteration_4">Iteration 4 + earlier versions</option><option value="iteration_4.2">Iteration 4.2 + anchor/base</option><option value="iteration_4.3">Iteration 4.3 + 4.2/anchor/base</option><option value="iteration_5">Iteration 5 + earlier versions</option><option value="iteration_6">Iteration 6 + earlier versions</option><option value="iteration_7">Iteration 7 + earlier versions</option><option value="iteration_8">Iteration 8 + earlier versions</option><option value="iteration_9">Iteration 9 + earlier versions</option><option value="iteration_10">Original ten experiments + base</option>')
+    for rel, title in (("base/overall analysis/index.html", "Base: all markets"), ("iteration_summary/index.html", "Ten experiments: P(better), verdicts and final strategy"), ("base/overall analysis/figure1/index.html", "Figure 1 frontiers")):
         if (out / rel).exists():
             links.append(dict(path=rel, title=title))
-    for i in range(1,6):
+    for i in range(1,11):
         rel = f"iteration_{i}/us_large/index.html"
         if (out / rel).exists():
             links.append(dict(path=rel, title=f"Iteration {i} comparison"))
+    for i in ('4.2','4.3'):
+        rel=f'iteration_{i}/us_large/index.html'
+        if (out/rel).exists():links.append(dict(path=rel,title=f'Iteration {i}: separate validation substage; descriptive P(test)'))
     for token, filename in (("OVERVIEW", "selection_groups_and_reasons.png"), ("DETAIL", "selected50_return_association.png")):
         rel = "us_high_cap_selection/charts/" + filename
         content = f'<img src="{rel}" alt="Frozen characteristic selection evidence">' if (out / rel).exists() else '<p>Selection chart not bundled; the table above retains the frozen evidence.</p>'

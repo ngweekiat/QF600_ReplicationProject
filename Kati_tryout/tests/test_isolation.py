@@ -19,7 +19,7 @@ def test_private_engine_and_all_configured_inputs_are_local():
     assert Path(jkmp.config.__file__).resolve().is_relative_to(ROOT / "scripts")
     assert comparison.KATI == ROOT
     choices = [(u, "base") for u in UNIVERSES]
-    choices += [("us_large", f'iteration_{i}') for i in range(1,6)]
+    choices += [("us_large", f'iteration_{i}') for i in range(1,11)]
     for market, group in choices:
         cfg = load_config(config_path(market, group))
         assert set(cfg.features.names) == set(expected)
@@ -47,7 +47,7 @@ def test_plan_keeps_all_base_markets_and_only_us_high_cap_iterations():
         for stage in ("portfolio", "tables", "market_reference"):
             assert f"{market}.base.{stage}" in names
         assert (f"{market}.base.static" in names)==(market=="us_large")
-    for group in (f'iteration_{i}' for i in range(1,6)):
+    for group in (f'iteration_{i}' for i in range(1,11)):
         assert any(f"us_large.{group}." in name for name in names)
     assert not any(job.universe in ("us_mid", "eu_large") and job.variant != "base" for job in jobs)
     numerical = {"03", "04", "05", "06", "07", "10", "11", "12", "13", "14", "monitor","experiment"}

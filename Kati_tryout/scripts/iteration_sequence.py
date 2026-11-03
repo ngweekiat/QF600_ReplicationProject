@@ -171,10 +171,22 @@ class ExperimentEngine:
             self._expanded_cov=extended
         return self._expanded_cov
 
-    def fit(self,state,folder,*,calibration=False,gamma_te=None):
+    def fit(self,state,folder,*,calibration=False,gamma_te=None,validation_result=False):
+        if state.get('cost_learning')=='recursive_benchmark_netting':
+            from benchmark_netting import fit_netting
+            return fit_netting(self,state,folder,calibration=calibration,gamma_te=gamma_te,validation_result=validation_result)
+        if state.get('selection_rule')=='one_se':
+            from stable_selection import fit_stable
+            return fit_stable(self,state,folder,calibration=calibration,gamma_te=gamma_te,validation_result=validation_result)
         cfg=self.cfg
         panel=self.panel_for(state,folder)
         cov=self.covariance_for(panel)
+        if 'idio_half_life_days' in state:
+            half_life=int(state['idio_half_life_days'])
+            if not hasattr(self,'_risk_covariances'):self._risk_covariances={}
+            if half_life not in self._risk_covariances:
+                self._risk_covariances[half_life]=load_covariance(ROOT/f'data/processed/us_large/iteration_7_covariance/hl_{half_life}')
+            cov=self._risk_covariances[half_life]
         pm=dataclasses.replace(cfg.portfolio_ml,benchmark_relative=state['benchmark_relative'],
              add_constant=not state['benchmark_relative'],half_life_years=tuple(state['half_lives']))
         cfg=dataclasses.replace(cfg,portfolio_ml=pm)
@@ -196,6 +208,7 @@ class ExperimentEngine:
             ym=build_yearly_moments(inp.panel,self.wealth,cov,self.rf,dates,cfg.features.names,
                 signal_dates=aim,gamma=gamma,mu=cfg.investor.mu,lb=cfg.universe.lookback_months,
                 iterations=cfg.investor.m_iterations,scale_by_vol=pm.scale_by_vol,
+                training_cost_multiplier=state.get('training_cost_multiplier',1.0),
                 add_constant=pm.add_constant,**_signal_kwargs(cfg,g))
             results[tag]=search_yearly(ym,tag,pm.p_grid,cfg.ridge_grid.values,years,pm.half_life_years)
             del ym
@@ -203,6 +216,7 @@ class ExperimentEngine:
             gamma=gamma,mu=cfg.investor.mu,iterations=cfg.investor.m_iterations,
             charge_exit_tc=cfg.portfolio.charge_exit_tc,benchmark_relative=state['benchmark_relative'])
         if calibration:
+            if validation_result:return res
             ex=ex_ante_exposures(active_weights(res['weights'],inp.panel),cov)
             return dict(gamma_te=gamma,te_ex_ante=float(ex.te.mean()*np.sqrt(12)),
                         months=len(evaluation),last_return=str((evaluation[-1]+MONTH).date()))
@@ -303,21 +317,35 @@ def write_iteration_report(number,decision,candidate,reference,base,static,marke
     narrative+=f' Compared against: {decision["reference"]}. Verdict: {decision["verdict"]}.'
     narrative+=f' Included in subsequent accepted setup: {decision["accepted"]}.'
     if decision['candidate_state']['benchmark_relative']:
-        narrative+=' The tilt uses calibrated gamma_TE; an inherited gamma-5 decision is not an extra multiplier of active risk.'
+        narrative+=' The tilt uses calibrated gamma_TE. Iteration 4 starts directly from Base; gamma 5 from iteration 2 is excluded.'
+    if number==6:
+        selection=json.loads((folder/'pretest_selection.json').read_text())
+        narrative+=f' Training-only cost preference: {selection["selected_multiplier"]:g}x, frozen using pretest actual-cost utility. Actual execution costs remain 1x. Iteration 4 is already included; rejected iteration 5 is not inherited.'
+    if number==7:
+        selection=json.loads((folder/'pretest_selection.json').read_text())
+        narrative+=f' Stock-specific volatility half-life: {selection["selected_half_life_days"]} days, frozen using pretest actual-cost utility. Factor risks, correlations, stocks and costs are unchanged. Iteration 4 is inherited; rejected iterations 5 and 6 are not.'
+    if number==8:
+        narrative+=' The annual choice must lie within one six-month-block-bootstrap standard error of the best historical mean utility; fewer RFF features, then stronger ridge, then smaller RFF variance win. The rule is fixed before test, with only past returns used each year. Iteration 4 is inherited; rejected iterations 5, 6 and 7 are absent.'
+    if number==9:
+        narrative+=' Learning uses affine benchmark-plus-active net-order costs derived from the existing recursion, including exits and the benchmark-dependent linear term. Original return/risk moment proxies, ridge search, execution and actual costs are unchanged. Fixed-coefficient cost identities are verified; annual refit-jump costs remain charged through actual accounting.'
+    if number==10:
+        selection=json.loads((folder/'pretest_selection.json').read_text())
+        narrative+=f' Equal-weight ensemble of fixed RFF seeds {selection["seeds"]}. Each seed independently selects annual settings from prior data. Stock-level aims are averaged and executed once with the same pretest-calibrated gamma_TE for every member. Coefficients from different random bases are not averaged. Actual costs are reconstructed from combined orders; seed selection uses no performance ranking. Rejected iterations 5-9 are absent.'
     text=f'# Iteration {number}: {decision["name"]}\n\n{narrative}\n\nP(better net Sharpe): {decision["p_better"] if decision["p_better"] is not None else "N/A (already in Base or identical)"}. Acceptance threshold: 80%.\n\n'+METHODS
     (folder/'SUMMARY.md').write_text(text,encoding='utf-8')
     (folder/'README.md').write_text(text,encoding='utf-8')
     body=f'<h1>Iteration {number}: {html.escape(decision["name"])}</h1><p class="note">{html.escape(narrative)}</p><p>P(better): {decision["p_better"] if decision["p_better"] is not None else "N/A"}</p>'
     body+=table.to_html(index=False,float_format=lambda v:f'{v:.5g}')+'<img src="charts/net_returns_and_costs.png"><img src="charts/costs_and_turnover.png">'
-    body+='<p><a href="SUMMARY.md">Summary and methods</a> | <a href="decision.json">Decision/inheritance</a> | <a href="performance_summary.csv">Performance CSV</a> | <a href="monthly_returns.csv">Monthly returns</a> | <a href="../../iteration_summary/index.html">All five experiments</a></p>'
+    body+='<p><a href="SUMMARY.md">Summary and methods</a> | <a href="decision.json">Decision/inheritance</a> | <a href="performance_summary.csv">Performance CSV</a> | <a href="monthly_returns.csv">Monthly returns</a> | <a href="../../iteration_summary/index.html">All ten experiments</a></p>'
     (folder/'index.html').write_text('<!doctype html><meta charset="utf-8">'+STYLE+body,encoding='utf-8')
 
 
-METHODS='''All comparisons use the existing 72 test return months, January 2020--December 2025. Kati OOS labels overlap this test history; no separate unseen confirmation is claimed. Annual expanding coefficient refits and monthly portfolio updates are preserved. P(better) is the fraction of 10,000 paired circular-block bootstrap samples (six-month blocks, seed 20261102) with a positive net-Sharpe difference, with half weight to numerical ties. It is not a frequentist p-value or a Bayesian probability of future outperformance. Net Sharpe uses gross-return volatility, following the paper convention. Acceptance is P(better) >= 80% against the last accepted version, not against Market. Identical strategies are not accepted as an improvement. Iteration 1 is retained as an existing design, without a statistical claim. Drawdown is descriptive and adds no rejection gate. Decisions use already inspected test outcomes; subsequent reported performance on those same months is selected-sample evidence, not independent validation. The experiment log retains rejected trials. Nested hyperparameter searches and earlier research choices are not fully corrected by these five comparisons. Cumulative returns add monthly net excess returns, matching the paper replication code (cumsum(r-tc)). Additive drawdown is the cumulative sum minus its running maximum including initial zero; multiply by 100 for percentage points. Relative performance is the cumulative difference against Market. Additive drawdown is a reporting extension of the paper chart convention, not a verified drawdown definition in the paper or a total-wealth loss. TE 1% is an ex-ante pretest calibration target, not a hard realised cap. Base markets, stock screens, selected 50, dates, costs and risk equations are retained except for each explicitly tested override. Exit 120 changes buffering within the same US large-cap candidate population and may change the stock count; costs x2 are applied both when fitting and when trading. The original wider covariance cache may supply extra buffered stocks, only after equality checks against common base covariance entries. No 250-stock breadth experiment is part of this five-step sequence.'''
+METHODS='''All comparisons use the existing 72 test return months, January 2020--December 2025. Kati OOS labels overlap this test history; no separate unseen confirmation is claimed. Annual expanding coefficient refits and monthly portfolio updates are preserved. P(better) is the fraction of 10,000 paired circular-block bootstrap samples (six-month blocks, seed 20261102) with a positive net-Sharpe difference, with half weight to numerical ties. It is not a frequentist p-value or a Bayesian probability of future outperformance. Net Sharpe uses gross-return volatility, following the paper convention. Acceptance is P(better) >= 80% against the last accepted version, not against Market. Identical strategies are not accepted as an improvement. Iteration 1 is retained as an existing design, without a statistical claim. Drawdown is descriptive and adds no rejection gate. Decisions use already inspected test outcomes; subsequent reported performance on those same months is selected-sample evidence, not independent validation. The experiment log retains rejected trials. Nested hyperparameter searches and earlier research choices are not fully corrected by these ten comparisons. Cumulative returns add monthly net excess returns, matching the paper replication code (cumsum(r-tc)). Additive drawdown is the cumulative sum minus its running maximum including initial zero; multiply by 100 for percentage points. Relative performance is the cumulative difference against Market. Additive drawdown is a reporting extension of the paper chart convention, not a verified drawdown definition in the paper or a total-wealth loss. TE 1% is an ex-ante pretest calibration target, not a hard realised cap. Base markets, stock screens, selected 50, dates, costs and risk equations are retained except for each explicitly tested override. Exit 120 changes buffering within the same US large-cap candidate population and may change the stock count; costs x2 are applied both when fitting and when trading. The original wider covariance cache may supply extra buffered stocks, only after equality checks against common base covariance entries. No 250-stock breadth experiment is part of this ten-step sequence.'''
 
 
-def report_saved(upto=5):
+def report_saved(upto=None):
     protocol=json.loads(PROTOCOL.read_text())
+    if upto is None:upto=len(protocol['iterations'])
     decisions=[]
     base=pd.read_parquet(BASE/'pf.parquet')
     market=pd.read_parquet(ROOT/'outputs/base/overall analysis/market_references/us_large/pf.parquet')
@@ -357,7 +385,7 @@ def report_saved(upto=5):
         cell.set_edgecolor('#ccd4dd')
         if row==0:cell.set_facecolor('#203451');cell.set_text_props(color='white',weight='bold')
         else:cell.set_facecolor('#f0f4f8' if row%2 else 'white')
-    fig.suptitle('Statistical tests across all five iterations | US high-cap, 2020–2025',fontsize=14)
+    fig.suptitle(f'Statistical tests across all {len(decisions)} iterations | US high-cap, 2020–2025',fontsize=14)
     fig.tight_layout()
     for suffix in ('png','pdf'):fig.savefig(OUT/f'statistical_tests_all_iterations.{suffix}',dpi=180,bbox_inches='tight')
     plt.close(fig)
@@ -376,27 +404,28 @@ def report_saved(upto=5):
         information_ratio=float(12*active.mean()/te) if te>0 else None,independent_unseen_confirmation=False))
     plot_comparison({'Final Portfolio ML':final,'Market':market},final_folder/'charts','Final accepted strategy vs Market, 2020--2025')
     (final_folder/'SUMMARY.md').write_text('# Final accepted US high-cap Portfolio ML\n\nIncluded iterations: '+str(decisions[-1]['included_after'])+'\n\n'+METHODS,encoding='utf-8')
-    write_json(OUT/'run_status.json',dict(completed_iterations=len(decisions),total_iterations=5,
-        sequence_complete=len(decisions)==5,final_is_provisional=len(decisions)<5))
+    total_iterations=len(protocol['iterations'])
+    write_json(OUT/'run_status.json',dict(completed_iterations=len(decisions),total_iterations=total_iterations,
+        sequence_complete=len(decisions)==total_iterations,final_is_provisional=len(decisions)<total_iterations))
     display=table[['iteration','change','Sharpe','P_better','worst_drawdown','verdict']].copy()
     display['P_better']=display.P_better.map(lambda x:'N/A' if pd.isna(x) else f'{x:.1%}')
     display['worst_drawdown']=display.worst_drawdown.map(lambda x:f'{100*x:.1f} pp')
     links=''.join(f'<li><a href="../iteration_{d["number"]}/us_large/index.html">Iteration {d["number"]}: {html.escape(d["name"])}</a> — {html.escape(d["verdict"])}</li>' for d in decisions)
-    body='<h1>Statistical tests across all five US high-cap iterations</h1>'+display.to_html(index=False,float_format=lambda x:f'{x:.3f}')
+    body=f'<h1>Statistical tests across all {len(decisions)} US high-cap iterations</h1>'+display.to_html(index=False,float_format=lambda x:f'{x:.3f}')
     body+='<ul>'+links+'</ul><h2>Final accepted strategy vs Market</h2>'+final_stats.to_html(index=False,float_format=lambda x:f'{x:.5g}')
     body+='<img src="final/charts/net_returns_and_costs.png"><p><a href="statistical_tests_all_iterations.csv">Experiment table CSV</a> | <a href="final/summary.json">Final active metrics and P versus Market</a> | <a href="METHODS.md">Definitions and limitations</a></p>'
     body+='<p class="note">'+html.escape(METHODS)+'</p>'
     (OUT/'index.html').write_text('<!doctype html><meta charset="utf-8">'+STYLE+body,encoding='utf-8')
     (OUT/'METHODS.md').write_text(METHODS,encoding='utf-8')
-    # Replace the former four-version landing page with the current five-step report.
+    # Replace the former four-version landing page with the current seven-step report.
     alias=ROOT/'outputs/base/overall analysis/us_high_cap_progression';alias.mkdir(parents=True,exist_ok=True)
-    (alias/'index.html').write_text('<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../../../iteration_summary/index.html"><a href="../../../iteration_summary/index.html">Current five-experiment decisions and final strategy</a>',encoding='utf-8')
+    (alias/'index.html').write_text('<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../../../iteration_summary/index.html"><a href="../../../iteration_summary/index.html">Current ten-experiment decisions and final strategy</a>',encoding='utf-8')
     progression=[dict(strategy='Base Portfolio ML',**statistics(base))]
     for d in decisions:
         progression.append(dict(strategy=f'Iteration {d["number"]}: {d["name"]}',**statistics(pd.read_parquet(ROOT/f'outputs/iteration_{d["number"]}/us_large/pf.parquet'))))
     pd.DataFrame(progression).to_csv(alias/'performance_summary.csv',index=False)
     from iteration_results_panels import build,build_summary
-    for number in (2,4):
+    for number in (2,4,6,7,8,9,10):
         if any(d['number']==number for d in decisions):build(number)
     build_summary()
     print(display.to_string(index=False),flush=True)
@@ -405,10 +434,13 @@ def report_saved(upto=5):
 
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--upto',type=int,choices=range(1,6),default=5)
+    parser.add_argument('--upto',type=int,choices=range(1,11),default=10)
+    parser.add_argument('--start-from',type=int,choices=range(1,11),default=1,
+                        help='Reuse verified saved decisions before this experiment')
     parser.add_argument('--reports-only',action='store_true')
+    parser.add_argument('--only',type=int,choices=[4],help='Run only the explicit Base-parent iteration-4 branch')
     args=parser.parse_args(argv)
-    if args.reports_only:return report_saved()
+    if args.reports_only:return report_saved(args.upto)
     logging.basicConfig(level=logging.INFO,format='%(asctime)s %(message)s')
     protocol=json.loads(PROTOCOL.read_text());engine=ExperimentEngine()
     base=pd.read_parquet(BASE/'pf.parquet')
@@ -417,7 +449,19 @@ def main(argv=None):
     accepted_state=default_state(engine.cfg);accepted=[1];previous=base;previous_number=1
     base_hashes={str(p):digest(p) for p in [BASE/'pf.parquet',ROOT/'outputs/base/us_large/static_ml_star/pf.parquet',ROOT/'outputs/base/us_mid/portfolio_ml/rff/pf.parquet',ROOT/'outputs/base/eu_large/portfolio_ml/rff/pf.parquet']}
     for spec in protocol['iterations'][:args.upto]:
+        if args.only is not None and spec['number']!=args.only:continue
         n=spec['number'];folder=ROOT/f'outputs/iteration_{n}/us_large';folder.mkdir(parents=True,exist_ok=True)
+        if spec.get('parent_iteration')==1:
+            # Explicit Base branch: accepted gamma-5/other trials are not parents.
+            accepted_state=default_state(engine.cfg);accepted=[1];previous=base;previous_number=1
+        if n<args.start_from:
+            saved=json.loads((folder/'decision.json').read_text())
+            if saved['inherited_iterations']!=accepted:raise ValueError('Saved prefix ancestry differs')
+            verify_accounting(folder,engine.panel_for(saved['candidate_state'],folder),engine.wealth)
+            if saved['accepted']:
+                accepted_state=saved['accepted_state_after'];accepted=list(saved['included_after'])
+                previous=pd.read_parquet(folder/'pf.parquet');previous_number=n
+            continue
         before=list(accepted);reference=previous;reference_label='Base (annual refitting)' if previous_number==1 else f'Iteration {previous_number}'
         if n==1:
             state=dict(accepted_state)
@@ -426,7 +470,22 @@ def main(argv=None):
             keep=True;verdict='Annual refitting already included in Base; retained as design'
         else:
             state=candidate_state(accepted_state,spec['override'])
-            candidate=engine.run_candidate(state,folder)
+            if n==6:
+                from selective_trading import run_selective
+                candidate=run_selective(engine,state,folder,spec)
+            elif n==7:
+                from risk_responsiveness import run_risk_trial
+                candidate=run_risk_trial(engine,state,folder,spec)
+            elif n==8:
+                from stable_selection import run_stable
+                candidate=run_stable(engine,state,folder,spec)
+            elif n==9:
+                from benchmark_netting import run_netting
+                candidate=run_netting(engine,state,folder,spec)
+            elif n==10:
+                from seed_ensemble import run_ensemble
+                candidate=run_ensemble(engine,state,folder,spec)
+            else:candidate=engine.run_candidate(state,folder)
             test=paired_probability(candidate,reference,protocol['bootstrap_reps'],protocol['bootstrap_block_months'],protocol['bootstrap_seed'])
             keep=test['probability'] is not None and test['probability']>=protocol['acceptance_threshold'] and not test['identical']
             verdict='Kept' if keep else ('Not included: identical to previous accepted version' if test['identical'] else 'Not included: P(better) below 80%')

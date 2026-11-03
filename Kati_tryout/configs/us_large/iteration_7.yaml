@@ -1,0 +1,8 @@
+base: base.yaml
+paths:
+  outputs: outputs/iteration_7/us_large
+portfolio_ml:
+  benchmark_relative: true
+  add_constant: false
+# Only idiosyncratic risk weighting is tested. Base risk data stays untouched.
+# The candidate grid and pretest selection rule are in us_high_cap_iterations.json.

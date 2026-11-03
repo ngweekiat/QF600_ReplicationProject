@@ -1,0 +1,8 @@
+base: base.yaml
+paths:
+  outputs: outputs/iteration_6/us_large
+portfolio_ml:
+  benchmark_relative: true
+  add_constant: false
+# Training-only cost candidates and selection rule are in us_high_cap_iterations.json.
+# The accepted ancestry is loaded from the saved iteration 5 decision.

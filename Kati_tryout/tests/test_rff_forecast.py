@@ -35,7 +35,7 @@ def test_market_configs_and_checkpoints_are_independent():
         assert marker!=tuning_marker(legacy)
         paths.append(marker)
     assert len(set(paths))==3
-    for i in range(1,6):
+    for i in range(1,11):
         assert load_config(config_path("us_large",f"iteration_{i}")).return_model.validation_scope=="universe"
 
 

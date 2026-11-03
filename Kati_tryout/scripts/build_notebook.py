@@ -50,7 +50,7 @@ def caption(path, source):
 def source_groups():
     scripts = sorted((ROOT / "scripts").rglob("*.py"))
     tests = sorted((ROOT / "tests").rglob("*.py"))
-    configs = sorted((ROOT / "configs").rglob("*.yaml")) + [ROOT/'configs/us_high_cap_iterations.json']
+    configs = sorted((ROOT / "configs").rglob("*.yaml")) + sorted((ROOT / "configs").rglob("*.json"))
     settings = ROOT / "settings.json"
     grouped = [
         ("Workflow entry points and preparation", [p for p in scripts if p.parent == ROOT / "scripts"]),
@@ -60,7 +60,14 @@ def source_groups():
         ("Iteration 2: gamma 5", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_2"]),
         ("Iteration 3: exit 120 and doubled costs", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_3"]),
         ("Iteration 4: Market plus 1% TE tilt", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_4"]),
+        ("Iteration 4.2: executed active-utility validation", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_4.2"]),
+        ("Iteration 4.3: uncertainty-aware executed validation", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_4.3"]),
         ("Iteration 5: recent-history weighting", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_5"]),
+        ("Iteration 6: more selective trading", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_6"]),
+        ("Iteration 7: stock-specific risk responsiveness", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_7"]),
+        ("Iteration 8: stable one-SE model selection", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_8"]),
+        ("Iteration 9: benchmark-aware trade netting", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_9"]),
+        ("Iteration 10: fixed RFF seed ensemble", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "iteration_10"]),
         ("Legacy iteration source (reference only)", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "legacy_iterations"]),
         ("Reporting and statistical comparisons", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "analysis"]),
         ("Calculation libraries", [p for p in scripts if p.relative_to(ROOT / "scripts").parts[0] == "jkmp"]),
@@ -125,10 +132,19 @@ print("Python:", sys.executable)
 | Iteration 2 | Gamma 5 | Previous accepted version and Base/Static ML*/Market |
 | Iteration 3 | Exit 120 and costs x2 | Previous accepted version; rejected changes are not inherited |
 | Iteration 4 | Market plus pretest-calibrated 1% TE tilt | Inherits only accepted preceding changes |
+| Iteration 4.2 | Select using executed active-utility validation | Separate branch from iteration 4; descriptive P(test), no 80% gate |
+| Iteration 4.3 | Account for uncertainty in executed validation scores | Builds on research stage 4.2; descriptive P(test), no 80% gate |
 | Iteration 5 | Recent-history weighting | Previous accepted version; all results retained |
-| Final | Only accepted changes | P(better) >= 80% on the unchanged 2020–2025 test period |
+| Iteration 6 | More selective trading: pretest-selected learning cost preference | Previous accepted version; actual costs unchanged |
+| Iteration 7 | Stock-specific risk responsiveness | Pretest-selected volatility half-life; all trials retained |
+| Iteration 8 | Stable one-SE annual model selection | Simpler candidates within historical utility uncertainty |
+| Iteration 9 | Benchmark-aware recursive cost learning | Fixed-coefficient net-order cost identity; actual accounting unchanged |
+| Iteration 10 | Equal-weight five-seed RFF ensemble | Original annual learning; combined targets executed once |
+| Final (original integer sequence) | Only accepted changes in iterations 1–10 | P(better) >= 80% on the unchanged 2020–2025 test period |
 
-Base return-forecast RFF settings are selected separately on historical members of each market, using `return_model.validation_scope: universe`. Coefficients still fit on screened regional training data. Portfolio ML has its own separate RFF portfolio-weight model and market-specific utility tuning. See `docs/MARKET_SPECIFIC_RFF_TUNING.md`. This source update has not fitted models or refreshed backtest results.
+The current **Base → 4 → 4.2 → 4.3 research branch** excludes iteration 2. It is documented in `docs/ITERATION_4_SUBSTAGES.md`. P(test) is computed for every stage; only 4.2/4.3 waive the 80% gate. A retained research stage is not evidence of improvement. Other trials remain historical unless explicitly rerun. Dedicated controls below run this branch.
+
+Base return-forecast RFF settings are selected separately on historical members of each market, using `return_model.validation_scope: universe`. Coefficients still fit on screened regional training data. Portfolio ML has its own separate RFF portfolio-weight model and market-specific utility tuning. See `docs/MARKET_SPECIFIC_RFF_TUNING.md`. Source-writing cells do not fit models; inspect the saved decisions and verification files for completion status.
 
 Base ridge calibration uses **validation selection from 101 penalties**. Return-model settings are selected on each market's historical validation members; Portfolio ML selects its own coefficients and settings using preceding portfolio utility. RFF and Static ML* k/u/g procedures and iteration settings are retained.
 
@@ -200,6 +216,17 @@ if RUN_MODELS:
 else:
     print("Model fits have not been started by this cell.")
 '''), markdown("""
+## Run the separate iteration-4 validation branch
+
+**Purpose:** run execution-based active validation (4.2), followed by uncertainty-aware selection (4.3), without rerunning or renumbering the original integer sequence. **Input:** compatible saved iteration-4 inputs and local data. **Output:** separate `outputs/iteration_4.2/us_large/` and `outputs/iteration_4.3/us_large/` results, diagnostic rationale images, and descriptive P(test). This can require fresh candidate replays/fits. Keep the flag false to inspect sources only.
+"""), code('''RUN_4_SUBSTAGES = False
+if RUN_4_SUBSTAGES:
+    for stage in ("4", "4.3"):
+        subprocess.run([sys.executable, "-X", "utf8", str(KATI_ROOT / f"scripts/iteration_{stage}/run.py")],
+                       cwd=KATI_ROOT, check=True)
+else:
+    print("Separate validation branch: outputs/iteration_4.2/ and outputs/iteration_4.3/.")
+'''), markdown("""
 ## Refresh the results explorer
 
 **Purpose:** create a local dashboard from results that actually exist. **Input:** Kati result files. **Output:** charts, tables and report navigation. Before fitting, the explorer shows selection evidence and marks missing model results as unavailable. It does not substitute Keats performance. Use market, run and measure controls in the explorer where offered.
@@ -233,7 +260,8 @@ for filename in ("selection_groups_and_reasons.png", "selected50_rank_correlatio
 | Which characteristic data and labels are used? | `data/characteristics/` and `data/SNAPSHOT_MANIFEST.json` |
 | Which base model/market performs better? | `outputs/base/overall analysis/` |
 | What changed in a specific iteration? | `outputs/iteration_N/us_large/overall analysis/` |
-| How do the four Portfolio ML versions compare? | `outputs/base/overall analysis/us_high_cap_progression/` |
+| How do all ten Portfolio ML experiments compare? | `outputs/iteration_summary/` and `outputs/base/overall analysis/us_high_cap_progression/` |
+| Where are the separate executed-validation refinements? | `outputs/iteration_4.2/us_large/` and `outputs/iteration_4.3/us_large/` |
 | How do all models and iterations compare? | `outputs/base/overall analysis/all_models_and_iterations/` |
 | Where are Figure 1 charts? | `outputs/base/overall analysis/figure1/` and iteration extensions |
 | What ran, failed, or was blocked? | `outputs/organisation_audit/run_logs/` for the all-group workflow |

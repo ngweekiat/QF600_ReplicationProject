@@ -38,7 +38,7 @@ class Job:
 
 def plan(universes,scope,group="base",skip_figure1=False):
     from script_groups import normalise_group
-    level=5 if group=="all" else (0 if group=='base' else int(normalise_group(group).split('_')[1]))
+    level=10 if group=="all" else (0 if group=='base' else int(normalise_group(group).split('_')[1]))
     jobs=[Job("audit","audit","all"),Job("prepare","prepare","all",dependencies=("audit",)),Job("validate","validate","all",dependencies=("prepare",))]
     tables=[]
     for u in universes:
@@ -59,7 +59,7 @@ def plan(universes,scope,group="base",skip_figure1=False):
             name=f'us_large.iteration_{number}.experiment'
             jobs.append(Job(name,'experiment','us_large',f'iteration_{number}',dependencies=(previous,'us_large.base.market_reference')))
             previous=name
-        if level==5 and set(universes)==set(UNIVERSES):
+        if level==10 and set(universes)==set(UNIVERSES):
             jobs.append(Job('us_large.iteration_verification','verify-iterations','us_large',dependencies=(previous,)))
             jobs.append(Job('overall.master_comparison','overall','all',extra=('--only-group','master'),dependencies=('us_large.iteration_verification','base.overall_analysis')))
     if scope=="full" and not skip_figure1:
@@ -127,7 +127,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--scope", choices=("core", "full"), default="core")
     parser.add_argument("--universe", choices=(*UNIVERSES, "all"), default="all")
-    parser.add_argument("--group",choices=("base",*(f'iteration_{i}' for i in range(1,6)),"all"),default="base")
+    parser.add_argument("--group",choices=("base",*(f'iteration_{i}' for i in range(1,11)),"all"),default="base")
     parser.add_argument("--list-jobs",action="store_true",help="Show dependencies without running experiments")
     parser.add_argument("--skip-figure1",action="store_true",help="Run full diagnostics without fitting the separate frontier grid")
     args = parser.parse_args()

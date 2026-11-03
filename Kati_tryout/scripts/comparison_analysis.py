@@ -28,7 +28,7 @@ BASE_PF = "US high-cap Portfolio ML base"
 STATIC = "US high-cap Static ML"
 STATIC_STAR = "US high-cap Static ML*"
 MARKET = "US high-cap Market"
-ITERATIONS = {i: f"US high-cap Portfolio ML iteration {i}" for i in range(1,6)}
+ITERATIONS = {i: f"US high-cap Portfolio ML iteration {i}" for i in range(1,11)}
 STYLE = """<style>body{max-width:1180px;margin:40px auto;padding:0 24px;font:16px/1.55 system-ui;color:#23313c}h1{font-size:30px}h2{margin-top:32px}table{border-collapse:collapse;font-size:13px;width:100%}th,td{padding:9px;border:1px solid #d5dee5;text-align:right}th:first-child,td:first-child{text-align:left}th{background:#e9eff4}.scroll{overflow:auto}img{max-width:100%;margin:18px 0}a{color:#125981}.note{background:#eef3f7;padding:15px;border-radius:6px}</style>"""
 
 
@@ -85,7 +85,7 @@ def iteration_source(number, target=None):
 
 def iteration_comparison_sources(number):
     """Current iteration plus all earlier versions; never include a later one."""
-    if number not in range(1,6):raise ValueError("Iteration must be 1 through 5")
+    if number not in range(1,11):raise ValueError("Iteration must be 1 through 10")
     return iteration_baseline_sources()+[iteration_source(i) for i in range(1,number+1)]
 
 
@@ -156,7 +156,8 @@ def charts(monthly, stats, out):
     import matplotlib.pyplot as plt
     folder = out / "charts"
     folder.mkdir(exist_ok=True)
-    colors = dict(zip(monthly.strategy.unique(), plt.get_cmap("tab10").colors))
+    palette=plt.get_cmap('tab20').colors
+    colors={label:palette[i%len(palette)] for i,label in enumerate(monthly.strategy.unique())}
     fig, axes = plt.subplots(2, 1, figsize=(12, 8), sharex=True)
     for label, d in monthly.groupby("strategy", sort=False):
         d = d.sort_values("eom_ret")
@@ -277,7 +278,7 @@ def write_report(monthly, inventory, out, title, benchmark, reps=2000, context="
 
 
 def run_reports(only="all", reps=2000):
-    if only in ('final',*(f'iteration_{i}' for i in range(1,6))):
+    if only in ('final',*(f'iteration_{i}' for i in range(1,11))):
         from iteration_sequence import report_saved
         return report_saved()
     if only=='all':
@@ -306,10 +307,10 @@ def run_reports(only="all", reps=2000):
         data.to_csv(BASE_OUT / "all_base_monthly_returns.csv", index=False)
     if only in ("master","all"):
         chosen=[r for r in records if r["expected_type"]!="Market" or r["strategy"]==MARKET]
-        combined, inv=load_sources(chosen+[iteration_source(i) for i in range(1,6)])
+        combined, inv=load_sources(chosen+[iteration_source(i) for i in range(1,11)])
         write_report(combined,inv,BASE_OUT/"all_models_and_iterations",
             "All retained base ML models and US high-cap Portfolio ML iterations",benchmark,reps,
-            "Unchanged three-market Base and five US high-cap sequential experiments. Rejected candidates remain visible but are not inherited. See outputs/iteration_summary for P(better), accepted ancestry and the final strategy.")
+            "Unchanged three-market Base and ten US high-cap sequential experiments. Rejected candidates remain visible but are not inherited. See outputs/iteration_summary for P(better), accepted ancestry and the final strategy.")
     add_navigation(include_iterations=only in ("all","iteration_1","iteration_2","iteration_3"))
     return 0
 
@@ -319,8 +320,8 @@ def add_navigation(include_iterations=True):
                ("Figure 1 implementable frontiers", "outputs/base/overall analysis/figure1/index.html"),
                ("All base ML models and iterations", "outputs/base/overall analysis/all_models_and_iterations/index.html"),
                ("Final US high-cap Portfolio ML progression", "outputs/base/overall analysis/us_high_cap_progression/index.html")]
-    entries += [(f"US high-cap iteration {i}", f"outputs/iteration_{i}/us_large/index.html") for i in range(1,6)]
-    entries.append(('Five experiment decisions and final strategy','outputs/iteration_summary/index.html'))
+    entries += [(f"US high-cap iteration {i}", f"outputs/iteration_{i}/us_large/index.html") for i in range(1,11)]
+    entries.append(('Ten experiment decisions and final strategy','outputs/iteration_summary/index.html'))
     for title, rel in entries:
         if not include_iterations and rel.startswith("outputs/iteration_"):continue
         page = ROOT / rel
@@ -343,7 +344,7 @@ def add_navigation(include_iterations=True):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--only-group", choices=("all", "base", *(f'iteration_{i}' for i in range(1,6)), "final", "master"), default="all")
+    parser.add_argument("--only-group", choices=("all", "base", *(f'iteration_{i}' for i in range(1,11)), "final", "master"), default="all")
     parser.add_argument("--bootstrap-reps", type=int, default=2000)
     args = parser.parse_args(argv)
     if args.bootstrap_reps < 1: parser.error("bootstrap-reps must be positive")
