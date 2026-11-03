@@ -46,6 +46,9 @@ against Markowitz-ML, Factor-ML, Static-ML\* and simple benchmarks on returns *n
   kept = **final version**); trial 4 half-life β (`configs/experiments/halflife.yaml`, `scripts/14_halflife.py`, killed).
 - **Holdout (Phase 7, run once):** `configs/experiments/holdout{,_linear,_final}.yaml`, `scripts/15_holdout.py` → `outputs/holdout/tables/`;
   monitor `scripts/11_monitor.py` → `outputs/holdout_final/monitor/`. Summary in `docs/results_summary.md`.
+- **Macro stress tests (extension, evaluation only, not a trial):** `evaluation/macro_stress.py`, `scripts/16_macro_stress.py` →
+  `outputs/macro_stress/`, `outputs/figures/macro_stress.png`; Fed-policy scenarios S1–S3 for the 2026 hike / hold / December decision,
+  pre-registered and reported in `docs/macro_stress.md` (D38).
 - **Not yet:** Rank-ML, Fig. 2.
 
 New portfolio methods should produce target weights `id, eom, w` and reuse
@@ -154,6 +157,7 @@ uv venv --python 3.12 .venv && uv pip install --python .venv/bin/python -e ".[de
 # Holdout (Phase 7 only): scripts 03–07 with --config configs/experiments/holdout{,_linear}.yaml; 04 and 12 run with holdout_final.yaml
 .venv/bin/python scripts/15_holdout.py               # holdout Tables 2–3, decay, final active stats, deflated Sharpe
 .venv/bin/python scripts/11_monitor.py               # monthly monitor flags + one-page dashboard (needs the holdout runs)
+.venv/bin/python scripts/16_macro_stress.py [--force] # Fed-policy stress scenarios S1–S3 (needs the 1981–2020 and holdout runs)
 ```
 
 **Python 3.11–3.13 only.** `wrds` pins pandas < 2.3, which has no Python 3.14 wheels; a source
@@ -176,6 +180,7 @@ config, notebooks, logs or chat messages.
 | `factor_details.parquet`, `cluster_labels.parquet` (+ originals) | JKP feature names, sign directions, themes |
 | `row_counts_by_month.csv` | Per-month row counts across the files above |
 | `fred_USREC.parquet`, `fred_VIXCLS.parquet`, `fred_FEDFUNDS.parquet` | FRED public CSVs (`date, value`), downloaded by `scripts/10_regimes.py` |
+| `fred_DFEDTAR.parquet`, `fred_DFEDTARU.parquet` | FOMC target (1982-09..2008-12) and target-range upper bound (2008-12 on), daily; downloaded by `scripts/16_macro_stress.py` |
 
 ## Processed data (`data/processed/`, from `scripts/01_prepare.py`)
 

@@ -298,6 +298,28 @@ class RegimesConfig:
 
 
 @dataclass(frozen=True)
+class MacroStressConfig:
+    target_series: tuple[str, ...]   # FRED target-rate series, oldest first; spliced at each one's first date
+    move_threshold: float            # pp: a month is a hike / cut if the month-end target moved by more than this
+    horizons: tuple[int, ...]        # S1 / S2 window lengths in return months, starting at the event month
+    s3_outcome_months: int           # S3: an S2 month's outcome is "hike" if any hike in the next this-many months
+    s3_offset_months: int            # S3 window starts this many months after the S2 month (Oct hold -> Dec)
+    s3_horizon: int                  # S3 window length in return months
+    p_hike: float                    # market-implied probability of the next hike (an input, not a forecast)
+    n_draws: int                     # current-book simulation draws
+    methods: tuple[str, ...]         # baseline methods in the historical lens
+
+    def __post_init__(self) -> None:
+        _require(len(self.target_series) >= 1, "macro_stress.target_series needs at least one series")
+        _require(self.move_threshold >= 0, "macro_stress.move_threshold must be >= 0")
+        _require(len(self.horizons) >= 1 and min(self.horizons) >= 1, "macro_stress.horizons must be >= 1")
+        _require(min(self.s3_outcome_months, self.s3_offset_months, self.s3_horizon) >= 1,
+                 "macro_stress S3 month counts must be >= 1")
+        _require(0.0 <= self.p_hike <= 1.0, "macro_stress.p_hike must be in [0, 1]")
+        _require(self.n_draws >= 100, "macro_stress.n_draws must be >= 100")
+
+
+@dataclass(frozen=True)
 class ReportingConfig:
     main_types: tuple[str, ...]
     subperiods: tuple[EpisodeConfig, ...]   # label, start, end (return months)
@@ -364,6 +386,7 @@ class Config:
     feature_importance: FeatureImportanceConfig
     reporting: ReportingConfig
     regimes: RegimesConfig
+    macro_stress: MacroStressConfig
 
     def as_dict(self) -> dict[str, Any]:
         """Plain-Python copy (dicts, lists, str paths) for saving alongside run outputs."""
